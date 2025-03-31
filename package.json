@@ -1,0 +1,22 @@
+{
+  "name": "myhosp",
+  "version": "1.0.0",
+  "description": "Plataforma de Gestión Médica Digital con Asistente de Voz",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "install-deps": "npm install express socket.io cors nodemon"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 

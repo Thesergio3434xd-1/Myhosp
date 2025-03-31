@@ -60,36 +60,176 @@ header {
   background-color: var(--primary-90);
   color: var(--white);
   padding: 1rem 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 2rem;
 }
 
 header h1 {
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, var(--white), var(--primary-30));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 header nav ul {
   list-style: none;
   display: flex;
-}
-
-header nav ul li {
-  margin-left: 1.5rem;
+  gap: 2rem;
 }
 
 header nav ul li a {
   color: var(--white);
   text-decoration: none;
-  font-size: 1rem;
-  transition: opacity 0.3s;
+  font-size: 1.1rem;
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
 }
 
-header nav ul li a:hover {
-  opacity: 0.8;
+header nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-30);
+  transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Estilo para el contenedor del asistente en el header */
+header .assistant {
+  margin-left: 2rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header .assistant::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+  animation: rotate 4s linear infinite;
+}
+
+header .assistant:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+header .assistant:hover::before {
+  animation: rotate 2s linear infinite;
+}
+
+/* Ajustar el tamaño y color del ícono */
+#micIcon {
+  font-size: 1.8rem;
+  color: var(--white);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+#micIcon:hover {
+  color: var(--primary-30);
+  transform: scale(1.1);
+}
+
+/* Estilos para el botón de menú móvil */
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.menu-button:hover {
+  color: var(--primary-30);
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+
+  header .container {
+    padding: 0 1rem;
+  }
+
+  header nav ul {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-90);
+    flex-direction: column;
+    padding: 1rem 0;
+    gap: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  header nav ul.active {
+    display: flex;
+  }
+
+  header nav ul li {
+    margin: 0;
+    text-align: center;
+  }
+
+  header nav ul li a {
+    display: block;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  header nav ul li:last-child a {
+    border-bottom: none;
+  }
+
+  header .assistant {
+    margin-left: 1rem;
+    padding: 0.8rem;
+  }
+
+  #micIcon {
+    font-size: 1.5rem;
+  }
 }
 
 /* 5) Sección Hero */
@@ -209,22 +349,4 @@ footer {
 footer p {
   font-size: 0.9rem;
   margin: 0.5rem 0;
-}
-
-/* Estilo para el contenedor del asistente en el header */
-header .assistant {
-  margin-left: 1rem;
-  cursor: pointer;
-}
-
-/* Ajustar el tamaño y color del ícono */
-#micIcon {
-  font-size: 1.5rem;
-  color: var(--color-blanco);
-  /* o el color que desees */
-  transition: color 0.3s;
-}
-
-#micIcon:hover {
-  color: #cccccc;
 }
