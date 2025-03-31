@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyHosp - Plataforma de Gestión Médica Digital</title>
+    <!-- Importar la tipografía Lexend -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Importar Font Awesome (versión actualizada) para el ícono del micrófono -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7eRJpIDjYvOCjtZbOmhiDnYsHZd+2jx9hYLmSp2+1M/GpZIBK4it1cYA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Enlazar la hoja de estilos principal -->
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <!-- Encabezado con navegación y asistente de voz -->
+    <header>
+      <div class="container">
+        <h1>MyHosp</h1>
+        <nav>
+          <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </nav>
+        <!-- Ícono de micrófono para activar el asistente de voz -->
+        <div class="assistant">
+          <i id="micIcon" class="fa-solid fa-microphone"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section id="inicio" class="hero">
+      <div class="container">
+        <h2>Bienvenido a MyHosp</h2>
+        <p>
+          La solución digital para gestionar tus citas médicas, telemedicina e
+          historial clínico. Optimiza tu atención y elimina las barreras del sistema
+          de salud.
+        </p>
+        <a href="#" class="btn">Iniciar Sesión</a>
+      </div>
+    </section>
+
+    <!-- Sección Acerca de Nosotros -->
+    <section id="nosotros" class="about">
+      <div class="container">
+        <h2>Nuestra Historia</h2>
+        <p>
+          En MyHosp comprendemos las dificultades para acceder a una atención médica
+          de calidad. Nuestra plataforma nace para eliminar largas esperas y procesos
+          burocráticos, conectando de manera eficiente a pacientes y profesionales de la
+          salud.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sección de Servicios -->
+    <section id="servicios" class="services">
+      <div class="container">
+        <h2>Nuestros Servicios</h2>
+        <div class="service-item">
+          <h3>Gestión de Citas</h3>
+          <p>Agiliza la programación de tus citas médicas con solo un clic.</p>
+        </div>
+        <div class="service-item">
+          <h3>Telemedicina</h3>
+          <p>Consulta a especialistas desde la comodidad de tu hogar.</p>
+        </div>
+        <div class="service-item">
+          <h3>Historial Clínico</h3>
+          <p>
+            Accede a tus informes médicos y resultados de laboratorio en un solo
+            lugar.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de Testimonios -->
+    <section id="testimonios" class="testimonials">
+      <div class="container">
+        <h2>Testimonios</h2>
+        <p>
+          "MyHosp cambió mi experiencia médica. Pude agendar mi cita en minutos y
+          hablar con un especialista sin complicaciones." - Juan Pérez
+        </p>
+      </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer id="contacto">
+      <div class="container">
+        <p>© 2025 MyHosp. Todos los derechos reservados.</p>
+        <p>Contacto: info@myhosp.com</p>
+      </div>
+    </footer>
+
+    <!-- Archivo JavaScript para el asistente de voz -->
+    <script src="./js/ViewModels/assistant.js"></script>
+  </body>
+</html>

@@ -1,0 +1,230 @@
+/* 1) Importar la tipografía Lexend */
+@import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
+
+/* 2) Definir variables de color (según la imagen de referencia) */
+:root {
+  /* Paleta Primary */
+  --primary-90: #003D87;
+  /* Ej. color más oscuro */
+  --primary-60: #0F62FE;
+  /* Ej. color intermedio */
+  --primary-30: #A6C8FF;
+  /* Ej. color claro */
+
+  /* Colores base */
+  --white: #ffffff;
+  --coolGray-10: #f2f4f8;
+  --coolGray-20: #dde1e6;
+  --coolGray-30: #c1c7cd;
+  --coolGray-40: #a2a9b0;
+  --coolGray-50: #697077;
+  --coolGray-60: #4d5358;
+  --coolGray-70: #343a3f;
+  --coolGray-80: #21272a;
+
+  /* Estados */
+  --error: #DA1E28;
+  /* El mismo valor para Error y Warning en la imagen */
+  --warning: #DA1E28;
+  --success: #198038;
+  /* Valor aproximado para 'Success' */
+
+  /* Overlay semitransparente (50%) */
+  --overlay-50: rgba(18, 22, 25, 0.5);
+  /* #121619 con opacidad 50% */
+}
+
+/* 3) Reset básico y tipografía global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lexend', sans-serif;
+  background-color: var(--white);
+  color: var(--coolGray-80);
+  line-height: 1.6;
+}
+
+/* Contenedor genérico para centrar y limitar el ancho */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 4) Header y navegación */
+header {
+  background-color: var(--primary-90);
+  color: var(--white);
+  padding: 1rem 0;
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 1.8rem;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+}
+
+header nav ul li {
+  margin-left: 1.5rem;
+}
+
+header nav ul li a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: opacity 0.3s;
+}
+
+header nav ul li a:hover {
+  opacity: 0.8;
+}
+
+/* 5) Sección Hero */
+.hero {
+  background-color: var(--primary-30);
+  color: var(--primary-90);
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero .btn {
+  display: inline-block;
+  background-color: var(--primary-90);
+  color: var(--white);
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.hero .btn:hover {
+  background-color: var(--primary-60);
+}
+
+/* 6) Sección "Nuestra Historia" */
+.about {
+  background-color: var(--primary-90);
+  color: var(--white);
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.about h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about p {
+  font-size: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* 7) Sección de Servicios */
+.services {
+  background-color: var(--white);
+  color: var(--coolGray-80);
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.services h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-90);
+}
+
+.service-item {
+  margin-bottom: 2rem;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-item p {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0.5rem auto;
+}
+
+/* 8) Sección de Testimonios */
+.testimonials {
+  background-color: var(--primary-60);
+  color: var(--white);
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.testimonials h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.testimonials p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* 9) Footer */
+footer {
+  background-color: var(--primary-90);
+  color: var(--white);
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+}
+
+footer p {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+/* Estilo para el contenedor del asistente en el header */
+header .assistant {
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+/* Ajustar el tamaño y color del ícono */
+#micIcon {
+  font-size: 1.5rem;
+  color: var(--color-blanco);
+  /* o el color que desees */
+  transition: color 0.3s;
+}
+
+#micIcon:hover {
+  color: #cccccc;
+}
