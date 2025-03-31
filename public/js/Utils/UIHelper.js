@@ -5,16 +5,24 @@ class UIHelper {
         welcomeMessage.innerHTML = `
             <div class="welcome-content">
                 <i class="fas fa-microphone-alt"></i>
-                <p>¡Hola! Soy Ana, tu asistente virtual de MyHosp</p>
-                <p class="welcome-commands">Dime "Ana" para activarme y luego podrás decir: "inicio", "nosotros", "servicios" o "contacto"</p>
+                <h2>¡Bienvenido a MyHosp!</h2>
+                <p>Soy Ana, tu asistente virtual</p>
+                <p class="welcome-commands">Dime "Ana" para activarme y luego podrás decir:</p>
+                <ul class="commands-list">
+                    <li>"inicio" - Para ir al inicio</li>
+                    <li>"nosotros" - Para conocer nuestra historia</li>
+                    <li>"servicios" - Para ver nuestros servicios</li>
+                    <li>"contacto" - Para ir al contacto</li>
+                </ul>
+                <p class="welcome-tip">También puedes hacer clic en el micrófono para activarme</p>
             </div>
         `;
         document.body.appendChild(welcomeMessage);
 
         setTimeout(() => {
             welcomeMessage.classList.add('fade-out');
-            setTimeout(() => welcomeMessage.remove(), 500);
-        }, 5000);
+            setTimeout(() => welcomeMessage.remove(), 10000);
+        }, 10000);
     }
 
     static showListeningMessage() {
@@ -78,15 +86,42 @@ class UIHelper {
                 color: var(--primary-30);
             }
 
+            .welcome-content h2 {
+                font-size: 1.8rem;
+                margin: 0;
+                color: var(--white);
+            }
+
             .welcome-content p {
                 font-size: 1.2rem;
                 margin: 0;
             }
 
             .welcome-commands {
-                font-size: 1rem !important;
+                font-size: 1.1rem !important;
                 color: var(--primary-30);
                 margin-top: 1rem;
+            }
+
+            .commands-list {
+                list-style: none;
+                padding: 0;
+                margin: 0.5rem 0;
+                text-align: left;
+                width: 100%;
+            }
+
+            .commands-list li {
+                margin: 0.5rem 0;
+                font-size: 1rem;
+                color: var(--white);
+            }
+
+            .welcome-tip {
+                font-size: 0.9rem !important;
+                color: var(--primary-30);
+                margin-top: 1rem;
+                font-style: italic;
             }
 
             .listening-message {

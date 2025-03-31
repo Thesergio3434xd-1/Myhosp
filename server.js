@@ -38,6 +38,12 @@ io.on('connection', (socket) => {
         socket.emit('voiceResponse', response);
     });
 
+    // Manejar estado del asistente
+    socket.on('assistantState', (state) => {
+        console.log('Estado del asistente:', state);
+        socket.emit('assistantStateUpdate', state);
+    });
+
     socket.on('disconnect', () => {
         console.log('Cliente desconectado');
     });
@@ -45,36 +51,42 @@ io.on('connection', (socket) => {
 
 // Procesar comandos de voz
 function processCommand(command) {
-    command = command.toLowerCase();
+    command = command.toLowerCase().trim();
     
-    if (command.includes('inicio')) {
+    if (command.includes('ana')) {
         return {
-            text: 'Navegando a la página de inicio',
+            text: '¿En qué puedo ayudarte?',
+            action: 'speak'
+        };
+    } else if (command.includes('inicio')) {
+        return {
+            text: 'Te llevo a la sección de inicio',
             action: 'navigate',
             target: '#inicio'
         };
     } else if (command.includes('nosotros')) {
         return {
-            text: 'Navegando a la sección sobre nosotros',
+            text: 'Te llevo a la sección sobre nosotros',
             action: 'navigate',
             target: '#nosotros'
         };
     } else if (command.includes('servicios')) {
         return {
-            text: 'Navegando a la sección de servicios',
+            text: 'Te llevo a la sección de servicios',
             action: 'navigate',
             target: '#servicios'
         };
     } else if (command.includes('contacto')) {
         return {
-            text: 'Navegando a la sección de contacto',
+            text: 'Te llevo a la sección de contacto',
             action: 'navigate',
             target: '#contacto'
         };
-    } else if (command.includes('ayuda')) {
+    } else if (command.includes('iniciar sesion')) {
         return {
-            text: 'Puedo ayudarte a navegar por la página. Di "inicio", "nosotros", "servicios" o "contacto"',
-            action: 'speak'
+            text: 'Te llevo al inicio de sesión',
+            action: 'click',
+            target: '.btn'
         };
     } else {
         return {
