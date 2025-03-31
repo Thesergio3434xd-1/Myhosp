@@ -1,59 +1,25 @@
-// Espera a que el DOM se cargue
+import AssistantViewModel from './AssistantViewModel.js';
+
+// Esperar a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
-    const micIcon = document.getElementById('micIcon');
-    const nav = document.querySelector('nav ul');
-    let isListening = false;
-    let socket = null;
+    // Inicializar el ViewModel
+    const assistant = new AssistantViewModel();
 
-    // Inicializar Socket.IO
-    try {
-        socket = io('http://localhost:3000');
+    // Asegurar que la síntesis de voz esté disponible
+    if ('speechSynthesis' in window) {
+        // Cancelar cualquier síntesis en curso
+        window.speechSynthesis.cancel();
+
+        // Configurar el idioma por defecto
+        const voices = window.speechSynthesis.getVoices();
+        const spanishVoice = voices.find(voice => voice.lang.includes('es'));
         
-        socket.on('connect', () => {
-            console.log('Conectado al servidor');
-            showWelcomeMessage();
-        });
-
-        socket.on('voiceResponse', (response) => {
-            speak(response.text);
-            if (response.action === 'navigate') {
-                window.location.href = response.target;
-            }
-        });
-    } catch (error) {
-        console.error('Error al conectar con el servidor:', error);
-    }
-
-    // Agregar botón de menú móvil
-    const menuButton = document.createElement('button');
-    menuButton.className = 'menu-button';
-    menuButton.innerHTML = '<i class="fas fa-bars"></i>';
-    document.querySelector('header .container').insertBefore(menuButton, nav);
-
-    // Toggle menú móvil
-    menuButton.addEventListener('click', () => {
-        nav.classList.toggle('active');
-    });
-
-    // Cerrar menú al hacer clic en un enlace
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', () => {
-            nav.classList.remove('active');
-        });
-    });
-
-    // Mejorar la interacción del micrófono
-    micIcon.addEventListener('click', () => {
-        if (!isListening) {
-            startAssistant();
-            isListening = true;
-            micIcon.classList.add('listening');
-        } else {
-            stopAssistant();
-            isListening = false;
-            micIcon.classList.remove('listening');
+        if (spanishVoice) {
+            window.speechSynthesis.defaultVoice = spanishVoice;
         }
-    });
+    } else {
+        console.error('La síntesis de voz no está disponible en este navegador');
+    }
 });
 
 let recognition = null;
@@ -69,6 +35,16 @@ function speak(text) {
     utterance.pitch = 1;
     utterance.volume = 1;
 
+    // Asegurar que el audio se reproduzca
+    utterance.onstart = () => {
+        console.log('Iniciando síntesis de voz...');
+    };
+
+    utterance.onerror = (event) => {
+        console.error('Error en síntesis de voz:', event);
+        synthesis.cancel();
+    };
+
     synthesis.speak(utterance);
 }
 
@@ -78,13 +54,14 @@ function showWelcomeMessage() {
     welcomeMessage.innerHTML = `
         <div class="welcome-content">
             <i class="fas fa-microphone-alt"></i>
-            <p>¡Bienvenido a MyHosp! ¿En qué puedo ayudarte hoy?</p>
+            <p>¡Hola! Soy Ana, tu asistente virtual de MyHosp</p>
+            <p class="welcome-commands">Dime "Ana" para activarme y luego podrás decir: "inicio", "nosotros", "servicios" o "contacto"</p>
         </div>
     `;
     document.body.appendChild(welcomeMessage);
 
     // Hablar el mensaje de bienvenida
-    speak('¡Bienvenido a MyHosp! ¿En qué puedo ayudarte hoy?');
+    speak('¡Hola! Soy Ana, tu asistente virtual de MyHosp. Dime Ana para activarme y luego podrás decir: inicio, nosotros, servicios o contacto');
 
     // Desaparecer el mensaje después de 5 segundos
     setTimeout(() => {
@@ -108,9 +85,10 @@ function startAssistant() {
     recognition.start();
 
     recognition.onstart = () => {
-        console.log('Asistente: Escuchando...');
+        console.log('Ana: Escuchando...');
         showListeningAnimation();
         showListeningMessage();
+        speak('Escuchando...');
     };
 
     recognition.onresult = (event) => {
@@ -120,9 +98,28 @@ function startAssistant() {
         
         console.log('Transcripción:', transcript);
         
-        // Enviar el comando al servidor
-        if (socket) {
-            socket.emit('voiceCommand', transcript);
+        // Procesar el comando
+        if (transcript.toLowerCase().includes('ana')) {
+            speak('¿En qué puedo ayudarte?');
+            return;
+        }
+
+        // Procesar comandos de navegación
+        if (transcript.toLowerCase().includes('inicio')) {
+            speak('Te llevo a la sección de inicio');
+            document.querySelector('#inicio').scrollIntoView({ behavior: 'smooth' });
+        } else if (transcript.toLowerCase().includes('nosotros')) {
+            speak('Te llevo a la sección sobre nosotros');
+            document.querySelector('#nosotros').scrollIntoView({ behavior: 'smooth' });
+        } else if (transcript.toLowerCase().includes('servicios')) {
+            speak('Te llevo a la sección de servicios');
+            document.querySelector('#servicios').scrollIntoView({ behavior: 'smooth' });
+        } else if (transcript.toLowerCase().includes('contacto')) {
+            speak('Te llevo a la sección de contacto');
+            document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });
+        } else if (transcript.toLowerCase().includes('iniciar sesion')) {
+            speak('Te llevo al inicio de sesión');
+            document.querySelector('.btn').click();
         }
     };
 
@@ -143,6 +140,7 @@ function stopAssistant() {
         recognition.stop();
         hideListeningAnimation();
         hideListeningMessage();
+        speak('Hasta luego, Ana se despide');
     }
 }
 
@@ -196,6 +194,8 @@ style.textContent = `
         text-align: center;
         animation: fadeIn 0.5s ease;
         z-index: 1000;
+        max-width: 90%;
+        width: 400px;
     }
 
     .welcome-content {
@@ -215,6 +215,12 @@ style.textContent = `
         margin: 0;
     }
 
+    .welcome-commands {
+        font-size: 1rem !important;
+        color: var(--primary-30);
+        margin-top: 1rem;
+    }
+
     .listening-message {
         position: fixed;
         bottom: 20px;
@@ -228,6 +234,7 @@ style.textContent = `
         gap: 0.5rem;
         animation: slideIn 0.3s ease;
         z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .listening-message i {
