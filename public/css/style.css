@@ -1,17 +1,11 @@
 /* 1) Importar la tipografía Lexend */
 @import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
 
-/* 2) Definir variables de color (según la imagen de referencia) */
+/* 2) Definir variables de color */
 :root {
-  /* Paleta Primary */
   --primary-90: #003D87;
-  /* Ej. color más oscuro */
   --primary-60: #0F62FE;
-  /* Ej. color intermedio */
   --primary-30: #A6C8FF;
-  /* Ej. color claro */
-
-  /* Colores base */
   --white: #ffffff;
   --coolGray-10: #f2f4f8;
   --coolGray-20: #dde1e6;
@@ -21,20 +15,13 @@
   --coolGray-60: #4d5358;
   --coolGray-70: #343a3f;
   --coolGray-80: #21272a;
-
-  /* Estados */
   --error: #DA1E28;
-  /* El mismo valor para Error y Warning en la imagen */
   --warning: #DA1E28;
   --success: #198038;
-  /* Valor aproximado para 'Success' */
-
-  /* Overlay semitransparente (50%) */
   --overlay-50: rgba(18, 22, 25, 0.5);
-  /* #121619 con opacidad 50% */
 }
 
-/* 3) Reset básico y tipografía global */
+/* 3) Reset y tipografía global */
 * {
   margin: 0;
   padding: 0;
@@ -48,7 +35,6 @@ body {
   line-height: 1.6;
 }
 
-/* Contenedor genérico para centrar y limitar el ancho */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -67,28 +53,51 @@ header {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-header .container {
+.header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
 }
 
-header h1 {
+/* Sección izquierda: micrófono y título */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-left h1 {
   font-size: 2rem;
   font-weight: 700;
+  margin-left: 10px;
   background: linear-gradient(45deg, var(--white), var(--primary-30));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-header nav ul {
+/* Sección derecha: navegación */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.nav-list {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
-header nav ul li a {
+.nav-list li a {
   color: var(--white);
   text-decoration: none;
   font-size: 1.1rem;
@@ -97,7 +106,7 @@ header nav ul li a {
   padding: 0.5rem 0;
 }
 
-header nav ul li a::after {
+.nav-list li a::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -108,128 +117,21 @@ header nav ul li a::after {
   transition: width 0.3s ease;
 }
 
-header nav ul li a:hover::after {
+.nav-list li a:hover::after {
   width: 100%;
 }
 
-/* Estilo para el contenedor del asistente en el header */
-header .assistant {
-  margin-left: 2rem;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1rem;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-header .assistant::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
-  animation: rotate 4s linear infinite;
-}
-
-header .assistant:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
-}
-
-header .assistant:hover::before {
-  animation: rotate 2s linear infinite;
-}
-
-/* Ajustar el tamaño y color del ícono */
+/* Estilo del ícono del micrófono */
 #micIcon {
   font-size: 1.8rem;
   color: var(--white);
   transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
+  cursor: pointer;
 }
 
 #micIcon:hover {
   color: var(--primary-30);
   transform: scale(1.1);
-}
-
-/* Estilos para el botón de menú móvil */
-.menu-button {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--white);
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-.menu-button:hover {
-  color: var(--primary-30);
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Media queries para responsividad */
-@media (max-width: 768px) {
-  .menu-button {
-    display: block;
-  }
-
-  header .container {
-    padding: 0 1rem;
-  }
-
-  header nav ul {
-    display: none;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background-color: var(--primary-90);
-    flex-direction: column;
-    padding: 1rem 0;
-    gap: 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  header nav ul.active {
-    display: flex;
-  }
-
-  header nav ul li {
-    margin: 0;
-    text-align: center;
-  }
-
-  header nav ul li a {
-    display: block;
-    padding: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  header nav ul li:last-child a {
-    border-bottom: none;
-  }
-
-  header .assistant {
-    margin-left: 1rem;
-    padding: 0.8rem;
-  }
-
-  #micIcon {
-    font-size: 1.5rem;
-  }
 }
 
 /* 5) Sección Hero */
@@ -238,6 +140,7 @@ header .assistant:hover::before {
   color: var(--primary-90);
   text-align: center;
   padding: 4rem 0;
+  margin-top: 80px;
 }
 
 .hero h2 {
@@ -318,19 +221,19 @@ header .assistant:hover::before {
 }
 
 /* 8) Sección de Testimonios */
-.testimonials {
+.testimonios {
   background-color: var(--primary-60);
   color: var(--white);
   text-align: center;
   padding: 3rem 0;
 }
 
-.testimonials h2 {
+.testimonios h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-.testimonials p {
+.testimonios p {
   font-size: 1.2rem;
   max-width: 800px;
   margin: 0 auto;
@@ -351,29 +254,43 @@ footer p {
   margin: 0.5rem 0;
 }
 
-.assistant {
-    margin-right: 20px;
-    cursor: pointer;
-}
-
-.assistant i {
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
-nav {
+/* Responsive: para pantallas menores a 768px */
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+  .header-container {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .nav-list {
+    flex-direction: column;
+    width: 100%;
+    display: none;
+  }
+  .nav-list.active {
     display: flex;
-    align-items: center;
+  }
+  .nav-list li {
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .header-right {
+    margin-top: 10px;
+  }
+  .hero {
+    margin-top: 120px;
+  }
 }

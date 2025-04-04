@@ -11,7 +11,7 @@ class ListeningView {
     }
 
     show() {
-        document.body.appendChild(this.element);
+        document.body.appendChild(this.create());
     }
 
     hide() {
@@ -22,10 +22,10 @@ class ListeningView {
 
     updateMicIcon(micIcon, isListening) {
         if (micIcon) {
-            micIcon.style.color = isListening ? '#4CAF50' : '#333';
+            micIcon.style.color = isListening ? '#4CAF50' : '#fff';
             micIcon.style.animation = isListening ? 'pulse 1.5s infinite' : 'none';
         }
     }
 }
 
-export default ListeningView; 
+export default ListeningView;

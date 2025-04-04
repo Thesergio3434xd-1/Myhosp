@@ -29,16 +29,12 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
     console.log('Cliente conectado');
 
-    // Manejar comandos de voz
     socket.on('voiceCommand', (command) => {
         console.log('Comando recibido:', command);
-        
-        // Procesar el comando y enviar respuesta
         let response = processCommand(command);
         socket.emit('voiceResponse', response);
     });
 
-    // Manejar estado del asistente
     socket.on('assistantState', (state) => {
         console.log('Estado del asistente:', state);
         socket.emit('assistantStateUpdate', state);
@@ -49,16 +45,10 @@ io.on('connection', (socket) => {
     });
 });
 
-// Procesar comandos de voz
+// Procesar comandos de voz para navegación
 function processCommand(command) {
     command = command.toLowerCase().trim();
-    
-    if (command.includes('ana')) {
-        return {
-            text: '¿En qué puedo ayudarte?',
-            action: 'speak'
-        };
-    } else if (command.includes('inicio')) {
+    if (command.includes('inicio')) {
         return {
             text: 'Te llevo a la sección de inicio',
             action: 'navigate',
@@ -82,15 +72,9 @@ function processCommand(command) {
             action: 'navigate',
             target: '#contacto'
         };
-    } else if (command.includes('iniciar sesion')) {
-        return {
-            text: 'Te llevo al inicio de sesión',
-            action: 'click',
-            target: '.btn'
-        };
     } else {
         return {
-            text: 'No entendí ese comando. ¿Podrías repetirlo?',
+            text: '',
             action: 'speak'
         };
     }
@@ -99,4 +83,4 @@ function processCommand(command) {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
-}); 
+});

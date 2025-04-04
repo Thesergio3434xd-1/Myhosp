@@ -1,3 +1,4 @@
+// Ahora WelcomeView no muestra nada, ya que se ha eliminado el mensaje en pantalla
 class WelcomeView {
     constructor() {
         this.element = null;
@@ -6,26 +7,13 @@ class WelcomeView {
     create() {
         this.element = document.createElement('div');
         this.element.className = 'welcome-message';
-        this.element.innerHTML = `
-            <div class="welcome-content">
-                <i class="fas fa-microphone-alt"></i>
-                <h2>¡Bienvenido a MyHosp!</h2>
-                <p>Soy Ana, tu asistente virtual</p>
-                <p class="welcome-commands">Dime "Ana" para activarme y luego podrás decir:</p>
-                <ul class="commands-list">
-                    <li>"inicio" - Para ir al inicio</li>
-                    <li>"nosotros" - Para conocer nuestra historia</li>
-                    <li>"servicios" - Para ver nuestros servicios</li>
-                    <li>"contacto" - Para ir al contacto</li>
-                </ul>
-                <p class="welcome-tip">También puedes hacer clic en el micrófono para activarme</p>
-            </div>
-        `;
+        this.element.innerHTML = ``;
         return this.element;
     }
 
     show() {
-        document.body.appendChild(this.element);
+        document.body.appendChild(this.create());
+        setTimeout(() => { this.hide(); }, 1000);
     }
 
     hide() {
@@ -38,4 +26,4 @@ class WelcomeView {
     }
 }
 
-export default WelcomeView; 
+export default WelcomeView;
