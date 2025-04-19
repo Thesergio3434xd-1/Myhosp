@@ -16,11 +16,7 @@
   --coolGray-70: #343a3f;
   --coolGray-80: #21272a;
   --error: #DA1E28;
-  --warning: #DA1E28;
   --success: #198038;
-  --overlay-50: rgba(18, 22, 25, 0.5);
-}
-
 /* 3) Reset y tipografía global */
 * {
   margin: 0;
