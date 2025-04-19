@@ -1,23 +1,25 @@
 /* 1) Importar la tipografía Lexend */
-@import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
 
 /* 2) Definir variables de color */
 :root {
-  --primary-90: #003D87;
-  --primary-60: #0F62FE;
-  --primary-30: #A6C8FF;
-  --white: #ffffff;
-  --coolGray-10: #f2f4f8;
-  --coolGray-20: #dde1e6;
-  --coolGray-30: #c1c7cd;
-  --coolGray-40: #a2a9b0;
-  --coolGray-50: #697077;
-  --coolGray-60: #4d5358;
-  --coolGray-70: #343a3f;
-  --coolGray-80: #21272a;
+  --primary: #3B9AB8; /* Azul vibrante */
+  --primary-dark: #00789E;
+  --primary-light: #6BBFD9;
+  --secondary: #00A0AA; /* Turquesa */
+  --secondary-dark: #008C96;
+  --accent: #E0FFFC; /* Resaltado */
+  --dark: #091E29; /* Fondo oscuro */
+  --light: #F8F8F8; /* Fondo claro */
+  --gray: #979797; /* Gris medio */
+  --gray-light: #F6F6F6;
+  --white: #FFFFFF;
+  --black: #000000;
   --error: #DA1E28;
   --success: #198038;
-/* 3) Reset y tipografía global */
+}
+
+/* 3) Reset y estilos globales */
 * {
   margin: 0;
   padding: 0;
@@ -26,9 +28,18 @@
 
 body {
   font-family: 'Lexend', sans-serif;
-  background-color: var(--white);
-  color: var(--coolGray-80);
-  line-height: 1.6;
+  color: var(--dark);
+  overflow-x: hidden;
+  background-color: #f5f5f5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  font-family: 'Lexend', sans-serif;
+}
+
+section {
+  overflow: hidden;
 }
 
 .container {
@@ -37,10 +48,16 @@ body {
   margin: 0 auto;
 }
 
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 /* 4) Header y navegación */
 header {
-  background-color: var(--primary-90);
-  color: var(--white);
+  background-color: #3B9AB8; /* Azul vibrante */
+  color: #FFFFFF; /* Blanco */
   padding: 1rem 0;
   position: fixed;
   width: 100%;
@@ -66,7 +83,7 @@ header {
   font-size: 2rem;
   font-weight: 700;
   margin-left: 10px;
-  background: linear-gradient(45deg, var(--white), var(--primary-30));
+  background: linear-gradient(45deg, var(--white), var(--primary-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -109,7 +126,7 @@ header {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--primary-30);
+  background-color: var(--primary-light);
   transition: width 0.3s ease;
 }
 
@@ -126,51 +143,25 @@ header {
 }
 
 #micIcon:hover {
-  color: var(--primary-30);
+  color: var(--primary-light);
   transform: scale(1.1);
 }
 
 /* 5) Sección Hero */
 .hero {
-  background-color: var(--primary-30);
-  color: var(--primary-90);
+  background-color: #F8F8F8; /* Fondo claro */
+  color: #091E29; /* Fondo oscuro */
   text-align: center;
   padding: 4rem 0;
   margin-top: 80px;
-}
-
-.hero h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero .btn {
-  display: inline-block;
-  background-color: var(--primary-90);
-  color: var(--white);
-  padding: 0.8rem 1.5rem;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.hero .btn:hover {
-  background-color: var(--primary-60);
+  padding-top: 7rem;
+  padding-bottom: 5rem;
 }
 
 /* 6) Sección "Nuestra Historia" */
 .about {
-  background-color: var(--primary-90);
-  color: var(--white);
+  background-color: #3B9AB8; /* Azul vibrante */
+  color: #FFFFFF; /* Blanco */
   text-align: center;
   padding: 3rem 0;
 }
@@ -189,8 +180,8 @@ header {
 
 /* 7) Sección de Servicios */
 .services {
-  background-color: var(--white);
-  color: var(--coolGray-80);
+  background-color: #FFFFFF; /* Blanco */
+  color: #091E29; /* Fondo oscuro */
   text-align: center;
   padding: 3rem 0;
 }
@@ -198,7 +189,7 @@ header {
 .services h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: var(--primary-90);
+  color: #3B9AB8; /* Azul vibrante */
 }
 
 .service-item {
@@ -218,8 +209,8 @@ header {
 
 /* 8) Sección de Testimonios */
 .testimonios {
-  background-color: var(--primary-60);
-  color: var(--white);
+  background-color: #3B9AB8; /* Azul vibrante */
+  color: #FFFFFF; /* Blanco */
   text-align: center;
   padding: 3rem 0;
 }
@@ -238,8 +229,8 @@ header {
 
 /* 9) Footer */
 footer {
-  background-color: var(--primary-90);
-  color: var(--white);
+  background-color: #3B9AB8; /* Azul vibrante */
+  color: #FFFFFF; /* Blanco */
   text-align: center;
   padding: 1.5rem 0;
   margin-top: 2rem;
@@ -255,10 +246,108 @@ footer p {
   to { transform: rotate(360deg); }
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+/* Nueva Sección: Funcionalidades */
+.features {
+  background-color: #F8F8F8; /* Fondo claro */
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.features h2 {
+  color: #3B9AB8; /* Azul vibrante */
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.features-grid {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.feature-item {
+  background-color: #E0FFFC; /* Resaltado */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+}
+
+.feature-item h3 {
+  color: var(--secondary);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-item p {
+  color: var(--dark);
+  font-size: 1rem;
+}
+
+/* Nueva Sección: Beneficios */
+.benefits {
+  background-color: #F6F6F6; /* Fondo claro */
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.benefits h2 {
+  color: #09A4AD; /* Turquesa */
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.benefits p {
+  color: var(--dark);
+  font-size: 1.2rem;
+}
+
+/* Nueva Sección: Contacto */
+.contact {
+  background-color: #3B9AB8; /* Azul vibrante */
+  color: #FFFFFF; /* Blanco */
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.contact p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.contact input,
+.contact textarea {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.contact button {
+  background-color: #00A0AA; /* Turquesa */
+  color: var(--white);
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.contact button:hover {
+  background-color: #18A0A9; /* Turquesa claro */
 }
 
 /* Responsive: para pantallas menores a 768px */
@@ -288,5 +377,529 @@ footer p {
   }
   .hero {
     margin-top: 120px;
+    padding-top: 6rem;
+  }
+}
+
+/* Nueva estructura para la landing-page */
+.landing-page {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.landing-page .div {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 1440px;
+  position: relative;
+}
+
+/* Header */
+.landing-page .frame-11 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: #3a99b7;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.landing-page .nav-menu {
+  display: flex;
+  gap: 32px;
+}
+
+.landing-page .nav-menu a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.landing-page .btn-login {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  color: #3a99b7;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.landing-page .btn-login:hover {
+  background-color: #e0f7fa;
+}
+
+/* Hero Section */
+.landing-page .hero-image-and-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 100px 32px;
+  background-color: #f8f8f8;
+  width: 100%;
+}
+
+.landing-page .hero-image-and-top h1 {
+  font-size: 48px;
+  color: #00a0aa;
+  margin-bottom: 20px;
+}
+
+.landing-page .hero-image-and-top p {
+  font-size: 20px;
+  color: #000000;
+  margin-bottom: 40px;
+}
+
+.landing-page .frame-10 {
+  background-color: #3a99b7;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.landing-page .frame-10:hover {
+  background-color: #2a88a0;
+}
+
+/* Funcionalidades */
+.landing-page .speciality-services {
+  padding: 80px 32px;
+  background-color: #f6f6f6;
+  text-align: center;
+}
+
+.landing-page .speciality-services h2 {
+  font-size: 36px;
+  color: #09a4ad;
+  margin-bottom: 20px;
+}
+
+.landing-page .speciality-services p {
+  font-size: 18px;
+  color: #000000;
+  margin-bottom: 40px;
+}
+
+.landing-page .frame-30 {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.landing-page .frame-32 {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  max-width: 300px;
+}
+
+.landing-page .frame-32 h3 {
+  font-size: 24px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.landing-page .frame-32 p {
+  font-size: 16px;
+  color: #091e29;
+}
+
+/* Beneficios */
+.landing-page .frame-42 {
+  padding: 80px 32px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.landing-page .frame-42 h2 {
+  font-size: 36px;
+  color: #09a4ad;
+  margin-bottom: 20px;
+}
+
+.landing-page .frame-42 p {
+  font-size: 18px;
+  color: #000000;
+}
+
+/* Testimonios */
+.landing-page .testimonial {
+  padding: 80px 32px;
+  background-color: #f6f6f6;
+  text-align: center;
+}
+
+.landing-page .testimonial h2 {
+  font-size: 36px;
+  color: #3a99b7;
+  margin-bottom: 40px;
+}
+
+.landing-page .content {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.landing-page .client {
+  background-color: #3a99b7;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  text-align: left;
+}
+
+.landing-page .client h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.landing-page .client p {
+  font-size: 16px;
+}
+
+/* Contacto */
+.landing-page .contact-us {
+  padding: 80px 32px;
+  background-color: #3b9ab8;
+  color: #ffffff;
+  text-align: center;
+}
+
+.landing-page .contact-us h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.landing-page .contact-us p {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+.landing-page .contact-us form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.landing-page .contact-us input,
+.landing-page .contact-us textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.landing-page .contact-us button {
+  background-color: #00a0aa;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.landing-page .contact-us button:hover {
+  background-color: #18a0a9;
+}
+
+/* Footer */
+.landing-page .footer {
+  padding: 40px 32px;
+  background-color: #3a99b7;
+  color: #ffffff;
+  text-align: center;
+}
+
+.landing-page .footer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.landing-page .footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .landing-page .frame-11 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .landing-page .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .landing-page .hero-image-and-top {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .landing-page .frame-30 {
+    flex-direction: column;
+  }
+
+  .landing-page .content {
+    flex-direction: column;
+  }
+}
+
+/* Clases de utilidad */
+.bg-primary-custom {
+  background-color: var(--primary) !important;
+}
+
+.bg-secondary-custom {
+  background-color: var(--secondary) !important;
+}
+
+.text-primary-custom {
+  color: var(--primary) !important;
+}
+
+.btn-primary-custom {
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover, 
+.btn-primary-custom:focus {
+  background-color: var(--primary-dark);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-primary {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+}
+
+/* Navbar */
+.navbar {
+  padding: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--white);
+}
+
+.navbar-brand:hover {
+  color: var(--accent);
+}
+
+.navbar .nav-link {
+  color: var(--white) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: var(--accent) !important;
+}
+
+.btn-login {
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero Section */
+.hero {
+  padding-top: 7rem;
+  padding-bottom: 5rem;
+  background-color: var(--light);
+}
+
+/* Funcionalidades */
+.feature-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  border-radius: 50%;
+  margin-top: -40px;
+}
+
+.feature-icon {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.hover-card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hover-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Beneficios */
+.benefit-card {
+  height: 250px;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.benefit-card img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: all 0.6s ease;
+}
+
+.benefit-card:hover img {
+  transform: scale(1.05);
+}
+
+.benefit-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(59, 154, 184, 0.9);
+  color: var(--white);
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover .benefit-caption {
+  background: rgba(59, 154, 184, 1);
+}
+
+/* Testimonios */
+.testimonial {
+  max-width: 700px;
+  transition: all 0.3s ease;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  opacity: 0.5;
+}
+
+.carousel-indicators .active {
+  opacity: 1;
+}
+
+/* Contacto */
+.form-control {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.25rem rgba(59, 154, 184, 0.25);
+}
+
+/* Footer */
+footer a:hover {
+  text-decoration: underline !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: var(--primary);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+  }
+  
+  .hero {
+    padding-top: 6rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  h1, .h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2, .h2 {
+    font-size: 2rem;
+  }
+  
+  .benefit-card {
+    height: 200px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+  
+  .btn-login {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .hero {
+    padding-top: 5rem;
+    text-align: center;
+  }
+  
+  h1, .h1 {
+    font-size: 2rem;
+  }
+  
+  h2, .h2 {
+    font-size: 1.75rem;
+  }
+  
+  .benefit-card {
+    height: 180px;
   }
 }

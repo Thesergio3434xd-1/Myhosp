@@ -1,110 +1,359 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MyHosp - Plataforma de Gestión Médica Digital</title>
-    <!-- Importar la tipografía Lexend -->
-    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet" />
-    <!-- Importar Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <!-- Enlazar la hoja de estilos principal -->
-    <link rel="stylesheet" href="./css/style.css" />
-    <!-- Socket.IO -->
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  </head>
-  <body>
-    <!-- Encabezado con navegación reorganizado -->
-    <header>
-      <div class="container header-container">
-        <div class="header-left">
-          <i id="micIcon" class="fa-solid fa-microphone"></i>
-          <h1>MyHosp</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyHosp - Gestión de Salud Digital</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts - Lexend -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Estilos personalizados originales -->
+  <link rel="stylesheet" href="./css/style.css" />
+  <!-- Estilos específicos para el asistente -->
+  <link rel="stylesheet" href="./css/asistente.css" />
+</head>
+
+<body>
+  <!-- Asistente de voz Ana -->
+  <div id="ana-assistant" class="voice-assistant">
+    <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+      <i id="micIcon" class="fas fa-microphone"></i>
+    </button>
+    <div id="assistantStatus" class="assistant-status"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top bg-primary-custom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <i class="fa-solid fa-hospital me-2"></i>
+        <span>MyHosp</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav me-3">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#funcionalidades">Funcionalidades</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonios">Testimonios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+        <a href="#" class="btn btn-light btn-login">
+          <i class="fas fa-user-circle me-2"></i>Ingresar
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center py-5">
+        <div class="col-lg-6 text-lg-start text-center mb-4 mb-lg-0">
+          <span class="badge bg-primary-custom mb-3">Plataforma médica digital</span>
+          <h1 class="display-4 fw-bold mb-3">Accede a tu salud sin filas ni llamadas</h1>
+          <p class="lead mb-4">
+            Agenda citas, realiza consultas online y accede a tu historial médico desde cualquier lugar con nuestra
+            plataforma intuitiva.
+          </p>
+          <div class="d-flex gap-3 justify-content-lg-start justify-content-center">
+            <a href="#" class="btn btn-primary-custom btn-lg px-4">Empezar ahora</a>
+            <a href="#" class="btn btn-outline-primary px-4">Ver demo</a>
+          </div>
         </div>
-        <div class="header-right">
-          <nav>
-            <ul class="nav-list">
-              <li><a href="#inicio">Inicio</a></li>
-              <li><a href="#nosotros">Nosotros</a></li>
-              <li><a href="#servicios">Servicios</a></li>
-              <li><a href="#contacto">Contacto</a></li>
-            </ul>
-          </nav>
-          <button class="menu-button" aria-label="Abrir menú de navegación" title="Menú"><i class="fa-solid fa-bars"></i></button>
+        <div class="col-lg-6">
+          <img
+            src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            alt="Doctor atendiendo paciente" class="img-fluid rounded-4 shadow">
         </div>
       </div>
-    </header>
+    </div>
+  </section>
 
-    <!-- Sección Hero -->
-    <section id="inicio" class="hero">
-      <div class="container">
-        <h2>Bienvenido a MyHosp</h2>
-        <p>
-          La solución digital para gestionar tus citas médicas, telemedicina e historial clínico.
-          Optimiza tu atención y elimina las barreras del sistema de salud.
-        </p>
-        <a href="#" class="btn">Iniciar Sesión</a>
-      </div>
-    </section>
-
-    <!-- Sección Acerca de Nosotros -->
-    <section id="nosotros" class="about">
-      <div class="container">
-        <h2>Nuestra Historia</h2>
-        <p>
-          En MyHosp comprendemos las dificultades para acceder a una atención médica de calidad.
-          Nuestra plataforma nace para eliminar largas esperas y procesos burocráticos, conectando
-          de manera eficiente a pacientes y profesionales de la salud.
-        </p>
-      </div>
-    </section>
-
-    <!-- Sección de Servicios -->
-    <section id="servicios" class="services">
-      <div class="container">
-        <h2>Nuestros Servicios</h2>
-        <div class="service-item">
-          <h3>Gestión de Citas</h3>
-          <p>Agiliza la programación de tus citas médicas con solo un clic.</p>
+  <!-- Funcionalidades -->
+  <section id="funcionalidades" class="bg-light py-5">
+    <div class="container py-5">
+      <div class="row mb-5">
+        <div class="col-lg-8">
+          <span class="badge bg-primary-custom mb-2">Nuestras soluciones</span>
+          <h2 class="display-5 fw-bold mb-3">Las mejores funcionalidades para un software médico del mañana</h2>
         </div>
-        <div class="service-item">
-          <h3>Telemedicina</h3>
-          <p>Consulta a especialistas desde la comodidad de tu hogar.</p>
+        <div class="col-lg-4 d-flex align-items-center justify-content-lg-end">
+          <a href="#" class="btn btn-outline-primary">Ver más</a>
         </div>
-        <div class="service-item">
-          <h3>Historial Clínico</h3>
-          <p>Accede a tus informes médicos y resultados de laboratorio en un solo lugar.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 bg-white shadow-sm hover-card">
+            <div class="card-body p-4 text-center">
+              <div class="feature-icon-wrapper mb-3">
+                <i class="far fa-calendar-alt feature-icon"></i>
+              </div>
+              <h5 class="card-title">Gestión de citas</h5>
+              <p class="card-text">Agenda, modifica o cancela tus citas médicas en menos de 2 minutos desde cualquier
+                dispositivo.</p>
+            </div>
+          </div>
         </div>
-        <div class="login-container"></div>
-      </div>
-    </section>
 
-    <!-- Sección de Testimonios -->
-    <section id="testimonios" class="testimonios">
-      <div class="container">
-        <h2>Testimonios</h2>
-        <p>
-          "MyHosp cambió mi experiencia médica. Pude agendar mi cita en minutos y hablar con un especialista sin complicaciones." - Juan Pérez
-        </p>
-      </div>
-    </section>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 bg-white shadow-sm hover-card">
+            <div class="card-body p-4 text-center">
+              <div class="feature-icon-wrapper mb-3">
+                <i class="fas fa-video feature-icon"></i>
+              </div>
+              <h5 class="card-title">Telemedicina</h5>
+              <p class="card-text">Consulta con especialistas por videollamada sin salir de casa. Atención segura,
+                rápida y confiable.</p>
+            </div>
+          </div>
+        </div>
 
-    <!-- Pie de Página (solo muestra el copyright) -->
-    <footer id="contacto">
-      <div class="container">
-        <p>© 2025 MyHosp. Todos los derechos reservados.</p>
-      </div>
-    </footer>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 bg-white shadow-sm hover-card">
+            <div class="card-body p-4 text-center">
+              <div class="feature-icon-wrapper mb-3">
+                <i class="fas fa-universal-access feature-icon"></i>
+              </div>
+              <h5 class="card-title">Tecnología inclusiva</h5>
+              <p class="card-text">Diseñada para ser accesible para todos, incluyendo personas mayores y con
+                discapacidad visual.</p>
+            </div>
+          </div>
+        </div>
 
-    <!-- Scripts -->
-    <script type="module" src="./js/ViewModels/assistant.js"></script>
-    <script>
-      // Menú responsive para dispositivos móviles
-      const menuButton = document.querySelector('.menu-button');
-      const navList = document.querySelector('.nav-list');
-      menuButton.addEventListener('click', () => {
-        navList.classList.toggle('active');
-      });
-    </script>
-  </body>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 border-0 bg-white shadow-sm hover-card">
+            <div class="card-body p-4 text-center">
+              <div class="feature-icon-wrapper mb-3">
+                <i class="far fa-file-alt feature-icon"></i>
+              </div>
+              <h5 class="card-title">Historial médico</h5>
+              <p class="card-text">Accede a tus resultados, fórmulas y diagnósticos en cualquier momento y lugar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beneficios -->
+  <section id="beneficios" class="py-5">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <span class="badge bg-primary-custom mb-2">Beneficios</span>
+        <h2 class="display-5 fw-bold">Todo en un solo lugar para tu salud</h2>
+        <p class="lead mx-auto" style="max-width: 700px;">Nuestra plataforma centraliza todas tus necesidades médicas en
+          una solución intuitiva.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="benefit-card position-relative overflow-hidden rounded">
+            <img
+              src="https://images.unsplash.com/photo-1516549655103-9dc1753f988a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+              alt="Gestión de Citas" class="img-fluid w-100">
+            <div class="benefit-caption p-3">
+              <span class="small d-block">Desde la facilidad de tus manos</span>
+              <strong>Gestión de Citas</strong>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="benefit-card position-relative overflow-hidden rounded">
+            <img
+              src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=872&q=80"
+              alt="Consulta Online" class="img-fluid w-100">
+            <div class="benefit-caption p-3">
+              <span class="small d-block">Desde cualquier lugar</span>
+              <strong>Consulta Online</strong>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="benefit-card position-relative overflow-hidden rounded">
+            <img
+              src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+              alt="Historial Médico" class="img-fluid w-100">
+            <div class="benefit-caption p-3">
+              <span class="small d-block">Centralizar la información</span>
+              <strong>Historial Médico</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
+  <section id="testimonios" class="bg-light py-5">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <span class="badge bg-primary-custom mb-2">Testimonios</span>
+        <h2 class="display-5 fw-bold">¿Qué opinan nuestros usuarios?</h2>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div id="carouselTestimonials" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="testimonial bg-primary-custom text-white p-4 rounded shadow mx-auto">
+                  <i class="fas fa-quote-left fa-2x mb-3"></i>
+                  <p class="lead">"Desde que uso MyHosp, agendo mis citas sin filas ni llamadas. Es rápido y fácil de
+                    usar."</p>
+                  <hr class="border-light">
+                  <div class="d-flex align-items-center">
+                    <img src="https://randomuser.me/api/portraits/women/45.jpg" class="rounded-circle me-3" width="60"
+                      height="60" alt="Laura Peña">
+                    <div>
+                      <h5 class="mb-0">Laura Peña</h5>
+                      <small>Paciente - Bogotá</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="testimonial bg-white p-4 rounded shadow mx-auto">
+                  <i class="fas fa-quote-left fa-2x mb-3 text-primary-custom"></i>
+                  <p class="lead">"Como médico, puedo revisar el historial del paciente antes de cada consulta y
+                    optimizar mi tiempo."</p>
+                  <hr>
+                  <div class="d-flex align-items-center">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle me-3" width="60"
+                      height="60" alt="Dr. Esteban Ruiz">
+                    <div>
+                      <h5 class="mb-0">Dr. Esteban Ruiz</h5>
+                      <small>Especialista - Cali</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-indicators position-relative mt-4">
+              <button type="button" data-bs-target="#carouselTestimonials" data-bs-slide-to="0"
+                class="active bg-primary-custom" aria-current="true" aria-label="Testimonio 1"></button>
+              <button type="button" data-bs-target="#carouselTestimonials" data-bs-slide-to="1"
+                class="bg-primary-custom" aria-label="Testimonio 2"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="py-5">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <span class="badge bg-primary-custom mb-2">Contacto</span>
+          <h2 class="display-5 fw-bold mb-4">¿Quieres probar MyHosp? Contáctanos.</h2>
+          <p class="lead mb-4">Escríbenos y te ayudamos a agendar tu primera cita o resolver cualquier duda.</p>
+
+          <div class="d-flex align-items-center mb-3">
+            <div class="bg-primary-custom p-2 rounded-circle text-white me-3">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <span>+57 310 338 8421</span>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <div class="bg-primary-custom p-2 rounded-circle text-white me-3">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <span>atencion_cliente@myhosp.com</span>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="card border-0 shadow">
+            <div class="card-body p-4">
+              <form>
+                <div class="mb-3">
+                  <input type="text" class="form-control py-3" placeholder="Nombre" required>
+                </div>
+                <div class="mb-3">
+                  <input type="tel" class="form-control py-3" placeholder="Celular" required>
+                </div>
+                <div class="mb-3">
+                  <input type="email" class="form-control py-3" placeholder="Correo electrónico" required>
+                </div>
+                <div class="mb-3">
+                  <textarea class="form-control py-3" rows="4" placeholder="Escribe tu mensaje" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 py-3">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary-custom text-white py-5">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6">
+          <h5 class="mb-3">MyHosp</h5>
+          <p class="mb-3">Transformando la experiencia de salud con tecnología accesible y eficiente.</p>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-light btn-sm">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="#" class="btn btn-light btn-sm">
+              <i class="far fa-envelope"></i> Email
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+          <h6 class="mb-3">Servicios</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Gestión de citas</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Consultas en línea</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Historial médico</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h6 class="mb-3">Información</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Términos y condiciones</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Política de privacidad</a></li>
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h6 class="mb-3">Síguenos</h6>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-white fs-5"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white fs-5"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white fs-5"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white fs-5"><i class="fab fa-linkedin"></i></a>
+          </div>
+          <p class="mt-3 small">© 2025 MyHosp. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Socket.IO -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  
+  <!-- Asistente de voz -->
+  <script type="module" src="./js/ViewModels/assistant.js"></script>
+</body>
+
 </html>

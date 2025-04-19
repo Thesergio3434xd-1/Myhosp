@@ -1,29 +1,38 @@
-// Ahora WelcomeView no muestra nada, ya que se ha eliminado el mensaje en pantalla
 class WelcomeView {
-    constructor() {
+    constructor(parent, navigationViewModel) {
+        this.parent = parent;
+        this.navigationViewModel = navigationViewModel;
         this.element = null;
     }
 
-    create() {
+    initialize() {
         this.element = document.createElement('div');
-        this.element.className = 'welcome-message';
-        this.element.innerHTML = ``;
-        return this.element;
+        this.element.className = 'welcome-view';
+        this.render();
+        this.parent.appendChild(this.element);
+        
+        // Eventos
+        this.element.querySelector('.start-button').addEventListener('click', () => {
+            this.navigationViewModel.navigateTo('listening');
+        });
+    }
+
+    render() {
+        this.element.innerHTML = `
+            <h1>Bienvenido a MyHosp</h1>
+            <p>Tu asistente hospitalario por voz</p>
+            <button class="start-button">Comenzar</button>
+        `;
     }
 
     show() {
-        document.body.appendChild(this.create());
-        setTimeout(() => { this.hide(); }, 1000);
+        if (this.element) this.element.style.display = 'block';
     }
 
     hide() {
-        if (this.element) {
-            this.element.classList.add('fade-out');
-            setTimeout(() => {
-                this.element.remove();
-            }, 500);
-        }
+        if (this.element) this.element.style.display = 'none';
     }
 }
 
-export default WelcomeView;
+// Eliminar la exportación por defecto
+// export default WelcomeView;
