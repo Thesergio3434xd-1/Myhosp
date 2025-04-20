@@ -10,9 +10,10 @@ class Assistant {
     this.speechSynthesis = window.speechSynthesis;
     this.activationRecognition = null;
     this.isActivationListening = false;
-    // Temporizador de inactividad (30 segundos)
+    // Temporizador de inactividad (1 min)
     this.inactivityTimer = null;
-    this.inactivityTimeout = 30000;
+    this.inactivityTimeout = 60000;
+    this.isSpeaking = false; // Nueva propiedad para rastrear cuando Ana está hablando
 
     this.initialize();
   }
@@ -313,7 +314,8 @@ class Assistant {
   }
 
   startListening() {
-    if (this.recognition && !this.isListening) {
+    // Solo iniciar reconocimiento si Ana NO está hablando
+    if (this.recognition && !this.isListening && !this.isSpeaking) {
       try {
         this.recognition.start();
       } catch (error) {
@@ -350,6 +352,12 @@ class Assistant {
 
   processCommand(command) {
     console.log('Procesando comando:', command);
+
+    // Ignorar comandos mientras Ana está hablando
+    if (this.isSpeaking) {
+      console.log('Ignorando comando mientras Ana está hablando');
+      return;
+    }
 
     // Reiniciar el temporizador de inactividad al recibir un comando
     this.resetInactivityTimer();
@@ -550,6 +558,14 @@ class Assistant {
         }
 
         utterance.onstart = () => {
+          // Marcar que Ana está hablando
+          this.isSpeaking = true;
+          
+          // Detener el reconocimiento de voz mientras Ana habla
+          if (this.isListening) {
+            this.stopListening();
+          }
+          
           // Mostrar el botón de silenciar cuando Ana está hablando
           if (this.muteButton) {
             this.muteButton.style.display = 'flex';
@@ -566,6 +582,9 @@ class Assistant {
         };
 
         utterance.onend = () => {
+          // Ya no está hablando
+          this.isSpeaking = false;
+          
           // Ocultar el botón de silenciar cuando Ana termina de hablar
           if (this.muteButton) {
             this.muteButton.style.display = 'none';
@@ -579,6 +598,8 @@ class Assistant {
           setTimeout(() => {
             if (this.isActivated) {
               this.updateUI(true, 'Escuchando...', true);
+              // Reiniciar escucha automáticamente después de que Ana termine de hablar
+              this.startListening();
             } else if (!isWelcome) {
               this.updateUI(false, '', false);
             }

@@ -135,7 +135,7 @@ function processCommand(command) {
     },
     'beneficios': {
       section: 'beneficios', target: '#beneficios',
-      aliases: ['ventajas', 'beneficio']
+      aliases: ['ventajas', 'beneficio', 'ventaja', 'provecho', 'utilidad']
     }
   };
 

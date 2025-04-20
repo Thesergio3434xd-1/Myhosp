@@ -1,16 +1,30 @@
 class SocketService {
     constructor(io) {
         this.io = io;
-        // El CommandController no se está utilizando en el servidor actual
-        // Se podría simplificar esta clase
     }
 
     initialize() {
-        // Esta implementación no se está utilizando 
-        // El manejo real de los sockets está directamente en server.js
         this.io.on('connection', (socket) => {
             console.log('Socket conectado');
-            // Implementar funcionalidad realmente necesaria aquí
+            
+            // Manejar comandos de voz
+            socket.on('voiceCommand', (command) => {
+                console.log('Comando recibido:', command);
+                
+                // Procesar comandos específicos para beneficios
+                if (command.toLowerCase().includes('beneficios')) {
+                    socket.emit('voiceResponse', {
+                        text: 'Te llevo a la sección de beneficios',
+                        action: 'navigate',
+                        target: '#beneficios'
+                    });
+                }
+            });
+            
+            // Manejar desconexión
+            socket.on('disconnect', () => {
+                console.log('Socket desconectado');
+            });
         });
     }
 }
