@@ -4,21 +4,319 @@ class Assistant {
     this.micButton = document.getElementById('micButton');
     this.micIcon = document.getElementById('micIcon');
     this.assistantStatus = document.getElementById('assistantStatus');
+    this.anaAssistant = document.getElementById('ana-assistant');
     this.recognition = null;
     this.isListening = false;
     this.isActivated = false;
+    this.isSuspended = false; // Nuevo estado para suspensión temporal
     this.speechSynthesis = window.speechSynthesis;
     this.activationRecognition = null;
     this.isActivationListening = false;
-    // Temporizador de inactividad (1 min)
+    // Temporizador de inactividad (3 min)
     this.inactivityTimer = null;
-    this.inactivityTimeout = 60000;
-    this.isSpeaking = false; // Nueva propiedad para rastrear cuando Ana está hablando
+    this.inactivityTimeout = 180000;
+    this.isSpeaking = false; // Propiedad para rastrear cuando Ana está hablando
+    
+    // Identificar el tipo de página en la que estamos
+    this.pageType = this.detectPageType();
 
-    this.initialize();
+    // Sistema dual de almacenamiento (localStorage/cookies)
+    this.globalAnaEnabled = this.getValue('anaEnabled') === 'true';
+    
+    // Crear div de notificación en el DOM si estamos en index.html
+    if (this.pageType === 'main' && !document.getElementById('assistant-notification-container')) {
+      this.createNotificationContainer();
+    }
+
+    // Si Ana está explícitamente deshabilitada, iniciar en modo deshabilitado
+    if (this.getValue('anaEnabled') === 'false') {
+      this.initializeDisabled();
+      return;
+    }
+
+    // Si aún no se ha mostrado el diálogo de consentimiento y estamos en la página principal,
+    // mostrar el diálogo si existe, o inicializar normalmente si no
+    if (this.pageType === 'main' && this.getValue('anaConsentShown') !== 'true' && document.getElementById('ana-consent-modal')) {
+      // El diálogo se mostrará por sí mismo mediante ana-consent.js
+      console.log('Esperando decisión del usuario en el diálogo de consentimiento');
+    } else {
+      // Inicializar según el estado global
+      if (this.globalAnaEnabled) {
+        this.initialize(); // Inicializar normalmente
+      } else {
+        this.initializeDisabled(); // Inicializar en modo deshabilitado
+      }
+    }
+  }
+
+  // Métodos de almacenamiento dual (localStorage/cookies)
+  // Intentar usar localStorage primero, luego cookies como respaldo
+  isLocalStorageAvailable() {
+    try {
+      const testKey = "__test_storage__";
+      localStorage.setItem(testKey, testKey);
+      localStorage.removeItem(testKey);
+      return true;
+    } catch (e) {
+      console.error('localStorage no disponible:', e);
+      return false;
+    }
+  }
+
+  // Guardar un valor en localStorage o cookies
+  saveValue(key, value) {
+    try {
+      if (this.isLocalStorageAvailable()) {
+        localStorage.setItem(key, value);
+      } else {
+        this.setCookie(key, value, 30); // 30 días
+      }
+      return true;
+    } catch (e) {
+      console.error('Error al guardar valor:', e);
+      return false;
+    }
+  }
+
+  // Obtener un valor de localStorage o cookies
+  getValue(key, defaultValue = null) {
+    try {
+      if (this.isLocalStorageAvailable()) {
+        return localStorage.getItem(key);
+      } else {
+        return this.getCookie(key);
+      }
+    } catch (e) {
+      console.error('Error al obtener valor:', e);
+      return defaultValue;
+    }
+  }
+
+  // Función para establecer cookies
+  setCookie(name, value, days) {
+    let expires = '';
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = name + '=' + (value || '') + expires + '; path=/';
+  }
+
+  // Función para leer cookies
+  getCookie(name) {
+    const nameEQ = name + '=';
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
+  // Método para crear el contenedor de notificaciones
+  createNotificationContainer() {
+    const container = document.createElement('div');
+    container.id = 'assistant-notification-container';
+    container.style.position = 'fixed';
+    container.style.top = '20px';
+    container.style.right = '20px';
+    container.style.zIndex = '10002';
+    document.body.appendChild(container);
+  }
+
+  // Comprobar si el usuario ya ha dado consentimiento para Ana
+  checkAnaConsent() {
+    return this.getValue('anaEnabled') === 'true';
+  }
+
+  // Mostrar diálogo de consentimiento para Ana
+  showAnaConsentDialog() {
+    const consentModal = document.getElementById('ana-consent-modal');
+    if (!consentModal) return;
+
+    // Configurar listeners para los botones del diálogo
+    const enableButton = document.getElementById('enableAna');
+    const disableButton = document.getElementById('disableAna');
+
+    if (enableButton) {
+      enableButton.addEventListener('click', () => {
+        this.saveValue('anaEnabled', 'true');
+        
+        // Ocultar el modal con animación
+        const modalContent = consentModal.querySelector('.ana-consent-modal');
+        modalContent.classList.add('hide');
+        
+        setTimeout(() => {
+          consentModal.style.display = 'none';
+          // Inicializar el asistente tras aceptar
+          this.initialize();
+          // Mostrar notificación de activación
+          this.showNotification('Asistente de voz activado', 'success', 'fa-check-circle');
+        }, 300);
+      });
+    }
+
+    if (disableButton) {
+      disableButton.addEventListener('click', () => {
+        this.saveValue('anaEnabled', 'false');
+        
+        // Ocultar el modal con animación
+        const modalContent = consentModal.querySelector('.ana-consent-modal');
+        modalContent.classList.add('hide');
+        
+        setTimeout(() => {
+          consentModal.style.display = 'none';
+          // Inicializar, pero deshabilitar funcionalidad
+          this.initializeDisabled();
+          // Mostrar notificación de desactivación
+          this.showNotification('Asistente de voz desactivado', 'info', 'fa-info-circle');
+        }, 300);
+      });
+    }
+  }
+
+  // Método para mostrar notificaciones
+  showNotification(message, type = 'info', icon = 'fa-info-circle') {
+    // Verificar si estamos en index.html
+    if (this.pageType !== 'main') return;
+    
+    // Remover notificaciones anteriores si existen
+    const oldNotification = document.querySelector('.assistant-notification');
+    if (oldNotification) {
+      oldNotification.remove();
+    }
+    
+    // Crear nueva notificación
+    const notification = document.createElement('div');
+    notification.className = `assistant-notification ${type}`;
+    notification.innerHTML = `
+      <i class="fas ${icon}"></i>
+      <span>${message}</span>
+    `;
+    
+    // Añadir al contenedor o al body si no existe el contenedor
+    const container = document.getElementById('assistant-notification-container') || document.body;
+    container.appendChild(notification);
+    
+    // Forzar un reflow para que la animación funcione correctamente
+    notification.offsetHeight;
+    
+    // Mostrar con animación
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 10);
+    
+    // Ocultar automáticamente después de 3 segundos
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
+      }, 300);
+    }, 3000);
+  }
+
+  // Nuevo método para inicializar Ana en modo deshabilitado (visible pero sin funcionalidad)
+  initializeDisabled() {
+    if (this.anaAssistant) {
+      // Aplicar estilo deshabilitado pero mantener visible
+      this.anaAssistant.classList.add('disabled');
+      
+      // Aplicar estilos al icono para que se vea gris
+      if (this.micIcon) {
+        this.micIcon.classList.add('disabled');
+      }
+      
+      this.updateUI(false, 'Asistente deshabilitado', false);
+      
+      // Añadir listener para reactivar si el usuario cambia de opinión
+      this.micButton.addEventListener('click', () => {
+        this.showReactivationDialog();
+      });
+    }
+  }
+  
+  // Diálogo para reactivar a Ana si el usuario la deshabilitó previamente
+  showReactivationDialog() {
+    // Comprobar si ya hay un diálogo de reactivación
+    let reactivationDialog = document.getElementById('ana-reactivation-dialog');
+    
+    // Si no existe, crearlo
+    if (!reactivationDialog) {
+      reactivationDialog = document.createElement('div');
+      reactivationDialog.id = 'ana-reactivation-dialog';
+      reactivationDialog.className = 'ana-reactivation-dialog';
+      reactivationDialog.innerHTML = `
+        <div class="reactivation-content">
+          <p>¿Deseas activar el asistente de voz Ana?</p>
+          <div class="reactivation-buttons">
+            <button id="enableAnaReactivate" class="btn btn-primary-custom btn-sm">Sí, activar</button>
+            <button id="cancelReactivate" class="btn btn-outline-secondary btn-sm">No</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(reactivationDialog);
+      
+      // Eventos para los botones
+      document.getElementById('enableAnaReactivate').addEventListener('click', () => {
+        this.saveValue('anaEnabled', 'true');
+        this.anaAssistant.classList.remove('disabled');
+        if (this.micIcon) {
+          this.micIcon.classList.remove('disabled');
+        }
+        reactivationDialog.remove();
+        this.initialize();
+        
+        // Mostrar notificación de activación
+        this.showNotification('Asistente de voz activado', 'success', 'fa-check-circle');
+      });
+      
+      document.getElementById('cancelReactivate').addEventListener('click', () => {
+        reactivationDialog.remove();
+      });
+      
+      // Auto-ocultar después de un tiempo
+      setTimeout(() => {
+        if (document.body.contains(reactivationDialog)) {
+          reactivationDialog.remove();
+        }
+      }, 5000);
+    }
+  }
+
+  // Detectar el tipo de página en la que se encuentra el asistente
+  detectPageType() {
+    const currentPath = window.location.pathname.toLowerCase();
+    
+    if (currentPath.includes('login.html')) {
+      return 'login';
+    } else if (currentPath.includes('registro.html')) {
+      return 'register';
+    } else if (currentPath.includes('index.html') || currentPath.endsWith('/') || currentPath.endsWith('/public/')) {
+      return 'main'; // Página principal (index.html o ruta raíz)
+    } else {
+      return 'other'; // Otras páginas
+    }
   }
 
   initialize() {
+    // Si Ana está deshabilitada, inicializarla en modo deshabilitado
+    if (this.getValue('anaEnabled') === 'false') {
+      this.initializeDisabled();
+      return;
+    }
+    
+    // Si está habilitada, quitar cualquier clase de deshabilitado
+    if (this.anaAssistant) {
+      this.anaAssistant.classList.remove('disabled');
+      if (this.micIcon) {
+        this.micIcon.classList.remove('disabled');
+      }
+    }
+    
     this.setupSpeechRecognition();
     this.setupActivationRecognition();
     this.setupEventListeners();
@@ -138,8 +436,26 @@ class Assistant {
     }
 
     this.isActivated = true;
-    this.updateUI(true, '¿A dónde quieres ir? (Inicio, Funcionalidades, Testimonios, Contacto)', true);
-    this.speak('En qué te puedo ayudar. Puedo llevarte a Inicio, Funcionalidades, Testimonios o Contacto.');
+    
+    // Mensajes específicos según la página
+    let welcomeMessage = '';
+    
+    switch (this.pageType) {
+      case 'login':
+        welcomeMessage = '¿En qué puedo ayudarte? Puedo asistirte con el inicio de sesión o llevarte a la página de registro si aún no tienes cuenta.';
+        this.updateUI(true, '¿Necesitas ayuda para iniciar sesión?', true);
+        break;
+      case 'register':
+        welcomeMessage = '¿En qué puedo ayudarte? Puedo asistirte con el registro o llevarte a la página de inicio de sesión si ya tienes cuenta.';
+        this.updateUI(true, '¿Necesitas ayuda para crear tu cuenta?', true);
+        break;
+      default:
+        welcomeMessage = 'En qué te puedo ayudar. Puedo llevarte a Inicio, Funcionalidades, Testimonios o Contacto.';
+        this.updateUI(true, '¿A dónde quieres ir? (Inicio, Funcionalidades, Testimonios, Contacto)', true);
+        break;
+    }
+    
+    this.speak(welcomeMessage);
 
     // Iniciar el temporizador de inactividad
     this.startInactivityTimer();
@@ -173,10 +489,82 @@ class Assistant {
     if (this.speechSynthesis.speaking) {
       this.speechSynthesis.cancel();
     }
+    
+    // Marcar visualmente como desactivado y cambiar el icono a gris
+    if (this.anaAssistant) {
+      this.anaAssistant.classList.add('disabled');
+      
+      if (this.micIcon) {
+        this.micIcon.classList.add('disabled');
+      }
+      
+      // Solo en la landing page mostramos la notificación de desactivación
+      // y usamos forzosamente el contenedor de notificaciones que creamos
+      if (this.pageType === 'main') {
+        this.saveValue('anaEnabled', 'false');
+        
+        const notificationContainer = document.getElementById('assistant-notification-container');
+        if (notificationContainer) {
+          // Primero, limpiamos cualquier notificación previa
+          notificationContainer.innerHTML = '';
+          
+          // Crear notificación directamente en el contenedor específico
+          const notification = document.createElement('div');
+          notification.className = 'assistant-notification info';
+          notification.innerHTML = `
+            <i class="fas fa-microphone-slash"></i>
+            <span>Asistente de voz desactivado</span>
+          `;
+          
+          notificationContainer.appendChild(notification);
+          
+          // Forzar un reflow para asegurar que la animación funcione
+          notification.offsetHeight;
+          
+          // Mostrar con animación
+          setTimeout(() => {
+            notification.classList.add('show');
+          }, 10);
+          
+          // Ocultar automáticamente después de 3 segundos
+          setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+              if (notification.parentNode) {
+                notification.remove();
+              }
+            }, 300);
+          }, 3000);
+        }
+      }
+    }
 
     this.speak(speechText);
 
     // Reiniciar la escucha para activación
+    setTimeout(() => {
+      this.startActivationListening();
+    }, 1000);
+  }
+
+  // Nuevo método para suspender temporalmente el asistente
+  suspendAssistant() {
+    console.log('Suspendiendo temporalmente el asistente...');
+    
+    // Detener la escucha activa
+    this.stopListening();
+    
+    // Marcar como suspendido pero no desactivado
+    this.isSuspended = true;
+    this.isActivated = false;
+    
+    // Actualizar la interfaz para mostrar estado suspendido
+    this.updateUI(false, 'En espera. Di "Ana" para reactivarme', false);
+    
+    // No cambiar el estilo visual (no aplicar gris)
+    // El asistente se mantiene con su apariencia normal pero en pausa
+    
+    // Reiniciar la escucha para activación después de un momento
     setTimeout(() => {
       this.startActivationListening();
     }, 1000);
@@ -267,8 +655,20 @@ class Assistant {
 
   welcomeUser() {
     setTimeout(() => {
-      // Mensaje de bienvenida mejorado que incluye instrucciones de uso
-      const welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono, y para desactivarme di "Para Ana" o "apágate". Puedo ayudarte a navegar diciendo "llévame a funcionalidades" o "muéstrame testimonios". También puedo leer el contenido de cualquier sección diciendo "lee sección inicio" o "léeme testimonios".';
+      // Mensaje de bienvenida adaptado según el tipo de página
+      let welcomeMessage = '';
+      
+      switch (this.pageType) {
+        case 'login':
+          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono. Puedo ayudarte a iniciar sesión, recuperar tu contraseña o llevarte a la página de registro si aún no tienes cuenta.';
+          break;
+        case 'register':
+          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono. Puedo ayudarte a completar el formulario de registro o llevarte a la página de inicio de sesión si ya tienes cuenta.';
+          break;
+        default:
+          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono, y para desactivarme di "Para Ana" o "apágate". Puedo ayudarte a navegar diciendo "llévame a funcionalidades" o "muéstrame testimonios". También puedo leer el contenido de cualquier sección diciendo "lee sección inicio" o "léeme testimonios".';
+          break;
+      }
 
       // Mostrar el mensaje completo en el estado del asistente
       this.assistantStatus.textContent = welcomeMessage;
@@ -362,15 +762,44 @@ class Assistant {
     // Reiniciar el temporizador de inactividad al recibir un comando
     this.resetInactivityTimer();
 
-    // Comprobar comandos de apagado primero - aseguramos reconocer todas las variantes
-    if (command.includes('para ana') || command.includes('apágate') ||
-      command.includes('adiós ana') || command.includes('adios ana') ||
-      command.includes('hasta luego ana') || command.includes('desactivate')) {
-      console.log('Comando de apagado detectado:', command);
+    // Distinguir entre comandos de suspensión y desactivación
+    if (command.toLowerCase().includes('desactivate')) {
+      console.log('Comando de desactivación completa detectado');
+      // Enviar al servidor para obtener respuesta adecuada
+      this.socket.emit('voiceCommand', command);
+      // Desactivar completamente y cambiar a gris
       this.deactivateAssistant();
+      return;
+    } else if (command.toLowerCase().includes('para ana') || 
+              command.toLowerCase().includes('apágate') || 
+              command.toLowerCase().includes('suspend') ||
+              command.toLowerCase().includes('adiós ana') || 
+              command.toLowerCase().includes('adios ana') ||
+              command.toLowerCase().includes('hasta luego ana')) {
+      console.log('Comando de suspensión temporal detectado');
+      // Enviar al servidor para obtener respuesta adecuada
+      this.socket.emit('voiceCommand', command);
+      // Solo suspender temporalmente (no cambia a gris, espera activación)
+      this.suspendAssistant();
       return;
     }
 
+    // Comandos específicos según la página
+    switch (this.pageType) {
+      case 'login':
+        if (this.processLoginCommands(command)) {
+          return; // Si se procesó un comando específico de login, terminamos
+        }
+        break;
+      case 'register':
+        if (this.processRegisterCommands(command)) {
+          return; // Si se procesó un comando específico de registro, terminamos
+        }
+        break;
+    }
+
+    // Si llegamos aquí, procesamos comandos genéricos o navegación
+    
     // Mejorar la detección de comandos de lectura
     if (command.includes('lee sección') || command.includes('léeme') ||
       command.includes('leer') || command.includes('leer contenido') ||
@@ -494,6 +923,96 @@ class Assistant {
     } else {
       this.socket.emit('voiceCommand', command);
     }
+  }
+
+  // Nuevo método para procesar comandos específicos de la página de login
+  processLoginCommands(command) {
+    // Comando para ayuda con el formulario de login
+    if (command.includes('ayuda') || command.includes('qué debo hacer') || 
+        command.includes('cómo inicio') || command.includes('cómo puedo iniciar')) {
+      this.speak('Para iniciar sesión, debes ingresar tu correo electrónico y contraseña. Si olvidaste tu contraseña, puedes usar el enlace de recuperación debajo del formulario.');
+      return true;
+    }
+    
+    // Comando para recuperar contraseña
+    if (command.includes('contraseña') && 
+        (command.includes('olvidé') || command.includes('olvidada') || command.includes('recuperar') || command.includes('restablecer'))) {
+      this.speak('Para recuperar tu contraseña, haz clic en el enlace "¿Olvidaste tu contraseña?" debajo del formulario.');
+      
+      // Resaltar el enlace visualmente
+      const forgotPasswordLink = document.querySelector('.forgot-password');
+      if (forgotPasswordLink) {
+        forgotPasswordLink.classList.add('highlight-section');
+        setTimeout(() => {
+          forgotPasswordLink.classList.remove('highlight-section');
+        }, 3000);
+      }
+      return true;
+    }
+    
+    // Comando para ir a registro
+    if (command.includes('registrar') || command.includes('crear cuenta') || command.includes('registro') ||
+        command.includes('no tengo cuenta')) {
+      this.speak('Te llevaré a la página de registro para crear una nueva cuenta.');
+      setTimeout(() => {
+        window.location.href = 'registro.html';
+      }, 1500);
+      return true;
+    }
+    
+    // Comando para completar el formulario (simulación)
+    if (command.includes('completa') || command.includes('llena') || command.includes('rellena') || 
+        (command.includes('formulario') && command.includes('ejemplo'))) {
+      this.speak('Voy a completar el formulario con datos de ejemplo para demostrarte cómo funciona.');
+      // Esto es solo demostrativo, en producción probablemente no se implementaría
+      document.getElementById('email').value = 'usuario@ejemplo.com';
+      document.getElementById('password').value = 'Contraseña123';
+      return true;
+    }
+    
+    return false; // No se procesó ningún comando específico
+  }
+
+  // Nuevo método para procesar comandos específicos de la página de registro
+  processRegisterCommands(command) {
+    // Comando para ayuda con el formulario de registro
+    if (command.includes('ayuda') || command.includes('qué debo hacer') || 
+        command.includes('cómo me registro') || command.includes('cómo crear cuenta')) {
+      this.speak('Para registrarte, debes completar todos los campos del formulario con tu nombre, apellido, correo electrónico y una contraseña segura. Luego acepta los términos y condiciones y haz clic en el botón Crear cuenta.');
+      return true;
+    }
+    
+    // Comando para explicar requisitos de contraseña
+    if ((command.includes('contraseña') || command.includes('clave')) && 
+        (command.includes('requisitos') || command.includes('cómo debe ser') || command.includes('segura'))) {
+      this.speak('Tu contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número. Esto es importante para la seguridad de tu cuenta.');
+      return true;
+    }
+    
+    // Comando para ir a login
+    if (command.includes('iniciar sesión') || command.includes('ya tengo cuenta') || command.includes('login')) {
+      this.speak('Te llevaré a la página de inicio de sesión.');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1500);
+      return true;
+    }
+    
+    // Comando para términos y condiciones
+    if (command.includes('términos') || command.includes('condiciones')) {
+      this.speak('Los términos y condiciones describen tus derechos y responsabilidades al usar nuestra plataforma. Es importante que los leas antes de registrarte.');
+      // Resaltar el enlace de términos
+      const termsLink = document.querySelector('.term-link');
+      if (termsLink) {
+        termsLink.classList.add('highlight-section');
+        setTimeout(() => {
+          termsLink.classList.remove('highlight-section');
+        }, 3000);
+      }
+      return true;
+    }
+    
+    return false; // No se procesó ningún comando específico
   }
 
   // Nuevo método para extraer texto legible de una sección

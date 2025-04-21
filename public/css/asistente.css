@@ -80,6 +80,11 @@ body {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8) !important;
 }
 
+/* Estilo para el micrófono desactivado (gris) */
+#micIcon.disabled {
+    color: #aaaaaa !important;
+}
+
 /* Asistente de voz Ana */
 .voice-assistant {
     position: fixed;
@@ -89,6 +94,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* Ocultar el asistente cuando está deshabilitado */
+.voice-assistant.hidden {
+    display: none;
+}
+
+/* Estilo para el asistente desactivado */
+.voice-assistant.disabled .mic-button {
+    background-color: #aaaaaa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mic-button {
@@ -140,4 +156,188 @@ body {
     0% { outline-color: rgba(59, 154, 184, 0.9); outline-offset: -3px; }
     50% { outline-color: rgba(59, 154, 184, 0.6); outline-offset: 3px; }
     100% { outline-color: rgba(59, 154, 184, 0); outline-offset: 0; }
+}
+
+/* Estilos específicos para el asistente en las páginas de autenticación */
+.auth-container .voice-assistant {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 10000;
+}
+
+/* Mensajes con estilos específicos por contexto */
+.login-assistant-message {
+    border-color: #3B9AB8 !important;
+    background-color: rgba(59, 154, 184, 0.05) !important;
+}
+
+.register-assistant-message {
+    border-color: #4CAF50 !important;
+    background-color: rgba(76, 175, 80, 0.05) !important;
+}
+
+/* Animación para destacar campos o elementos que Ana menciona */
+@keyframes field-highlight {
+    0% { border-color: rgba(59, 154, 184, 0.9); box-shadow: 0 0 10px rgba(59, 154, 184, 0.5); }
+    50% { border-color: rgba(59, 154, 184, 0.6); box-shadow: 0 0 15px rgba(59, 154, 184, 0.7); }
+    100% { border-color: rgba(59, 154, 184, 0); box-shadow: 0 0 0 rgba(59, 154, 184, 0); }
+}
+
+.highlight-field {
+    animation: field-highlight 2s ease-out;
+}
+
+/* Estilos para enlaces destacados por Ana */
+.term-link.highlight-section,
+.forgot-password.highlight-section {
+    color: #3B9AB8;
+    font-weight: bold;
+    text-decoration: underline;
+    animation: pulse 1.5s infinite;
+}
+
+/* Notificación de consentimiento para Ana */
+.ana-consent-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+}
+
+.ana-consent-modal {
+    background-color: white;
+    border-radius: 10px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: modal-in 0.3s ease-out forwards;
+}
+
+@keyframes modal-in {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.ana-consent-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ana-consent-header i {
+    font-size: 24px;
+    color: #3B9AB8;
+}
+
+.ana-consent-header h3 {
+    margin: 0;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.ana-consent-body {
+    padding: 20px;
+}
+
+.ana-consent-footer {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #e9ecef;
+}
+
+.ana-consent-modal.hide {
+    animation: modal-out 0.3s ease-in forwards;
+}
+
+@keyframes modal-out {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0; }
+}
+
+/* Estilos para la notificación de asistente */
+.assistant-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    max-width: 300px;
+}
+
+.assistant-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.assistant-notification.success {
+    border-left: 4px solid #4CAF50;
+}
+
+.assistant-notification.info {
+    border-left: 4px solid #3B9AB8;
+}
+
+.assistant-notification i {
+    font-size: 18px;
+}
+
+.assistant-notification.success i {
+    color: #4CAF50;
+}
+
+.assistant-notification.info i {
+    color: #3B9AB8;
+}
+
+/* Estilos para el diálogo de activación */
+.ana-reactivation-dialog {
+    position: fixed;
+    bottom: 95px;
+    right: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    z-index: 10001;
+    max-width: 250px;
+    animation: popup 0.3s ease-out forwards;
+}
+
+@keyframes popup {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.reactivation-content {
+    text-align: center;
+}
+
+.reactivation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
 }

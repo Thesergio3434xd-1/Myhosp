@@ -15,9 +15,34 @@
   <link rel="stylesheet" href="./css/style.css" />
   <!-- Estilos específicos para el asistente -->
   <link rel="stylesheet" href="./css/asistente.css" />
+  <style>
+    /* Estilo para la animación de desvanecimiento del modal */
+    .ana-consent-overlay.hiding {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Notificación para habilitar/deshabilitar a Ana -->
+  <div id="ana-consent-modal" class="ana-consent-overlay">
+    <div class="ana-consent-modal">
+      <div class="ana-consent-header">
+        <i class="fas fa-robot text-primary-custom"></i>
+        <h3>Asistente Virtual Ana</h3>
+      </div>
+      <div class="ana-consent-body">
+        <p>¡Bienvenido a MyHosp! Ana es nuestro asistente virtual que te puede ayudar a navegar por el sitio usando comandos de voz.</p>
+        <p>¿Deseas habilitar a Ana durante tu recorrido por la página?</p>
+      </div>
+      <div class="ana-consent-footer">
+        <button id="enableAna" class="btn btn-primary-custom">Sí, habilitar a Ana</button>
+        <button id="disableAna" class="btn btn-outline-secondary">No, gracias</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Asistente de voz Ana -->
   <div id="ana-assistant" class="voice-assistant">
     <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
@@ -44,7 +69,7 @@
           <li class="nav-item"><a class="nav-link" href="#testimonios">Testimonios</a></li>
           <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
         </ul>
-        <a href="#" class="btn btn-light btn-login">
+        <a href="login.html" class="btn btn-light btn-login">
           <i class="fas fa-user-circle me-2"></i>Ingresar
         </a>
       </div>
@@ -403,6 +428,12 @@
   
   <!-- Socket.IO -->
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  
+  <!-- Script de notificación inicial para el asistente -->
+  <script src="./js/activation-prompt.js"></script>
+  
+  <!-- Script de consentimiento para Ana -->
+  <script src="./js/ana-consent.js"></script>
   
   <!-- Asistente de voz -->
   <script type="module" src="./js/ViewModels/assistant.js"></script>

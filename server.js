@@ -5,18 +5,25 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 
-// Importar solo el servicio de Socket que realmente se utiliza
-let SocketService;
+// Importar servicios
+let SocketService, AuthService;
 try {
   SocketService = require('./server/services/SocketService');
-  console.log('Servicio de Socket cargado correctamente');
+  AuthService = require('./server/services/AuthService');
+  console.log('Servicios cargados correctamente');
 } catch (error) {
-  console.error('Error al cargar el servicio de Socket:', error.message);
-  // Definir clase mock simplificada
+  console.error('Error al cargar servicios:', error.message);
+  // Definir clases mock simplificadas
   SocketService = class {
     constructor() { }
     initialize() {
       console.log('Mock SocketService inicializado');
+    }
+  };
+  AuthService = class {
+    constructor() { }
+    initialize() {
+      console.log('Mock AuthService inicializado');
     }
   };
 }
@@ -46,26 +53,35 @@ if (fs.existsSync(indexPath)) {
   console.error('Archivo index.html no encontrado en:', indexPath);
 }
 
-// Inicializar el servicio de sockets
+// Inicializar los servicios
 try {
+  // Inicializar servicio de sockets
   const socketService = new SocketService(io);
   socketService.initialize();
   console.log('Servicio de sockets inicializado');
+  
+  // Inicializar servicio de autenticación
+  const authService = new AuthService(io);
+  authService.initialize();
+  console.log('Servicio de autenticación inicializado');
 } catch (error) {
-  console.error('Error al inicializar el servicio de sockets:', error);
+  console.error('Error al inicializar servicios:', error);
 }
 
-// Ruta principal
+// Rutas principales
 app.get('/', (req, res) => {
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-    console.log('Solicitud a la ruta principal recibida');
-  } else {
-    res.status(404).send('Archivo index.html no encontrado');
-  }
+  res.sendFile(indexPath);
 });
 
-// Endpoint de prueba básico (mantenido por ser útil para verificación rápida)
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+app.get('/registro', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'registro.html'));
+});
+
+// Endpoint de prueba básico
 app.get('/test', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando correctamente' });
 });
@@ -77,18 +93,26 @@ io.on('connection', (socket) => {
   socket.on('voiceCommand', (command) => {
     console.log('Comando recibido:', command);
 
-    // Si recibimos un comando de desactivación, respondemos inmediatamente
-    if (command.toLowerCase().includes('adios ana') ||
-      command.toLowerCase().includes('adiós ana') ||
-      command.toLowerCase().includes('apágate') ||
-      command.toLowerCase().includes('para ana') ||
-      command.toLowerCase().includes('hasta luego ana') ||
-      command.toLowerCase().includes('desactivate')) {
-
-      console.log('Comando de apagado detectado en el servidor');
+    // Separar entre comandos de suspensión temporal y desactivación completa
+    if (command.toLowerCase().includes('desactivate')) {
+      // Comando de desactivación completa
+      console.log('Comando de desactivación completa detectado');
       socket.emit('voiceResponse', {
-        text: 'Hasta pronto. Me apago.',
-        action: 'speak'
+        text: 'Entendido. Me desactivo completamente.',
+        action: 'deactivate'
+      });
+      return;
+    } else if (command.toLowerCase().includes('para ana') || 
+              command.toLowerCase().includes('apágate') || 
+              command.toLowerCase().includes('suspend') ||
+              command.toLowerCase().includes('adiós ana') || 
+              command.toLowerCase().includes('adios ana') ||
+              command.toLowerCase().includes('hasta luego ana')) {
+      // Comando de suspensión temporal
+      console.log('Comando de suspensión temporal detectado');
+      socket.emit('voiceResponse', {
+        text: 'Entendido. Estaré aquí esperando cuando me necesites.',
+        action: 'suspend'
       });
       return;
     }
@@ -138,6 +162,32 @@ function processCommand(command) {
       aliases: ['ventajas', 'beneficio', 'ventaja', 'provecho', 'utilidad']
     }
   };
+
+  // Manejar navegación entre páginas
+  if (command.includes('login') || command.includes('iniciar sesión') || command.includes('entrar')) {
+    return {
+      text: 'Te llevo a la página de inicio de sesión',
+      action: 'navigatePage',
+      target: 'login.html'
+    };
+  }
+  
+  if (command.includes('registro') || command.includes('registrar') || command.includes('crear cuenta')) {
+    return {
+      text: 'Te llevo a la página de registro',
+      action: 'navigatePage',
+      target: 'registro.html'
+    };
+  }
+  
+  if ((command.includes('inicio') || command.includes('home') || command.includes('principal')) && 
+     (command.includes('volver') || command.includes('regresar') || command.includes('ir'))) {
+    return {
+      text: 'Volviendo a la página principal',
+      action: 'navigatePage',
+      target: 'index.html'
+    };
+  }
 
   // Verificar si alguna palabra clave o sus aliases están en el comando
   for (const [key, value] of Object.entries(navigationMap)) {
@@ -193,7 +243,7 @@ function processCommand(command) {
   // Respuestas a preguntas comunes
   if (command.includes('qué puedes hacer') || command.includes('ayuda') || command.includes('cómo funciona')) {
     return {
-      text: 'Puedo ayudarte a navegar por el sitio. Di por ejemplo "ir a inicio", "funcionalidades", "muéstrame los testimonios", "contáctanos" o "beneficios".',
+      text: 'Puedo ayudarte a navegar por el sitio. Di por ejemplo "ir a inicio", "funcionalidades", "muéstrame los testimonios", "contáctanos" o "ir a login".',
       action: 'speak'
     };
   } else if (command.includes('gracias') || command.includes('thank')) {
@@ -203,13 +253,13 @@ function processCommand(command) {
     };
   } else if (command.includes('hola') || command.includes('hey') || command.includes('saludos')) {
     return {
-      text: 'Hola, soy Ana. ¿En qué puedo ayudarte? Puedes pedirme que te muestre diferentes secciones del sitio.',
+      text: 'Hola, soy Ana. ¿En qué puedo ayudarte? Puedes pedirme que te muestre diferentes secciones del sitio o que te lleve a la página de inicio de sesión o registro.',
       action: 'speak'
     };
   } else {
     // Respuesta por defecto
     return {
-      text: 'No entendí tu comando. Puedo ayudarte a navegar si dices "inicio", "funcionalidades", "testimonios", "contacto" o "beneficios".',
+      text: 'No entendí tu comando. Puedo ayudarte a navegar si dices "inicio", "funcionalidades", "testimonios", "contacto", "beneficios", "ir a login" o "ir a registro".',
       action: 'speak'
     };
   }
