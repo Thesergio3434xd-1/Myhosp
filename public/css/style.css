@@ -715,10 +715,15 @@ footer p {
   font-weight: 700;
   font-size: 1.5rem;
   color: var(--white);
+  margin-left: -200px !important; /* Espacio a la izquierda fijo */
 }
 
 .navbar-brand:hover {
   color: var(--accent);
+}
+
+.navbar .navbar-nav {
+  margin-right: 10px !important; /* Espacio a la derecha fijo para los items */
 }
 
 .navbar .nav-link {
@@ -737,6 +742,7 @@ footer p {
   padding: 0.5rem 1.5rem;
   border-radius: 50px;
   transition: all 0.3s ease;
+  margin-right: -200px !important; /* Espacio a la derecha */
 }
 
 .btn-login:hover {
@@ -906,9 +912,9 @@ footer a:hover {
 
 /* Estilos para el logo en la navbar */
 .navbar-logo {
-    width: 70px; /* Aumentado a 60px para mayor visibilidad */
+    width: 60px; /* Tamaño aumentado */
     height: auto;
-    margin-right: 5px;
+    margin-right: 10px;
     transition: transform 0.3s ease;
 }
 

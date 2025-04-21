@@ -17,6 +17,76 @@
     <link rel="stylesheet" href="./css/auth.css" />
     <!-- Estilos del asistente -->
     <link rel="stylesheet" href="./css/asistente.css" />
+    <style>
+        /* Estilos específicos para mejorar la página de registro */
+        @media (max-width: 991px) {
+            .register .div {
+                flex-direction: column;
+            }
+            
+            .register .frame {
+                width: 100%;
+                height: 250px;
+            }
+            
+            .register .frame-2 {
+                width: 100%;
+                padding: 30px 20px;
+            }
+            
+            .myhosp-logo-container {
+                display: none; /* Ocultar en móviles */
+            }
+        }
+        
+        /* Estilos para mejorar el logo del registro */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .registro-logo {
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        /* Ajustes responsivos adicionales para registro */
+        @media (max-width: 768px) {
+            .register .div {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+            
+            .register .frame-2 {
+                padding: 20px;
+            }
+            
+            /* Ajustar campos para móviles */
+            .input, .ingrese-el-correo, .ingrese-su-numero-de, .frame-6 {
+                font-size: 16px; /* Textos más grandes en móvil para mejor legibilidad */
+            }
+            
+            /* Mejorar visualización del selector de país */
+            .frame-7 {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .text-wrapper-4 {
+                flex-shrink: 0;
+                width: auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -64,8 +134,8 @@
             <!-- Panel derecho con formulario -->
             <div class="frame-2">
                 <div class="frame-3">
-                    <div class="logo-container mb-3">
-                        <img src="./img/logo.png" alt="MyHosp Logo" class="registro-logo" width="100">
+                    <div class="logo-container">
+                        <img src="./img/logo.png" alt="MyHosp Logo" class="registro-logo">
                     </div>
                     <h1 class="text-wrapper">Registrarse</h1>
                     <p class="ya-tienes-una-cuenta">

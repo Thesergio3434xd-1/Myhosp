@@ -113,20 +113,7 @@
             color: white;
         }
         
-        .logo-icon {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
+        /* Se elimina el círculo del logo en la esquina inferior izquierda */
     </style>
 </head>
 
@@ -148,16 +135,16 @@
         <div id="assistantStatus" class="assistant-status"></div>
     </div>
 
-    <!-- Imagen de fondo a pantalla completa -->
+    <!-- Imagen de fondo a pantalla completa - Actualizada para usar DOCTOR.png -->
     <div class="fullscreen-bg">
-        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80" 
-             alt="Doctor con paciente en consulta médica">
+        <img src="./img/DOCTOR.png" 
+             alt="Equipo médico en hospital">
     </div>
 
     <!-- Formulario de login -->
     <div class="login-form-container">
         <div class="text-center mb-4">
-            <img src="./img/logo.png" alt="MyHosp Logo" class="mb-3" style="width: 120px;">
+            <img src="img/logo.png" alt="MyHosp Logo" class="mb-3" style="width: 120px;">
             <h2 class="fw-bold mb-0">Ingresar en MyHosp</h2>
         </div>
         
@@ -198,10 +185,6 @@
         <i class="fas fa-sign-out-alt"></i>
         <span>Salir</span>
     </a>
-    
-    <div class="logo-icon">
-        <img src="img/icon.svg" alt="MyHosp Icon" style="width: 30px; height: 30px;">
-    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -899,6 +899,78 @@ body {
   }
 }
 
+/* Estilos específicos para móviles en la página de registro */
+@media (max-width: 480px) {
+    .register .div {
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    /* Ajustes para el formulario */
+    .register .frame-2 {
+        padding: 15px;
+    }
+    
+    /* Mejorar la visualización del selector de teléfono */
+    .register .frame-7 {
+        flex-wrap: nowrap;
+    }
+    
+    .register .text-wrapper-4 {
+        padding: 12px 10px;
+        font-size: 14px;
+    }
+    
+    .register .icon-arrow-down {
+        margin-left: 2px;
+        margin-right: 8px;
+    }
+    
+    .register .ingrese-su-numero-de {
+        flex: 1;
+    }
+    
+    /* Mejorar la visualización de los campos de entrada */
+    .register .input,
+    .register .ingrese-el-correo,
+    .register .frame-6 {
+        height: 45px;
+    }
+    
+    /* Mejorar los botones en móvil */
+    .register .div-wrapper {
+        height: 50px;
+    }
+
+    /* Ajustes para el texto */
+    .register .text-wrapper {
+        font-size: 24px;
+    }
+    
+    .register .text-wrapper-3 {
+        font-size: 15px;
+    }
+}
+
+/* Fix para el bug visual del campo de teléfono */
+.register .frame-7 {
+    display: flex;
+    align-items: center;
+}
+
+.register .text-wrapper-4 {
+    white-space: nowrap;
+    border-right: 1px solid #ddd;
+}
+
+.register .vector {
+    display: none;
+}
+
+.register .ingrese-su-numero-de {
+    flex: 1;
+}
+
 @media (max-width: 992px) {
     .register .freepik-export {
         display: none;
