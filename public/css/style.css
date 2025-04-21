@@ -906,19 +906,20 @@ footer a:hover {
 
 /* Estilos para el logo en la navbar */
 .navbar-logo {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: white;
-    padding: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    margin-right: 8px;
+    width: 70px; /* Aumentado a 60px para mayor visibilidad */
+    height: auto;
+    margin-right: 5px;
     transition: transform 0.3s ease;
 }
 
 .navbar-brand:hover .navbar-logo {
     transform: scale(1.1);
+}
+
+/* Estilos para el logo en la página de registro */
+.registro-logo {
+    max-width: 100px;
+    height: auto;
 }
 
 /* Estilos para el logo en la página de registro */
