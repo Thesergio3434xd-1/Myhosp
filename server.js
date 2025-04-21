@@ -93,26 +93,27 @@ io.on('connection', (socket) => {
   socket.on('voiceCommand', (command) => {
     console.log('Comando recibido:', command);
 
-    // Separar entre comandos de suspensión temporal y desactivación completa
-    if (command.toLowerCase().includes('desactivate')) {
-      // Comando de desactivación completa
-      console.log('Comando de desactivación completa detectado');
+    // Verificar si es un comando de desactivación COMPLETA (solo con "desactívate"/"desactivate")
+    if (command.toLowerCase().match(/desact[ií]vate/i)) {
+      console.log('Comando de DESACTIVACIÓN COMPLETA detectado en el servidor');
       socket.emit('voiceResponse', {
-        text: 'Entendido. Me desactivo completamente.',
-        action: 'deactivate'
+        text: 'Entendido, me desactivo completamente.',
+        action: 'deactivate_complete'
       });
       return;
-    } else if (command.toLowerCase().includes('para ana') || 
-              command.toLowerCase().includes('apágate') || 
-              command.toLowerCase().includes('suspend') ||
-              command.toLowerCase().includes('adiós ana') || 
-              command.toLowerCase().includes('adios ana') ||
-              command.toLowerCase().includes('hasta luego ana')) {
-      // Comando de suspensión temporal
-      console.log('Comando de suspensión temporal detectado');
+    }
+    
+    // Verificar si es un comando de SUSPENSIÓN TEMPORAL
+    if (command.toLowerCase().includes('adios ana') ||
+      command.toLowerCase().includes('adiós ana') ||
+      command.toLowerCase().includes('apágate') ||
+      command.toLowerCase().includes('para ana') ||
+      command.toLowerCase().includes('hasta luego ana')) {
+
+      console.log('Comando de SUSPENSIÓN TEMPORAL detectado en el servidor');
       socket.emit('voiceResponse', {
-        text: 'Entendido. Estaré aquí esperando cuando me necesites.',
-        action: 'suspend'
+        text: 'Entendido, quedo en espera. Di "Ana" cuando me necesites.',
+        action: 'suspend_temporary'
       });
       return;
     }

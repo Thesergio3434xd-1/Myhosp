@@ -8,111 +8,29 @@ class Assistant {
     this.recognition = null;
     this.isListening = false;
     this.isActivated = false;
-    this.isSuspended = false; // Nuevo estado para suspensión temporal
     this.speechSynthesis = window.speechSynthesis;
     this.activationRecognition = null;
     this.isActivationListening = false;
     // Temporizador de inactividad (3 min)
     this.inactivityTimer = null;
     this.inactivityTimeout = 180000;
-    this.isSpeaking = false; // Propiedad para rastrear cuando Ana está hablando
+    this.isSpeaking = false; // Nueva propiedad para rastrear cuando Ana está hablando
     
     // Identificar el tipo de página en la que estamos
     this.pageType = this.detectPageType();
 
-    // Sistema dual de almacenamiento (localStorage/cookies)
-    this.globalAnaEnabled = this.getValue('anaEnabled') === 'true';
-    
     // Crear div de notificación en el DOM si estamos en index.html
     if (this.pageType === 'main' && !document.getElementById('assistant-notification-container')) {
       this.createNotificationContainer();
     }
 
-    // Si Ana está explícitamente deshabilitada, iniciar en modo deshabilitado
-    if (this.getValue('anaEnabled') === 'false') {
-      this.initializeDisabled();
-      return;
-    }
-
-    // Si aún no se ha mostrado el diálogo de consentimiento y estamos en la página principal,
-    // mostrar el diálogo si existe, o inicializar normalmente si no
-    if (this.pageType === 'main' && this.getValue('anaConsentShown') !== 'true' && document.getElementById('ana-consent-modal')) {
-      // El diálogo se mostrará por sí mismo mediante ana-consent.js
-      console.log('Esperando decisión del usuario en el diálogo de consentimiento');
+    // Verificar si Ana está habilitada o mostrar diálogo de consentimiento
+    // Solo mostrar el diálogo en la página principal, nunca en login/registro
+    if (this.pageType === 'main' && !this.checkAnaConsent() && document.getElementById('ana-consent-modal')) {
+      this.showAnaConsentDialog();
     } else {
-      // Inicializar según el estado global
-      if (this.globalAnaEnabled) {
-        this.initialize(); // Inicializar normalmente
-      } else {
-        this.initializeDisabled(); // Inicializar en modo deshabilitado
-      }
+      this.initialize();
     }
-  }
-
-  // Métodos de almacenamiento dual (localStorage/cookies)
-  // Intentar usar localStorage primero, luego cookies como respaldo
-  isLocalStorageAvailable() {
-    try {
-      const testKey = "__test_storage__";
-      localStorage.setItem(testKey, testKey);
-      localStorage.removeItem(testKey);
-      return true;
-    } catch (e) {
-      console.error('localStorage no disponible:', e);
-      return false;
-    }
-  }
-
-  // Guardar un valor en localStorage o cookies
-  saveValue(key, value) {
-    try {
-      if (this.isLocalStorageAvailable()) {
-        localStorage.setItem(key, value);
-      } else {
-        this.setCookie(key, value, 30); // 30 días
-      }
-      return true;
-    } catch (e) {
-      console.error('Error al guardar valor:', e);
-      return false;
-    }
-  }
-
-  // Obtener un valor de localStorage o cookies
-  getValue(key, defaultValue = null) {
-    try {
-      if (this.isLocalStorageAvailable()) {
-        return localStorage.getItem(key);
-      } else {
-        return this.getCookie(key);
-      }
-    } catch (e) {
-      console.error('Error al obtener valor:', e);
-      return defaultValue;
-    }
-  }
-
-  // Función para establecer cookies
-  setCookie(name, value, days) {
-    let expires = '';
-    if (days) {
-      const date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = '; expires=' + date.toUTCString();
-    }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
-  }
-
-  // Función para leer cookies
-  getCookie(name) {
-    const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
   }
 
   // Método para crear el contenedor de notificaciones
@@ -128,7 +46,7 @@ class Assistant {
 
   // Comprobar si el usuario ya ha dado consentimiento para Ana
   checkAnaConsent() {
-    return this.getValue('anaEnabled') === 'true';
+    return localStorage.getItem('anaEnabled') === 'true';
   }
 
   // Mostrar diálogo de consentimiento para Ana
@@ -142,7 +60,7 @@ class Assistant {
 
     if (enableButton) {
       enableButton.addEventListener('click', () => {
-        this.saveValue('anaEnabled', 'true');
+        localStorage.setItem('anaEnabled', 'true');
         
         // Ocultar el modal con animación
         const modalContent = consentModal.querySelector('.ana-consent-modal');
@@ -160,7 +78,7 @@ class Assistant {
 
     if (disableButton) {
       disableButton.addEventListener('click', () => {
-        this.saveValue('anaEnabled', 'false');
+        localStorage.setItem('anaEnabled', 'false');
         
         // Ocultar el modal con animación
         const modalContent = consentModal.querySelector('.ana-consent-modal');
@@ -230,7 +148,13 @@ class Assistant {
         this.micIcon.classList.add('disabled');
       }
       
-      this.updateUI(false, 'Asistente deshabilitado', false);
+      // Solo mostrar mensaje de estado desactivado en la página principal, no en login/registro
+      if (this.pageType === 'main') {
+        this.updateUI(false, 'Asistente desactivado', false);
+      } else {
+        // En login/registro solo aplicamos estilos visuales sin mensaje
+        this.updateUI(false, '', false);
+      }
       
       // Añadir listener para reactivar si el usuario cambia de opinión
       this.micButton.addEventListener('click', () => {
@@ -262,7 +186,7 @@ class Assistant {
       
       // Eventos para los botones
       document.getElementById('enableAnaReactivate').addEventListener('click', () => {
-        this.saveValue('anaEnabled', 'true');
+        localStorage.setItem('anaEnabled', 'true');
         this.anaAssistant.classList.remove('disabled');
         if (this.micIcon) {
           this.micIcon.classList.remove('disabled');
@@ -304,7 +228,7 @@ class Assistant {
 
   initialize() {
     // Si Ana está deshabilitada, inicializarla en modo deshabilitado
-    if (this.getValue('anaEnabled') === 'false') {
+    if (localStorage.getItem('anaEnabled') === 'false') {
       this.initializeDisabled();
       return;
     }
@@ -501,7 +425,7 @@ class Assistant {
       // Solo en la landing page mostramos la notificación de desactivación
       // y usamos forzosamente el contenedor de notificaciones que creamos
       if (this.pageType === 'main') {
-        this.saveValue('anaEnabled', 'false');
+        localStorage.setItem('anaEnabled', 'false');
         
         const notificationContainer = document.getElementById('assistant-notification-container');
         if (notificationContainer) {
@@ -542,29 +466,6 @@ class Assistant {
     this.speak(speechText);
 
     // Reiniciar la escucha para activación
-    setTimeout(() => {
-      this.startActivationListening();
-    }, 1000);
-  }
-
-  // Nuevo método para suspender temporalmente el asistente
-  suspendAssistant() {
-    console.log('Suspendiendo temporalmente el asistente...');
-    
-    // Detener la escucha activa
-    this.stopListening();
-    
-    // Marcar como suspendido pero no desactivado
-    this.isSuspended = true;
-    this.isActivated = false;
-    
-    // Actualizar la interfaz para mostrar estado suspendido
-    this.updateUI(false, 'En espera. Di "Ana" para reactivarme', false);
-    
-    // No cambiar el estilo visual (no aplicar gris)
-    // El asistente se mantiene con su apariencia normal pero en pausa
-    
-    // Reiniciar la escucha para activación después de un momento
     setTimeout(() => {
       this.startActivationListening();
     }, 1000);
@@ -621,16 +522,40 @@ class Assistant {
     });
   }
 
+  // Socket listeners para respuestas del servidor  
   setupSocketListeners() {
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
     });
 
     this.socket.on('voiceResponse', (response) => {
+      console.log('Respuesta del servidor:', response);
+      
+      // Procesar respuestas específicas para suspensión/desactivación
+      if (response.action === 'suspend_temporary') {
+        // Solo suspensión temporal
+        this.suspendAssistant();
+        return;
+      } else if (response.action === 'deactivate_complete') {
+        // Desactivación completa (modo gris)
+        this.deactivateAssistant('user_complete');
+        return;
+      }
+      
+      // Procesar respuestas normales
       if (response.text) {
         this.speak(response.text);
       }
 
+      // Navegación entre páginas
+      if (response.action === 'navigatePage' && response.target) {
+        setTimeout(() => {
+          window.location.href = response.target;
+        }, 1500);
+        return;
+      }
+
+      // Navegación dentro de la misma página
       if (response.action === 'navigate' && response.target) {
         setTimeout(() => {
           const targetElement = document.querySelector(response.target);
@@ -762,25 +687,12 @@ class Assistant {
     // Reiniciar el temporizador de inactividad al recibir un comando
     this.resetInactivityTimer();
 
-    // Distinguir entre comandos de suspensión y desactivación
-    if (command.toLowerCase().includes('desactivate')) {
-      console.log('Comando de desactivación completa detectado');
-      // Enviar al servidor para obtener respuesta adecuada
-      this.socket.emit('voiceCommand', command);
-      // Desactivar completamente y cambiar a gris
+    // Comprobar comandos de apagado primero - aseguramos reconocer todas las variantes
+    if (command.includes('para ana') || command.includes('apágate') ||
+      command.includes('adiós ana') || command.includes('adios ana') ||
+      command.includes('hasta luego ana') || command.includes('desactivate')) {
+      console.log('Comando de apagado detectado:', command);
       this.deactivateAssistant();
-      return;
-    } else if (command.toLowerCase().includes('para ana') || 
-              command.toLowerCase().includes('apágate') || 
-              command.toLowerCase().includes('suspend') ||
-              command.toLowerCase().includes('adiós ana') || 
-              command.toLowerCase().includes('adios ana') ||
-              command.toLowerCase().includes('hasta luego ana')) {
-      console.log('Comando de suspensión temporal detectado');
-      // Enviar al servidor para obtener respuesta adecuada
-      this.socket.emit('voiceCommand', command);
-      // Solo suspender temporalmente (no cambia a gris, espera activación)
-      this.suspendAssistant();
       return;
     }
 

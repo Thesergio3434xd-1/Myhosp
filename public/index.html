@@ -45,6 +45,15 @@
 
   <!-- Asistente de voz Ana -->
   <div id="ana-assistant" class="voice-assistant">
+    <!-- Botones para controlar el asistente -->
+    <div class="assistant-controls">
+      <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+        <i class="fas fa-toggle-on"></i>
+      </button>
+      <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+        <i class="fas fa-toggle-off"></i>
+      </button>
+    </div>
     <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
       <i id="micIcon" class="fas fa-microphone"></i>
     </button>
@@ -55,7 +64,7 @@
   <nav class="navbar navbar-expand-lg fixed-top bg-primary-custom">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <i class="fa-solid fa-hospital me-2"></i>
+        <img src="./img/logo.png" alt="MyHosp Logo" class="navbar-logo me-2">
         <span>MyHosp</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -434,6 +443,9 @@
   
   <!-- Script de consentimiento para Ana -->
   <script src="./js/ana-consent.js"></script>
+  
+  <!-- Script para controlar los botones del asistente -->
+  <script src="./js/assistant-controls.js"></script>
   
   <!-- Asistente de voz -->
   <script type="module" src="./js/ViewModels/assistant.js"></script>

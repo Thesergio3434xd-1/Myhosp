@@ -20,8 +20,17 @@
 </head>
 
 <body>
-    <!-- Asistente virtual Ana -->
+    <!-- Asistente de voz Ana -->
     <div id="ana-assistant" class="voice-assistant">
+        <!-- Botones para controlar el asistente -->
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="fas fa-toggle-on"></i>
+            </button>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
+            </button>
+        </div>
         <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
             <i id="micIcon" class="fas fa-microphone"></i>
         </button>
@@ -53,6 +62,9 @@
             <!-- Panel derecho con formulario -->
             <div class="frame-2">
                 <div class="frame-3">
+                    <div class="logo-container mb-3">
+                        <img src="./img/logo.png" alt="MyHosp Logo" class="registro-logo" width="100">
+                    </div>
                     <h1 class="text-wrapper">Registrarse</h1>
                     <p class="ya-tienes-una-cuenta">
                         <span class="span">¿Ya tienes una cuenta? </span> 
@@ -126,12 +138,18 @@
 
     <!-- Socket.IO -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-
-    <!-- Cargador de imágenes de fondo -->
-    <script src="./js/background-loader.js"></script>
+    
+    <!-- Script de consentimiento para Ana -->
+    <script src="./js/ana-consent.js"></script>
+    
+    <!-- Script para controlar los botones del asistente -->
+    <script src="./js/assistant-controls.js"></script>
 
     <!-- Asistente virtual -->
     <script src="./js/ViewModels/assistant.js"></script>
+
+    <!-- Cargador de imágenes de fondo -->
+    <script src="./js/background-loader.js"></script>
 
     <!-- ViewModel de Registro -->
     <script src="./js/ViewModels/RegisterViewModel.js"></script>

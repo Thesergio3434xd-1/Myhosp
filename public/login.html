@@ -131,8 +131,17 @@
 </head>
 
 <body>
-    <!-- Asistente virtual Ana -->
+    <!-- Asistente de voz Ana -->
     <div id="ana-assistant" class="voice-assistant">
+        <!-- Botones para controlar el asistente -->
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="fas fa-toggle-on"></i>
+            </button>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
+            </button>
+        </div>
         <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
             <i id="micIcon" class="fas fa-microphone"></i>
         </button>
@@ -148,7 +157,7 @@
     <!-- Formulario de login -->
     <div class="login-form-container">
         <div class="text-center mb-4">
-            <img src="img/1.png" alt="MyHosp Logo" class="mb-3" style="width: 120px;">
+            <img src="./img/logo.png" alt="MyHosp Logo" class="mb-3" style="width: 120px;">
             <h2 class="fw-bold mb-0">Ingresar en MyHosp</h2>
         </div>
         
@@ -202,6 +211,9 @@
 
     <!-- Script de consentimiento para Ana -->
     <script src="./js/ana-consent.js"></script>
+    
+    <!-- Script para controlar los botones del asistente -->
+    <script src="./js/assistant-controls.js"></script>
     
     <!-- Asistente virtual -->
     <script src="./js/ViewModels/assistant.js"></script>

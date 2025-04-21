@@ -82,7 +82,7 @@ body {
 
 /* Estilo para el micrófono desactivado (gris) */
 #micIcon.disabled {
-    color: #aaaaaa !important;
+    color: #777777 !important; /* Gris más oscuro para el ícono */
 }
 
 /* Asistente de voz Ana */
@@ -103,8 +103,9 @@ body {
 
 /* Estilo para el asistente desactivado */
 .voice-assistant.disabled .mic-button {
-    background-color: #aaaaaa;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #aaaaaa !important; /* Gris para indicar desactivado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+    animation: none !important;
 }
 
 .mic-button {
@@ -341,3 +342,49 @@ body {
     gap: 10px;
     margin-top: 12px;
 }
+
+/* Estilos para los botones de control del asistente */
+.assistant-controls {
+    display: flex;
+    margin-bottom: 8px;
+    gap: 5px;
+    justify-content: center;
+}
+
+.control-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.control-button:hover {
+    transform: scale(1.1);
+}
+
+.enable-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.disable-button {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Estado activado/desactivado de los botones */
+.enable-button.active {
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.disable-button.active {
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+}
+
+/* Animación específica para el estado activo */
