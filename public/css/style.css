@@ -712,18 +712,29 @@ footer p {
 }
 
 .navbar-brand {
+  display: flex;
+  align-items: center;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.3rem; /* Tamaño reducido para el texto */
   color: var(--white);
-  margin-left: -200px !important; /* Espacio a la izquierda fijo */
+  padding: 0;
+}
+
+.navbar-brand span {
+  font-weight: 600;
+  position: relative;
+  top: 1px; /* Alineación vertical fina */
+}
+
+.navbar-logo {
+  width: 30px;  /* Reducido para que no sea tan grande */
+  height: auto;
+  margin-right: 6px;
+  transition: transform 0.3s ease;
 }
 
 .navbar-brand:hover {
   color: var(--accent);
-}
-
-.navbar .navbar-nav {
-  margin-right: 10px !important; /* Espacio a la derecha fijo para los items */
 }
 
 .navbar .nav-link {
@@ -742,7 +753,6 @@ footer p {
   padding: 0.5rem 1.5rem;
   border-radius: 50px;
   transition: all 0.3s ease;
-  margin-right: -200px !important; /* Espacio a la derecha */
 }
 
 .btn-login:hover {
@@ -883,6 +893,14 @@ footer a:hover {
 }
 
 @media (max-width: 575.98px) {
+  .navbar-logo {
+    width: 25px;
+  }
+  
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+  
   .navbar-brand {
     font-size: 1.25rem;
   }
@@ -908,32 +926,4 @@ footer a:hover {
   .benefit-card {
     height: 180px;
   }
-}
-
-/* Estilos para el logo en la navbar */
-.navbar-logo {
-    width: 60px; /* Tamaño aumentado */
-    height: auto;
-    margin-right: 10px;
-    transition: transform 0.3s ease;
-}
-
-.navbar-brand:hover .navbar-logo {
-    transform: scale(1.1);
-}
-
-/* Estilos para el logo en la página de registro */
-.registro-logo {
-    max-width: 100px;
-    height: auto;
-}
-
-/* Estilos para el logo en la página de registro */
-.registro-logo {
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: white;
-    padding: 4px;
-    border: 2px solid rgba(59, 154, 184, 0.3);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }

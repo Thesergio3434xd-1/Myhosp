@@ -109,10 +109,11 @@ body {
 }
 
 .terms-container {
-    margin: 15px 0;
+    margin: 10px 0;
     display: flex;
     align-items: center;
     gap: 10px;
+    font-size: 12px;
 }
 
 .auth-container {
@@ -530,6 +531,9 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  position: fixed; /* Fijar la posición en la ventana */
+  top: 0;
+  left: 0;
 }
 
 .register .div {
@@ -537,6 +541,7 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden; /* Evitar desplazamiento */
 }
 
 /* Panel izquierdo con imagen de médicos */
@@ -547,6 +552,7 @@ body {
   overflow: hidden;
   background-color: #3a99b7;
   background-image: linear-gradient(135deg, #3a99b7 0%, #6FB1C7 100%);
+  flex-shrink: 0; /* Evitar que se reduzca */
 }
 
 .register .overlap {
@@ -591,14 +597,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px;
+  padding: 20px 40px;
   overflow-y: auto;
   background-color: white;
+  position: relative; /* Asegurar posicionamiento estable */
+  flex-shrink: 0; /* Evitar que se reduzca */
 }
 
 .register .frame-3 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   width: 100%;
   max-width: 500px;
 }
@@ -607,16 +615,17 @@ body {
   font-family: 'Lexend', sans-serif;
   font-weight: 700;
   color: #000000;
-  font-size: 40px;
-  margin-bottom: 10px;
+  font-size: 28px;
+  margin-bottom: 3px;
 }
 
 .register .ya-tienes-una-cuenta {
   font-family: 'Lexend', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   color: #878787;
-  margin-top: 10px;
+  margin-top: 3px;
+  margin-bottom: 8px;
 }
 
 .register .span {
@@ -633,31 +642,32 @@ body {
 #registerForm {
   width: 100%;
   max-width: 500px;
+  padding-bottom: 40px; /* Espacio adicional en la parte inferior */
 }
 
 .register .frame-4,
 .register .frame-wrapper,
 .register .frame-5 {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .register .text-wrapper-3 {
   font-weight: 500;
   color: #333;
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-size: 12px;
+  margin-bottom: 1px;
 }
 
 .register .ingrese-el-correo,
 .register .input,
 .register .frame-6 {
   width: 100%;
-  height: 45px;
-  padding: 10px 15px;
+  height: 32px;
+  padding: 0 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .register .frame-7 {
@@ -669,13 +679,14 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: white;
+  height: 32px;
 }
 
 /* Botones */
 .register .div-wrapper,
 .register .frame-8 {
   width: 100%;
-  padding: 12px;
+  padding: 6px;
   border-radius: 5px;
   border: none;
   margin-top: 10px;
@@ -731,6 +742,16 @@ body {
   height: 31px;
   top: 17px;
   left: 20px;
+}
+
+/* Evitar movimientos durante hover o focus */
+.register .ingrese-el-correo:focus,
+.register .input:focus,
+.register .frame-6:focus,
+.register .div-wrapper:hover,
+.register .frame-8:hover {
+  transform: none !important; /* Eliminar transformaciones que puedan causar movimiento */
+  box-shadow: 0 0 0 3px rgba(58, 153, 183, 0.2);
 }
 
 /* Animación entrada */
@@ -813,13 +834,17 @@ body {
 
 @media (max-width: 992px) {
   .register {
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
     flex-direction: column;
-    height: auto;
   }
   
   .register .frame {
     width: 100%;
     height: 200px;
+    flex-shrink: 0;
+    position: static;
   }
   
   .register .element {
@@ -836,7 +861,10 @@ body {
   .register .frame-2 {
     width: 100%;
     height: auto;
+    min-height: calc(100vh - 200px);
     padding: 30px 20px;
+    position: static;
+    overflow-y: auto;
   }
   
   .register .frame {
@@ -975,4 +1003,333 @@ body {
     .register .freepik-export {
         display: none;
     }
+}
+
+/* Reducción adicional de tamaños y espaciados para eliminar scroll */
+.registro-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Reducido de 8px a 5px */
+  width: 100%;
+}
+
+.row-flex {
+  display: flex;
+  gap: 8px; /* Reducido de 12px a 8px */
+  width: 100%;
+}
+
+.half-width {
+  width: calc(50% - 4px); /* Ajustado para el nuevo gap */
+  flex-shrink: 0;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Reducido de 8px a 5px */
+  margin-top: 5px; /* Reducido de 10px a 5px */
+}
+
+/* Reducir aún más altura de campos y espaciados */
+.register .ingrese-el-correo,
+.register .input,
+.register .frame-6 {
+  height: 32px; /* Reducido de 35px a 32px */
+  padding: 0 8px; /* Reducido de 10px a 8px */
+  font-size: 12px; /* Reducido de 13px a 12px */
+}
+
+.register .frame-7 {
+  height: 32px; /* Reducido de 35px a 32px */
+}
+
+.register .text-wrapper-3 {
+  font-size: 12px; /* Reducido de 13px a 12px */
+  margin-bottom: 1px; /* Reducido de 2px a 1px */
+}
+
+.register .text-wrapper-4 {
+  font-size: 12px; /* Reducido de 13px a 12px */
+  padding: 0 8px; /* Reducido de 10px a 8px */
+}
+
+/* Ajuste para los botones */
+.register .div-wrapper,
+.register .frame-8 {
+  padding: 6px; /* Reducido de 8px a 6px */
+}
+
+/* Ajuste para el checkbox */
+.terms-container {
+  margin: 3px 0; /* Reducido de 5px a 3px */
+  font-size: 12px; /* Reducido de 13px a 12px */
+}
+
+/* Ajustes para el título y mensaje de inicio de sesión */
+.register .text-wrapper {
+  font-size: 28px; /* Reducido de 32px a 28px */
+  margin-bottom: 3px; /* Reducido de 5px a 3px */
+}
+
+.register .ya-tienes-una-cuenta {
+  font-size: 14px; /* Reducido de 16px a 14px */
+  margin-top: 3px; /* Reducido de 5px a 3px */
+  margin-bottom: 8px; /* Reducido de 15px a 8px */
+}
+
+/* Ajuste del contenedor principal */
+.register .frame-2 {
+  padding: 20px 40px; /* Reducido de 30px a 20px en el padding vertical */
+}
+
+/* Ajuste del espacio entre grupos de campos */
+.register .frame-4 {
+  margin-bottom: 5px; /* Reducido de 10px a 5px */
+}
+
+.register .frame-3 {
+  margin-bottom: 8px; /* Reducido de 15px a 8px */
+}
+
+/* Ajustes ligeramente mayores para mejorar usabilidad pero sin causar scroll */
+.register .ingrese-el-correo,
+.register .input,
+.register .frame-6 {
+  height: 36px; /* Aumentado de 32px a 36px */
+  padding: 0 10px; /* Aumentado de 8px a 10px */
+  font-size: 14px; /* Aumentado de 12px a 14px */
+}
+
+.register .frame-7 {
+  height: 36px; /* Aumentado de 32px a 36px */
+}
+
+.register .text-wrapper-3 {
+  font-size: 14px; /* Aumentado de 12px a 14px */
+  margin-bottom: 2px; /* Aumentado de 1px a 2px */
+}
+
+.register .text-wrapper-4 {
+  font-size: 14px; /* Aumentado de 12px a 14px */
+  padding: 0 10px; /* Aumentado de 8px a 10px */
+}
+
+/* Ajuste para los botones */
+.register .div-wrapper,
+.register .frame-8 {
+  padding: 8px; /* Aumentado de 6px a 8px */
+}
+
+/* Ajuste para el checkbox */
+.terms-container {
+  margin: 5px 0; /* Aumentado de 3px a 5px */
+  font-size: 14px; /* Aumentado de 12px a 14px */
+}
+
+/* Ajustes para el título y mensaje de inicio de sesión */
+.register .text-wrapper {
+  font-size: 30px; /* Aumentado de 28px a 30px */
+  margin-bottom: 5px; /* Aumentado de 3px a 5px */
+}
+
+.register .ya-tienes-una-cuenta {
+  font-size: 15px; /* Aumentado de 14px a 15px */
+  margin-top: 4px; /* Aumentado de 3px a 4px */
+  margin-bottom: 10px; /* Aumentado de 8px a 10px */
+}
+
+/* Ajuste del espacio entre grupos de campos */
+.register .frame-4 {
+  margin-bottom: 8px; /* Aumentado de 5px a 8px */
+}
+
+.register .frame-3 {
+  margin-bottom: 12px; /* Aumentado de 8px a 12px */
+}
+
+/* Ajustes con tamaños ligeramente mayores para el formulario de registro */
+.register .ingrese-el-correo,
+.register .input,
+.register .frame-6 {
+  height: 39px; /* Aumentado a 39px */
+  padding: 0 12px; /* Aumentado a 12px */
+  font-size: 15px; /* Aumentado a 15px */
+}
+
+.register .frame-7 {
+  height: 39px; /* Aumentado a 39px */
+}
+
+.register .text-wrapper-3 {
+  font-size: 15px; /* Aumentado a 15px */
+  margin-bottom: 3px; /* Aumentado a 3px */
+}
+
+.register .text-wrapper-4 {
+  font-size: 15px; /* Aumentado a 15px */
+  padding: 0 12px; /* Aumentado a 12px */
+}
+
+/* Ajuste para los botones */
+.register .div-wrapper,
+.register .frame-8 {
+  padding: 9px; /* Aumentado a 9px */
+  font-size: 15px; /* Aumentado a 15px */
+}
+
+/* Ajuste para el checkbox */
+.terms-container {
+  margin: 6px 0; /* Aumentado a 6px */
+  font-size: 15px; /* Aumentado a 15px */
+}
+
+/* Ajustes para el título y mensaje de inicio de sesión */
+.register .text-wrapper {
+  font-size: 32px; /* Aumentado a 32px */
+  margin-bottom: 6px; /* Aumentado a 6px */
+}
+
+/* Aumentando aún más los tamaños para mejor visualización */
+.register .ingrese-el-correo,
+.register .input,
+.register .frame-6 {
+  height: 45px; /* Aumentado a 45px */
+  padding: 0 15px; /* Aumentado a 15px */
+  font-size: 17px; /* Aumentado a 17px */
+}
+
+.register .frame-7 {
+  height: 45px; /* Aumentado a 45px */
+}
+
+.register .text-wrapper-3 {
+  font-size: 17px; /* Aumentado a 17px */
+  margin-bottom: 5px; /* Aumentado a 5px */
+}
+
+.register .text-wrapper-4 {
+  font-size: 17px; /* Aumentado a 17px */
+  padding: 0 15px; /* Aumentado a 15px */
+}
+
+/* Ajuste para los botones */
+.register .div-wrapper,
+.register .frame-8 {
+  padding: 12px; /* Aumentado a 12px */
+  font-size: 17px; /* Aumentado a 17px */
+}
+
+/* Ajuste para el checkbox */
+.terms-container {
+  margin: 10px 0; /* Aumentado a 10px */
+  font-size: 17px; /* Aumentado a 17px */
+}
+
+/* Ajustes para el título y mensaje de inicio de sesión */
+.register .text-wrapper {
+  font-size: 36px; /* Aumentado a 36px */
+  margin-bottom: 8px; /* Aumentado a 8px */
+}
+
+.register .ya-tienes-una-cuenta {
+  font-size: 17px; /* Aumentado a 17px */
+  margin-top: 6px; /* Aumentado a 6px */
+  margin-bottom: 15px; /* Aumentado a 15px */
+}
+
+/* Aumentando aún más los tamaños para mejor visualización */
+.register .ingrese-el-correo,
+.register .input,
+.register .frame-6 {
+  height: 42px; /* Aumentado a 42px */
+  padding: 0 14px; /* Aumentado a 14px */
+  font-size: 16px; /* Aumentado a 16px */
+}
+
+.register .frame-7 {
+  height: 42px; /* Aumentado a 42px */
+}
+
+.register .text-wrapper-3 {
+  font-size: 16px; /* Aumentado a 16px */
+  margin-bottom: 4px; /* Aumentado a 4px */
+}
+
+.register .text-wrapper-4 {
+  font-size: 16px; /* Aumentado a 16px */
+  padding: 0 14px; /* Aumentado a 14px */
+}
+
+/* Ajuste para los botones */
+.register .div-wrapper,
+.register .frame-8 {
+  padding: 10px; /* Aumentado a 10px */
+  font-size: 16px; /* Aumentado a 16px */
+}
+
+/* Ajuste para el checkbox */
+.terms-container {
+  margin: 8px 0; /* Aumentado a 8px */
+  font-size: 16px; /* Aumentado a 16px */
+}
+
+/* Ajustes para el título y mensaje de inicio de sesión */
+.register .text-wrapper {
+  font-size: 34px; /* Aumentado a 34px */
+  margin-bottom: 7px; /* Aumentado a 7px */
+}
+
+.register .ya-tienes-una-cuenta {
+  font-size: 16px; /* Aumentado a 16px */
+  margin-top: 5px; /* Aumentado a 5px */
+  margin-bottom: 12px; /* Aumentado a 12px */
+}
+
+/* Aumentado aún más los tamaños para una visualización óptima */
+.register .ingrese-el-correo,
+.register .input,
+.register .frame-6 {
+  height: 48px; /* Aumentado a 48px */
+  padding: 0 16px; /* Aumentado a 16px */
+  font-size: 18px; /* Aumentado a 18px */
+}
+
+.register .frame-7 {
+  height: 48px; /* Aumentado a 48px */
+}
+
+.register .text-wrapper-3 {
+  font-size: 18px; /* Aumentado a 18px */
+  margin-bottom: 6px; /* Aumentado a 6px */
+}
+
+.register .text-wrapper-4 {
+  font-size: 18px; /* Aumentado a 18px */
+  padding: 0 16px; /* Aumentado a 16px */
+}
+
+/* Ajuste para los botones */
+.register .div-wrapper,
+.register .frame-8 {
+  padding: 14px; /* Aumentado a 14px */
+  font-size: 18px; /* Aumentado a 18px */
+}
+
+/* Ajuste para el checkbox */
+.terms-container {
+  margin: 12px 0; /* Aumentado a 12px */
+  font-size: 18px; /* Aumentado a 18px */
+}
+
+/* Ajustes para el título y mensaje de inicio de sesión */
+.register .text-wrapper {
+  font-size: 38px; /* Aumentado a 38px */
+  margin-bottom: 10px; /* Aumentado a 10px */
+}
+
+.register .ya-tienes-una-cuenta {
+  font-size: 18px; /* Aumentado a 18px */
+  margin-top: 8px; /* Aumentado a 8px */
+  margin-bottom: 18px; /* Aumentado a 18px */
 }
