@@ -718,6 +718,7 @@ footer p {
   font-size: 1.3rem; /* Tamaño reducido para el texto */
   color: var(--white);
   padding: 0;
+  margin-left: 5px;
 }
 
 .navbar-brand span {
@@ -727,9 +728,9 @@ footer p {
 }
 
 .navbar-logo {
-  width: 30px;  /* Reducido para que no sea tan grande */
+  width: 45px;  /* Logo un poco más grande */
   height: auto;
-  margin-right: 6px;
+  margin-right: 10px;
   transition: transform 0.3s ease;
 }
 
@@ -740,7 +741,8 @@ footer p {
 .navbar .nav-link {
   color: var(--white) !important;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.7rem;
+  margin: 0 0.2rem;
   transition: all 0.3s ease;
 }
 
@@ -750,7 +752,7 @@ footer p {
 
 .btn-login {
   font-weight: 600;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1.2rem;
   border-radius: 50px;
   transition: all 0.3s ease;
 }
@@ -871,10 +873,15 @@ footer a:hover {
     padding: 1rem;
     border-radius: 10px;
     margin-top: 1rem;
+    text-align: right;
   }
   
   .hero {
     padding-top: 6rem;
+  }
+  
+  .navbar-nav {
+    align-items: flex-end;
   }
 }
 
@@ -894,15 +901,11 @@ footer a:hover {
 
 @media (max-width: 575.98px) {
   .navbar-logo {
-    width: 25px;
+    width: 35px;
   }
   
   .navbar-brand {
-    font-size: 1.1rem;
-  }
-  
-  .navbar-brand {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
   
   .btn-login {
