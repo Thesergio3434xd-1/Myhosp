@@ -10,11 +10,12 @@
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- Estilos personalizados originales -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Estilos personalizados originales -->
   <link rel="stylesheet" href="./css/style.css" />
   <!-- Estilos específicos para el asistente -->
   <link rel="stylesheet" href="./css/asistente.css" />
+  <!-- Estilos para el botón de ayuda de Ana -->
+  <link rel="stylesheet" href="./css/ana-help-button.css" />
   <style>
     /* Estilo para la animación de desvanecimiento del modal */
     .ana-consent-overlay.hiding {
@@ -71,8 +72,10 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end pe-0" id="navbarNav">        <ul class="navbar-nav me-1">
           <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sobre-nosotros">Nosotros</a></li>
           <li class="nav-item"><a class="nav-link" href="#funcionalidades">Funcionalidades</a></li>
           <li class="nav-item"><a class="nav-link" href="#beneficios">Beneficios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#app-movil">App Móvil</a></li>
           <li class="nav-item"><a class="nav-link" href="#testimonios">Testimonios</a></li>
           <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
         </ul>
@@ -108,6 +111,87 @@
     </div>
   </section>
 
+  <!-- Sobre Nosotros -->
+  <section id="sobre-nosotros" class="py-5 bg-white">
+    <div class="container py-5">
+      <div class="row mb-5">
+        <div class="col-lg-12 text-center">
+          <span class="badge bg-primary-custom mb-2">Quiénes Somos</span>
+          <h2 class="display-5 fw-bold mb-3">Transformando la experiencia de salud en Colombia</h2>
+          <p class="lead mx-auto" style="max-width: 800px;">MyHosp nació con la misión de hacer más accesible el sistema de salud colombiano mediante tecnología intuitiva y centrada en las personas.</p>
+        </div>
+      </div>
+      
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="position-relative">
+            <img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGhlYWx0aGNhcmUlMjB0ZWNobm9sb2d5fGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" 
+                 alt="Equipo MyHosp" class="img-fluid rounded-4 shadow">
+            <div class="bg-primary-custom p-4 rounded-3 shadow text-white position-absolute" style="bottom: -30px; right: -20px; max-width: 300px;">
+              <h4 class="h5 mb-2">Nuestro Compromiso</h4>
+              <p class="mb-0 small">Facilitar el acceso a servicios de salud de calidad para todos los colombianos, sin importar su ubicación.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-5 mt-lg-0">
+          <div class="accordion" id="accordionMision">
+            <div class="accordion-item border-0 mb-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#mision">
+                  Nuestra Misión
+                </button>
+              </h2>
+              <div id="mision" class="accordion-collapse collapse show" data-bs-parent="#accordionMision">
+                <div class="accordion-body">
+                  Buscamos digitalizar y simplificar todos los procesos relacionados con la atención médica, reduciendo barreras de acceso y mejorando la experiencia tanto para pacientes como para profesionales de la salud.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item border-0 mb-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vision">
+                  Nuestra Visión
+                </button>
+              </h2>
+              <div id="vision" class="accordion-collapse collapse" data-bs-parent="#accordionMision">
+                <div class="accordion-body">
+                  Para 2028, aspiramos a ser la plataforma de gestión médica líder en Colombia, expandirnos a toda Latinoamérica y convertir la atención médica en un proceso simple, rápido y accesible para millones de personas.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item border-0 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#equipo">
+                  Nuestro Equipo
+                </button>
+              </h2>
+              <div id="equipo" class="accordion-collapse collapse" data-bs-parent="#accordionMision">
+                <div class="accordion-body">
+                  Contamos con un equipo multidisciplinario de profesionales en salud, tecnología y experiencia de usuario, trabajando juntos para crear una solución integral que responda a las necesidades reales del sistema de salud colombiano.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 d-flex flex-wrap">
+            <div class="bg-light rounded p-3 me-3 mb-3">
+              <h4 class="h5 mb-2">+ 30.000</h4>
+              <p class="small mb-0">Usuarios activos</p>
+            </div>
+            <div class="bg-light rounded p-3 me-3 mb-3">
+              <h4 class="h5 mb-2">+ 12</h4>
+              <p class="small mb-0">Hospitales asociados</p>
+            </div>
+            <div class="bg-light rounded p-3 mb-3">
+              <h4 class="h5 mb-2">+ 450</h4>
+              <p class="small mb-0">Médicos en plataforma</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Funcionalidades -->
   <section id="funcionalidades" class="bg-light py-5">
     <div class="container py-5">
@@ -121,7 +205,7 @@
         </div>
       </div>
 
-      <div class="row g-4">
+      <div class="row g-4 mb-5">
         <div class="col-md-6 col-lg-3">
           <div class="card h-100 border-0 bg-white shadow-sm hover-card">
             <div class="card-body p-4 text-center">
@@ -131,6 +215,9 @@
               <h5 class="card-title">Gestión de citas</h5>
               <p class="card-text">Agenda, modifica o cancela tus citas médicas en menos de 2 minutos desde cualquier
                 dispositivo.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 p-0">
+              <a href="#" class="btn btn-link text-primary-custom w-100">Ver detalles</a>
             </div>
           </div>
         </div>
@@ -145,6 +232,9 @@
               <p class="card-text">Consulta con especialistas por videollamada sin salir de casa. Atención segura,
                 rápida y confiable.</p>
             </div>
+            <div class="card-footer bg-transparent border-0 p-0">
+              <a href="#" class="btn btn-link text-primary-custom w-100">Ver detalles</a>
+            </div>
           </div>
         </div>
 
@@ -158,6 +248,9 @@
               <p class="card-text">Diseñada para ser accesible para todos, incluyendo personas mayores y con
                 discapacidad visual.</p>
             </div>
+            <div class="card-footer bg-transparent border-0 p-0">
+              <a href="#" class="btn btn-link text-primary-custom w-100">Ver detalles</a>
+            </div>
           </div>
         </div>
 
@@ -170,6 +263,92 @@
               <h5 class="card-title">Historial médico</h5>
               <p class="card-text">Accede a tus resultados, fórmulas y diagnósticos en cualquier momento y lugar.</p>
             </div>
+            <div class="card-footer bg-transparent border-0 p-0">
+              <a href="#" class="btn btn-link text-primary-custom w-100">Ver detalles</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Funcionalidad destacada -->
+      <div class="row align-items-center bg-white rounded-4 shadow-sm p-3 p-md-5 mt-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <h3 class="h2 fw-bold mb-4">Proceso simplificado de citas médicas</h3>
+          <div class="mb-4">
+            <div class="d-flex mb-3">
+              <div class="me-3 bg-primary-custom rounded text-white p-2" style="width: 40px; height: 40px;">
+                <i class="fas fa-search"></i>
+              </div>
+              <div>
+                <h5>1. Busca especialistas</h5>
+                <p class="text-muted">Filtra por especialidad, ubicación, disponibilidad o calificación.</p>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="me-3 bg-primary-custom rounded text-white p-2" style="width: 40px; height: 40px;">
+                <i class="far fa-calendar-check"></i>
+              </div>
+              <div>
+                <h5>2. Selecciona fecha y hora</h5>
+                <p class="text-muted">Visualiza la disponibilidad en tiempo real y elige el momento que te convenga.</p>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <div class="me-3 bg-primary-custom rounded text-white p-2" style="width: 40px; height: 40px;">
+                <i class="fas fa-clipboard-check"></i>
+              </div>
+              <div>
+                <h5>3. Confirma tu cita</h5>
+                <p class="text-muted">Recibe la confirmación instantánea y recordatorios previos a tu cita.</p>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="btn btn-primary-custom px-4">Prueba ahora</a>
+        </div>
+        <div class="col-lg-6">
+          <div class="position-relative">
+            <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1vYmlsZSUyMGFwcHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" 
+                alt="Aplicación móvil MyHosp" class="img-fluid rounded-4 shadow">
+            <div class="position-absolute" style="top: -30px; right: -20px; width: 120px; height: 120px; background-color: #f8f9fa; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+              <div class="text-center">
+                <div class="h2 fw-bold text-primary-custom mb-0">93%</div>
+                <div class="small">Satisfacción</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Estadísticas -->
+      <div class="row mt-5 pt-3">
+        <div class="col-12 text-center mb-4">
+          <h3 class="fw-bold">¿Por qué elegir MyHosp?</h3>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 shadow-sm text-center">
+            <div class="display-4 text-primary-custom mb-2">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h4 class="fw-bold">80%</h4>
+            <p>Menos tiempo en trámites</p>
+          </div>
+        </div>
+        <div class="col-md-4 my-4 my-md-0">
+          <div class="p-4 bg-white rounded-4 shadow-sm text-center">
+            <div class="display-4 text-primary-custom mb-2">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h4 class="fw-bold">100%</h4>
+            <p>Accesible desde cualquier dispositivo</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 shadow-sm text-center">
+            <div class="display-4 text-primary-custom mb-2">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <h4 class="fw-bold">450+</h4>
+            <p>Médicos especializados disponibles</p>
           </div>
         </div>
       </div>
@@ -217,6 +396,103 @@
             <div class="benefit-caption p-3">
               <span class="small d-block">Centralizar la información</span>
               <strong>Historial Médico</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Móvil -->
+  <section id="app-movil" class="py-5 bg-white">
+    <div class="container py-5">
+      <div class="row mb-5">
+        <div class="col-lg-12 text-center">
+          <span class="badge bg-primary-custom mb-2">Aplicación Móvil</span>
+          <h2 class="display-5 fw-bold mb-3">Tu salud al alcance de tu mano</h2>
+          <p class="lead mx-auto" style="max-width: 800px;">Descarga nuestra aplicación y lleva tu salud contigo a donde vayas.</p>
+        </div>
+      </div>
+      
+      <div class="row align-items-center">
+        <!-- Mockups de la app -->
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="position-relative">
+            <div class="phone-mockup" style="position: relative; z-index: 2;">
+              <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwYXBwfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" 
+                   alt="App de MyHosp" class="img-fluid rounded-4 shadow">
+            </div>
+            <div class="phone-mockup-secondary" style="position: absolute; top: 30px; right: -70px; width: 50%; z-index: 1; transform: rotate(10deg);">
+              <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW9iaWxlJTIwYXBwfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" 
+                   alt="App de MyHosp - Vista de calendario" class="img-fluid rounded-4 shadow">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Características de la app -->
+        <div class="col-lg-6">
+          <h3 class="fw-bold mb-4">Funcionalidades principales</h3>
+          
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <div class="bg-primary-custom p-3 rounded text-white">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+            </div>
+            <div>
+              <h4 class="h5 mb-2">Citas a un clic de distancia</h4>
+              <p class="text-muted">Agenda, cancela o reprograma citas directamente desde tu smartphone, con notificaciones y recordatorios automáticos.</p>
+            </div>
+          </div>
+          
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <div class="bg-primary-custom p-3 rounded text-white">
+                <i class="fas fa-comment-medical"></i>
+              </div>
+            </div>
+            <div>
+              <h4 class="h5 mb-2">Chat médico 24/7</h4>
+              <p class="text-muted">Comunícate con profesionales de la salud a través de nuestro chat seguro para consultas rápidas y orientación.</p>
+            </div>
+          </div>
+          
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <div class="bg-primary-custom p-3 rounded text-white">
+                <i class="fas fa-file-prescription"></i>
+              </div>
+            </div>
+            <div>
+              <h4 class="h5 mb-2">Recetas digitales</h4>
+              <p class="text-muted">Recibe y guarda tus recetas médicas en formato digital, con recordatorios de medicación y opción de reabastecimiento.</p>
+            </div>
+          </div>
+          
+          <div class="d-flex mb-5">
+            <div class="flex-shrink-0 me-3">
+              <div class="bg-primary-custom p-3 rounded text-white">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+            </div>
+            <div>
+              <h4 class="h5 mb-2">Seguimiento de salud</h4>
+              <p class="text-muted">Integración con dispositivos wearables para monitoreo de signos vitales e indicadores de salud importantes.</p>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-6">
+              <a href="#" class="d-block mb-3">
+                <img src="https://www.freepnglogos.com/uploads/app-store-logo-png/apple-app-store-travel-awards-globestamp-7.png" 
+                     alt="Descarga en App Store" class="img-fluid" style="height: 50px;">
+              </a>
+            </div>
+            <div class="col-6">
+              <a href="#" class="d-block mb-3">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" 
+                     alt="Disponible en Google Play" class="img-fluid" style="height: 50px;">
+              </a>
             </div>
           </div>
         </div>
@@ -335,46 +611,124 @@
   <!-- Contacto -->
   <section id="contacto" class="py-5">
     <div class="container py-5">
+      <div class="text-center mb-5">
+        <span class="badge bg-primary-custom mb-2">Contacto</span>
+        <h2 class="display-5 fw-bold">Estamos aquí para ayudarte</h2>
+        <p class="lead mx-auto" style="max-width: 700px;">Nuestro equipo de atención al cliente está disponible para resolver tus dudas y guiarte en cada paso.</p>
+      </div>
+
       <div class="row">
         <div class="col-lg-5 mb-4 mb-lg-0">
-          <span class="badge bg-primary-custom mb-2">Contacto</span>
-          <h2 class="display-5 fw-bold mb-4">¿Quieres probar MyHosp? Contáctanos.</h2>
-          <p class="lead mb-4">Escríbenos y te ayudamos a agendar tu primera cita o resolver cualquier duda.</p>
+          <div class="card border-0 shadow h-100">
+            <div class="card-body p-4">
+              <h3 class="h4 fw-bold mb-4">Comunícate con nosotros</h3>
+              
+              <div class="d-flex align-items-center mb-4">
+                <div class="bg-primary-custom p-3 rounded-circle text-white me-3">
+                  <i class="fas fa-phone-alt"></i>
+                </div>
+                <div>
+                  <h5 class="h6 mb-1">Teléfono</h5>
+                  <p class="mb-0">+57 310 338 8421</p>
+                </div>
+              </div>
 
-          <div class="d-flex align-items-center mb-3">
-            <div class="bg-primary-custom p-2 rounded-circle text-white me-3">
-              <i class="fas fa-phone-alt"></i>
-            </div>
-            <span>+57 310 338 8421</span>
-          </div>
+              <div class="d-flex align-items-center mb-4">
+                <div class="bg-primary-custom p-3 rounded-circle text-white me-3">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div>
+                  <h5 class="h6 mb-1">Email</h5>
+                  <p class="mb-0">atencion_cliente@myhosp.com</p>
+                </div>
+              </div>
 
-          <div class="d-flex align-items-center">
-            <div class="bg-primary-custom p-2 rounded-circle text-white me-3">
-              <i class="fas fa-envelope"></i>
+              <div class="d-flex align-items-center mb-4">
+                <div class="bg-primary-custom p-3 rounded-circle text-white me-3">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div>
+                  <h5 class="h6 mb-1">Oficina principal</h5>
+                  <p class="mb-0">Carrera 7 #71-21, Torre B, Piso 8<br>Bogotá, Colombia</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <div class="bg-primary-custom p-3 rounded-circle text-white me-3">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                  <h5 class="h6 mb-1">Horario de atención</h5>
+                  <p class="mb-0">Lunes a Viernes: 8:00 AM - 6:00 PM<br>Sábados: 9:00 AM - 2:00 PM</p>
+                </div>
+              </div>
+              
+              <div class="mt-4">
+                <h5 class="h6 mb-3">Síguenos en redes sociales</h5>
+                <div class="d-flex gap-3">
+                  <a href="#" class="btn btn-light btn-sm">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" class="btn btn-light btn-sm">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" class="btn btn-light btn-sm">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                  <a href="#" class="btn btn-light btn-sm">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+              </div>
             </div>
-            <span>atencion_cliente@myhosp.com</span>
           </div>
         </div>
 
         <div class="col-lg-7">
           <div class="card border-0 shadow">
             <div class="card-body p-4">
+              <h3 class="h4 fw-bold mb-4">Envíanos un mensaje</h3>
               <form>
-                <div class="mb-3">
-                  <input type="text" class="form-control py-3" placeholder="Nombre" required>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="nombre" class="form-label">Nombre completo</label>
+                    <input type="text" class="form-control py-3" id="nombre" placeholder="Tu nombre" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="celular" class="form-label">Número de contacto</label>
+                    <input type="tel" class="form-control py-3" id="celular" placeholder="Tu celular" required>
+                  </div>
                 </div>
                 <div class="mb-3">
-                  <input type="tel" class="form-control py-3" placeholder="Celular" required>
+                  <label for="email" class="form-label">Correo electrónico</label>
+                  <input type="email" class="form-control py-3" id="email" placeholder="Tu correo electrónico" required>
                 </div>
                 <div class="mb-3">
-                  <input type="email" class="form-control py-3" placeholder="Correo electrónico" required>
+                  <label for="asunto" class="form-label">Asunto</label>
+                  <select class="form-select py-3" id="asunto" required>
+                    <option value="" selected disabled>Selecciona un asunto</option>
+                    <option value="soporte">Soporte técnico</option>
+                    <option value="citas">Información sobre citas</option>
+                    <option value="facturacion">Facturación</option>
+                    <option value="alianzas">Propuestas de alianza</option>
+                    <option value="otro">Otro</option>
+                  </select>
                 </div>
-                <div class="mb-3">
-                  <textarea class="form-control py-3" rows="4" placeholder="Escribe tu mensaje" required></textarea>
+                <div class="mb-4">
+                  <label for="mensaje" class="form-label">Mensaje</label>
+                  <textarea class="form-control py-3" id="mensaje" rows="4" placeholder="¿En qué podemos ayudarte?" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary-custom w-100 py-3">Enviar</button>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary-custom py-3">Enviar mensaje</button>
+                </div>
               </form>
             </div>
+          </div>
+          
+          <!-- Mapa -->
+          <div class="mt-4 rounded-4 overflow-hidden shadow">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6807952335366!2d-74.0518968!3d4.6517637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3b9d27cf5f%3A0x25c0b9ef8f32d1e0!2sCra.%207%20%2371-21%2C%20Bogot%C3%A1%2C%20Colombia!5e0!3m2!1ses!2sco!4v1651785323811!5m2!1ses!2sco" 
+                  width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>
@@ -435,18 +789,22 @@
   
   <!-- Socket.IO -->
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  
-  <!-- Script de notificación inicial para el asistente -->
+    <!-- Script de notificación inicial para el asistente -->
   <script src="./js/activation-prompt.js"></script>
+  
+  <!-- Script para notificación inicial sobre capacidades de Ana -->
+  <script src="./js/initial-notification.js"></script>
   
   <!-- Script de consentimiento para Ana -->
   <script src="./js/ana-consent.js"></script>
   
   <!-- Script para controlar los botones del asistente -->
   <script src="./js/assistant-controls.js"></script>
-  
-  <!-- Asistente de voz -->
+    <!-- Asistente de voz -->
   <script type="module" src="./js/ViewModels/assistant.js"></script>
+  
+  <!-- Botón de ayuda de Ana -->
+  <script src="./js/ana-help-button.js"></script>
 </body>
 
 </html>

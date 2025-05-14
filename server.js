@@ -116,11 +116,16 @@ io.on('connection', (socket) => {
         action: 'suspend_temporary'
       });
       return;
-    }
-
-    // Para los demás comandos, usar el procesador normal
+    }    // Para los demás comandos, usar el procesador normal
     let response = processCommand(command);
     console.log('Respuesta generada:', response);
+    
+    // Si la acción es skip, no enviamos respuesta al cliente
+    if (response && response.action === 'skip') {
+      console.log('Omitiendo respuesta para evitar duplicación');
+      return;
+    }
+    
     socket.emit('voiceResponse', response);
   });
 
@@ -137,30 +142,40 @@ io.on('connection', (socket) => {
 // Procesar comandos de voz para navegación y lectura
 function processCommand(command) {
   command = command.toLowerCase().trim();
-  console.log('Procesando comando:', command);
-
-  // Lista de secciones directas y palabras relacionadas
+  console.log('Procesando comando:', command);  // Lista de secciones directas y palabras relacionadas
   const navigationMap = {
     // Secciones principales y sus sinónimos
     'inicio': {
       section: 'inicio', target: '#inicio',
-      aliases: ['principal', 'home', 'empezar', 'comienzo']
+      aliases: ['principal', 'home', 'empezar', 'comienzo', 'página principal', 'principio']
+    },
+    'nosotros': {
+      section: 'nosotros', target: '#sobre-nosotros',
+      aliases: ['sobre nosotros', 'quiénes somos', 'acerca de', 'empresa', 'organización', 'conocenos']
     },
     'funcionalidades': {
       section: 'funcionalidades', target: '#funcionalidades',
-      aliases: ['servicios', 'features', 'funciones', 'características']
+      aliases: ['servicios', 'features', 'funciones', 'características', 'qué hacemos', 'capacidades']
     },
     'testimonios': {
       section: 'testimonios', target: '#testimonios',
-      aliases: ['opiniones', 'comentarios', 'experiencias', 'clientes']
+      aliases: ['opiniones', 'comentarios', 'experiencias', 'clientes', 'reseñas', 'valoraciones']
     },
     'contacto': {
       section: 'contacto', target: '#contacto',
-      aliases: ['contáctanos', 'comunicar', 'mensaje', 'email']
+      aliases: ['contáctanos', 'comunicar', 'mensaje', 'email', 'contactar', 'escribir', 'ubicación']
     },
     'beneficios': {
       section: 'beneficios', target: '#beneficios',
-      aliases: ['ventajas', 'beneficio', 'ventaja', 'provecho', 'utilidad']
+      aliases: ['ventajas', 'beneficio', 'ventaja', 'provecho', 'utilidad', 'valor agregado']
+    },
+    'app móvil': {
+      section: 'app móvil', target: '#app-movil',
+      aliases: ['aplicación', 'móvil', 'smartphone', 'celular', 'android', 'iphone', 'app', 'aplicación móvil']
+    },
+    'ingresar': {
+      section: 'ingresar', target: 'login.html',
+      aliases: ['acceder', 'entrar', 'login', 'iniciar sesión', 'cuenta']
     }
   };
 
@@ -189,27 +204,41 @@ function processCommand(command) {
       target: 'index.html'
     };
   }
-
   // Verificar si alguna palabra clave o sus aliases están en el comando
   for (const [key, value] of Object.entries(navigationMap)) {
     if (command.includes(key)) {
       console.log(`Navegación detectada: "${key}" -> ${value.target}`);
-      return {
-        text: `Te llevo a la sección de ${value.section}`,
-        action: 'navigate',
-        target: value.target
-      };
-    }
-
-    // Verificar aliases
-    for (const alias of value.aliases) {
-      if (command.includes(alias)) {
-        console.log(`Navegación detectada (alias): "${alias}" -> ${value.target}`);
+      // Si el comando comienza con "navegar:", significa que el cliente ya inició la navegación
+      // en ese caso, no enviamos respuesta para evitar duplicar mensajes
+      if (command.startsWith('navegar:')) {
+        return {
+          action: 'skip' // No realizaremos ninguna acción para evitar duplicación
+        };
+      } else {
         return {
           text: `Te llevo a la sección de ${value.section}`,
           action: 'navigate',
           target: value.target
         };
+      }
+    }
+    // Verificar aliases
+    for (const alias of value.aliases) {
+      if (command.includes(alias)) {
+        console.log(`Navegación detectada (alias): "${alias}" -> ${value.target}`);
+        // Si el comando comienza con "navegar:", significa que el cliente ya inició la navegación
+        // en ese caso, no enviamos respuesta para evitar duplicar mensajes  
+        if (command.startsWith('navegar:')) {
+          return {
+            action: 'skip' // No realizaremos ninguna acción para evitar duplicación
+          };
+        } else {
+          return {
+            text: `Te llevo a la sección de ${value.section}`,
+            action: 'navigate',
+            target: value.target
+          };
+        }
       }
     }
   }
@@ -239,15 +268,13 @@ function processCommand(command) {
         }
       }
     }
-  }
-
-  // Respuestas a preguntas comunes
+  }  // Respuestas a preguntas comunes
   if (command.includes('qué puedes hacer') || command.includes('ayuda') || command.includes('cómo funciona')) {
     return {
-      text: 'Puedo ayudarte a navegar por el sitio. Di por ejemplo "ir a inicio", "funcionalidades", "muéstrame los testimonios", "contáctanos" o "ir a login".',
+      text: 'Soy Ana, tu asistente de voz. Puedo ayudarte a navegar diciendo frases como "llévame a inicio", "muéstrame nosotros", "ir a funcionalidades", "quiero ver beneficios", "vamos a app móvil", "muéstrame testimonios", "llévame a contacto" o "quiero ingresar". También puedo leer contenido si dices "lee sección" seguido del nombre. Puedes interrumpirme en cualquier momento simplemente hablando mientras estoy respondiendo, y puedes desactivarme diciendo "para Ana" o "apágate".',
       action: 'speak'
     };
-  } else if (command.includes('gracias') || command.includes('thank')) {
+  }else if (command.includes('gracias') || command.includes('thank')) {
     return {
       text: 'De nada, estoy aquí para ayudarte.',
       action: 'speak'
@@ -256,11 +283,10 @@ function processCommand(command) {
     return {
       text: 'Hola, soy Ana. ¿En qué puedo ayudarte? Puedes pedirme que te muestre diferentes secciones del sitio o que te lleve a la página de inicio de sesión o registro.',
       action: 'speak'
-    };
-  } else {
-    // Respuesta por defecto
+    };  } else {
+    // Respuesta por defecto mejorada con ejemplos concretos
     return {
-      text: 'No entendí tu comando. Puedo ayudarte a navegar si dices "inicio", "funcionalidades", "testimonios", "contacto", "beneficios", "ir a login" o "ir a registro".',
+      text: 'No entendí tu comando. Prueba con alguno de estos ejemplos: "Llévame a Inicio", "Muéstrame Nosotros", "Ir a Funcionalidades", "Quiero ver Beneficios", "Vamos a App Móvil", "Muéstrame Testimonios", "Llévame a Contacto" o "Quiero Ingresar".',
       action: 'speak'
     };
   }

@@ -44,6 +44,22 @@ body {
     border: 1px solid #4CAF50;
 }
 
+/* Estado de interrupción - nuevo estilo para mostrar cuando Ana es interrumpida */
+.assistant-status.interrupted {
+    opacity: 1;
+    background-color: rgba(236, 151, 31, 0.2);
+    border: 1px solid #EC971F;
+    color: #d35400;
+    font-weight: 500;
+    animation: flash-attention 0.5s ease-out;
+}
+
+@keyframes flash-attention {
+    0% { transform: scale(1); background-color: rgba(236, 151, 31, 0.4); }
+    50% { transform: scale(1.05); background-color: rgba(236, 151, 31, 0.6); }
+    100% { transform: scale(1); background-color: rgba(236, 151, 31, 0.2); }
+}
+
 /* Estado de bienvenida mejorado */
 .assistant-status.welcome {
     background-color: rgba(59, 154, 184, 0.15);

@@ -362,9 +362,7 @@ class Assistant {
     this.isActivated = true;
     
     // Mensajes específicos según la página
-    let welcomeMessage = '';
-    
-    switch (this.pageType) {
+    let welcomeMessage = '';    switch (this.pageType) {
       case 'login':
         welcomeMessage = '¿En qué puedo ayudarte? Puedo asistirte con el inicio de sesión o llevarte a la página de registro si aún no tienes cuenta.';
         this.updateUI(true, '¿Necesitas ayuda para iniciar sesión?', true);
@@ -374,8 +372,8 @@ class Assistant {
         this.updateUI(true, '¿Necesitas ayuda para crear tu cuenta?', true);
         break;
       default:
-        welcomeMessage = 'En qué te puedo ayudar. Puedo llevarte a Inicio, Funcionalidades, Testimonios o Contacto.';
-        this.updateUI(true, '¿A dónde quieres ir? (Inicio, Funcionalidades, Testimonios, Contacto)', true);
+        welcomeMessage = '¿En qué te puedo ayudar? Puedo llevarte a cualquier sección: Inicio, Nosotros, Funcionalidades, Beneficios, App Móvil, Testimonios o Contacto.';
+        this.updateUI(true, '¿A dónde quieres ir? (Todas las secciones disponibles)', true);
         break;
     }
     
@@ -581,9 +579,7 @@ class Assistant {
   welcomeUser() {
     setTimeout(() => {
       // Mensaje de bienvenida adaptado según el tipo de página
-      let welcomeMessage = '';
-      
-      switch (this.pageType) {
+      let welcomeMessage = '';      switch (this.pageType) {
         case 'login':
           welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono. Puedo ayudarte a iniciar sesión, recuperar tu contraseña o llevarte a la página de registro si aún no tienes cuenta.';
           break;
@@ -591,7 +587,7 @@ class Assistant {
           welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono. Puedo ayudarte a completar el formulario de registro o llevarte a la página de inicio de sesión si ya tienes cuenta.';
           break;
         default:
-          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono, y para desactivarme di "Para Ana" o "apágate". Puedo ayudarte a navegar diciendo "llévame a funcionalidades" o "muéstrame testimonios". También puedo leer el contenido de cualquier sección diciendo "lee sección inicio" o "léeme testimonios".';
+          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono, y para desactivarme di "Para Ana" o "apágate". Puedo ayudarte a navegar por todas las secciones: Inicio, Nosotros, Funcionalidades, Beneficios, App Móvil, Testimonios o Contacto. Solo di "llévame a" seguido del nombre de la sección. También puedo leer el contenido de cualquier sección diciendo "lee sección" seguido del nombre de la sección.';
           break;
       }
 
@@ -617,8 +613,8 @@ class Assistant {
       }, estimatedDuration); // Tiempo calculado según longitud del mensaje
     }, 1500);
   }
-
   startActivationListening() {
+    // Siempre permitir la activación, incluso si Ana está hablando
     if (this.activationRecognition && !this.isActivated && !this.isActivationListening) {
       try {
         this.activationRecognition.stop(); // Detener la escucha anterior si existe
@@ -637,14 +633,19 @@ class Assistant {
       }
     }
   }
-
   startListening() {
-    // Solo iniciar reconocimiento si Ana NO está hablando
-    if (this.recognition && !this.isListening && !this.isSpeaking) {
+    // Permitir que se inicie el reconocimiento incluso si Ana está hablando (para interrupciones)
+    if (this.recognition && !this.isListening) {
       try {
         this.recognition.start();
       } catch (error) {
         console.error('Error al iniciar reconocimiento:', error);
+        // Reintentar después de un breve retraso
+        setTimeout(() => {
+          if (!this.isListening && this.isActivated) {
+            this.startListening();
+          }
+        }, 1000);
       }
     }
   }
@@ -654,8 +655,7 @@ class Assistant {
       this.recognition.stop();
     }
   }
-
-  updateUI(isListening, message, isActive = this.isActivated) {
+  updateUI(isListening, message, isActive = this.isActivated, isInterrupted = false) {
     // Actualizar botón de micrófono
     this.micButton.classList.toggle('listening', isListening);
     this.micButton.classList.toggle('active', isActive);
@@ -670,18 +670,27 @@ class Assistant {
       this.assistantStatus.classList.toggle('listening', isListening);
       this.assistantStatus.classList.toggle('active', isActive);
       this.assistantStatus.classList.toggle('welcome', !isActive && !isListening);
+      
+      // Nuevo: manejar el estado de interrupción
+      this.assistantStatus.classList.toggle('interrupted', isInterrupted);
     } else {
       this.assistantStatus.classList.remove('visible');
     }
   }
-
   processCommand(command) {
-    console.log('Procesando comando:', command);
-
-    // Ignorar comandos mientras Ana está hablando
+    console.log('Procesando comando:', command);    // Si Ana está hablando, detener la síntesis de voz para permitir la interrupción
     if (this.isSpeaking) {
-      console.log('Ignorando comando mientras Ana está hablando');
-      return;
+      console.log('Interrumpiendo a Ana para procesar nuevo comando');
+      this.speechSynthesis.cancel();
+      this.isSpeaking = false;
+      
+      // Mostrar indicador visual de interrupción usando el nuevo estado interrupted
+      this.updateUI(true, 'Te escucho...', true, true);
+      
+      // Breve pausa para indicar que se ha interrumpido antes de procesar el comando
+      setTimeout(() => {
+        this.updateUI(true, `Procesando: "${command}"`, true, false);
+      }, 500);
     }
 
     // Reiniciar el temporizador de inactividad al recibir un comando
@@ -711,37 +720,52 @@ class Assistant {
     }
 
     // Si llegamos aquí, procesamos comandos genéricos o navegación
-    
-    // Mejorar la detección de comandos de lectura
+      // Mejorar la detección de comandos de lectura
     if (command.includes('lee sección') || command.includes('léeme') ||
       command.includes('leer') || command.includes('leer contenido') ||
       command.match(/lee\s+[a-z]+/) || command.includes('qué dice')) {
-
-      // Mapeo de secciones para la lectura
-      const sections = {
-        'inicio': '#inicio',
-        'funcionalidades': '#funcionalidades',
-        'testimonios': '#testimonios',
-        'contacto': '#contacto',
-        'beneficios': '#beneficios'
-      };
-
-      let targetSection = null;
-
-      // Determinar qué sección se quiere leer
-      for (const section in sections) {
-        if (command.includes(section)) {
-          targetSection = section;
-          break;
-        }
+      
+      console.log("Detectado comando de lectura:", command);
+      // Usar el mismo mapa de navegación que ya tenemos definido
+      const sections = {};
+      for (const section in navigationKeywords) {
+        sections[section] = navigationKeywords[section].target;
+        
+        // Añadir también aliases para la lectura
+        navigationKeywords[section].aliases.forEach(alias => {
+          sections[alias] = navigationKeywords[section].target;
+        });
       }
 
-      // Si se encontró una sección válida
+      let targetSection = null;      // Determinar qué sección se quiere leer
+      for (const section in navigationKeywords) {
+        if (command.includes(section)) {
+          targetSection = section;
+          console.log(`Sección para lectura encontrada por nombre directo: ${section}`);
+          break;
+        }
+        
+        // Comprobar aliases también
+        for (const alias of navigationKeywords[section].aliases) {
+          if (command.includes(alias)) {
+            targetSection = section;
+            console.log(`Sección para lectura encontrada por alias: ${alias} -> ${section}`);
+            break;
+          }
+        }
+        
+        if (targetSection) break;
+      }      // Si se encontró una sección válida
       if (targetSection) {
         console.log(`Leyendo sección: ${targetSection}`);
-        const sectionElement = document.querySelector(sections[targetSection]);
+        const sectionTarget = navigationKeywords[targetSection].target;
+        console.log(`Selector de la sección: ${sectionTarget}`);
+        
+        const sectionElement = document.querySelector(sectionTarget);
 
         if (sectionElement) {
+          console.log("Elemento de sección encontrado:", sectionElement.id || sectionElement.className);
+          
           // Verificar si la sección está visible en el viewport
           const rect = sectionElement.getBoundingClientRect();
           const isInViewport = rect.top >= 0 &&
@@ -778,60 +802,130 @@ class Assistant {
           } else {
             // Si ya estamos en la sección, leer directamente
             const sectionContent = this.extractReadableContent(sectionElement);
+            console.log("Contenido extraído:", sectionContent ? (sectionContent.substring(0, 50) + "...") : "No se encontró contenido");
+            
             if (sectionContent) {
               this.speak(`Contenido de la sección ${targetSection}: ${sectionContent}`);
+            } else {
+              this.speak(`Lo siento, no pude encontrar contenido para leer en la sección ${targetSection}.`);
             }
           }
 
           return; // Terminar procesamiento del comando
+        } else {
+          console.error(`No se encontró el elemento de la sección: ${sectionTarget}`);
+          this.speak(`No he podido encontrar la sección ${targetSection} para leerla.`);
+          return;
         }
       } else {
         // Si menciona leer pero no especifica qué sección
-        this.speak("¿Qué sección te gustaría que leyera? Puedes decir 'lee inicio', 'lee funcionalidades', 'lee testimonios' o 'lee contacto'.");
+        this.speak("¿Qué sección te gustaría que leyera? Puedes decir 'lee inicio', 'lee funcionalidades', 'lee beneficios', 'lee app móvil', 'lee testimonios' o 'lee contacto'.");
         return;
       }
-    }
-
-    // Verificar si es un comando de navegación primero
+    }    // Verificar si es un comando de navegación primero
     const navigationKeywords = {
-      'inicio': '#inicio',
-      'funcionalidades': '#funcionalidades',
-      'testimonios': '#testimonios',
-      'contacto': '#contacto',
-      'beneficios': '#beneficios'
-    };
-
-    // Primero, intentar navegación directa en cliente para una respuesta más rápida
+      'inicio': {
+        target: '#inicio',
+        aliases: ['principal', 'home', 'empezar', 'comienzo', 'página principal', 'principio']
+      },
+      'nosotros': {
+        target: '#sobre-nosotros',
+        aliases: ['sobre nosotros', 'quiénes somos', 'acerca de', 'empresa', 'organización', 'conocenos']
+      },
+      'funcionalidades': {
+        target: '#funcionalidades',
+        aliases: ['servicios', 'features', 'funciones', 'características', 'qué hacemos', 'capacidades']
+      },
+      'testimonios': {
+        target: '#testimonios',
+        aliases: ['opiniones', 'comentarios', 'experiencias', 'clientes', 'reseñas', 'valoraciones']
+      },
+      'contacto': {
+        target: '#contacto',
+        aliases: ['contáctanos', 'comunicar', 'mensaje', 'email', 'contactar', 'escribir', 'ubicación']
+      },
+      'beneficios': {
+        target: '#beneficios',
+        aliases: ['ventajas', 'beneficio', 'ventaja', 'provecho', 'utilidad', 'valor agregado']
+      },
+      'app móvil': {
+        target: '#app-movil',
+        aliases: ['aplicación', 'móvil', 'smartphone', 'celular', 'android', 'iphone', 'app', 'aplicación móvil']
+      },
+      'ingresar': {
+        target: 'login.html',
+        aliases: ['acceder', 'entrar', 'login', 'iniciar sesión', 'cuenta']
+      }
+    };    // Primero, intentar navegación directa en cliente para una respuesta más rápida
     let targetSection = null;
+    let sectionName = null;
+    
+    // Comprobar primero las secciones principales
     for (const section in navigationKeywords) {
       if (command.toLowerCase().includes(section)) {
-        targetSection = navigationKeywords[section];
+        targetSection = navigationKeywords[section].target;
+        sectionName = section;
         console.log(`Detectada navegación a sección: ${section}`);
         break;
       }
+      
+      // Comprobar también los aliases de cada sección
+      for (const alias of navigationKeywords[section].aliases) {
+        if (command.toLowerCase().includes(alias)) {
+          targetSection = navigationKeywords[section].target;
+          sectionName = section;
+          console.log(`Detectada navegación a sección por alias: ${alias} -> ${section}`);
+          break;
+        }
+      }
+      
+      if (targetSection) break; // Si ya encontramos algo, salir del bucle
     }
 
     // Si encontramos una sección, navegamos a ella directamente
     if (targetSection) {
-      const targetElement = document.querySelector(targetSection);
-      if (targetElement) {
-        console.log(`Navegando a elemento: ${targetSection}`);
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
+      // Verificar si es una URL o un selector de elemento
+      if (targetSection.includes('.html')) {
+        // Si es una URL, preparar la navegación y confirmar al usuario
+        this.speak(`Te llevo a la página de ${sectionName}`, false, () => {
+          setTimeout(() => {
+            window.location.href = targetSection;
+          }, 500);
         });
+        return; // Terminar el procesamiento aquí
+      } else {
+        // Si es un elemento en la página actual
+        const targetElement = document.querySelector(targetSection);
+        if (targetElement) {
+          console.log(`Navegando a elemento: ${targetSection}`);
+            // Confirmar verbalmente la navegación solo si no es "inicio" para evitar repetir el mensaje de bienvenida
+          if (sectionName !== 'inicio') {
+            this.speak(`Te llevo a la sección de ${sectionName}`);
+          } else {
+            // Para inicio, usar un mensaje más simple
+            this.speak("Mostrando la sección de inicio");
+          }
+          
+          // Navegar visualmente
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
 
-        // Añadir efecto de resaltado
-        targetElement.classList.add('highlight-section');
-        setTimeout(() => {
-          targetElement.classList.remove('highlight-section');
-        }, 2000);
+          // Añadir efecto de resaltado
+          targetElement.classList.add('highlight-section');
+          setTimeout(() => {
+            targetElement.classList.remove('highlight-section');
+          }, 2000);
+        }
       }
-    }
-
-    // Enviar comando al servidor destacando la sección si es navegación
+    }    // Enviar comando al servidor solo si no hemos encontrado una navegación en el cliente
+    // o si queremos que el servidor confirme la acción
     if (targetSection) {
-      this.socket.emit('voiceCommand', `navegar:${targetSection.substring(1)} ${command}`);
+      if (targetSection.startsWith('#')) {
+        // No enviamos al servidor si ya hemos navegado en el cliente para evitar mensajes duplicados
+        // this.socket.emit('voiceCommand', `navegar:${targetSection.substring(1)} ${command}`);
+      }
     } else {
       this.socket.emit('voiceCommand', command);
     }
@@ -927,45 +1021,50 @@ class Assistant {
     return false; // No se procesó ningún comando específico
   }
 
-  // Nuevo método para extraer texto legible de una sección
+  // Método mejorado para extraer texto legible de una sección
   extractReadableContent(element) {
-    // Extraer títulos importantes
-    const titleElements = element.querySelectorAll('h1, h2, h3, h4, h5');
+    try {
+      // Extraer títulos importantes
+      const titleElements = element.querySelectorAll('h1, h2, h3, h4, h5');
 
-    // Extraemos todos los párrafos y elementos de texto significativos
-    const textElements = element.querySelectorAll('p, .card-text, .lead, li');
+      // Extraemos todos los párrafos y elementos de texto significativos
+      const textElements = element.querySelectorAll('p, .card-text, .lead, li, .card-title');
 
-    let readableText = '';
+      let readableText = '';
 
-    // Añadir títulos
-    titleElements.forEach(title => {
-      if (title.textContent.trim().length > 0) {
-        readableText += title.textContent.trim() + '. ';
+      // Añadir títulos
+      titleElements.forEach(title => {
+        if (title.textContent.trim().length > 0) {
+          readableText += title.textContent.trim() + '. ';
+        }
+      });
+
+      // Añadir TODOS los párrafos sin limitación
+      textElements.forEach(paragraph => {
+        if (paragraph.textContent.trim().length > 0) {
+          readableText += paragraph.textContent.trim() + '. ';
+        }
+      });
+
+      // Si no encontramos suficiente contenido estructurado, extraer todo el texto visible
+      if (readableText.length < 30) {
+        readableText = element.textContent
+          .replace(/\s+/g, ' ')
+          .trim();
       }
-    });
 
-    // Añadir TODOS los párrafos sin limitación
-    textElements.forEach(paragraph => {
-      if (paragraph.textContent.trim().length > 0) {
-        readableText += paragraph.textContent.trim() + '. ';
+      // Si aún así no hay contenido
+      if (readableText.length < 5) {
+        return 'No hay contenido disponible para leer en esta sección.';
       }
-    });
 
-    // Si no encontramos suficiente contenido estructurado, extraer todo el texto visible
-    if (readableText.length < 30) {
-      readableText = element.textContent
-        .replace(/\s+/g, ' ')
-        .trim();
+      console.log("Contenido extraído:", readableText.substring(0, 100) + "..."); // Log para depuración
+      return readableText;
+    } catch (error) {
+      console.error("Error al extraer contenido:", error);
+      return "Lo siento, no pude leer el contenido de esta sección debido a un error.";
     }
-
-    // Si aún así no hay contenido
-    if (readableText.length < 5) {
-      return 'No hay contenido disponible para leer en esta sección.';
-    }
-
-    return readableText;
   }
-
   speak(text, isWelcome = false, onEndCallback = null) {
     if ('speechSynthesis' in window) {
       // Detener cualquier síntesis de voz en curso
@@ -992,9 +1091,10 @@ class Assistant {
           // Marcar que Ana está hablando
           this.isSpeaking = true;
           
-          // Detener el reconocimiento de voz mientras Ana habla
-          if (this.isListening) {
-            this.stopListening();
+          // En lugar de detener el reconocimiento, lo mantenemos activo para permitir interrupciones
+          // Solo reiniciar si no está ya escuchando
+          if (!this.isListening && this.isActivated) {
+            this.startListening();
           }
           
           // Mostrar el botón de silenciar cuando Ana está hablando

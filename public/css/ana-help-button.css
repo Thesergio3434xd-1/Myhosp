@@ -1,0 +1,40 @@
+/* Ana Help Button CSS */
+.ana-help-button {
+  position: fixed;
+  left: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: #3B9AB8;
+  background: linear-gradient(135deg, #3B9AB8, #2980b9);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.ana-help-button i {
+  color: white;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.ana-help-button:hover {
+  width: 45px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.ana-help-button:hover i {
+  transform: scale(1.1);
+}
+
+.ana-help-button:active {
+  transform: translateY(-50%) scale(0.95);
+}
