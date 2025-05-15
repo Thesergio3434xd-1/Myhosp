@@ -1,21 +1,13 @@
+/**
+ * Asistente de voz Ana - Versión refactorizada y mejorada
+ * Esta versión soluciona los problemas de:
+ * 1. Organización del código
+ * 2. Funcionalidad de lectura de secciones
+ * 3. Sistema de notificaciones
+ */
+
 class Assistant {
   constructor() {
-    this.socket = io();
-    this.micButton = document.getElementById('micButton');
-    this.micIcon = document.getElementById('micIcon');
-    this.assistantStatus = document.getElementById('assistantStatus');
-    this.anaAssistant = document.getElementById('ana-assistant');
-    this.recognition = null;
-    this.isListening = false;
-    this.isActivated = false;
-    this.speechSynthesis = window.speechSynthesis;
-    this.activationRecognition = null;
-    this.isActivationListening = false;
-    // Temporizador de inactividad (3 min)
-    this.inactivityTimer = null;
-    this.inactivityTimeout = 180000;
-    this.isSpeaking = false; // Nueva propiedad para rastrear cuando Ana está hablando
-    
     // Definir constantes de navegación para que estén disponibles en toda la clase
     this.navigationKeywords = {
       'inicio': {
@@ -52,6 +44,23 @@ class Assistant {
       }
     };
     
+    // Inicializar componentes del asistente
+    this.socket = io();
+    this.micButton = document.getElementById('micButton');
+    this.micIcon = document.getElementById('micIcon');
+    this.assistantStatus = document.getElementById('assistantStatus');
+    this.anaAssistant = document.getElementById('ana-assistant');
+    this.recognition = null;
+    this.isListening = false;
+    this.isActivated = false;
+    this.speechSynthesis = window.speechSynthesis;
+    this.activationRecognition = null;
+    this.isActivationListening = false;
+    // Temporizador de inactividad (3 min)
+    this.inactivityTimer = null;
+    this.inactivityTimeout = 180000;
+    this.isSpeaking = false; 
+    
     // Identificar el tipo de página en la que estamos
     this.pageType = this.detectPageType();
 
@@ -61,7 +70,6 @@ class Assistant {
     }
 
     // Verificar si Ana está habilitada o mostrar diálogo de consentimiento
-    // Solo mostrar el diálogo en la página principal, nunca en login/registro
     if (this.pageType === 'main' && !this.checkAnaConsent() && document.getElementById('ana-consent-modal')) {
       this.showAnaConsentDialog();
     } else {
@@ -173,7 +181,7 @@ class Assistant {
     }, 3000);
   }
 
-  // Nuevo método para inicializar Ana en modo deshabilitado (visible pero sin funcionalidad)
+  // Inicializar Ana en modo deshabilitado (visible pero sin funcionalidad)
   initializeDisabled() {
     if (this.anaAssistant) {
       // Aplicar estilo deshabilitado pero mantener visible
@@ -184,7 +192,7 @@ class Assistant {
         this.micIcon.classList.add('disabled');
       }
       
-      // Solo mostrar mensaje de estado desactivado en la página principal, no en login/registro
+      // Solo mostrar mensaje de estado desactivado en la página principal
       if (this.pageType === 'main') {
         this.updateUI(false, 'Asistente desactivado', false);
       } else {
@@ -384,6 +392,104 @@ class Assistant {
     }
   }
 
+  setupEventListeners() {
+    // Evento click en el botón de micrófono
+    if (this.micButton) {
+      this.micButton.addEventListener('click', () => {
+        if (this.isActivated) {
+          this.deactivateAssistant();
+        } else {
+          this.activateAssistant();
+        }
+      });
+    }
+    
+    // Botones de control (si existen)
+    const enableButton = document.getElementById('enableAssistant');
+    if (enableButton) {
+      enableButton.addEventListener('click', () => {
+        this.activateAssistant();
+      });
+    }
+    
+    const disableButton = document.getElementById('disableAssistant');
+    if (disableButton) {
+      disableButton.addEventListener('click', () => {
+        this.deactivateAssistant();
+      });
+    }
+  }
+
+  setupSocketListeners() {
+    // Escuchar respuestas del servidor para comandos de voz
+    this.socket.on('voiceResponse', (response) => {
+      console.log('Respuesta recibida del servidor:', response);
+      
+      if (!response) return;
+      
+      // Manejar diferentes tipos de acciones
+      switch (response.action) {
+        case 'navigate':
+          // Navegar a una sección en la misma página
+          const element = document.querySelector(response.target);
+          if (element) {
+            this.speak(response.text);
+            setTimeout(() => {
+              element.scrollIntoView({ behavior: 'smooth' });
+              // Resaltar la sección brevemente
+              element.classList.add('highlight-section');
+              setTimeout(() => {
+                element.classList.remove('highlight-section');
+              }, 2000);
+            }, 500);
+          }
+          break;
+          
+        case 'navigatePage':
+          // Navegar a otra página
+          this.speak(response.text, false, () => {
+            setTimeout(() => {
+              window.location.href = response.target;
+            }, 500);
+          });
+          break;
+          
+        case 'read':
+          // Leer contenido (respuesta del servidor que incluye texto para leer)
+          if (response.text && response.sectionContent) {
+            this.speak(`${response.text}: ${response.sectionContent}`);
+          } else if (response.text) {
+            this.speak(response.text);
+          }
+          break;
+          
+        case 'deactivate_complete':
+          // Desactivación completa (persistente)
+          localStorage.setItem('anaEnabled', 'false');
+          this.speak(response.text, false, () => {
+            this.deactivateAssistant();
+            this.initializeDisabled();
+          });
+          break;
+          
+        case 'suspend_temporary':
+          // Suspensión temporal (hasta que digan "Ana" nuevamente)
+          this.speak(response.text, false, () => {
+            this.deactivateAssistant();
+          });
+          break;
+          
+        case 'speak':
+        default:
+          // Simplemente hablar la respuesta
+          if (response.text) {
+            this.speak(response.text);
+          }
+          break;
+      }
+    });
+  }
+
   activateAssistant() {
     console.log('Activando a Ana');
     // Detener la escucha de activación
@@ -398,7 +504,8 @@ class Assistant {
     this.isActivated = true;
     
     // Mensajes específicos según la página
-    let welcomeMessage = '';    switch (this.pageType) {
+    let welcomeMessage = '';    
+    switch (this.pageType) {
       case 'login':
         welcomeMessage = '¿En qué puedo ayudarte? Puedo asistirte con el inicio de sesión o llevarte a la página de registro si aún no tienes cuenta.';
         this.updateUI(true, '¿Necesitas ayuda para iniciar sesión?', true);
@@ -408,7 +515,7 @@ class Assistant {
         this.updateUI(true, '¿Necesitas ayuda para crear tu cuenta?', true);
         break;
       default:
-        welcomeMessage = '¿En qué te puedo ayudar? Puedo llevarte a cualquier sección: Inicio, Nosotros, Funcionalidades, Beneficios, App Móvil, Testimonios o Contacto.';
+        welcomeMessage = '¿En qué te puedo ayudar? Puedo llevarte a cualquier sección: Inicio, Nosotros, Funcionalidades, Beneficios, App Móvil, Testimonios o Contacto. También puedo leer el contenido de cualquier sección.';
         this.updateUI(true, '¿A dónde quieres ir? (Todas las secciones disponibles)', true);
         break;
     }
@@ -423,7 +530,6 @@ class Assistant {
     }, 1000);
   }
 
-  // Método para desactivar a Ana (incluyendo por inactividad)
   deactivateAssistant(reason = '') {
     console.log(`Desactivando asistente. Razón: ${reason || 'comando del usuario'}`);
     // Limpiar el temporizador de inactividad
@@ -435,204 +541,46 @@ class Assistant {
 
     const message = reason === 'inactivity'
       ? 'Me desactivé por inactividad. Di "Ana" para activarme'
-      : 'Asistente desactivado';
+      : 'Hasta pronto. Di "Ana" cuando me necesites.';
 
+    // Actualizar UI
     this.updateUI(false, message, false);
 
-    const speechText = reason === 'inactivity'
-      ? 'Me desactivé por inactividad. Di Ana para activarme.'
-      : 'Hasta pronto';
+    // Decir mensaje de despedida
+    this.speak(message, false);
 
-    // Cancelar cualquier síntesis de voz en curso antes de hablar
-    if (this.speechSynthesis.speaking) {
-      this.speechSynthesis.cancel();
-    }
-    
-    // Marcar visualmente como desactivado y cambiar el icono a gris
-    if (this.anaAssistant) {
-      this.anaAssistant.classList.add('disabled');
-      
-      if (this.micIcon) {
-        this.micIcon.classList.add('disabled');
-      }
-      
-      // Solo en la landing page mostramos la notificación de desactivación
-      // y usamos forzosamente el contenedor de notificaciones que creamos
-      if (this.pageType === 'main') {
-        localStorage.setItem('anaEnabled', 'false');
-        
-        const notificationContainer = document.getElementById('assistant-notification-container');
-        if (notificationContainer) {
-          // Primero, limpiamos cualquier notificación previa
-          notificationContainer.innerHTML = '';
-          
-          // Crear notificación directamente en el contenedor específico
-          const notification = document.createElement('div');
-          notification.className = 'assistant-notification info';
-          notification.innerHTML = `
-            <i class="fas fa-microphone-slash"></i>
-            <span>Asistente de voz desactivado</span>
-          `;
-          
-          notificationContainer.appendChild(notification);
-          
-          // Forzar un reflow para asegurar que la animación funcione
-          notification.offsetHeight;
-          
-          // Mostrar con animación
-          setTimeout(() => {
-            notification.classList.add('show');
-          }, 10);
-          
-          // Ocultar automáticamente después de 3 segundos
-          setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-              if (notification.parentNode) {
-                notification.remove();
-              }
-            }, 300);
-          }, 3000);
-        }
-      }
-    }
-
-    this.speak(speechText);
-
-    // Reiniciar la escucha para activación
+    // Iniciar escucha de activación después de un breve retraso
     setTimeout(() => {
       this.startActivationListening();
-    }, 1000);
-  }
-
-  // Inicia el temporizador de inactividad
-  startInactivityTimer() {
-    // Limpiar cualquier temporizador existente primero
-    this.clearInactivityTimer();
-
-    // Crear nuevo temporizador
-    this.inactivityTimer = setTimeout(() => {
-      console.log('Desactivando por inactividad');
-      if (this.isActivated) {
-        this.deactivateAssistant('inactivity');
-      }
-    }, this.inactivityTimeout);
-
-    console.log('Temporizador de inactividad iniciado');
-  }
-
-  // Reinicia el temporizador de inactividad
-  resetInactivityTimer() {
-    if (this.isActivated) {
-      this.startInactivityTimer();
-    }
-  }
-
-  // Limpia el temporizador de inactividad
-  clearInactivityTimer() {
-    if (this.inactivityTimer) {
-      clearTimeout(this.inactivityTimer);
-      this.inactivityTimer = null;
-    }
-  }
-
-  setupEventListeners() {
-    // Activar/desactivar micrófono al hacer clic
-    this.micButton.addEventListener('click', () => {
-      if (this.isActivated) {
-        // Si ya está activada, desactivarla
-        this.deactivateAssistant();
-      } else {
-        // Si no está activada, activarla
-        this.activateAssistant();
-      }
-    });
-
-    // Modificar el comportamiento del document click para no detener el habla
-    // Solo reiniciar el temporizador de inactividad
-    document.addEventListener('click', () => {
-      // Reiniciar el temporizador de inactividad al interactuar con la página
-      this.resetInactivityTimer();
-    });
-  }
-
-  // Socket listeners para respuestas del servidor  
-  setupSocketListeners() {
-    this.socket.on('connect', () => {
-      console.log('Conectado al servidor');
-    });
-
-    this.socket.on('voiceResponse', (response) => {
-      console.log('Respuesta del servidor:', response);
-      
-      // Procesar respuestas específicas para suspensión/desactivación
-      if (response.action === 'suspend_temporary') {
-        // Solo suspensión temporal
-        this.suspendAssistant();
-        return;
-      } else if (response.action === 'deactivate_complete') {
-        // Desactivación completa (modo gris)
-        this.deactivateAssistant('user_complete');
-        return;
-      }
-      
-      // Procesar respuestas normales
-      if (response.text) {
-        this.speak(response.text);
-      }
-
-      // Navegación entre páginas
-      if (response.action === 'navigatePage' && response.target) {
-        setTimeout(() => {
-          window.location.href = response.target;
-        }, 1500);
-        return;
-      }
-
-      // Navegación dentro de la misma página
-      if (response.action === 'navigate' && response.target) {
-        setTimeout(() => {
-          const targetElement = document.querySelector(response.target);
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-
-            // Resaltar la sección
-            targetElement.classList.add('highlight-section');
-            setTimeout(() => {
-              targetElement.classList.remove('highlight-section');
-            }, 2000);
-          } else {
-            console.error(`Elemento no encontrado: ${response.target}`);
-          }
-        }, 500);
-      }
-    });
+    }, 1500);
   }
 
   welcomeUser() {
+    // Solo mostrar mensaje de bienvenida en la página principal, no en login/registro
+    if (this.pageType !== 'main') {
+      this.anaAssistant.classList.add('active');
+      // Para login/registro, solo iniciar la escucha de activación sin mensaje
+      this.startActivationListening();
+      return;
+    }
+
+    // Periodo de gracia para permitir que la página se cargue completamente
     setTimeout(() => {
-      // Mensaje de bienvenida adaptado según el tipo de página
-      let welcomeMessage = '';      switch (this.pageType) {
-        case 'login':
-          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono. Puedo ayudarte a iniciar sesión, recuperar tu contraseña o llevarte a la página de registro si aún no tienes cuenta.';
-          break;
-        case 'register':
-          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono. Puedo ayudarte a completar el formulario de registro o llevarte a la página de inicio de sesión si ya tienes cuenta.';
-          break;
-        default:
-          welcomeMessage = 'Hola, soy Ana, tu asistente virtual de MyHosp. Para activarme solo di "Ana" o presiona el botón del micrófono, y para desactivarme di "Para Ana" o "apágate". Puedo ayudarte a navegar por todas las secciones: Inicio, Nosotros, Funcionalidades, Beneficios, App Móvil, Testimonios o Contacto. Solo di "llévame a" seguido del nombre de la sección. También puedo leer el contenido de cualquier sección diciendo "lee sección" seguido del nombre de la sección.';
-          break;
+      // Comprobar si Ana está habilitada
+      if (localStorage.getItem('anaEnabled') !== 'true') {
+        // Si está deshabilitada, solo iniciar escucha de activación sin mensaje
+        this.startActivationListening();
+        return;
       }
 
-      // Mostrar el mensaje completo en el estado del asistente
-      this.assistantStatus.textContent = welcomeMessage;
-      this.assistantStatus.classList.add('visible');
-      this.assistantStatus.classList.add('welcome');
-      this.assistantStatus.classList.remove('listening');
-      this.assistantStatus.classList.remove('active');
+      // Activar el asistente visualmente
+      this.anaAssistant.classList.add('active');
+
+      // Mensaje de bienvenida (solo para la página principal)
+      const welcomeMessage = 'Hola, soy Ana, tu asistente de voz en MyHosp. Puedo ayudarte a navegar por las distintas secciones de la página. También puedo leer el contenido para ti. Di mi nombre "Ana" cuando necesites mi ayuda.';
+      
+      // Mostrar mensaje de estado
+      this.updateUI(false, 'Bienvenido a MyHosp', true);
 
       // Hablar el mensaje de bienvenida
       this.speak(welcomeMessage, true);
@@ -649,6 +597,7 @@ class Assistant {
       }, estimatedDuration); // Tiempo calculado según longitud del mensaje
     }, 1500);
   }
+  
   startActivationListening() {
     // Siempre permitir la activación, incluso si Ana está hablando
     if (this.activationRecognition && !this.isActivated && !this.isActivationListening) {
@@ -669,6 +618,7 @@ class Assistant {
       }
     }
   }
+  
   startListening() {
     // Permitir que se inicie el reconocimiento incluso si Ana está hablando (para interrupciones)
     if (this.recognition && !this.isListening) {
@@ -691,6 +641,7 @@ class Assistant {
       this.recognition.stop();
     }
   }
+  
   updateUI(isListening, message, isActive = this.isActivated, isInterrupted = false) {
     // Actualizar botón de micrófono
     this.micButton.classList.toggle('listening', isListening);
@@ -707,49 +658,15 @@ class Assistant {
       this.assistantStatus.classList.toggle('active', isActive);
       this.assistantStatus.classList.toggle('welcome', !isActive && !isListening);
       
-      // Nuevo: manejar el estado de interrupción
+      // Manejar el estado de interrupción
       this.assistantStatus.classList.toggle('interrupted', isInterrupted);
     } else {
       this.assistantStatus.classList.remove('visible');
     }
-  }  processCommand(command) {
+  }
+
+  processCommand(command) {
     console.log('Procesando comando:', command);
-    
-    // Definir constantes de navegación primero para que estén disponibles en todo el método
-    const navigationKeywords = {
-      'inicio': {
-        target: '#inicio',
-        aliases: ['principal', 'home', 'empezar', 'comienzo', 'página principal', 'principio']
-      },
-      'nosotros': {
-        target: '#sobre-nosotros',
-        aliases: ['sobre nosotros', 'quiénes somos', 'acerca de', 'empresa', 'organización', 'conocenos']
-      },
-      'funcionalidades': {
-        target: '#funcionalidades',
-        aliases: ['servicios', 'features', 'funciones', 'características', 'qué hacemos', 'capacidades']
-      },
-      'testimonios': {
-        target: '#testimonios',
-        aliases: ['opiniones', 'comentarios', 'experiencias', 'clientes', 'reseñas', 'valoraciones']
-      },
-      'contacto': {
-        target: '#contacto',
-        aliases: ['contáctanos', 'comunicar', 'mensaje', 'email', 'contactar', 'escribir', 'ubicación']
-      },
-      'beneficios': {
-        target: '#beneficios',
-        aliases: ['ventajas', 'beneficio', 'ventaja', 'provecho', 'utilidad', 'valor agregado']
-      },
-      'app móvil': {
-        target: '#app-movil',
-        aliases: ['aplicación', 'móvil', 'smartphone', 'celular', 'android', 'iphone', 'app', 'aplicación móvil']
-      },
-      'ingresar': {
-        target: 'login.html',
-        aliases: ['acceder', 'entrar', 'login', 'iniciar sesión', 'cuenta']
-      }
-    };
     
     // Si Ana está hablando, detener la síntesis de voz para permitir la interrupción
     if (this.isSpeaking) {
@@ -769,7 +686,7 @@ class Assistant {
     // Reiniciar el temporizador de inactividad al recibir un comando
     this.resetInactivityTimer();
 
-    // Comprobar comandos de apagado primero - aseguramos reconocer todas las variantes
+    // Comprobar comandos de apagado primero
     if (command.includes('para ana') || command.includes('apágate') ||
       command.includes('adiós ana') || command.includes('adios ana') ||
       command.includes('hasta luego ana') || command.includes('desactivate')) {
@@ -790,16 +707,16 @@ class Assistant {
           return; // Si se procesó un comando específico de registro, terminamos
         }
         break;
-    }    // Si llegamos aquí, procesamos comandos genéricos o navegación
-    // Usamos this.navigationKeywords que ya está definido en el constructor
-
-    // Mejorar la detección de comandos de lectura
+    }
+    
+    // Detectar comandos de lectura
     if (command.includes('lee sección') || command.includes('léeme') ||
       command.includes('leer') || command.includes('leer contenido') ||
       command.match(/lee\s+[a-z]+/) || command.includes('qué dice')) {
       
       console.log("Detectado comando de lectura:", command);
-        // Usar el mismo mapa de navegación que ya hemos definido
+      
+      // Usar el mapa de navegación para determinar qué sección leer
       const sections = {};
       for (const section in this.navigationKeywords) {
         sections[section] = this.navigationKeywords[section].target;
@@ -829,7 +746,9 @@ class Assistant {
         }
         
         if (targetSection) break;
-      }// Si se encontró una sección válida
+      }
+      
+      // Si se encontró una sección válida
       if (targetSection) {
         console.log(`Leyendo sección: ${targetSection}`);
         const sectionTarget = this.navigationKeywords[targetSection].target;
@@ -895,7 +814,10 @@ class Assistant {
         // Si menciona leer pero no especifica qué sección
         this.speak("¿Qué sección te gustaría que leyera? Puedes decir 'lee inicio', 'lee funcionalidades', 'lee beneficios', 'lee app móvil', 'lee testimonios' o 'lee contacto'.");
         return;
-      }    }    // Verificar si es un comando de navegación primero    // Primero, intentar navegación directa en cliente para una respuesta más rápida
+      }
+    }
+    
+    // Verificar si es un comando de navegación
     let targetSection = null;
     let sectionName = null;
     
@@ -958,19 +880,22 @@ class Assistant {
           }, 2000);
         }
       }
-    }    // Enviar comando al servidor solo si no hemos encontrado una navegación en el cliente
-    // o si queremos que el servidor confirme la acción
+    }
+    
+    // Enviar comando al servidor solo si no hemos encontrado una navegación en el cliente
     if (targetSection) {
       if (targetSection.startsWith('#')) {
         // No enviamos al servidor si ya hemos navegado en el cliente para evitar mensajes duplicados
         // this.socket.emit('voiceCommand', `navegar:${targetSection.substring(1)} ${command}`);
+        return;
       }
     } else {
+      // Si no se procesó localmente, enviar al servidor
       this.socket.emit('voiceCommand', command);
     }
   }
 
-  // Nuevo método para procesar comandos específicos de la página de login
+  // Método para procesar comandos específicos de la página de login
   processLoginCommands(command) {
     // Comando para ayuda con el formulario de login
     if (command.includes('ayuda') || command.includes('qué debo hacer') || 
@@ -985,7 +910,7 @@ class Assistant {
       this.speak('Para recuperar tu contraseña, haz clic en el enlace "¿Olvidaste tu contraseña?" debajo del formulario.');
       
       // Resaltar el enlace visualmente
-      const forgotPasswordLink = document.querySelector('.forgot-password');
+      const forgotPasswordLink = document.querySelector('a[href="#"].small');
       if (forgotPasswordLink) {
         forgotPasswordLink.classList.add('highlight-section');
         setTimeout(() => {
@@ -1018,7 +943,7 @@ class Assistant {
     return false; // No se procesó ningún comando específico
   }
 
-  // Nuevo método para procesar comandos específicos de la página de registro
+  // Método para procesar comandos específicos de la página de registro
   processRegisterCommands(command) {
     // Comando para ayuda con el formulario de registro
     if (command.includes('ayuda') || command.includes('qué debo hacer') || 
@@ -1104,6 +1029,34 @@ class Assistant {
       return "Lo siento, no pude leer el contenido de esta sección debido a un error.";
     }
   }
+
+  // Iniciar temporizador de inactividad
+  startInactivityTimer() {
+    this.clearInactivityTimer();
+    this.inactivityTimer = setTimeout(() => {
+      if (this.isActivated) {
+        console.log('Desactivando asistente por inactividad');
+        this.deactivateAssistant('inactivity');
+      }
+    }, this.inactivityTimeout);
+  }
+
+  // Reiniciar temporizador de inactividad
+  resetInactivityTimer() {
+    this.clearInactivityTimer();
+    if (this.isActivated) {
+      this.startInactivityTimer();
+    }
+  }
+
+  // Limpiar temporizador de inactividad
+  clearInactivityTimer() {
+    if (this.inactivityTimer) {
+      clearTimeout(this.inactivityTimer);
+      this.inactivityTimer = null;
+    }
+  }
+
   speak(text, isWelcome = false, onEndCallback = null) {
     if ('speechSynthesis' in window) {
       // Detener cualquier síntesis de voz en curso
@@ -1136,11 +1089,6 @@ class Assistant {
             this.startListening();
           }
           
-          // Mostrar el botón de silenciar cuando Ana está hablando
-          if (this.muteButton) {
-            this.muteButton.style.display = 'flex';
-          }
-          
           // Reiniciar el temporizador de inactividad cuando Ana está hablando
           this.resetInactivityTimer();
 
@@ -1154,11 +1102,6 @@ class Assistant {
         utterance.onend = () => {
           // Ya no está hablando
           this.isSpeaking = false;
-          
-          // Ocultar el botón de silenciar cuando Ana termina de hablar
-          if (this.muteButton) {
-            this.muteButton.style.display = 'none';
-          }
           
           // Si hay una función de callback para cuando termine de hablar
           if (onEndCallback && typeof onEndCallback === 'function') {

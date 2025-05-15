@@ -1,0 +1,301 @@
+/**
+ * Estilos unificados para las notificaciones y diálogos del asistente Ana
+ * Este archivo reúne todos los estilos relacionados con notificaciones para
+ * mantener la coherencia visual y facilitar el mantenimiento
+ */
+
+/* Modal de consentimiento */
+.ana-consent-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.ana-consent-overlay.hiding {
+  opacity: 0;
+}
+
+.ana-consent-modal {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem;
+  animation: fadeIn 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.ana-consent-modal.hiding {
+  transform: translateY(-30px);
+  opacity: 0;
+}
+
+.ana-consent-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.ana-consent-header i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.ana-consent-body {
+  margin-bottom: 1.5rem;
+}
+
+.ana-consent-footer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.consent-features {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.consent-features li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.consent-features li i {
+  color: var(--primary-color);
+  margin-right: 0.5rem;
+}
+
+.consent-note {
+  color: #666;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Notificación inicial sobre Ana */
+.ana-initial-notification {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  max-width: 420px;
+  width: 90%;
+  overflow: hidden;
+  animation: slideInRight 0.5s ease-out forwards;
+  margin-bottom: 1rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ana-initial-notification.hiding {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+.ana-initial-notification.simplified {
+  max-width: 350px;
+  font-size: 0.9rem;
+}
+
+.initial-notification-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.initial-notification-header i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.initial-notification-header h4 {
+  margin-bottom: 0;
+  flex-grow: 1;
+  font-size: 1.2rem;
+}
+
+.close-notification {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+}
+
+.initial-notification-body {
+  padding: 1rem;
+}
+
+.simplified .initial-notification-body {
+  padding: 0.8rem;
+}
+
+.initial-notification-body p {
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+}
+
+.simplified .initial-notification-body p:last-child {
+  margin-bottom: 0;
+}
+
+.instruction-group {
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.instruction-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.capability {
+  margin-bottom: 0.3rem;
+  padding-left: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.initial-notification-footer {
+  padding: 0.8rem 1rem;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.simplified .initial-notification-footer {
+  justify-content: center;
+}
+
+.ok-button {
+  min-width: 100px;
+}
+
+.dont-show-again {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  color: #6c757d;
+}
+
+.dont-show-again input {
+  margin-right: 0.5rem;
+}
+
+/* Notificaciones pequeñas del asistente */
+.assistant-notification {
+  background-color: white;
+  border-left: 4px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  transform: translateX(50px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.assistant-notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.assistant-notification.success {
+  border-left-color: #28a745;
+}
+
+.assistant-notification.warning {
+  border-left-color: #ffc107;
+}
+
+.assistant-notification.error {
+  border-left-color: #dc3545;
+}
+
+.assistant-notification.info {
+  border-left-color: #17a2b8;
+}
+
+.assistant-notification i {
+  margin-right: 10px;
+}
+
+.assistant-notification.success i {
+  color: #28a745;
+}
+
+.assistant-notification.warning i {
+  color: #ffc107;
+}
+
+.assistant-notification.error i {
+  color: #dc3545;
+}
+
+.assistant-notification.info i {
+  color: #17a2b8;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Diálogo de reactivación */
+.ana-reactivation-dialog {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1050;
+  max-width: 300px;
+  animation: fadeIn 0.3s ease;
+}
+
+.reactivation-content {
+  text-align: center;
+}
+
+.reactivation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}

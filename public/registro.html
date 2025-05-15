@@ -13,11 +13,12 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="./css/style.css" />
     <!-- Estilos específicos para autenticación -->
-    <link rel="stylesheet" href="./css/auth.css" />
-    <!-- Estilos del asistente -->
+    <link rel="stylesheet" href="./css/auth.css" />    <!-- Estilos del asistente -->
     <link rel="stylesheet" href="./css/asistente.css" />
     <!-- Estilos para el botón de ayuda de Ana -->
     <link rel="stylesheet" href="./css/ana-help-button.css" />
+    <!-- Estilos unificados para notificaciones -->
+    <link rel="stylesheet" href="./css/notifications.css" />
     <style>
         /* Estilos específicos para mejorar la página de registro */
         @media (max-width: 991px) {
@@ -208,15 +209,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>    <!-- Socket.IO -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     
-    <!-- Script para notificación inicial sobre capacidades de Ana -->
-    <script src="./js/initial-notification.js"></script>
-    
-    <!-- Script de consentimiento para Ana -->
-    <script src="./js/ana-consent.js"></script>
+    <!-- Gestor de notificaciones unificado -->
+    <script src="./js/notification-manager.js"></script>
     
     <!-- Script para controlar los botones del asistente -->
-    <script src="./js/assistant-controls.js"></script>    <!-- Asistente virtual -->
-    <script src="./js/ViewModels/assistant.js"></script>
+    <script src="./js/assistant-controls.js"></script>
+    
+    <!-- Asistente virtual (versión refactorizada) -->
+    <script src="./js/ViewModels/assistant-refactored.js"></script>
 
     <!-- Botón de ayuda de Ana -->
     <script src="./js/ana-help-button.js"></script>

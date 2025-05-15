@@ -268,7 +268,52 @@ function processCommand(command) {
         }
       }
     }
-  }  // Respuestas a preguntas comunes
+  }  // Detectar comandos de lectura de secciones
+  if (command.includes('lee sección') || command.includes('léeme') ||
+      command.includes('leer') || command.includes('leer contenido') ||
+      command.match(/lee\s+[a-z]+/) || command.includes('qué dice')) {
+    
+    console.log("Detectado comando de lectura en servidor:", command);
+    
+    // Verificar qué sección se quiere leer
+    let sectionToRead = null;
+    let sectionName = null;
+    
+    for (const [key, value] of Object.entries(navigationMap)) {
+      if (command.includes(key)) {
+        sectionToRead = value.target;
+        sectionName = key;
+        break;
+      }
+      
+      // Verificar aliases
+      for (const alias of value.aliases) {
+        if (command.includes(alias)) {
+          sectionToRead = value.target;
+          sectionName = key;
+          break;
+        }
+      }
+      
+      if (sectionToRead) break;
+    }
+    
+    if (sectionToRead) {
+      return {
+        text: `Leyendo sección de ${sectionName}`,
+        action: 'read',
+        target: sectionToRead,
+        sectionName: sectionName
+      };
+    } else {
+      return {
+        text: "¿Qué sección te gustaría que leyera? Puedes decir 'lee inicio', 'lee funcionalidades', 'lee beneficios', 'lee app móvil', 'lee testimonios' o 'lee contacto'.",
+        action: 'speak'
+      };
+    }
+  }
+  
+  // Respuestas a preguntas comunes
   if (command.includes('qué puedes hacer') || command.includes('ayuda') || command.includes('cómo funciona')) {
     return {
       text: 'Soy Ana, tu asistente de voz. Puedo ayudarte a navegar diciendo frases como "llévame a inicio", "muéstrame nosotros", "ir a funcionalidades", "quiero ver beneficios", "vamos a app móvil", "muéstrame testimonios", "llévame a contacto" o "quiero ingresar". También puedo leer contenido si dices "lee sección" seguido del nombre. Puedes interrumpirme en cualquier momento simplemente hablando mientras estoy respondiendo, y puedes desactivarme diciendo "para Ana" o "apágate".',
