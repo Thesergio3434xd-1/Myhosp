@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MyHosp - Citas</title>
+    <title>MyHosp - Consultas en línea</title>
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -156,6 +156,35 @@
       font-size: 0.8rem;
       color: gray;
     }
+
+
+    .nav-pills .nav-link.active {
+      background-color: #f8f9fa;
+      color: #0d6efd;
+    }
+    .card-specialty {
+      font-size: 0.8rem;
+      background-color: #e5f9f5;
+      color: #1c9c89;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .appointment-btn {
+      background-color: #3ea7c1;
+      color: white;
+      border: none;
+    }
+    .appointment-btn:hover {
+      background-color: #2f90a8;
+    }
+    .profile-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+ 
     </style>
   </head>
   <body>
@@ -187,203 +216,228 @@
           <img src="img/logo.png" alt="Logo" width="80">
         </div>
         <ul class="nav flex-column">
-            <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.html"><i
-                class="bi bi-speedometer2"></i>
-              Dashboard</a></li>
-          <li><a class="nav-link" href="citas.html"><i
-                class="bi bi-calendar3"></i> Citas</a></li>
-          <li><a class="nav-link" href="historial_medico.html"><i
-                class="bi bi-folder2-open"></i> Historial
-              Médico</a></li>
-          <li><a class="nav-link active" href="consultas_online.html"><i
-                class="bi bi-camera-video"></i> Consulta
-              Online</a></li>
-          <li><a class="nav-link" href="ayuda.html"><i
-                class="bi bi-question-circle"></i>
-              Ayuda</a></li>
-        </ul>
-      </div>
-      <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
-        Salir</button>
-    </div>
-
-    <div class="main">
-      <!-- Navbar Perfil -->
-      <div
-        class="topbar d-flex justify-content-between align-items-center px-4"
-        style="background-color: #0d99b4; color: white; height: 60px;">
-        <div>
-          <strong>Hola, Neymar Tapias</strong><br>
-          <span
-            style="font-weight: 700; font-size: 1.25rem;">Historial
-            Médico</span>
+          <ul class="nav flex-column">
+            <li><a class="nav-link" href="dashboard.html"><i
+                  class="bi bi-speedometer2"></i>
+                Dashboard</a></li>
+            <li><a class="nav-link" href="citas.html"><i
+                  class="bi bi-calendar3"></i> Citas</a></li>
+            <li><a class="nav-link" href="historial_medico.html"><i
+                  class="bi bi-folder2-open"></i> Historial
+                Médico</a></li>
+            <li><a class="nav-link active" href="consultas_online.html"><i
+                  class="bi bi-camera-video"></i> Consulta
+                Online</a></li>
+            <li><a class="nav-link" href="ayuda.html"><i
+                  class="bi bi-question-circle"></i>
+                Ayuda</a></li>
+          </ul>
         </div>
+        <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
+          Salir</button>
+      </div>
 
-        <div class="d-flex align-items-center gap-3 ms-auto">
-          <!-- Dropdown idioma -->
-          <div class="dropdown">
-            <button
-              class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-              type="button" id="dropdownIdioma"
-              data-bs-toggle="dropdown" aria-expanded="false"
-              style="background: transparent; border: none; font-size: 0.85rem;">
-              <img src="https://flagcdn.com/w20/co.png" alt="ES"
-                width="18" height="13"
-                style="object-fit: cover; border-radius: 2px;">
-              ES
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="dropdownIdioma"
-              style="min-width: 70px; font-size: 0.85rem;">
-              <li>
-                <a
-                  class="dropdown-item d-flex align-items-center gap-2"
-                  href="#">
-                  <img src="https://flagcdn.com/w20/co.png"
-                    alt="ES" width="18" height="13"
-                    style="object-fit: cover; border-radius: 2px;">
-                  ES
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item d-flex align-items-center gap-2"
-                  href="#">
-                  <img src="https://flagcdn.com/w20/us.png"
-                    alt="EN" width="18" height="13"
-                    style="object-fit: cover; border-radius: 2px;">
-                  EN
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Notificaciones -->
-          <button type="button"
-            class="btn position-relative btn-transparent text-white p-0"
-            style="background: transparent; border: none; font-size: 1rem;">
-            <i class="bi bi-bell"></i>
+      <div class="main">
+        <!-- Navbar Perfil -->
+        <div
+          class="topbar d-flex justify-content-between align-items-center px-4"
+          style="background-color: #0d99b4; color: white; height: 60px;">
+          <div>
+            <strong>Hola, Neymar Tapias</strong><br>
             <span
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-              3
-              <span class="visually-hidden">notificaciones
-                nuevas</span>
-            </span>
-          </button>
+              style="font-weight: 700; font-size: 1.25rem;">Consultas en línea</span>
+          </div>
 
-          <!-- Dropdown perfil -->
-          <div class="dropdown">
-            <button
-              class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-              type="button" id="dropdownPerfil"
-              data-bs-toggle="dropdown" aria-expanded="false"
-              style="background: transparent; border: none;">
-              <img
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                alt="User" width="32" height="32"
-                class="rounded-circle">
-              <span class="fw-semibold">Neymar Tapias</span>
+          <div class="d-flex align-items-center gap-3 ms-auto">
+            <!-- Dropdown idioma -->
+            <div class="dropdown">
+              <button
+                class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
+                type="button" id="dropdownIdioma"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                style="background: transparent; border: none; font-size: 0.85rem;">
+                <img src="https://flagcdn.com/w20/co.png" alt="ES"
+                  width="18" height="13"
+                  style="object-fit: cover; border-radius: 2px;">
+                ES
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownIdioma"
+                style="min-width: 70px; font-size: 0.85rem;">
+                <li>
+                  <a
+                    class="dropdown-item d-flex align-items-center gap-2"
+                    href="#">
+                    <img src="https://flagcdn.com/w20/co.png"
+                      alt="ES" width="18" height="13"
+                      style="object-fit: cover; border-radius: 2px;">
+                    ES
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item d-flex align-items-center gap-2"
+                    href="#">
+                    <img src="https://flagcdn.com/w20/us.png"
+                      alt="EN" width="18" height="13"
+                      style="object-fit: cover; border-radius: 2px;">
+                    EN
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Notificaciones -->
+            <button type="button"
+              class="btn position-relative btn-transparent text-white p-0"
+              style="background: transparent; border: none; font-size: 1rem;">
+              <i class="bi bi-bell"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="font-size: 0.6rem; padding: 0.15em 0.3em;">
+                3
+                <span class="visually-hidden">notificaciones
+                  nuevas</span>
+              </span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="dropdownPerfil">
-              <li><a class="dropdown-item" href="perfil.html">Mi
-                  Perfil</a></li>
-              <li><a class="dropdown-item"
-                  href="#">Configuración</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger"
-                  href="#">Cerrar Sesión</a></li>
+
+            <!-- Dropdown perfil -->
+            <div class="dropdown">
+              <button
+                class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
+                type="button" id="dropdownPerfil"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                style="background: transparent; border: none;">
+                <img
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  alt="User" width="32" height="32"
+                  class="rounded-circle">
+                <span class="fw-semibold">Neymar Tapias</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownPerfil">
+                <li><a class="dropdown-item" href="perfil.html">Mi
+                    Perfil</a></li>
+                <li><a class="dropdown-item"
+                    href="#">Configuración</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger"
+                    href="#">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+   
+        <!-- Contenido principal -->
+        <div class="p-4">
+          <ul class="nav nav-pills mb-4">
+              <li class="nav-item">
+                <a class="nav-link active" style="color: #0d99b4;">Próximas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" style="color: #0d99b4;">Completas</a>
+              </li>
             </ul>
-          </div>
 
+          <div class="bg-white p-4 shadow rounded">
+
+            <!-- Título -->
+            <h3 class="text-center mb-4" style="color: #0d99b4;">Consultas en línea</h3>
+
+            <!-- Cards -->
+            <div class="row g-3">
+              <!-- Card 1 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card p-3 shadow-sm">
+                  <div class="d-flex align-items-center mb-2">
+                    <img src="https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg" alt="Doctor"
+                      class="profile-img me-2">
+                    <div>
+                      <strong>Pablo Ruiz Hernández</strong><br>
+                      <small>Médico general | 4 años de experiencia</small>
+                      <div class="card-specialty mt-1">Medicina general</div>
+                    </div>
+                  </div>
+                  <div class="mt-3 mb-2">
+                    <strong>Disponible</strong><br>
+                    <i class="bi bi-clock"></i> Jueves, 09:00 AM
+                  </div>
+                  <button class="btn appointment-btn w-100">Cita
+                    agendada</button>
+                </div>
+              </div>
+
+              <hr>
+
+              <!-- Card 2 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card p-3 shadow-sm">
+                  <div class="d-flex align-items-center mb-2">
+                    <img src="https://img.freepik.com/foto-gratis/hermosa-joven-doctora-mirando-camara-oficina_1301-7807.jpg?semt=ais_hybrid&w=740" alt="Doctora"
+                      class="profile-img me-2">
+                    <div>
+                      <strong>Amanda Otero Ramos</strong><br>
+                      <small>Especialista | 12 años de experiencia</small>
+                      <div class="card-specialty mt-1">Psicología</div>
+                    </div>
+                  </div>
+                  <div class="mt-3 mb-2">
+                    <strong>Disponible</strong><br>
+                    <i class="bi bi-clock"></i> Lun, Sab — 10:00 AM–01:00 PM
+                  </div>
+                  <button class="btn appointment-btn w-100">Cita
+                    agendada</button>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="card p-3 shadow-sm">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="profile-img bg-secondary me-2"></div>
+                    <div>
+                      <strong>Por confirmar especialista</strong><br>
+                      <small> - | - </small><br>
+                      <div class="card-specialty mt-1">Gastroenterología</div>
+                    </div>
+                  </div>
+                  <div class="mt-3 mb-2">
+                    <strong>Disponible</strong><br>
+                    <i class="bi bi-clock"></i> Martes 15 de Febrero — 3:00
+                    PM–4:00 PM
+                  </div>
+                  <button class="btn appointment-btn w-100">Cita
+                    agendada</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
-    <br><br>
-    <!-- Contenido principal -->
-     <div class="p-4">  
-        <div class="bg-white p-4 shadow rounded">
 
-        </div>  
-     </div>
-    
-    </div>
-    <!-- Modal para agregar nueva categoría -->
+      <!-- Bootstrap JS -->
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-      data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title text-center" id="staticBackdropLabel"
-              style="color: #0d99b4;">Crear categoria del historial medico</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"
-              aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="nombreCategoria" class="form-label">Nombre de la
-                  categoría</label>
-                <input type="text" class="form-control" id="nombreCategoria"
-                  placeholder="Ingrese el nombre de la categoría">
-              </div>
+      <!-- Socket.IO -->
+      <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+      <!-- Script de notificación inicial para el asistente -->
+      <script src="./js/activation-prompt.js"></script>
 
-              <div class="mb-3">
-                <label for="descripcionCategoria"
-                  class="form-label">Descripción</label>
-                <input type="text" class="form-control"
-                  id="descripcionCategoria"
-                  placeholder="Ingrese la descripción de la categoría">
-              </div>
+      <!-- Script para notificación inicial sobre capacidades de Ana -->
+      <script src="./js/initial-notification.js"></script>
 
-              <div class="mb-3">
-                <label for="colorCategoria" class="form-label">Color de la
-                  categoría</label>
-                <input type="color" class="form-control"
-                  id="descripcionCategoria"
-                  placeholder="Ingrese la descripción de la categoría">
-              </div>
+      <!-- Script de consentimiento para Ana -->
+      <script src="./js/ana-consent.js"></script>
 
-              <div class="mb-4">
-                <label for="formFile" class="form-label">Default file input example</label>
-                <input class="form-control" type="file" id="formFile">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary"
-              data-bs-dismiss="modal"  style="background-color: #0d99b4;">Volver</button>
-            <button type="button" class="btn btn-primary" style="background-color: #0d99b4;">Crear
-              Categoria</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <!-- Script para controlar los botones del asistente -->
+      <script src="./js/assistant-controls.js"></script>
+      <!-- Asistente de voz -->
+      <script type="module" src="./js/ViewModels/assistant.js"></script>
 
-    
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <!-- Socket.IO -->
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    <!-- Script de notificación inicial para el asistente -->
-  <script src="./js/activation-prompt.js"></script>
-  
-  <!-- Script para notificación inicial sobre capacidades de Ana -->
-  <script src="./js/initial-notification.js"></script>
-  
-  <!-- Script de consentimiento para Ana -->
-  <script src="./js/ana-consent.js"></script>
-  
-  <!-- Script para controlar los botones del asistente -->
-  <script src="./js/assistant-controls.js"></script>
-  <!-- Asistente de voz -->
-  <script type="module" src="./js/ViewModels/assistant.js"></script>
-  
-  <!-- Botón de ayuda de Ana -->
-  <script src="./js/ana-help-button.js"></script>
-  </body>
-</html>
+      <!-- Botón de ayuda de Ana -->
+      <script src="./js/ana-help-button.js"></script>
+    </body>
+  </html>
