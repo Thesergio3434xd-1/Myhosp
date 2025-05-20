@@ -113,49 +113,58 @@
         color: white;
         font-size: 20px;
         }
-    .card-bordered-red {
-      border: 1px solid #d67c7c;
-      border-radius: 8px;
-    }
-    .card-bordered-green {
-      border: 1px solid #66a661;
-      border-radius: 8px;
-    }
-    .star-yellow {
-      color: #f9d148;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .star-grey {
-      color: #bfbfbf;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .card-header-icons {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #777;
-    }
-    .card-img-container {
-      position: relative;
-      padding-top: 10px;
-    }
-    .card-text-center {
-      text-align: center;
-      margin-top: 10px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .text-date {
-      font-size: 0.8rem;
-      color: gray;
-    }
+    
+                .calendar-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.08);
+        }
+
+        .fc .fc-toolbar-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        text-align: center;
+        width: 100%;
+        }
+
+        .fc-toolbar-chunk:nth-child(1),
+        .fc-toolbar-chunk:nth-child(3) {
+        flex: 0 0 auto;
+        }
+
+        .fc-event {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0;
+        }
+
+        .fc-event-title {
+        background-color: #0d99b4;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        display: inline-block;
+        text-decoration: none !important; /* ✅ Quitar subrayado */
+        }
+
+        .fc-event-title-container a {
+        text-decoration: none !important;
+        color: inherit;
+        }
+
+        .fc-daygrid-day-number {
+        color: #000;
+        font-weight: 500;
+        text-decoration: none !important;
+        }
+        .fc-col-header-cell-cushion {
+        text-decoration: none !important;
+        color: #000; /* opcional: para que no estén azules */
+        }
     </style>
     </head>
     <body>
@@ -307,12 +316,14 @@
                 <!-- Contenido principal -->
                 <div class="p-4">
                     <div class="d-flex gap-2 mb-4">
-                        <button class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop"
-                            style="background-color: #0d99b4;  border-color: #0d99b4; ">+
+                        <button class="btn btn-primary"
+                            style="background-color: #0d99b4;  border-color: #0d99b4; ">
+                            +
                             Nueva
                             cita</button>
-                        <a class="btn btn-secondary" style="background-color: #0d99b4;  border-color: #0d99b4;" href="ver_citas.html"> 
+                        <a class="btn btn-secondary"
+                            style="background-color: #0d99b4;  border-color: #0d99b4;"
+                            href="ver_citas.html">
                             <i class="bi bi-list-ul"></i> Ver
                             todas las citas
                         </a>
@@ -320,144 +331,82 @@
 
                     <div class="row">
                         <div class="col-8">
-                            <div class="bg-white p-4 shadow rounded bg-white p-4 shadow rounded">
-                                 <h2 class="text-center mb-4" style="color: #0d99b4;">
-                            Citas
-                        </h2>
+                            <div
+                                class="bg-white p-4 shadow rounded bg-white p-4 shadow rounded">
+                                <h2 class="text-center mb-4"
+                                    style="color: #0d99b4;">
+                                    Calendario de citas
+                                </h2>
+                                <div class="container">
+                                    <div id="calendar"></div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="bg-white p-4 shadow rounded bg-white p-4 shadow rounded">
-                                 <h4 class="fw-bold">Citas próximas</h4>
-  <hr>
+                            <div
+                                class="bg-white p-4 shadow rounded bg-white p-4 shadow rounded">
+                                <h4 class="fw-bold">Citas próximas</h4>
+                                <hr>
 
-  <!-- Hoy -->
-  <p class="fw-semibold mb-1">Hoy</p>
-  <div class="card bg-light mb-3">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">No hay cita el día de hoy</p>
-      <small class="text-muted d-block">Sin hora</small>
-      <small class="text-muted">Enero 03, 2025</small>
-    </div>
-  </div>
+                                <!-- Hoy -->
+                                <p class="fw-semibold mb-1">Hoy</p>
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body p-3">
+                                        <p class="mb-1 fw-semibold">No hay cita
+                                            el día de hoy</p>
+                                        <small class="text-muted d-block">Sin
+                                            hora</small>
+                                        <small class="text-muted">Enero 03,
+                                            2025</small>
+                                    </div>
+                                </div>
 
-  <!-- Mañana -->
-  <p class="fw-semibold mt-4 mb-1">Mañana</p>
-  <div class="card bg-light mb-2">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">Examen de sangre</p>
-      <small class="text-muted d-block">07:00am - 08:00am</small>
-      <small class="text-muted">Enero 04, 2025</small>
-    </div>
-  </div>
+                                <!-- Mañana -->
+                                <p class="fw-semibold mt-4 mb-1">Mañana</p>
+                                <div class="card bg-light mb-2">
+                                    <div class="card-body p-3">
+                                        <p class="mb-1 fw-semibold">Examen de
+                                            sangre</p>
+                                        <small
+                                            class="text-muted d-block">07:00am -
+                                            08:00am</small>
+                                        <small class="text-muted">Enero 04,
+                                            2025</small>
+                                    </div>
+                                </div>
 
-  <div class="card bg-light mb-3">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">Medicina General</p>
-      <small class="text-muted d-block">14:00pm - 15:00pm</small>
-      <small class="text-muted">Enero 04, 2025</small>
-    </div>
-  </div>
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body p-3">
+                                        <p class="mb-1 fw-semibold">Medicina
+                                            General</p>
+                                        <small
+                                            class="text-muted d-block">14:00pm -
+                                            15:00pm</small>
+                                        <small class="text-muted">Enero 04,
+                                            2025</small>
+                                    </div>
+                                </div>
 
-  <!-- 24 de Enero -->
-  <p class="fw-semibold mt-4 mb-1">24 de Enero 2025</p>
-  <div class="card bg-light">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">Primera vez-Nutricionista</p>
-      <small class="text-muted d-block">10:00am - 11:00am</small>
-      <small class="text-muted">Enero 24, 2025</small>
-    </div>
-  </div>
+                                <!-- 24 de Enero -->
+                                <p class="fw-semibold mt-4 mb-1">24 de Enero
+                                    2025</p>
+                                <div class="card bg-light">
+                                    <div class="card-body p-3">
+                                        <p class="mb-1 fw-semibold">Primera
+                                            vez-Nutricionista</p>
+                                        <small
+                                            class="text-muted d-block">10:00am -
+                                            11:00am</small>
+                                        <small class="text-muted">Enero 24,
+                                            2025</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
-            <!-- Modal para agregar nueva categoría -->
-
-            <div class="modal fade" id="staticBackdrop"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center"
-                                id="staticBackdropLabel"
-                                style="color: #0d99b4;">Crear categoria del
-                                historial medico</h5>
-                            <button type="button" class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                               <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="especialidad" class="form-label">Especialidad</label>
-        <select class="form-select" id="especialidad">
-          <option selected>Psicología</option>
-          <option>Medicina General</option>
-          <option>Pediatría</option>
-        </select>
-      </div>
-      <div class="col-md-6">
-        <label for="medico" class="form-label">Médico</label>
-        <select class="form-select" id="medico">
-          <option selected>Dr. Alexander Moreno</option>
-          <option>Dra. Laura Gómez</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Tipo de cita</label><br>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="tipoCita" id="presencial" value="Presencial">
-        <label class="form-check-label" for="presencial">Presencial</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="tipoCita" id="virtual" value="Virtual" checked>
-        <label class="form-check-label" for="virtual">Virtual</label>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="fecha" class="form-label">Fecha de la cita</label>
-      <input type="date" class="form-control" id="fecha" value="2025-04-10">
-    </div>
-
-    <div class="mb-3">
-      <label for="hora" class="form-label">Hora de la cita</label>
-      <select class="form-select" id="hora">
-        <option selected>2:00 pm</option>
-        <option>10:00 am</option>
-        <option>4:00 pm</option>
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label for="problema" class="form-label">Problema</label>
-      <select class="form-select" id="problema">
-        <option selected>Depresión</option>
-        <option>Ansiedad</option>
-        <option>Estrés</option>
-      </select>
-    </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                                style="background-color: #0d99b4;">Volver</button>
-                            <button type="button" class="btn btn-primary"
-                                style="background-color: #0d99b4;">Crear
-                                Categoria</button>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Bootstrap JS -->
@@ -482,5 +431,30 @@
 
             <!-- Botón de ayuda de Ana -->
             <script src="./js/ana-help-button.js"></script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        initialDate: '2025-01-01',
+        headerToolbar: {
+          left: 'prev',
+          center: 'title',
+          right: 'next'
+        },
+        events: [
+          { title: '01', start: '2025-01-03' },
+          { title: '02', start: '2025-01-03' },
+          { title: '03', start: '2025-01-24' }
+        ]
+      });
+      calendar.render();
+    });
+  </script>
         </body>
     </html>
