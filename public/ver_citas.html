@@ -306,157 +306,163 @@
                 </div>
                 <!-- Contenido principal -->
                 <div class="p-4">
-                    <div class="d-flex gap-2 mb-4">
-                        <button class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop"
-                            style="background-color: #0d99b4;  border-color: #0d99b4; ">+
-                            Nueva
-                            cita</button>
-                        <a class="btn btn-secondary" style="background-color: #0d99b4;  border-color: #0d99b4;" href="ver_citas.html"> 
-                            <i class="bi bi-list-ul"></i> Ver
-                            todas las citas
-                        </a>
-                    </div>
+                    <ul class="nav nav-tabs mb-3">
+                        <li class="nav-item">
+                            <button class="nav-link active">Hoy</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link"
+                                style="color: #0d99b4;">Mañana</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link"
+                                style="color: #0d99b4;">Miércoles</button>
+                        </li>
+                        <li class="ms-auto">
+                            <select class="form-select form-select-sm w-auto">
+                                <option>ver 10</option>
+                                <option>ver 20</option>
+                                <option>ver 50</option>
+                            </select>
+                        </li>
+                    </ul>
 
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="bg-white p-4 shadow rounded bg-white p-4 shadow rounded">
-                                 <h2 class="text-center mb-4" style="color: #0d99b4;">
-                            Citas
-                        </h2>
+                    <!-- CITA -->
+                    <div class="card mb-2">
+                        <div class="card-body d-flex align-items-start gap-3">
+                            <div class="text-center">
+                                <div class="fw-bold">Lun</div>
+                                <div class="fs-5">15</div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="bg-white p-4 shadow rounded bg-white p-4 shadow rounded">
-                                 <h4 class="fw-bold">Citas próximas</h4>
-  <hr>
-
-  <!-- Hoy -->
-  <p class="fw-semibold mb-1">Hoy</p>
-  <div class="card bg-light mb-3">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">No hay cita el día de hoy</p>
-      <small class="text-muted d-block">Sin hora</small>
-      <small class="text-muted">Enero 03, 2025</small>
-    </div>
-  </div>
-
-  <!-- Mañana -->
-  <p class="fw-semibold mt-4 mb-1">Mañana</p>
-  <div class="card bg-light mb-2">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">Examen de sangre</p>
-      <small class="text-muted d-block">07:00am - 08:00am</small>
-      <small class="text-muted">Enero 04, 2025</small>
-    </div>
-  </div>
-
-  <div class="card bg-light mb-3">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">Medicina General</p>
-      <small class="text-muted d-block">14:00pm - 15:00pm</small>
-      <small class="text-muted">Enero 04, 2025</small>
-    </div>
-  </div>
-
-  <!-- 24 de Enero -->
-  <p class="fw-semibold mt-4 mb-1">24 de Enero 2025</p>
-  <div class="card bg-light">
-    <div class="card-body p-3">
-      <p class="mb-1 fw-semibold">Primera vez-Nutricionista</p>
-      <small class="text-muted d-block">10:00am - 11:00am</small>
-      <small class="text-muted">Enero 24, 2025</small>
-    </div>
-  </div>
+                            <div class="flex-grow-1">
+                                <div class="text-muted small">
+                                    <i class="bi bi-clock me-1"></i> 09:00am -
+                                    09:30am
+                                </div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-person me-1"></i> Juan
+                                    Carlos Villamizar Rojas
+                                </div>
+                                <div class="fw-semibold">Psicología por primera
+                                    vez</div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-light btn-sm dropdown-toggle"
+                                        data-bs-toggle="dropdown">Edit</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="#">Editar</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="#">Eliminar</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
-            <!-- Modal para agregar nueva categoría -->
+                    <!-- Repite bloques similares con diferentes datos -->
 
-            <div class="modal fade" id="staticBackdrop"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center"
-                                id="staticBackdropLabel"
-                                style="color: #0d99b4;">Crear categoria del
-                                historial medico</h5>
-                            <button type="button" class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                               <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="especialidad" class="form-label">Especialidad</label>
-        <select class="form-select" id="especialidad">
-          <option selected>Psicología</option>
-          <option>Medicina General</option>
-          <option>Pediatría</option>
-        </select>
-      </div>
-      <div class="col-md-6">
-        <label for="medico" class="form-label">Médico</label>
-        <select class="form-select" id="medico">
-          <option selected>Dr. Alexander Moreno</option>
-          <option>Dra. Laura Gómez</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Tipo de cita</label><br>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="tipoCita" id="presencial" value="Presencial">
-        <label class="form-check-label" for="presencial">Presencial</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="tipoCita" id="virtual" value="Virtual" checked>
-        <label class="form-check-label" for="virtual">Virtual</label>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="fecha" class="form-label">Fecha de la cita</label>
-      <input type="date" class="form-control" id="fecha" value="2025-04-10">
-    </div>
-
-    <div class="mb-3">
-      <label for="hora" class="form-label">Hora de la cita</label>
-      <select class="form-select" id="hora">
-        <option selected>2:00 pm</option>
-        <option>10:00 am</option>
-        <option>4:00 pm</option>
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label for="problema" class="form-label">Problema</label>
-      <select class="form-select" id="problema">
-        <option selected>Depresión</option>
-        <option>Ansiedad</option>
-        <option>Estrés</option>
-      </select>
-    </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                                style="background-color: #0d99b4;">Volver</button>
-                            <button type="button" class="btn btn-primary"
-                                style="background-color: #0d99b4;">Crear
-                                Categoria</button>
+                    <div class="card mb-2">
+                        <div class="card-body d-flex align-items-start gap-3">
+                            <div class="text-center">
+                                <div class="fw-bold">Mar</div>
+                                <div class="fs-5">16</div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="text-muted small">
+                                    <i class="bi bi-clock me-1"></i> 06:00am -
+                                    07:30am
+                                </div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-person me-1"></i>
+                                    Laboratorio
+                                </div>
+                                <div class="fw-semibold">Exámenes médico</div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-light btn-sm dropdown-toggle"
+                                        data-bs-toggle="dropdown">Edit</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="#">Editar</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="#">Eliminar</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="card mb-2">
+                        <div class="card-body d-flex align-items-start gap-3">
+                            <div class="text-center">
+                                <div class="fw-bold">Mier</div>
+                                <div class="fs-5">17</div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="text-muted small">
+                                    <i class="bi bi-clock me-1"></i> 09:00am -
+                                    09:30am
+                                </div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-person me-1"></i>
+                                    Juan Carlos Villamizar Rojas
+                                </div>
+                                <div class="fw-semibold">Psicología</div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-light btn-sm dropdown-toggle"
+                                        data-bs-toggle="dropdown">Edit</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="#">Editar</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="#">Eliminar</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-2">
+                        <div class="card-body d-flex align-items-start gap-3">
+                            <div class="text-center">
+                                <div class="fw-bold">Vier</div>
+                                <div class="fs-5">28</div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="text-muted small">
+                                    <i class="bi bi-clock me-1"></i> 05:00pm -
+                                    06:30am
+                                </div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-person me-1"></i>
+                                    Maria Eugenia Lourdes Martinez
+                                </div>
+                                <div class="fw-semibold">Endocrinologia por primera vez</div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-light btn-sm dropdown-toggle"
+                                        data-bs-toggle="dropdown">Edit</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="#">Editar</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="#">Eliminar</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
