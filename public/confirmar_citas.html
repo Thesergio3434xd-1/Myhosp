@@ -4,8 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>MyHosp - Citas</title>
-        <!-- Bootstrap CSS -->
-        <link
+       <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
             rel="stylesheet" />
         <!-- Font Awesome -->
@@ -27,198 +26,9 @@
         <link rel="stylesheet" href="./css/asistente.css" />
         <!-- Estilos para el botón de ayuda de Ana -->
         <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <style>
-        body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        }
-
-        .sidebar {
-        width: 240px;
-        height: 100vh;
-        background-color: #f8f9fa;
-        position: fixed;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 1rem;
-        border-right: 1px solid #dee2e6;
-        }
-
-        .sidebar .logo {
-        text-align: center;
-        margin-bottom: 2rem;
-        }
-
-        .sidebar .nav-link {
-        color: #495057;
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        display: flex;
-        align-items: center;
-        }
-
-        .sidebar .nav-link i {
-        margin-right: 10px;
-        }
-
-        .sidebar .nav-link.active {
-        background-color: #0d99b4;
-        color: white;
-        }
-
-        .sidebar .logout-btn {
-        width: 100%;
-        background-color: #0d99b4;
-        border: none;
-        border-radius: 8px;
-        color: white;
-        padding: 0.6rem;
-        }
-
-        .main {
-        margin-left: 240px;
-        background-color: #f1f3f4;
-        min-height: 100vh;
-        }
-
-        .topbar {
-        background-color: #0d99b4;
-        color: white;
-        padding: 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        }
-
-        .topbar .user-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        }
-
-        .topbar img {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        }
-
-        .fab {
-        position: fixed;
-        right: 20px;
-        bottom: 20px;
-        background-color: #0d99b4;
-        border-radius: 50%;
-        padding: 15px;
-        color: white;
-        font-size: 20px;
-        }
-    .card-bordered-red {
-      border: 1px solid #d67c7c;
-      border-radius: 8px;
-    }
-    .card-bordered-green {
-      border: 1px solid #66a661;
-      border-radius: 8px;
-    }
-    .star-yellow {
-      color: #f9d148;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .star-grey {
-      color: #bfbfbf;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .card-header-icons {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #777;
-    }
-    .card-img-container {
-      position: relative;
-      padding-top: 10px;
-    }
-    .card-text-center {
-      text-align: center;
-      margin-top: 10px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .text-date {
-      font-size: 0.8rem;
-      color: gray;
-    }
-
-           .calendar-container {
-        max-width: 900px;
-        margin: 40px auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.08);
-        }
-
-        .fc .fc-toolbar-title {
-        font-size: 1.6rem;
-        font-weight: 700;
-        text-align: center;
-        width: 100%;
-        }
-
-        .fc-toolbar-chunk:nth-child(1),
-        .fc-toolbar-chunk:nth-child(3) {
-        flex: 0 0 auto;
-        }
-
-        .fc-event {
-        background-color: transparent !important;
-        border: none !important;
-        padding: 0;
-        }
-
-        .fc-event-title {
-        background-color: #0d99b4;
-        color: #fff;
-        padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        display: inline-block;
-        text-decoration: none !important; /* ✅ Quitar subrayado */
-        }
-
-        .fc-event-title-container a {
-        text-decoration: none !important;
-        color: inherit;
-        }
-
-        .fc-daygrid-day-number {
-        color: #000;
-        font-weight: 500;
-        text-decoration: none !important;
-        }
-        .fc-col-header-cell-cushion {
-        text-decoration: none !important;
-        color: #000; /* opcional: para que no estén azules */
-        }
-
-        #fechaSeleccionada {
-        margin-bottom: 1rem; /* separa el texto de los botones */
-        }
-
-        #horarios {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-}
-    </style>
+        <link rel="stylesheet" href="./css/dashboard.css" />
+        <!-- Estilos unificados para notificaciones -->
+  <link rel="stylesheet" href="./css/notifications.css" />
     </head>
     <body>
         <!-- Asistente de voz Ana -->
@@ -290,9 +100,9 @@
                             type="button" id="dropdownIdioma"
                             data-bs-toggle="dropdown" aria-expanded="false"
                             style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w20/co.png" alt="ES"
-                                width="18" height="13"
-                                style="object-fit: cover; border-radius: 2px;">
+                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
+                                width="24" height="auto"
+                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
                             ES
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end"
@@ -302,9 +112,9 @@
                                 <a
                                     class="dropdown-item d-flex align-items-center gap-2"
                                     href="#">
-                                    <img src="https://flagcdn.com/w20/co.png"
-                                        alt="ES" width="18" height="13"
-                                        style="object-fit: cover; border-radius: 2px;">
+                                    <img src="https://flagcdn.com/w24/co.png"
+                                        alt="ES" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
                                     ES
                                 </a>
                             </li>
@@ -312,9 +122,9 @@
                                 <a
                                     class="dropdown-item d-flex align-items-center gap-2"
                                     href="#">
-                                    <img src="https://flagcdn.com/w20/us.png"
-                                        alt="EN" width="18" height="13"
-                                        style="object-fit: cover; border-radius: 2px;">
+                                    <img src="https://flagcdn.com/w24/us.png"
+                                        alt="EN" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
                                     EN
                                 </a>
                             </li>
@@ -469,7 +279,8 @@
                                     </select>
                                 </div>
                                 <button type="submit"
-                                    class="btn w-100 text-white"  style="background-color: #0d99b4;">Confirmar
+                                    class="btn w-100 text-white"
+                                    style="background-color: #0d99b4;">Confirmar
                                     cita</button>
                             </form>
                         </div>

@@ -27,136 +27,9 @@
         <link rel="stylesheet" href="./css/asistente.css" />
         <!-- Estilos para el botón de ayuda de Ana -->
         <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <style>
-        body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        }
-
-        .sidebar {
-        width: 240px;
-        height: 100vh;
-        background-color: #f8f9fa;
-        position: fixed;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 1rem;
-        border-right: 1px solid #dee2e6;
-        }
-
-        .sidebar .logo {
-        text-align: center;
-        margin-bottom: 2rem;
-        }
-
-        .sidebar .nav-link {
-        color: #495057;
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        display: flex;
-        align-items: center;
-        }
-
-        .sidebar .nav-link i {
-        margin-right: 10px;
-        }
-
-        .sidebar .nav-link.active {
-        background-color: #0d99b4;
-        color: white;
-        }
-
-        .sidebar .logout-btn {
-        width: 100%;
-        background-color: #0d99b4;
-        border: none;
-        border-radius: 8px;
-        color: white;
-        padding: 0.6rem;
-        }
-
-        .main {
-        margin-left: 240px;
-        background-color: #f1f3f4;
-        min-height: 100vh;
-        }
-
-        .topbar {
-        background-color: #0d99b4;
-        color: white;
-        padding: 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        }
-
-        .topbar .user-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        }
-
-        .topbar img {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        }
-
-        .fab {
-        position: fixed;
-        right: 20px;
-        bottom: 20px;
-        background-color: #0d99b4;
-        border-radius: 50%;
-        padding: 15px;
-        color: white;
-        font-size: 20px;
-        }
-    .card-bordered-red {
-      border: 1px solid #d67c7c;
-      border-radius: 8px;
-    }
-    .card-bordered-green {
-      border: 1px solid #66a661;
-      border-radius: 8px;
-    }
-    .star-yellow {
-      color: #f9d148;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .star-grey {
-      color: #bfbfbf;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .card-header-icons {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #777;
-    }
-    .card-img-container {
-      position: relative;
-      padding-top: 10px;
-    }
-    .card-text-center {
-      text-align: center;
-      margin-top: 10px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .text-date {
-      font-size: 0.8rem;
-      color: gray;
-    }
-    </style>
+        <link rel="stylesheet" href="./css/dashboard.css" />
+        <!-- Estilos unificados para notificaciones -->
+  <link rel="stylesheet" href="./css/notifications.css" />
     </head>
     <body>
         <!-- Asistente de voz Ana -->
@@ -210,100 +83,95 @@
 
             <div class="main">
                 <!-- Navbar Perfil -->
-                <div
-                    class="topbar d-flex justify-content-between align-items-center px-4"
-                    style="background-color: #0d99b4; color: white; height: 60px;">
-                    <div>
-                        <strong>Hola, Neymar Tapias</strong><br>
-                        <span
-                            style="font-weight: 700; font-size: 1.25rem;">Historial
-                            Médico</span>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-3 ms-auto">
-                        <!-- Dropdown idioma -->
-                        <div class="dropdown">
-                            <button
-                                class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                                type="button" id="dropdownIdioma"
-                                data-bs-toggle="dropdown" aria-expanded="false"
-                                style="background: transparent; border: none; font-size: 0.85rem;">
-                                <img src="https://flagcdn.com/w20/co.png"
-                                    alt="ES"
-                                    width="18" height="13"
-                                    style="object-fit: cover; border-radius: 2px;">
-                                ES
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="dropdownIdioma"
-                                style="min-width: 70px; font-size: 0.85rem;">
-                                <li>
-                                    <a
-                                        class="dropdown-item d-flex align-items-center gap-2"
-                                        href="#">
-                                        <img
-                                            src="https://flagcdn.com/w20/co.png"
-                                            alt="ES" width="18" height="13"
-                                            style="object-fit: cover; border-radius: 2px;">
-                                        ES
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        class="dropdown-item d-flex align-items-center gap-2"
-                                        href="#">
-                                        <img
-                                            src="https://flagcdn.com/w20/us.png"
-                                            alt="EN" width="18" height="13"
-                                            style="object-fit: cover; border-radius: 2px;">
-                                        EN
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Notificaciones -->
-                        <button type="button"
-                            class="btn position-relative btn-transparent text-white p-0"
-                            style="background: transparent; border: none; font-size: 1rem;">
-                            <i class="bi bi-bell"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                                3
-                                <span class="visually-hidden">notificaciones
-                                    nuevas</span>
-                            </span>
-                        </button>
-
-                        <!-- Dropdown perfil -->
-                        <div class="dropdown">
-                            <button
-                                class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                                type="button" id="dropdownPerfil"
-                                data-bs-toggle="dropdown" aria-expanded="false"
-                                style="background: transparent; border: none;">
-                                <img
-                                    src="https://randomuser.me/api/portraits/men/32.jpg"
-                                    alt="User" width="32" height="32"
-                                    class="rounded-circle">
-                                <span class="fw-semibold">Neymar Tapias</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="dropdownPerfil">
-                                <li><a class="dropdown-item"
-                                        href="perfil.html">Mi
-                                        Perfil</a></li>
-                                <li><a class="dropdown-item"
-                                        href="#">Configuración</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger"
-                                        href="#">Cerrar Sesión</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
+               <div
+                class="topbar d-flex justify-content-between align-items-center px-4"
+                style="background-color: #0d99b4; color: white; height: 60px;">
+                <div>
+                    <strong>Hola, Neymar Tapias</strong><br>
+                    <span
+                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
                 </div>
+
+                <div class="d-flex align-items-center gap-3 ms-auto">
+                    <!-- Dropdown idioma -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
+                            type="button" id="dropdownIdioma"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none; font-size: 0.85rem;">
+                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
+                                width="24" height="auto"
+                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                            ES
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownIdioma"
+                            style="min-width: 70px; font-size: 0.85rem;">
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/co.png"
+                                        alt="ES" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    ES
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/us.png"
+                                        alt="EN" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    EN
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Notificaciones -->
+                    <button type="button"
+                        class="btn position-relative btn-transparent text-white p-0"
+                        style="background: transparent; border: none; font-size: 1rem;">
+                        <i class="bi bi-bell"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
+                            3
+                            <span class="visually-hidden">notificaciones
+                                nuevas</span>
+                        </span>
+                    </button>
+
+                    <!-- Dropdown perfil -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
+                            type="button" id="dropdownPerfil"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none;">
+                            <img
+                                src="https://randomuser.me/api/portraits/men/32.jpg"
+                                alt="User" width="32" height="32"
+                                class="rounded-circle">
+                            <span class="fw-semibold">Neymar Tapias</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownPerfil">
+                            <li><a class="dropdown-item" href="perfil.html">Mi
+                                    Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="#">Configuración</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
                
                 <!-- Contenido principal -->
                 <div class="p-4">

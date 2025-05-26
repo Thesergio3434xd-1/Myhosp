@@ -1,504 +1,328 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MyHosp - Ayuda</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet" />
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-      rel="stylesheet">
-    <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet">
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="./css/style.css" />
-    <!-- Estilos específicos para autenticación -->
-    <link rel="stylesheet" href="./css/auth.css" />
-    <!-- Estilos del asistente -->
-    <link rel="stylesheet" href="./css/asistente.css" />
-    <!-- Estilos para el botón de ayuda de Ana -->
-    <link rel="stylesheet" href="./css/ana-help-button.css" />
-    <style>
-        body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        }
 
-        .sidebar {
-        width: 240px;
-        height: 100vh;
-        background-color: #f8f9fa;
-        position: fixed;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 1rem;
-        border-right: 1px solid #dee2e6;
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyHosp - Ayuda</title>
+ <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+        <!-- Font Awesome -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+            rel="stylesheet">
+        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <!-- Estilos personalizados -->
+        <link rel="stylesheet" href="./css/style.css" />
+        <!-- Estilos específicos para autenticación -->
+        <link rel="stylesheet" href="./css/auth.css" />
+        <!-- Estilos del asistente -->
+        <link rel="stylesheet" href="./css/asistente.css" />
+        <!-- Estilos para el botón de ayuda de Ana -->
+        <link rel="stylesheet" href="./css/ana-help-button.css" />
+        <link rel="stylesheet" href="./css/dashboard.css" />
+        <!-- Estilos unificados para notificaciones -->
+        <link rel="stylesheet" href="./css/notifications.css" />
+</head>
 
-        .sidebar .logo {
-        text-align: center;
-        margin-bottom: 2rem;
-        }
-
-        .sidebar .nav-link {
-        color: #495057;
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        display: flex;
-        align-items: center;
-        }
-
-        .sidebar .nav-link i {
-        margin-right: 10px;
-        }
-
-        .sidebar .nav-link.active {
-        background-color: #0d99b4;
-        color: white;
-        }
-
-        .sidebar .logout-btn {
-        width: 100%;
-        background-color: #0d99b4;
-        border: none;
-        border-radius: 8px;
-        color: white;
-        padding: 0.6rem;
-        }
-
-        .main {
-        margin-left: 240px;
-        background-color: #f1f3f4;
-        min-height: 100vh;
-        }
-
-        .topbar {
-        background-color: #0d99b4;
-        color: white;
-        padding: 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        }
-
-        .topbar .user-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        }
-
-        .topbar img {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        }
-
-        .fab {
-        position: fixed;
-        right: 20px;
-        bottom: 20px;
-        background-color: #0d99b4;
-        border-radius: 50%;
-        padding: 15px;
-        color: white;
-        font-size: 20px;
-        }
-    .card-bordered-red {
-      border: 1px solid #d67c7c;
-      border-radius: 8px;
-    }
-    .card-bordered-green {
-      border: 1px solid #66a661;
-      border-radius: 8px;
-    }
-    .star-yellow {
-      color: #f9d148;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .star-grey {
-      color: #bfbfbf;
-      font-size: 1.3rem;
-      position: absolute;
-      top: 10px;
-      left: 15px;
-    }
-    .card-header-icons {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #777;
-    }
-    .card-img-container {
-      position: relative;
-      padding-top: 10px;
-    }
-    .card-text-center {
-      text-align: center;
-      margin-top: 10px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .text-date {
-      font-size: 0.8rem;
-      color: gray;
-    }
-
-    #chat2 .form-control {
-border-color: transparent;
-}
-
-#chat2 .form-control:focus {
-border-color: transparent;
-box-shadow: inset 0px 0px 0px 1px transparent;
-}
-
-.divider:after,
-.divider:before {
-content: "";
-flex: 1;
-height: 1px;
-background: #eee;
-}
-    </style>
-
-  </head>
-  <body>
-    <!-- Asistente de voz Ana -->
-    <div id="ana-assistant" class="voice-assistant">
-      <!-- Botones para controlar el asistente -->
-      <div class="assistant-controls">
-        <button id="enableAssistant"
-          class="control-button enable-button"
-          aria-label="Activar asistente de voz">
-          <i class="fas fa-toggle-on"></i>
-        </button>
-        <button id="disableAssistant"
-          class="control-button disable-button"
-          aria-label="Desactivar asistente de voz">
-          <i class="fas fa-toggle-off"></i>
-        </button>
-      </div>
-      <button id="micButton" class="mic-button"
-        aria-label="Activar asistente de voz">
-        <i id="micIcon" class="fas fa-microphone"></i>
+<body>
+  <!-- Asistente de voz Ana -->
+  <div id="ana-assistant" class="voice-assistant">
+    <!-- Botones para controlar el asistente -->
+    <div class="assistant-controls">
+      <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+        <i class="fas fa-toggle-on"></i>
       </button>
-      <div id="assistantStatus" class="assistant-status"></div>
+      <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+        <i class="fas fa-toggle-off"></i>
+      </button>
+    </div>
+    <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+      <i id="micIcon" class="fas fa-microphone"></i>
+    </button>
+    <div id="assistantStatus" class="assistant-status"></div>
+  </div>
+
+  <div class="sidebar">
+    <div>
+      <div class="logo">
+        <img src="img/logo.png" alt="Logo" width="80">
+      </div>
+      <ul class="nav flex-column">
+        <ul class="nav flex-column">
+          <li><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i>
+              Dashboard</a></li>
+          <li><a class="nav-link" href="citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
+          <li><a class="nav-link" href="historial_medico.html"><i class="bi bi-folder2-open"></i> Historial
+              Médico</a></li>
+          <li><a class="nav-link" href="consultas_online.html"><i class="bi bi-camera-video"></i> Consulta
+              Online</a></li>
+          <li><a class="nav-link active" href="ayuda.html"><i class="bi bi-question-circle"></i>
+              Ayuda</a></li>
+        </ul>
+    </div>
+    <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
+      Salir</button>
+  </div>
+
+  <div class="main">
+    <!-- Navbar Perfil -->
+    <div
+                class="topbar d-flex justify-content-between align-items-center px-4"
+                style="background-color: #0d99b4; color: white; height: 60px;">
+                <div>
+                    <strong>Hola, Neymar Tapias</strong><br>
+                    <span
+                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 ms-auto">
+                    <!-- Dropdown idioma -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
+                            type="button" id="dropdownIdioma"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none; font-size: 0.85rem;">
+                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
+                                width="24" height="auto"
+                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                            ES
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownIdioma"
+                            style="min-width: 70px; font-size: 0.85rem;">
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/co.png"
+                                        alt="ES" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    ES
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/us.png"
+                                        alt="EN" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    EN
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Notificaciones -->
+                    <button type="button"
+                        class="btn position-relative btn-transparent text-white p-0"
+                        style="background: transparent; border: none; font-size: 1rem;">
+                        <i class="bi bi-bell"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
+                            3
+                            <span class="visually-hidden">notificaciones
+                                nuevas</span>
+                        </span>
+                    </button>
+
+                    <!-- Dropdown perfil -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
+                            type="button" id="dropdownPerfil"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none;">
+                            <img
+                                src="https://randomuser.me/api/portraits/men/32.jpg"
+                                alt="User" width="32" height="32"
+                                class="rounded-circle">
+                            <span class="fw-semibold">Neymar Tapias</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownPerfil">
+                            <li><a class="dropdown-item" href="perfil.html">Mi
+                                    Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="#">Configuración</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+    <br>
+    <!-- Contenido principal -->
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-6">
+
+        <div class="card" id="chat2">
+          <div class="card-header d-flex justify-content-between align-items-center p-3">
+            <h5 class="mb-0">Chat con Ana</h5>
+          </div>
+
+          <div class="card-body" data-mdb-perfect-scrollbar-init
+            style="position: relative; height: 400px; overflow-y: auto;">
+            <div class="d-flex flex-row justify-content-start">
+              <img src="https://www.baoss.es/wp-content/uploads/2024/12/asistente-virtual-3.jpg" alt="avatar 1"
+                style="width: 45px; height: 100%;">
+              <div>
+                <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Bienvenido
+                  nuevamente, Neymar Tapias. Soy tu asistente virtual,
+                  MyHospBot. ¿En qué puedo colaborarte el día de hoy?</p>
+              </div>
+            </div>
+
+            <div class="divider d-flex align-items-center mb-4">
+              <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Hoy</p>
+            </div>
+
+            <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+              <div>
+                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Quisiera
+                  que me dieras información acerca de las preguntas mas
+                  frecuentes de los usuarios.</p>
+              </div>
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar 1"
+                style="width: 45px; height: 100%;" class="rounded-circle me-2">
+            </div>
+
+            <div class="d-flex flex-row justify-content-start">
+              <img src="https://www.baoss.es/wp-content/uploads/2024/12/asistente-virtual-3.jpg" alt="avatar 1"
+                style="width: 45px; height: 100%;">
+              <div>
+                <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Claro,
+                  aquí tienes las preguntas que más frecuentan los usuarios
+                  dentro de MyHosp. ¡Espero que te sea de ayuda!</p>
+              </div>
+            </div>
+            <!-- FAQ dentro del chat -->
+            <div class="accordion mt-3" id="faqAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne">
+                    ¿Cómo actualizo mi información personal?
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Aquí va la explicación para actualizar tu información
+                    personal.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo">
+                    ¿Qué incluye mi suscripción?
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Aquí va la descripción de lo que incluye tu suscripción.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree">
+                    ¿Cómo me pagan?
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Aquí va la información sobre cómo se realizan los pagos.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour">
+                    ¿Cómo cancelo o modifico una cita?
+                  </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Aquí va la guía para cancelar o modificar una cita.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFive">
+                    ¿Ofrecen algún programa de fidelidad o recompensas?
+                  </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Aquí va la información sobre programas de fidelidad o
+                    recompensas.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin FAQ -->
+          </div>
+
+          <div class="card-footer text-muted d-flex align-items-center p-3">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar 1" style="width: 45px; height: 100%;"
+              class="rounded-circle me-2">
+
+            <div class="position-relative flex-grow-1">
+              <input type="text" class="form-control form-control-lg pe-5"
+                placeholder="Ingrese la inquietud que tengas respecto a myhosp">
+              <i class="fas fa-paper-plane text-primary position-absolute top-50 end-0 translate-middle-y me-3"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <div class="sidebar">
-      <div>
-        <div class="logo">
-          <img src="img/logo.png" alt="Logo" width="80">
-        </div>
-        <ul class="nav flex-column">
-          <ul class="nav flex-column">
-            <li><a class="nav-link" href="dashboard.html"><i
-                  class="bi bi-speedometer2"></i>
-                Dashboard</a></li>
-            <li><a class="nav-link" href="citas.html"><i
-                  class="bi bi-calendar3"></i> Citas</a></li>
-            <li><a class="nav-link" href="historial_medico.html"><i
-                  class="bi bi-folder2-open"></i> Historial
-                Médico</a></li>
-            <li><a class="nav-link" href="consultas_online.html"><i
-                  class="bi bi-camera-video"></i> Consulta
-                Online</a></li>
-            <li><a class="nav-link active" href="ayuda.html"><i
-                  class="bi bi-question-circle"></i>
-                Ayuda</a></li>
-          </ul>
-        </div>
-        <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
-          Salir</button>
-      </div>
+  </div>
 
-      <div class="main">
-        <!-- Navbar Perfil -->
-        <div
-          class="topbar d-flex justify-content-between align-items-center px-4"
-          style="background-color: #0d99b4; color: white; height: 60px;">
-          <div>
-            <strong>Hola, Neymar Tapias</strong><br>
-            <span
-              style="font-weight: 700; font-size: 1.25rem;">Ayuda</span>
-          </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-          <div class="d-flex align-items-center gap-3 ms-auto">
-            <!-- Dropdown idioma -->
-            <div class="dropdown">
-              <button
-                class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                type="button" id="dropdownIdioma"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                style="background: transparent; border: none; font-size: 0.85rem;">
-                <img src="https://flagcdn.com/w20/co.png"
-                  alt="ES"
-                  width="18" height="13"
-                  style="object-fit: cover; border-radius: 2px;">
-                ES
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="dropdownIdioma"
-                style="min-width: 70px; font-size: 0.85rem;">
-                <li>
-                  <a
-                    class="dropdown-item d-flex align-items-center gap-2"
-                    href="#">
-                    <img
-                      src="https://flagcdn.com/w20/co.png"
-                      alt="ES" width="18" height="13"
-                      style="object-fit: cover; border-radius: 2px;">
-                    ES
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item d-flex align-items-center gap-2"
-                    href="#">
-                    <img
-                      src="https://flagcdn.com/w20/us.png"
-                      alt="EN" width="18" height="13"
-                      style="object-fit: cover; border-radius: 2px;">
-                    EN
-                  </a>
-                </li>
-              </ul>
-            </div>
+  <!-- Socket.IO -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <!-- Script de notificación inicial para el asistente -->
+  <script src="./js/activation-prompt.js"></script>
 
-            <!-- Notificaciones -->
-            <button type="button"
-              class="btn position-relative btn-transparent text-white p-0"
-              style="background: transparent; border: none; font-size: 1rem;">
-              <i class="bi bi-bell"></i>
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                3
-                <span class="visually-hidden">notificaciones
-                  nuevas</span>
-              </span>
-            </button>
+  <!-- Script para notificación inicial sobre capacidades de Ana -->
+  <script src="./js/initial-notification.js"></script>
 
-            <!-- Dropdown perfil -->
-            <div class="dropdown">
-              <button
-                class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                type="button" id="dropdownPerfil"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                style="background: transparent; border: none;">
-                <img
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
-                  alt="User" width="32" height="32"
-                  class="rounded-circle">
-                <span class="fw-semibold">Neymar Tapias</span>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="dropdownPerfil">
-                <li><a class="dropdown-item"
-                    href="perfil.html">Mi
-                    Perfil</a></li>
-                <li><a class="dropdown-item"
-                    href="#">Configuración</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger"
-                    href="#">Cerrar Sesión</a></li>
-              </ul>
-            </div>
+  <!-- Script de consentimiento para Ana -->
+  <script src="./js/ana-consent.js"></script>
 
-          </div>
-        </div>
-        <br>
-        <!-- Contenido principal -->
-        <div class="row d-flex justify-content-center">
-          <div class="col-md-10 col-lg-8 col-xl-6">
+  <!-- Script para controlar los botones del asistente -->
+  <script src="./js/assistant-controls.js"></script>
+  <!-- Asistente de voz -->
+  <script type="module" src="./js/ViewModels/assistant.js"></script>
 
-            <div class="card" id="chat2">
-              <div
-                class="card-header d-flex justify-content-between align-items-center p-3">
-                <h5 class="mb-0">Chat con Ana</h5>
-              </div>
+  <!-- Botón de ayuda de Ana -->
+  <script src="./js/ana-help-button.js"></script>
+</body>
 
-              <div class="card-body" data-mdb-perfect-scrollbar-init
-                style="position: relative; height: 400px; overflow-y: auto;">
-                <div class="d-flex flex-row justify-content-start">
-                  <img
-                    src="https://www.baoss.es/wp-content/uploads/2024/12/asistente-virtual-3.jpg"
-                    alt="avatar 1" style="width: 45px; height: 100%;">
-                  <div>
-                    <p
-                      class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Bienvenido
-                      nuevamente, Neymar Tapias. Soy tu asistente virtual,
-                      MyHospBot. ¿En qué puedo colaborarte el día de hoy?</p>
-                  </div>
-                </div>
-
-                <div class="divider d-flex align-items-center mb-4">
-                  <p class="text-center mx-3 mb-0"
-                    style="color: #a2aab7;">Hoy</p>
-                </div>
-
-                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                  <div>
-                    <p
-                      class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Quisiera
-                      que me dieras información acerca de las preguntas mas
-                      frecuentes de los usuarios.</p>
-                  </div>
-                  <img src="https://randomuser.me/api/portraits/men/32.jpg"
-                    alt="avatar 1" style="width: 45px; height: 100%;"
-                    class="rounded-circle me-2">
-                </div>
-
-                <div class="d-flex flex-row justify-content-start">
-                  <img
-                    src="https://www.baoss.es/wp-content/uploads/2024/12/asistente-virtual-3.jpg"
-                    alt="avatar 1" style="width: 45px; height: 100%;">
-                  <div>
-                    <p
-                      class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Claro,
-                      aquí tienes las preguntas que más frecuentan los usuarios
-                      dentro de MyHosp. ¡Espero que te sea de ayuda!</p>
-                  </div>
-                </div>
-                <!-- FAQ dentro del chat -->
-                <div class="accordion mt-3" id="faqAccordion">
-                  <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                        ¿Cómo actualizo mi información personal?
-                      </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse"
-                      data-bs-parent="#faqAccordion">
-                      <div class="accordion-body">
-                        Aquí va la explicación para actualizar tu información
-                        personal.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                        ¿Qué incluye mi suscripción?
-                      </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse"
-                      data-bs-parent="#faqAccordion">
-                      <div class="accordion-body">
-                        Aquí va la descripción de lo que incluye tu suscripción.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree">
-                        ¿Cómo me pagan?
-                      </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse"
-                      data-bs-parent="#faqAccordion">
-                      <div class="accordion-body">
-                        Aquí va la información sobre cómo se realizan los pagos.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseFour">
-                        ¿Cómo cancelo o modifico una cita?
-                      </button>
-                    </h2>
-                    <div id="collapseFour" class="accordion-collapse collapse"
-                      data-bs-parent="#faqAccordion">
-                      <div class="accordion-body">
-                        Aquí va la guía para cancelar o modificar una cita.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseFive">
-                        ¿Ofrecen algún programa de fidelidad o recompensas?
-                      </button>
-                    </h2>
-                    <div id="collapseFive" class="accordion-collapse collapse"
-                      data-bs-parent="#faqAccordion">
-                      <div class="accordion-body">
-                        Aquí va la información sobre programas de fidelidad o
-                        recompensas.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Fin FAQ -->
-              </div>
-
-              <div class="card-footer text-muted d-flex align-items-center p-3">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg"
-                  alt="avatar 1" style="width: 45px; height: 100%;"
-                  class="rounded-circle me-2">
-
-                <div class="position-relative flex-grow-1">
-                  <input type="text" class="form-control form-control-lg pe-5"
-                    placeholder="Ingrese la inquietud que tengas respecto a myhosp">
-                  <i
-                    class="fas fa-paper-plane text-primary position-absolute top-50 end-0 translate-middle-y me-3"></i>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Bootstrap JS -->
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-      <!-- Socket.IO -->
-      <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-      <!-- Script de notificación inicial para el asistente -->
-      <script src="./js/activation-prompt.js"></script>
-
-      <!-- Script para notificación inicial sobre capacidades de Ana -->
-      <script src="./js/initial-notification.js"></script>
-
-      <!-- Script de consentimiento para Ana -->
-      <script src="./js/ana-consent.js"></script>
-
-      <!-- Script para controlar los botones del asistente -->
-      <script src="./js/assistant-controls.js"></script>
-      <!-- Asistente de voz -->
-      <script type="module" src="./js/ViewModels/assistant.js"></script>
-
-      <!-- Botón de ayuda de Ana -->
-      <script src="./js/ana-help-button.js"></script>
-    </body>
-  </html>
+</html>
