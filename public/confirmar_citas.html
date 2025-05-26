@@ -1,287 +1,426 @@
 <!DOCTYPE html>
-<html lang="es">
-    <head>
+<html lang="es">    <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MyHosp - Citas</title>
-       <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <!-- Estilos personalizados -->
-        <link rel="stylesheet" href="./css/style.css" />
-        <!-- Estilos específicos para autenticación -->
-        <link rel="stylesheet" href="./css/auth.css" />
-        <!-- Estilos del asistente -->
-        <link rel="stylesheet" href="./css/asistente.css" />
-        <!-- Estilos para el botón de ayuda de Ana -->
-        <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-  <link rel="stylesheet" href="./css/notifications.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MyHosp - Confirmar Cita</title>
+        
+        <!-- Bootstrap 5.3 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!-- Bootstrap Icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Estilos modernos -->
+        <link rel="stylesheet" href="./css/modern-design.css">
+        
+        <!-- Estilos específicos del asistente -->
+        <link rel="stylesheet" href="./css/asistente.css">
+        <link rel="stylesheet" href="./css/ana-help-button.css">
     </head>
-    <body>
-        <!-- Asistente de voz Ana -->
+    <body>        <!-- Asistente de voz Ana -->
         <div id="ana-assistant" class="voice-assistant">
             <!-- Botones para controlar el asistente -->
             <div class="assistant-controls">
                 <button id="enableAssistant"
                     class="control-button enable-button"
                     aria-label="Activar asistente de voz">
-                    <i class="fas fa-toggle-on"></i>
+                    <i class="bi bi-toggle-on"></i>
                 </button>
                 <button id="disableAssistant"
                     class="control-button disable-button"
                     aria-label="Desactivar asistente de voz">
-                    <i class="fas fa-toggle-off"></i>
+                    <i class="bi bi-toggle-off"></i>
                 </button>
             </div>
             <button id="micButton" class="mic-button"
                 aria-label="Activar asistente de voz">
-                <i id="micIcon" class="fas fa-microphone"></i>
+                <i id="micIcon" class="bi bi-mic"></i>
             </button>
             <div id="assistantStatus" class="assistant-status"></div>
         </div>
 
+        <!-- Sidebar -->
         <div class="sidebar">
-            <div>
+            <div class="sidebar-header">
                 <div class="logo">
-                    <img src="img/logo.png" alt="Logo" width="80">
+                    <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=100&h=100&fit=crop&crop=center" alt="MyHosp Logo" class="logo-img">
+                    <span class="logo-text">MyHosp</span>
                 </div>
-                <ul class="nav flex-column">
-                    <li><a class="nav-link" href="dashboard.html"><i
-                                class="bi bi-speedometer2"></i>
-                            Dashboard</a></li>
-                    <li><a class="nav-link" href="citas.html"><i
-                                class="bi bi-calendar3"></i> Citas</a></li>
-                    <li><a class="nav-link active"
-                            href="historial_medico.html"><i
-                                class="bi bi-folder2-open"></i> Historial
-                            Médico</a></li>
-                    <li><a class="nav-link" href="consultas_online.html"><i
-                                class="bi bi-camera-video"></i> Consulta
-                            Online</a></li>
-                    <li><a class="nav-link" href="ayuda.html"><i
-                                class="bi bi-question-circle"></i>
-                            Ayuda</a></li>
-                </ul>
             </div>
-            <a class="logout-btn" href="index.html"><i
-                    class="bi bi-box-arrow-left"></i>
-                Salir</a>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.index.html" class="nav-item">
+                    <i class="bi bi-house-door"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="citas.html" class="nav-item active">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Mis Citas</span>
+                </a>
+                <a href="crear_nueva_cita.html" class="nav-item">
+                    <i class="bi bi-calendar-plus"></i>
+                    <span>Nueva Cita</span>
+                </a>
+                <a href="historial_medico.html" class="nav-item">
+                    <i class="bi bi-file-medical"></i>
+                    <span>Historial Médico</span>
+                </a>
+                <a href="consultas_online.html" class="nav-item">
+                    <i class="bi bi-camera-video"></i>
+                    <span>Consultas Online</span>
+                </a>
+                <a href="perfil.html" class="nav-item">
+                    <i class="bi bi-person-circle"></i>
+                    <span>Mi Perfil</span>
+                </a>
+                <a href="ayuda.html" class="nav-item">
+                    <i class="bi bi-question-circle"></i>
+                    <span>Ayuda & Soporte</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-btn">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
         </div>
 
-        <div class="main">
-            <!-- Navbar Perfil -->
-            <div
-                class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
-                    <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1>Confirmar Cita</h1>
+                        <p>Verifica y confirma los detalles de tu cita médica</p>
+                    </div>
                 </div>
-
-                <div class="d-flex align-items-center gap-3 ms-auto">
+                
+                <div class="topbar-right">
                     <!-- Dropdown idioma -->
                     <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                            type="button" id="dropdownIdioma"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
-                                width="24" height="auto"
-                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                            ES
+                        <button class="topbar-btn dropdown-toggle" type="button" id="dropdownIdioma" 
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15">
+                            <span>ES</span>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownIdioma"
-                            style="min-width: 70px; font-size: 0.85rem;">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/co.png"
-                                        alt="ES" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    ES
+                                <a class="dropdown-item" href="#">
+                                    <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15">
+                                    Español
                                 </a>
                             </li>
                             <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/us.png"
-                                        alt="EN" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    EN
+                                <a class="dropdown-item" href="#">
+                                    <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15">
+                                    English
                                 </a>
                             </li>
                         </ul>
                     </div>
 
                     <!-- Notificaciones -->
-                    <button type="button"
-                        class="btn position-relative btn-transparent text-white p-0"
-                        style="background: transparent; border: none; font-size: 1rem;">
-                        <i class="bi bi-bell"></i>
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                            3
-                            <span class="visually-hidden">notificaciones
-                                nuevas</span>
-                        </span>
-                    </button>
-
-                    <!-- Dropdown perfil -->
                     <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                            type="button" id="dropdownPerfil"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none;">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="User" width="32" height="32"
-                                class="rounded-circle">
-                            <span class="fw-semibold">Neymar Tapias</span>
+                        <button class="topbar-btn position-relative" type="button" 
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell"></i>
+                            <span class="notification-badge">3</span>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownPerfil">
-                            <li><a class="dropdown-item" href="perfil.html">Mi
-                                    Perfil</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+                            <li class="dropdown-header">Notificaciones (3)</li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item"
-                                    href="#">Configuración</a>
+                                <a class="dropdown-item notification-item" href="#">
+                                    <div class="notification-icon bg-success">
+                                        <i class="bi bi-check-circle"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <span class="notification-title">Cita confirmada</span>
+                                        <span class="notification-text">Tu cita con Dr. García está confirmada</span>
+                                        <span class="notification-time">Hace 5 min</span>
+                                    </div>
+                                </a>
                             </li>
                         </ul>
                     </div>
 
+                    <!-- Perfil de usuario -->
+                    <div class="dropdown">
+                        <button class="topbar-btn user-btn dropdown-toggle" type="button" 
+                                id="dropdownPerfil" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
+                                 alt="Usuario" class="user-avatar">
+                            <div class="user-info">
+                                <span class="user-name">Neymar Tapias</span>
+                                <span class="user-role">Paciente</span>
+                            </div>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                            <li><a class="dropdown-item" href="editar_perfil.html"><i class="bi bi-gear"></i> Configuración</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <!-- Contenido principal -->
-            <div class="p-4">
-                <div class="bg-white p-4 shadow rounded">
-                    <div class="row gx-5">
-                        <!-- Col Izquierda -->
-                        <div
-                            class="col-lg-4 border-right d-flex flex-column justify-content-between">
-                            <br><br>
-                            <h5 class="text-center"
-                                style="color: #888b8c;">
-                                Detalles de la cita
-                            </h5>
-                            <hr>
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="bi bi-heart-pulse fs-4 me-2"></i>
-                                <span>Psicología</span>
+            </div>            <!-- Contenido principal -->
+            <div class="page-content">
+                
+                <!-- Header de proceso -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="glass-card">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <div class="process-steps">
+                                    <div class="step completed">
+                                        <div class="step-number">1</div>
+                                        <span>Seleccionar</span>
+                                    </div>
+                                    <div class="step-line completed"></div>
+                                    <div class="step completed">
+                                        <div class="step-number">2</div>
+                                        <span>Agendar</span>
+                                    </div>
+                                    <div class="step-line active"></div>
+                                    <div class="step active">
+                                        <div class="step-number">3</div>
+                                        <span>Confirmar</span>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="bi bi-person-circle fs-4 me-2"></i>
-                                <span>Dr. Alexander Moreno</span>
-                            </div>
-
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="bi bi-camera-video fs-4 me-2"></i>
-                                <span>Cita virtual</span>
-                            </div>
-
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="bi bi-clock fs-4 me-2"></i>
-                                <span>60 mins</span>
-                            </div>
-
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="bi bi-currency-dollar fs-4 me-2"></i>
-                                <span>80.000 COP</span>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-calendar-event fs-4 me-2"></i>
-                                <span>02:00pm - 03:00pm, Miércoles, 10 de
-                                    abril.</span>
+                            <div class="text-center">
+                                <h3 class="text-primary mb-2">¡Último paso!</h3>
+                                <p class="text-muted">Verifica los detalles de tu cita y confirma la programación</p>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Col Derecha -->
-                        <div class="col-lg-8 px-lg-5 mt-4 mt-lg-0">
-                            <h2 class="text-center mb-4"
-                                style="color: #0d99b4;">
-                                Verificacion de datos
-                            </h2>
-                            <form action="ver_citas.html">
-                                <div class="mb-3">
-                                    <label for="nombrePaciente"
-                                        class="form-label">Nombre del
-                                        paciente</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="nombrePaciente"
-                                        placeholder="Neymar Tapias" />
+                <div class="row">
+                    <!-- Detalles de la cita -->
+                    <div class="col-lg-5 mb-4">
+                        <div class="glass-card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-calendar-check text-primary me-2"></i>
+                                    Detalles de la Cita
+                                </h5>
+                            </div>
+                            
+                            <div class="appointment-details">
+                                <!-- Médico -->
+                                <div class="detail-item">
+                                    <div class="detail-icon bg-primary">
+                                        <i class="bi bi-person-badge"></i>
+                                    </div>
+                                    <div class="detail-content">
+                                        <span class="detail-label">Médico</span>
+                                        <span class="detail-value">Dr. Alexander Moreno</span>
+                                        <div class="doctor-info">
+                                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face" 
+                                                 alt="Dr. Alexander Moreno" class="doctor-avatar">
+                                            <div class="doctor-rating">
+                                                <div class="stars">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                </div>
+                                                <span class="rating-text">4.8 (156 reseñas)</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="idPaciente"
-                                        class="form-label">Identificación del
-                                        paciente</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="idPaciente"
-                                        placeholder="1111222333" />
+
+                                <!-- Especialidad -->
+                                <div class="detail-item">
+                                    <div class="detail-icon bg-success">
+                                        <i class="bi bi-heart-pulse"></i>
+                                    </div>
+                                    <div class="detail-content">
+                                        <span class="detail-label">Especialidad</span>
+                                        <span class="detail-value">Psicología</span>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="celularContacto"
-                                        class="form-label">Celular de
-                                        contacto</label>
-                                    <input
-                                        type="tel"
-                                        class="form-control"
-                                        id="celularContacto"
-                                        placeholder="+57 3103358842" />
+
+                                <!-- Modalidad -->
+                                <div class="detail-item">
+                                    <div class="detail-icon bg-info">
+                                        <i class="bi bi-camera-video"></i>
+                                    </div>
+                                    <div class="detail-content">
+                                        <span class="detail-label">Modalidad</span>
+                                        <span class="detail-value">Consulta Virtual</span>
+                                        <small class="text-muted">Se enviará enlace de videollamada</small>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="correoPaciente"
-                                        class="form-label">Correo electrónico
-                                        del paciente</label>
-                                    <input
-                                        type="email"
-                                        class="form-control"
-                                        id="correoPaciente"
-                                        placeholder="Neymar.Top@gmail.com" />
+
+                                <!-- Fecha y hora -->
+                                <div class="detail-item">
+                                    <div class="detail-icon bg-warning">
+                                        <i class="bi bi-calendar-event"></i>
+                                    </div>
+                                    <div class="detail-content">
+                                        <span class="detail-label">Fecha y Hora</span>
+                                        <span class="detail-value">Miércoles, 10 de Abril</span>
+                                        <span class="detail-time">2:00 PM - 3:00 PM</span>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="problemaMedico"
-                                        class="form-label">Problema</label>
-                                    <select class="form-select"
-                                        id="problemaMedico"
-                                        aria-label="Selecciona problema médico">
-                                        <option selected>Escoja su problema
-                                            médico</option>
-                                        <option value="1">Problema 1</option>
-                                        <option value="2">Problema 2</option>
-                                        <option value="3">Problema 3</option>
+
+                                <!-- Duración -->
+                                <div class="detail-item">
+                                    <div class="detail-icon bg-secondary">
+                                        <i class="bi bi-clock"></i>
+                                    </div>
+                                    <div class="detail-content">
+                                        <span class="detail-label">Duración</span>
+                                        <span class="detail-value">60 minutos</span>
+                                    </div>
+                                </div>
+
+                                <!-- Costo -->
+                                <div class="detail-item">
+                                    <div class="detail-icon bg-primary">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </div>
+                                    <div class="detail-content">
+                                        <span class="detail-label">Costo</span>
+                                        <span class="detail-value">$80.000 COP</span>
+                                        <small class="text-muted">Pago al momento de la consulta</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Información adicional -->
+                            <div class="alert alert-info d-flex align-items-start">
+                                <i class="bi bi-info-circle me-2 mt-1"></i>
+                                <div>
+                                    <strong>Importante:</strong> Recibirás un correo de confirmación con el enlace de la videollamada 30 minutos antes de la cita.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario de confirmación -->
+                    <div class="col-lg-7">
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-shield-check text-success me-2"></i>
+                                    Verificación de Datos
+                                </h5>
+                            </div>
+                            
+                            <form action="ver_citas.html" class="needs-validation" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nombrePaciente" class="form-label">
+                                            <i class="bi bi-person me-1"></i>
+                                            Nombre Completo del Paciente
+                                        </label>
+                                        <input type="text" class="form-control" id="nombrePaciente" 
+                                               value="Neymar Tapias" required>
+                                        <div class="invalid-feedback">
+                                            Por favor ingresa el nombre completo.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="idPaciente" class="form-label">
+                                            <i class="bi bi-card-text me-1"></i>
+                                            Número de Identificación
+                                        </label>
+                                        <input type="text" class="form-control" id="idPaciente" 
+                                               value="1111222333" required>
+                                        <div class="invalid-feedback">
+                                            Por favor ingresa un número de identificación válido.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="celularContacto" class="form-label">
+                                            <i class="bi bi-phone me-1"></i>
+                                            Celular de Contacto
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">+57</span>
+                                            <input type="tel" class="form-control" id="celularContacto" 
+                                                   value="3103358842" required>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Por favor ingresa un número de celular válido.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="correoPaciente" class="form-label">
+                                            <i class="bi bi-envelope me-1"></i>
+                                            Correo Electrónico
+                                        </label>
+                                        <input type="email" class="form-control" id="correoPaciente" 
+                                               value="Neymar.Top@gmail.com" required>
+                                        <div class="invalid-feedback">
+                                            Por favor ingresa un correo electrónico válido.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="problemaMedico" class="form-label">
+                                        <i class="bi bi-clipboard2-pulse me-1"></i>
+                                        Motivo de la Consulta
+                                    </label>
+                                    <select class="form-select" id="problemaMedico" required>
+                                        <option value="">Selecciona el motivo de tu consulta</option>
+                                        <option value="ansiedad">Manejo de ansiedad</option>
+                                        <option value="estres">Control del estrés</option>
+                                        <option value="depresion">Síntomas depresivos</option>
+                                        <option value="relaciones">Problemas de pareja/familiares</option>
+                                        <option value="autoestima">Autoestima y confianza</option>
+                                        <option value="trauma">Procesamiento de trauma</option>
+                                        <option value="otro">Otro motivo</option>
                                     </select>
+                                    <div class="invalid-feedback">
+                                        Por favor selecciona el motivo de la consulta.
+                                    </div>
                                 </div>
-                                <button type="submit"
-                                    class="btn w-100 text-white"
-                                    style="background-color: #0d99b4;">Confirmar
-                                    cita</button>
+
+                                <!-- Términos y condiciones -->
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="terminos" required>
+                                    <label class="form-check-label" for="terminos">
+                                        Acepto los <a href="#" class="text-primary">términos y condiciones</a> del servicio 
+                                        y autorizo el tratamiento de mis datos personales según la 
+                                        <a href="#" class="text-primary">política de privacidad</a>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        Debes aceptar los términos y condiciones.
+                                    </div>
+                                </div>
+
+                                <!-- Botones de acción -->
+                                <div class="d-flex gap-3">
+                                    <a href="crear_nueva_cita.html" class="btn btn-outline-secondary flex-fill">
+                                        <i class="bi bi-arrow-left me-2"></i>
+                                        Volver
+                                    </a>
+                                    <button type="submit" class="btn btn-primary flex-fill btn-lg">
+                                        <i class="bi bi-check-circle me-2"></i>
+                                        Confirmar Cita
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>

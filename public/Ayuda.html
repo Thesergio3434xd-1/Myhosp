@@ -55,20 +55,19 @@
       <div class="logo">
         <img src="img/logo.png" alt="Logo" width="80">
       </div>
-      <ul class="nav flex-column">
-        <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i>
+      <ul class="nav flex-column">        <ul class="nav flex-column">
+          <li><a class="nav-link" href="dashboard.index.html"><i class="bi bi-speedometer2"></i>
               Dashboard</a></li>
-          <li><a class="nav-link" href="citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
+          <li><a class="nav-link" href="ver_citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
           <li><a class="nav-link" href="historial_medico.html"><i class="bi bi-folder2-open"></i> Historial
               Médico</a></li>
           <li><a class="nav-link" href="consultas_online.html"><i class="bi bi-camera-video"></i> Consulta
               Online</a></li>
-          <li><a class="nav-link active" href="ayuda.html"><i class="bi bi-question-circle"></i>
+          <li><a class="nav-link" href="perfil.html"><i class="bi bi-person"></i> Perfil</a></li>
+          <li><a class="nav-link active" href="Ayuda.html"><i class="bi bi-question-circle"></i>
               Ayuda</a></li>
         </ul>
-    </div>
-    <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
+    </div>    <button class="logout-btn" onclick="handleLogout()"><i class="bi bi-box-arrow-left"></i>
       Salir</button>
   </div>
 
@@ -76,11 +75,10 @@
     <!-- Navbar Perfil -->
     <div
                 class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
+                style="background-color: #0d99b4; color: white; height: 60px;">                <div>
+                    <strong>Hola, <span id="username">Usuario</span></strong><br>
                     <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+                        style="font-weight: 700; font-size: 1.25rem;">Centro de Ayuda</span>
                 </div>
 
                 <div class="d-flex align-items-center gap-3 ms-auto">
@@ -174,29 +172,24 @@
           </div>
 
           <div class="card-body" data-mdb-perfect-scrollbar-init
-            style="position: relative; height: 400px; overflow-y: auto;">
-            <div class="d-flex flex-row justify-content-start">
-              <img src="https://www.baoss.es/wp-content/uploads/2024/12/asistente-virtual-3.jpg" alt="avatar 1"
-                style="width: 45px; height: 100%;">
+            style="position: relative; height: 400px; overflow-y: auto;">            <div class="d-flex flex-row justify-content-start">
+              <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="avatar Ana"
+                style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
               <div>
-                <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Bienvenido
-                  nuevamente, Neymar Tapias. Soy tu asistente virtual,
-                  MyHospBot. ¿En qué puedo colaborarte el día de hoy?</p>
+                <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">¡Hola! Soy Ana, tu asistente virtual de MyHosp. 
+                  Estoy aquí para ayudarte con cualquier duda que tengas sobre nuestros servicios. 
+                  ¿En qué puedo ayudarte hoy?</p>
               </div>
             </div>
 
             <div class="divider d-flex align-items-center mb-4">
               <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Hoy</p>
-            </div>
-
-            <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+            </div>            <div class="d-flex flex-row justify-content-end mb-4 pt-1">
               <div>
-                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Quisiera
-                  que me dieras información acerca de las preguntas mas
-                  frecuentes de los usuarios.</p>
+                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">¿Podrías mostrarme las preguntas más frecuentes de los usuarios?</p>
               </div>
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar 1"
-                style="width: 45px; height: 100%;" class="rounded-circle me-2">
+              <img id="userAvatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="avatar usuario"
+                style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;" class="me-2">
             </div>
 
             <div class="d-flex flex-row justify-content-start">
@@ -209,46 +202,71 @@
               </div>
             </div>
             <!-- FAQ dentro del chat -->
-            <div class="accordion mt-3" id="faqAccordion">
-              <div class="accordion-item">
+            <div class="accordion mt-3" id="faqAccordion">              <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseOne">
+                    <i class="bi bi-person-gear me-2 text-primary"></i>
                     ¿Cómo actualizo mi información personal?
                   </button>
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                   <div class="accordion-body">
-                    Aquí va la explicación para actualizar tu información
-                    personal.
+                    <p><strong>Para actualizar tu información personal:</strong></p>
+                    <ol>
+                      <li>Ve a tu <a href="perfil.html" class="text-primary">Perfil</a> desde el menú lateral</li>
+                      <li>Haz clic en "Editar" en cualquier campo que desees modificar</li>
+                      <li>Actualiza la información requerida</li>
+                      <li>Guarda los cambios</li>
+                    </ol>
+                    <div class="alert alert-info">
+                      <i class="bi bi-info-circle me-2"></i>
+                      Algunos cambios pueden requerir verificación por email.
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="accordion-item">
+              </div>              <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo">
-                    ¿Qué incluye mi suscripción?
+                    <i class="bi bi-card-checklist me-2 text-success"></i>
+                    ¿Qué servicios incluye MyHosp?
                   </button>
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                   <div class="accordion-body">
-                    Aquí va la descripción de lo que incluye tu suscripción.
+                    <p><strong>MyHosp incluye:</strong></p>
+                    <ul>
+                      <li><i class="bi bi-calendar-check text-primary"></i> Agendamiento de citas médicas</li>
+                      <li><i class="bi bi-camera-video text-info"></i> Consultas virtuales</li>
+                      <li><i class="bi bi-file-medical text-success"></i> Historial médico digital</li>
+                      <li><i class="bi bi-chat-dots text-warning"></i> Asistente virtual Ana</li>
+                      <li><i class="bi bi-bell text-danger"></i> Recordatorios automáticos</li>
+                      <li><i class="bi bi-shield-check text-dark"></i> Seguridad de datos médicos</li>
+                    </ul>
                   </div>
                 </div>
-              </div>
-
-              <div class="accordion-item">
+              </div>              <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseThree">
-                    ¿Cómo me pagan?
+                    <i class="bi bi-credit-card me-2 text-success"></i>
+                    ¿Cómo funcionan los pagos?
                   </button>
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                   <div class="accordion-body">
-                    Aquí va la información sobre cómo se realizan los pagos.
+                    <p><strong>Métodos de pago aceptados:</strong></p>
+                    <ul>
+                      <li><i class="bi bi-credit-card text-primary"></i> Tarjetas de crédito/débito</li>
+                      <li><i class="bi bi-paypal text-info"></i> PayPal</li>
+                      <li><i class="bi bi-bank text-success"></i> Transferencia bancaria</li>
+                      <li><i class="bi bi-cash text-warning"></i> Efectivo en clínica</li>
+                    </ul>
+                    <div class="alert alert-success">
+                      <i class="bi bi-shield-check me-2"></i>
+                      Todos los pagos están protegidos con SSL.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -283,16 +301,15 @@
               </div>
             </div>
             <!-- Fin FAQ -->
-          </div>
-
-          <div class="card-footer text-muted d-flex align-items-center p-3">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar 1" style="width: 45px; height: 100%;"
-              class="rounded-circle me-2">
+          </div>          <div class="card-footer text-muted d-flex align-items-center p-3">
+            <img id="userAvatarFooter" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="avatar usuario" 
+              style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;" class="me-2">
 
             <div class="position-relative flex-grow-1">
-              <input type="text" class="form-control form-control-lg pe-5"
-                placeholder="Ingrese la inquietud que tengas respecto a myhosp">
-              <i class="fas fa-paper-plane text-primary position-absolute top-50 end-0 translate-middle-y me-3"></i>
+              <input type="text" id="helpInput" class="form-control form-control-lg pe-5"
+                placeholder="Escribe tu pregunta sobre MyHosp..." onkeypress="handleHelpQuestion(event)">
+              <i class="fas fa-paper-plane text-primary position-absolute top-50 end-0 translate-middle-y me-3" 
+                style="cursor: pointer;" onclick="sendHelpQuestion()"></i>
             </div>
           </div>
         </div>
@@ -301,27 +318,195 @@
     </div>
 
   </div>
-
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Socket.IO -->
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  <!-- Script de notificación inicial para el asistente -->
+  
+  <!-- JavaScript para autenticación y funcionalidades -->
+  <script>
+    // Verificación de autenticación
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar si el usuario está logueado
+      if (!localStorage.getItem('userLoggedIn')) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Actualizar nombre de usuario
+      const username = localStorage.getItem('username') || 'Usuario';
+      document.getElementById('username').textContent = username;
+      
+      // Mostrar notificación de bienvenida
+      showNotification('¡Bienvenido al Centro de Ayuda de MyHosp!', 'info');
+    });
+
+    // Función de logout
+    function handleLogout() {
+      if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('userEmail');
+        showNotification('Sesión cerrada exitosamente', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+      }
+    }
+
+    // Función para manejar preguntas de ayuda
+    function handleHelpQuestion(event) {
+      if (event.key === 'Enter') {
+        sendHelpQuestion();
+      }
+    }
+
+    // Función para enviar pregunta de ayuda
+    function sendHelpQuestion() {
+      const input = document.getElementById('helpInput');
+      const question = input.value.trim();
+      
+      if (question === '') {
+        showNotification('Por favor escribe tu pregunta', 'warning');
+        return;
+      }
+
+      // Agregar pregunta del usuario al chat
+      addMessageToChat(question, 'user');
+      
+      // Limpiar input
+      input.value = '';
+      
+      // Simular respuesta de Ana después de un breve delay
+      setTimeout(() => {
+        const response = generateAnaResponse(question);
+        addMessageToChat(response, 'ana');
+      }, 1000);
+    }
+
+    // Función para agregar mensajes al chat
+    function addMessageToChat(message, sender) {
+      const chatBody = document.querySelector('.card-body[data-mdb-perfect-scrollbar-init]');
+      const messageDiv = document.createElement('div');
+      
+      if (sender === 'user') {
+        messageDiv.className = 'd-flex flex-row justify-content-end mb-4 pt-1';
+        messageDiv.innerHTML = `
+          <div>
+            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${message}</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="avatar usuario"
+            style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;" class="me-2">
+        `;
+      } else {
+        messageDiv.className = 'd-flex flex-row justify-content-start mb-4';
+        messageDiv.innerHTML = `
+          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="avatar Ana"
+            style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
+          <div>
+            <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">${message}</p>
+          </div>
+        `;
+      }
+      
+      // Insertar antes del FAQ
+      const faqSection = chatBody.querySelector('.accordion');
+      chatBody.insertBefore(messageDiv, faqSection);
+      
+      // Scroll hacia abajo
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // Función para generar respuestas de Ana
+    function generateAnaResponse(question) {
+      const lowerQuestion = question.toLowerCase();
+      
+      if (lowerQuestion.includes('cita') || lowerQuestion.includes('agendar')) {
+        return 'Para agendar una cita, ve a la sección "Citas" en el menú lateral y selecciona "Nueva Cita". ¿Necesitas ayuda con algo específico sobre las citas?';
+      } else if (lowerQuestion.includes('pago') || lowerQuestion.includes('cobro')) {
+        return 'Aceptamos varios métodos de pago incluyendo tarjetas de crédito, PayPal y transferencias bancarias. Todos los pagos están protegidos con encriptación SSL.';
+      } else if (lowerQuestion.includes('historial') || lowerQuestion.includes('médico')) {
+        return 'Puedes acceder a tu historial médico desde el menú lateral. Allí encontrarás todos tus documentos, consultas y reportes médicos organizados por fecha.';
+      } else if (lowerQuestion.includes('consulta online') || lowerQuestion.includes('virtual')) {
+        return 'Las consultas online se realizan por videollamada. Ve a "Consulta Online" en el menú y sigue las instrucciones para conectarte con tu médico.';
+      } else if (lowerQuestion.includes('perfil') || lowerQuestion.includes('información')) {
+        return 'Para actualizar tu información personal, ve a tu "Perfil" desde el menú lateral. Allí puedes editar todos tus datos de forma segura.';
+      } else {
+        return 'Gracias por tu pregunta. Te recomiendo revisar las preguntas frecuentes arriba o contactar a nuestro equipo de soporte para ayuda personalizada.';
+      }
+    }
+
+    // Sistema de notificaciones
+    function showNotification(message, type = 'info', duration = 3000) {
+      // Crear elemento de notificación
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      notification.style.cssText = `
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      `;
+      
+      notification.innerHTML = `
+        <div class="d-flex align-items-center">
+          <i class="bi bi-${getNotificationIcon(type)} me-2"></i>
+          <span>${message}</span>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remover después del tiempo especificado
+      setTimeout(() => {
+        if (notification && notification.parentNode) {
+          notification.remove();
+        }
+      }, duration);
+    }
+
+    // Función para obtener iconos de notificación
+    function getNotificationIcon(type) {
+      switch(type) {
+        case 'success': return 'check-circle-fill';
+        case 'error': return 'exclamation-triangle-fill';
+        case 'warning': return 'exclamation-triangle-fill';
+        case 'info': return 'info-circle-fill';
+        default: return 'info-circle-fill';
+      }
+    }
+
+    // Función para navegación rápida
+    function quickNavigate(page) {
+      showNotification(`Navegando a ${page}...`, 'info', 1000);
+      setTimeout(() => {
+        window.location.href = page;
+      }, 500);
+    }
+
+    // Agregar funcionalidad a los enlaces del FAQ
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mejorar experiencia de navegación en FAQ
+      const faqLinks = document.querySelectorAll('.accordion-body a');
+      faqLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+          quickNavigate(href);
+        });
+      });
+    });
+  </script>
+
+  <!-- Scripts del asistente Ana -->
   <script src="./js/activation-prompt.js"></script>
-
-  <!-- Script para notificación inicial sobre capacidades de Ana -->
   <script src="./js/initial-notification.js"></script>
-
-  <!-- Script de consentimiento para Ana -->
   <script src="./js/ana-consent.js"></script>
-
-  <!-- Script para controlar los botones del asistente -->
   <script src="./js/assistant-controls.js"></script>
-  <!-- Asistente de voz -->
   <script type="module" src="./js/ViewModels/assistant.js"></script>
-
-  <!-- Botón de ayuda de Ana -->
   <script src="./js/ana-help-button.js"></script>
 </body>
 

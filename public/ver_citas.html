@@ -1,54 +1,625 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MyHosp - Citas</title>
-        <!-- Bootstrap CSS -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <!-- Estilos personalizados -->
-        <link rel="stylesheet" href="./css/style.css" />
-        <!-- Estilos específicos para autenticación -->
-        <link rel="stylesheet" href="./css/auth.css" />
-        <!-- Estilos del asistente -->
-        <link rel="stylesheet" href="./css/asistente.css" />
-        <!-- Estilos para el botón de ayuda de Ana -->
-        <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-  <link rel="stylesheet" href="./css/notifications.css" />
-    </head>
-    <body>
-        <!-- Asistente de voz Ana -->
-        <div id="ana-assistant" class="voice-assistant">
-            <!-- Botones para controlar el asistente -->
-            <div class="assistant-controls">
-                <button id="enableAssistant"
-                    class="control-button enable-button"
-                    aria-label="Activar asistente de voz">
-                    <i class="fas fa-toggle-on"></i>
-                </button>
-                <button id="disableAssistant"
-                    class="control-button disable-button"
-                    aria-label="Desactivar asistente de voz">
-                    <i class="fas fa-toggle-off"></i>
-                </button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyHosp - Mis Citas Médicas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
+</head>
+<body>
+    <!-- Asistente de voz Ana -->
+    <div id="ana-assistant" class="voice-assistant">
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="fas fa-toggle-on"></i>
+            </button>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
+            </button>
+        </div>
+        <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+            <i id="micIcon" class="fas fa-microphone"></i>
+        </button>
+        <div id="assistantStatus" class="assistant-status"></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar d-flex flex-column vh-100">
+                    <div class="text-center py-3">
+                        <div class="logo">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=80&h=80&fit=crop&crop=center" alt="MyHosp Logo" width="80" class="rounded-circle">
+                            <h5 class="text-white mt-2 mb-0">MyHosp</h5>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column flex-grow-1">
+                        <a class="nav-link" href="dashboard.index.html">
+                            <i class="bi bi-house-door"></i> Dashboard
+                        </a>
+                        <a class="nav-link active" href="ver_citas.html">
+                            <i class="bi bi-calendar3"></i> Mis Citas
+                        </a>
+                        <a class="nav-link" href="crear_nueva_cita.html">
+                            <i class="bi bi-calendar-plus"></i> Nueva Cita
+                        </a>
+                        <a class="nav-link" href="historial_medico.html">
+                            <i class="bi bi-folder2-open"></i> Historial Médico
+                        </a>
+                        <a class="nav-link" href="consultas_online.html">
+                            <i class="bi bi-camera-video"></i> Consulta Online
+                        </a>
+                        <a class="nav-link" href="perfil.html">
+                            <i class="bi bi-person"></i> Mi Perfil
+                        </a>
+                        <a class="nav-link" href="Ayuda.html">
+                            <i class="bi bi-question-circle"></i> Ayuda
+                        </a>
+                    </nav>
+                    
+                    <div class="mt-auto p-3">
+                        <button class="logout-btn w-100" onclick="handleLogout()">
+                            <i class="bi bi-box-arrow-left"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
             </div>
-            <button id="micButton" class="mic-button"
-                aria-label="Activar asistente de voz">
+
+            <!-- Contenido Principal -->
+            <div class="col-md-9 col-lg-10">
+                <!-- Topbar -->
+                <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
+                    <div>
+                        <h4 class="text-white mb-0">Mis Citas Médicas</h4>
+                        <span class="text-white-50">Gestiona y revisa todas tus citas</span>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-light">
+                            <i class="bi bi-calendar-plus me-1"></i> Nueva Cita
+                        </button>
+                        
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" class="rounded me-1"> ES
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" class="rounded me-2"> Español</a></li>
+                                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" alt="EN" width="24" class="rounded me-2"> English</a></li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-transparent text-white position-relative">
+                            <i class="bi bi-bell fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                        </button>
+                        
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle">
+                                <span id="username">Neymar Tapias</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                                <li><a class="dropdown-item" href="editar_perfil.html"><i class="bi bi-gear me-2"></i>Configuración</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>                
+                <!-- Contenido de Citas -->
+                <div class="container-fluid py-4">
+                    <!-- Estadísticas Rápidas -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card bg-gradient-primary text-white fade-in-up">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-calendar-check fs-1 mb-2"></i>
+                                    <h4>5</h4>
+                                    <p class="mb-0">Citas Programadas</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card bg-gradient-success text-white fade-in-up">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-check-circle fs-1 mb-2"></i>
+                                    <h4>12</h4>
+                                    <p class="mb-0">Citas Completadas</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card bg-gradient-info text-white fade-in-up">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-clock fs-1 mb-2"></i>
+                                    <h4>2</h4>
+                                    <p class="mb-0">Pendientes Hoy</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card text-white" style="background: linear-gradient(135deg, #fd7e14 0%, #e55347 100%);">
+                                <div class="card-body text-center fade-in-up">
+                                    <i class="bi bi-x-circle fs-1 mb-2"></i>
+                                    <h4>1</h4>
+                                    <p class="mb-0">Canceladas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filtros de Búsqueda -->
+                    <div class="card mb-4 fade-in-up">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-funnel me-2"></i>Filtros de Búsqueda</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Estado de la Cita</label>
+                                    <select class="form-select" id="filterStatus">
+                                        <option value="">Todos los estados</option>
+                                        <option value="programada">Programada</option>
+                                        <option value="completada">Completada</option>
+                                        <option value="cancelada">Cancelada</option>
+                                        <option value="en-proceso">En Proceso</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="filterDate">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Especialidad</label>
+                                    <select class="form-select" id="filterSpecialty">
+                                        <option value="">Todas las especialidades</option>
+                                        <option value="cardiologia">Cardiología</option>
+                                        <option value="dermatologia">Dermatología</option>
+                                        <option value="pediatria">Pediatría</option>
+                                        <option value="neurologia">Neurología</option>
+                                        <option value="ginecologia">Ginecología</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Médico</label>
+                                    <input type="text" class="form-control" id="filterDoctor" placeholder="Buscar por médico...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-primary me-2">
+                                        <i class="bi bi-search me-1"></i>Buscar
+                                    </button>
+                                    <button class="btn btn-outline-secondary">
+                                        <i class="bi bi-arrow-repeat me-1"></i>Limpiar Filtros
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Citas -->
+                    <div class="card fade-in-up">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="bi bi-calendar3 me-2"></i>Mis Citas Médicas</h5>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-primary active">
+                                    <i class="bi bi-list"></i> Lista
+                                </button>
+                                <button type="button" class="btn btn-outline-primary">
+                                    <i class="bi bi-calendar3"></i> Calendario
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="appointmentsList">
+                                <!-- Cita 1 - Próxima -->
+                                <div class="row mb-4 p-3 border rounded-3 bg-light">
+                                    <div class="col-md-2 text-center">
+                                        <div class="bg-primary text-white rounded p-3">
+                                            <div class="fs-4 fw-bold">26</div>
+                                            <div class="small">Mayo</div>
+                                            <div class="small">2025</div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="badge bg-success">Próxima</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=60&h=60&fit=crop&crop=face" alt="Dr. García" width="60" class="rounded-circle me-3">
+                                            <div>
+                                                <h5 class="mb-1">Dr. Carlos García</h5>
+                                                <p class="text-muted mb-1">Cardiólogo</p>
+                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Hospital San José</small>
+                                            </div>
+                                        </div>
+                                        <div class="row text-muted small">
+                                            <div class="col-6">
+                                                <i class="bi bi-clock me-1"></i>10:30 AM - 11:00 AM
+                                            </div>
+                                            <div class="col-6">
+                                                <i class="bi bi-telephone me-1"></i>Consulta Presencial
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="mb-2">
+                                            <span class="badge bg-warning text-dark">Confirmar Asistencia</span>
+                                        </div>
+                                        <div class="btn-group-vertical d-grid gap-2">
+                                            <a href="confirmar_citas.html" class="btn btn-success btn-sm">
+                                                <i class="bi bi-check-circle me-1"></i>Confirmar
+                                            </a>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-pencil me-1"></i>Reagendar
+                                            </button>
+                                            <button class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-x-circle me-1"></i>Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cita 2 - Programada -->
+                                <div class="row mb-4 p-3 border rounded-3">
+                                    <div class="col-md-2 text-center">
+                                        <div class="bg-info text-white rounded p-3">
+                                            <div class="fs-4 fw-bold">28</div>
+                                            <div class="small">Mayo</div>
+                                            <div class="small">2025</div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="badge bg-primary">Programada</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=60&h=60&fit=crop&crop=face" alt="Dra. López" width="60" class="rounded-circle me-3">
+                                            <div>
+                                                <h5 class="mb-1">Dra. Ana López</h5>
+                                                <p class="text-muted mb-1">Dermatóloga</p>
+                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Clínica Santa María</small>
+                                            </div>
+                                        </div>
+                                        <div class="row text-muted small">
+                                            <div class="col-6">
+                                                <i class="bi bi-clock me-1"></i>2:00 PM - 2:30 PM
+                                            </div>
+                                            <div class="col-6">
+                                                <i class="bi bi-camera-video me-1"></i>Consulta Virtual
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="mb-2">
+                                            <span class="badge bg-success">Confirmada</span>
+                                        </div>
+                                        <div class="btn-group-vertical d-grid gap-2">
+                                            <button class="btn btn-primary btn-sm">
+                                                <i class="bi bi-camera-video me-1"></i>Unirse
+                                            </button>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-pencil me-1"></i>Reagendar
+                                            </button>
+                                            <button class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-x-circle me-1"></i>Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cita 3 - Completada -->
+                                <div class="row mb-4 p-3 border rounded-3 opacity-75">
+                                    <div class="col-md-2 text-center">
+                                        <div class="bg-success text-white rounded p-3">
+                                            <div class="fs-4 fw-bold">22</div>
+                                            <div class="small">Mayo</div>
+                                            <div class="small">2025</div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="badge bg-success">Completada</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=60&h=60&fit=crop&crop=face" alt="Dr. Martínez" width="60" class="rounded-circle me-3">
+                                            <div>
+                                                <h5 class="mb-1">Dr. Luis Martínez</h5>
+                                                <p class="text-muted mb-1">Pediatra</p>
+                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Hospital Central</small>
+                                            </div>
+                                        </div>
+                                        <div class="row text-muted small">
+                                            <div class="col-6">
+                                                <i class="bi bi-clock me-1"></i>9:00 AM - 9:30 AM
+                                            </div>
+                                            <div class="col-6">
+                                                <i class="bi bi-telephone me-1"></i>Consulta Presencial
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="mb-2">
+                                            <span class="badge bg-success">Atendida</span>
+                                        </div>
+                                        <div class="btn-group-vertical d-grid gap-2">
+                                            <button class="btn btn-outline-info btn-sm">
+                                                <i class="bi bi-file-earmark-medical me-1"></i>Ver Resultados
+                                            </button>
+                                            <button class="btn btn-outline-warning btn-sm">
+                                                <i class="bi bi-star me-1"></i>Calificar
+                                            </button>
+                                            <button class="btn btn-outline-success btn-sm">
+                                                <i class="bi bi-arrow-repeat me-1"></i>Repetir Cita
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cita 4 - Cancelada -->
+                                <div class="row mb-4 p-3 border rounded-3 bg-danger bg-opacity-10">
+                                    <div class="col-md-2 text-center">
+                                        <div class="bg-danger text-white rounded p-3">
+                                            <div class="fs-4 fw-bold">20</div>
+                                            <div class="small">Mayo</div>
+                                            <div class="small">2025</div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="badge bg-danger">Cancelada</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="https://images.unsplash.com/photo-1594824797077-d0e4cf08b3c8?w=60&h=60&fit=crop&crop=face" alt="Dra. Rodríguez" width="60" class="rounded-circle me-3">
+                                            <div>
+                                                <h5 class="mb-1">Dra. María Rodríguez</h5>
+                                                <p class="text-muted mb-1">Neuróloga</p>
+                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Clínica Norte</small>
+                                            </div>
+                                        </div>
+                                        <div class="row text-muted small">
+                                            <div class="col-6">
+                                                <i class="bi bi-clock me-1"></i>4:00 PM - 4:30 PM
+                                            </div>
+                                            <div class="col-6">
+                                                <i class="bi bi-x-circle me-1"></i>Cancelada por médico
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="mb-2">
+                                            <span class="badge bg-danger">Motivo: Emergencia</span>
+                                        </div>
+                                        <div class="btn-group-vertical d-grid gap-2">
+                                            <button class="btn btn-primary btn-sm">
+                                                <i class="bi bi-calendar-plus me-1"></i>Reagendar
+                                            </button>
+                                            <button class="btn btn-outline-info btn-sm">
+                                                <i class="bi bi-info-circle me-1"></i>Ver Detalles
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Paginación -->
+                            <nav aria-label="Navegación de citas">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Siguiente</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts del asistente Ana -->
+    <script src="./js/activation-prompt.js"></script>
+    <script src="./js/initial-notification.js"></script>
+    <script src="./js/ana-consent.js"></script>
+    <script src="./js/assistant-controls.js"></script>
+    <script type="module" src="./js/ViewModels/assistant.js"></script>
+    <script src="./js/ana-help-button.js"></script>
+</body>
+</html>
+        <script src="./js/ana-help-button.js"></script>
+        <script src="./js/ViewModels/assistant-refactored.js"></script>
+        <script src="./js/notification-manager.js"></script>
+
+        <script>
+            // Datos de ejemplo de citas
+            const sampleAppointments = [
+                {
+                    id: 1,
+                    doctor: "Amanda Otero",
+                    specialty: "Pediatría",
+                    date: "2025-05-28",
+                    time: "10:00",
+                    status: "programada",
+                    location: "Consultorio 201"
+                },
+                {
+                    id: 2,
+                    doctor: "Pablo Ruiz",
+                    specialty: "Cardiología",
+                    date: "2025-05-30",
+                    time: "14:30",
+                    status: "programada",
+                    location: "Consultorio 305"
+                },
+                {
+                    id: 3,
+                    doctor: "Jessica Reyes",
+                    specialty: "Dermatología",
+                    date: "2025-05-25",
+                    time: "09:15",
+                    status: "completada",
+                    location: "Consultorio 102"
+                }
+            ];
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Verificar autenticación
+                if (!localStorage.getItem('userLoggedIn')) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // Inicializar asistente
+                if (typeof AssistantViewModel !== 'undefined') {
+                    window.assistantVM = new AssistantViewModel();
+                }
+
+                // Cargar citas
+                displayAppointments(sampleAppointments);
+
+                // Funcionalidad de logout
+                document.getElementById('logoutBtn').addEventListener('click', function() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('userDocument');
+                        localStorage.removeItem('userName');
+                        window.location.href = 'login.html';
+                    }
+                });
+
+                // Filtros
+                document.getElementById('filterStatus').addEventListener('change', filterAppointments);
+                document.getElementById('filterDate').addEventListener('change', filterAppointments);
+                document.getElementById('filterSpecialty').addEventListener('change', filterAppointments);
+            });
+
+            function displayAppointments(appointments) {
+                const container = document.getElementById('appointmentsList');
+                
+                if (appointments.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-5">
+                            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No tienes citas programadas</h5>
+                            <a href="crear_citas.html" class="btn btn-primary mt-3">Agendar una cita</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = appointments.map(appointment => `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5 class="card-title mb-1">Dr. ${appointment.doctor}</h5>
+                                    <p class="text-muted mb-2">${appointment.specialty}</p>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-calendar me-2 text-primary"></i>
+                                        <span>${formatDate(appointment.date)} a las ${appointment.time}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                        <span>${appointment.location}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <span class="badge ${getStatusBadgeClass(appointment.status)} mb-3">
+                                        ${getStatusText(appointment.status)}
+                                    </span>
+                                    <div>
+                                        ${appointment.status === 'programada' ? `
+                                            <button class="btn btn-sm btn-outline-primary me-2" onclick="editAppointment(${appointment.id})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="cancelAppointment(${appointment.id})">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('es-ES', options);
+            }
+
+            function getStatusBadgeClass(status) {
+                switch(status) {
+                    case 'programada': return 'bg-warning text-dark';
+                    case 'completada': return 'bg-success';
+                    case 'cancelada': return 'bg-danger';
+                    default: return 'bg-secondary';
+                }
+            }
+
+            function getStatusText(status) {
+                switch(status) {
+                    case 'programada': return 'Programada';
+                    case 'completada': return 'Completada';
+                    case 'cancelada': return 'Cancelada';
+                    default: return status;
+                }
+            }
+
+            function filterAppointments() {
+                const statusFilter = document.getElementById('filterStatus').value;
+                const dateFilter = document.getElementById('filterDate').value;
+                const specialtyFilter = document.getElementById('filterSpecialty').value;
+
+                let filtered = sampleAppointments.filter(appointment => {
+                    if (statusFilter && appointment.status !== statusFilter) return false;
+                    if (dateFilter && appointment.date !== dateFilter) return false;
+                    if (specialtyFilter && appointment.specialty.toLowerCase() !== specialtyFilter) return false;
+                    return true;
+                });
+
+                displayAppointments(filtered);
+            }
+
+            function editAppointment(id) {
+                localStorage.setItem('editAppointmentId', id);
+                window.location.href = 'editar_citas.html';
+            }
+
+            function cancelAppointment(id) {
+                if (confirm('¿Estás seguro de que deseas cancelar esta cita?')) {
+                    alert('Cita cancelada exitosamente');
+                    // En un caso real, aquí se haría la llamada al servidor
+                    location.reload();
+                }
+            }
+        </script>
                 <i id="micIcon" class="fas fa-microphone"></i>
             </button>
             <div id="assistantStatus" class="assistant-status"></div>

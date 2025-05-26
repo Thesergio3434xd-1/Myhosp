@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHosp - Historial Médico</title>
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos modernos -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    
+    <!-- Estilos específicos del asistente -->
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
+</head>
+
+<body>
+    <!-- Asistente de voz Ana -->
+    <div id="ana-assistant" class="voice-assistant">
+        <!-- Botones para controlar el asistente -->
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="bi bi-toggle-on"></i>
+            </button>
+            <button id="disableAssistant" class="control-button disable-button"
+                aria-label="Desactivar asistente de voz">
+                <i class="bi bi-toggle-off"></i>
+            </button>
+        </div>
+        <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+            <i id="micIcon" class="bi bi-mic"></i>
+        </button>
+        <div id="assistantStatus" class="assistant-status"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=100&h=100&fit=crop&crop=center" alt="MyHosp Logo" class="logo-img">
+                <span class="logo-text">MyHosp</span>
+            </div>
+        </div>
+
+        <div class="sidebar-nav">
+            <a href="dashboard.index.html" class="nav-item">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="ver_citas.html" class="nav-item">
+                <i class="bi bi-calendar3"></i>
+                <span>Citas</span>
+            </a>
+            <a href="historial_medico.html" class="nav-item active">
+                <i class="bi bi-folder2-open"></i>
+                <span>Historial Médico</span>
+            </a>
+            <a href="consultas_online.html" class="nav-item">
+                <i class="bi bi-camera-video"></i>
+                <span>Consulta Online</span>
+            </a>
+            <a href="perfil.html" class="nav-item">
+                <i class="bi bi-person"></i>
+                <span>Perfil</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="logout-btn" id="logoutBtn">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="page-title">
+                    <h4 class="mb-0">Historial Médico</h4>
+                    <small class="text-muted">Consulta tu historial médico completo</small>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <!-- Selector de idioma -->
+                <div class="dropdown">
+                    <button class="btn btn-ghost dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15">
+                        <span>ES</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" width="20" height="15"> ES</a></li>
+                        <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" width="20" height="15"> EN</a></li>
+                    </ul>
+                </div>
+
+                <!-- Notificaciones -->
+                <button class="btn btn-ghost position-relative">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+
+                <!-- Perfil -->
+                <div class="dropdown">
+                    <button class="btn btn-ghost dropdown-toggle user-dropdown" type="button" data-bs-toggle="dropdown">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Usuario" class="user-avatar">
+                        <span>Neymar Tapias</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn2"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="container-fluid px-4 py-4">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="dashboard.index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Historial Médico</li>
+                </ol>
+            </nav>
+
+            <!-- Información del paciente -->
+            <div class="row mb-4">
+                <div class="col-lg-4">
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <i class="bi bi-person-lines-fill text-primary me-2"></i>
+                                Información del Paciente
+                            </h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
+                                 alt="Neymar Tapias" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                            <h6 class="mb-1">Neymar Tapias</h6>
+                            <p class="text-muted small mb-2">ID: 1234567890</p>
+                            
+                            <div class="row g-2 text-start">
+                                <div class="col-12">
+                                    <div class="info-item">
+                                        <i class="bi bi-calendar text-primary me-2"></i>
+                                        <strong>Edad:</strong> 28 años
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="info-item">
+                                        <i class="bi bi-gender-male text-primary me-2"></i>
+                                        <strong>Género:</strong> Masculino
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="info-item">
+                                        <i class="bi bi-droplet text-danger me-2"></i>
+                                        <strong>Tipo de sangre:</strong> O+
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="info-item">
+                                        <i class="bi bi-heart-pulse text-warning me-2"></i>
+                                        <strong>Alergias:</strong> Penicilina
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estadísticas médicas -->
+                    <div class="card glass-card mt-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <i class="bi bi-graph-up text-success me-2"></i>
+                                Estadísticas Médicas
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="stat-card text-center">
+                                        <div class="stat-number text-primary">12</div>
+                                        <div class="stat-label">Consultas</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-card text-center">
+                                        <div class="stat-number text-success">3</div>
+                                        <div class="stat-label">Especialistas</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-card text-center">
+                                        <div class="stat-number text-warning">5</div>
+                                        <div class="stat-label">Medicamentos</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-card text-center">
+                                        <div class="stat-number text-info">2</div>
+                                        <div class="stat-label">Exámenes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenido principal del historial -->
+                <div class="col-lg-8">
+                    <!-- Pestañas -->
+                    <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-consultas-tab" data-bs-toggle="pill" data-bs-target="#pills-consultas" type="button" role="tab">
+                                <i class="bi bi-clipboard-pulse me-2"></i>Consultas
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-medicamentos-tab" data-bs-toggle="pill" data-bs-target="#pills-medicamentos" type="button" role="tab">
+                                <i class="bi bi-capsule me-2"></i>Medicamentos
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-examenes-tab" data-bs-toggle="pill" data-bs-target="#pills-examenes" type="button" role="tab">
+                                <i class="bi bi-file-medical me-2"></i>Exámenes
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-vacunas-tab" data-bs-toggle="pill" data-bs-target="#pills-vacunas" type="button" role="tab">
+                                <i class="bi bi-shield-plus me-2"></i>Vacunas
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Contenido de las pestañas -->
+                    <div class="tab-content" id="pills-tabContent">
+                        <!-- Consultas -->
+                        <div class="tab-pane fade show active" id="pills-consultas" role="tabpanel">
+                            <div class="card glass-card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">Historial de Consultas</h6>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-download me-1"></i>Exportar
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Consulta 1 -->
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-primary">
+                                            <i class="bi bi-clipboard-pulse text-white"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div>
+                                                    <h6 class="mb-1">Consulta Psicológica</h6>
+                                                    <p class="text-muted small mb-1">Dr. Alexander Moreno</p>
+                                                </div>
+                                                <span class="badge bg-success">Completada</span>
+                                            </div>
+                                            <p class="mb-2"><strong>Diagnóstico:</strong> Depresión post-natal - Sesión de seguimiento</p>
+                                            <p class="mb-2"><strong>Tratamiento:</strong> Continuación de terapia cognitivo-conductual. Se observa mejora significativa en el estado de ánimo.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>10 de Abril, 2025
+                                                </small>
+                                                <button class="btn btn-outline-primary btn-sm">
+                                                    <i class="bi bi-eye me-1"></i>Ver detalles
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Consulta 2 -->
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-info">
+                                            <i class="bi bi-heart-pulse text-white"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div>
+                                                    <h6 class="mb-1">Medicina General</h6>
+                                                    <p class="text-muted small mb-1">Dr. Carlos Rodríguez</p>
+                                                </div>
+                                                <span class="badge bg-success">Completada</span>
+                                            </div>
+                                            <p class="mb-2"><strong>Diagnóstico:</strong> Control rutinario de salud</p>
+                                            <p class="mb-2"><strong>Tratamiento:</strong> Paciente en buen estado general. Se recomienda mantener actividad física regular.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>15 de Marzo, 2025
+                                                </small>
+                                                <button class="btn btn-outline-primary btn-sm">
+                                                    <i class="bi bi-eye me-1"></i>Ver detalles
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Consulta 3 -->
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-warning">
+                                            <i class="bi bi-clipboard-pulse text-white"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div>
+                                                    <h6 class="mb-1">Consulta Psicológica</h6>
+                                                    <p class="text-muted small mb-1">Dr. Alexander Moreno</p>
+                                                </div>
+                                                <span class="badge bg-success">Completada</span>
+                                            </div>
+                                            <p class="mb-2"><strong>Diagnóstico:</strong> Evaluación inicial - Depresión post-natal</p>
+                                            <p class="mb-2"><strong>Tratamiento:</strong> Inicio de terapia cognitivo-conductual. Establecimiento de objetivos terapéuticos.</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>20 de Febrero, 2025
+                                                </small>
+                                                <button class="btn btn-outline-primary btn-sm">
+                                                    <i class="bi bi-eye me-1"></i>Ver detalles
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medicamentos -->
+                        <div class="tab-pane fade" id="pills-medicamentos" role="tabpanel">
+                            <div class="card glass-card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Medicamentos Actuales</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="medication-card">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <div>
+                                                        <h6 class="mb-1">Sertralina 50mg</h6>
+                                                        <p class="text-muted small mb-1">Antidepresivo</p>
+                                                    </div>
+                                                    <span class="badge bg-success">Activo</span>
+                                                </div>
+                                                <p class="mb-2"><strong>Dosis:</strong> 1 tableta diaria por la mañana</p>
+                                                <p class="mb-2"><strong>Duración:</strong> 6 meses</p>
+                                                <small class="text-muted">Prescrito por Dr. Alexander Moreno</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="medication-card">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <div>
+                                                        <h6 class="mb-1">Complejo B</h6>
+                                                        <p class="text-muted small mb-1">Suplemento vitamínico</p>
+                                                    </div>
+                                                    <span class="badge bg-success">Activo</span>
+                                                </div>
+                                                <p class="mb-2"><strong>Dosis:</strong> 1 cápsula diaria</p>
+                                                <p class="mb-2"><strong>Duración:</strong> 3 meses</p>
+                                                <small class="text-muted">Prescrito por Dr. Carlos Rodríguez</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="mt-4 mb-3">Medicamentos Anteriores</h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="medication-card">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <div>
+                                                        <h6 class="mb-1">Lorazepam 1mg</h6>
+                                                        <p class="text-muted small mb-1">Ansiolítico</p>
+                                                    </div>
+                                                    <span class="badge bg-secondary">Terminado</span>
+                                                </div>
+                                                <p class="mb-2"><strong>Dosis:</strong> 1/2 tableta según necesidad</p>
+                                                <p class="mb-2"><strong>Duración:</strong> 1 mes</p>
+                                                <small class="text-muted">Prescrito por Dr. Alexander Moreno</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Exámenes -->
+                        <div class="tab-pane fade" id="pills-examenes" role="tabpanel">
+                            <div class="card glass-card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Resultados de Exámenes</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="exam-item">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h6 class="mb-1">Hemograma Completo</h6>
+                                                <p class="text-muted small mb-1">Laboratorio Central</p>
+                                            </div>
+                                            <span class="badge bg-success">Normal</span>
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>Glóbulos Rojos:</strong><br>
+                                                    4.8 M/μL <span class="text-success">(Normal)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>Glóbulos Blancos:</strong><br>
+                                                    7.2 K/μL <span class="text-success">(Normal)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>Hemoglobina:</strong><br>
+                                                    14.5 g/dL <span class="text-success">(Normal)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>Hematocrito:</strong><br>
+                                                    42% <span class="text-success">(Normal)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                <i class="bi bi-calendar me-1"></i>10 de Marzo, 2025
+                                            </small>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-download me-1"></i>Descargar PDF
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="exam-item">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h6 class="mb-1">Perfil Lipídico</h6>
+                                                <p class="text-muted small mb-1">Laboratorio Central</p>
+                                            </div>
+                                            <span class="badge bg-warning">Revisión</span>
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>Colesterol Total:</strong><br>
+                                                    210 mg/dL <span class="text-warning">(Límite)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>HDL:</strong><br>
+                                                    45 mg/dL <span class="text-success">(Normal)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>LDL:</strong><br>
+                                                    130 mg/dL <span class="text-warning">(Límite)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="exam-result">
+                                                    <strong>Triglicéridos:</strong><br>
+                                                    95 mg/dL <span class="text-success">(Normal)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                <i class="bi bi-calendar me-1"></i>5 de Marzo, 2025
+                                            </small>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-download me-1"></i>Descargar PDF
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vacunas -->
+                        <div class="tab-pane fade" id="pills-vacunas" role="tabpanel">
+                            <div class="card glass-card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Registro de Vacunación</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="vaccine-item">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="vaccine-icon">
+                                                <i class="bi bi-shield-check text-success"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-1">COVID-19 (Pfizer-BioNTech)</h6>
+                                                <p class="text-muted small mb-1">Dosis de refuerzo</p>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>15 de Enero, 2025
+                                                </small>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <span class="badge bg-success">Completa</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="vaccine-item">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="vaccine-icon">
+                                                <i class="bi bi-shield-check text-success"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-1">Influenza</h6>
+                                                <p class="text-muted small mb-1">Vacuna anual</p>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>10 de Noviembre, 2024
+                                                </small>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <span class="badge bg-success">Completa</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="vaccine-item">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="vaccine-icon">
+                                                <i class="bi bi-shield-exclamation text-warning"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-1">Tétanos</h6>
+                                                <p class="text-muted small mb-1">Refuerzo cada 10 años</p>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar me-1"></i>Próxima dosis: Mayo 2026
+                                                </small>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <span class="badge bg-warning">Pendiente</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    
+    <!-- Scripts del asistente -->
+    <script src="./js/activation-prompt.js"></script>
+    <script src="./js/initial-notification.js"></script>
+    <script src="./js/ana-consent.js"></script>
+    <script src="./js/assistant-controls.js"></script>
+    <script type="module" src="./js/ViewModels/assistant.js"></script>
+    <script src="./js/ana-help-button.js"></script>
+
+    <script>
+        // Verificar autenticación y configurar página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticación
+            if (!localStorage.getItem('userLoggedIn')) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Actualizar nombre del usuario
+            const userName = localStorage.getItem('userName') || 'Usuario';
+            document.querySelectorAll('.user-dropdown span').forEach(el => {
+                el.textContent = userName;
+            });
+
+            // Configurar logout
+            document.querySelectorAll('#logoutBtn, #logoutBtn2').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('userDocument');
+                        localStorage.removeItem('userName');
+                        window.location.href = 'login.html';
+                    }
+                });
+            });
+
+            // Configurar sidebar toggle
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('collapsed');
+                });
+            }
+
+            // Inicializar funcionalidades
+            initializeHistorialMedico();
+        });
+
+        // Inicializar historial médico
+        function initializeHistorialMedico() {
+            // Configurar botones de exportar
+            setupExportButtons();
+            
+            // Configurar botones de ver detalles
+            setupDetailButtons();
+            
+            // Configurar botones de descarga
+            setupDownloadButtons();
+        }
+
+        // Configurar botones de exportar
+        function setupExportButtons() {
+            const exportBtns = document.querySelectorAll('[data-action="export"]');
+            exportBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const type = this.getAttribute('data-type') || 'consultas';
+                    exportData(type);
+                });
+            });
+        }
+
+        // Configurar botones de ver detalles
+        function setupDetailButtons() {
+            const detailBtns = document.querySelectorAll('[data-action="detail"]');
+            detailBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const consultaId = this.getAttribute('data-id');
+                    showConsultaDetail(consultaId);
+                });
+            });
+        }
+
+        // Configurar botones de descarga
+        function setupDownloadButtons() {
+            const downloadBtns = document.querySelectorAll('[data-action="download"]');
+            downloadBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const examId = this.getAttribute('data-id');
+                    downloadExam(examId);
+                });
+            });
+        }
+
+        // Exportar datos
+        function exportData(type) {
+            showNotification(`Exportando ${type}...`, 'info');
+            
+            // Simular exportación
+            setTimeout(() => {
+                showNotification(`${type} exportado exitosamente`, 'success');
+            }, 2000);
+        }
+
+        // Mostrar detalles de consulta
+        function showConsultaDetail(consultaId) {
+            // Crear modal con detalles de la consulta
+            const modalHtml = `
+                <div class="modal fade" id="consultaDetailModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="bi bi-clipboard-pulse me-2"></i>
+                                    Detalles de la Consulta
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Fecha y Hora</label>
+                                        <p>10 de Abril, 2025 - 2:00 PM</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Especialista</label>
+                                        <p>Dr. Alexander Moreno - Psicología</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold">Motivo de Consulta</label>
+                                        <p>Seguimiento de tratamiento para depresión post-natal</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold">Diagnóstico</label>
+                                        <p>Depresión post-natal - Sesión de seguimiento. Se observa mejora significativa en el estado de ánimo del paciente.</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold">Tratamiento</label>
+                                        <p>Continuación de terapia cognitivo-conductual. Se recomienda mantener rutina de ejercicios y técnicas de relajación.</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold">Observaciones</label>
+                                        <p>Paciente muestra progreso positivo. Próxima cita programada en 2 semanas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary">
+                                    <i class="bi bi-download me-1"></i>Descargar Reporte
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Agregar modal al DOM
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById('consultaDetailModal'));
+            modal.show();
+            
+            // Limpiar modal al cerrar
+            document.getElementById('consultaDetailModal').addEventListener('hidden.bs.modal', function() {
+                this.remove();
+            });
+        }
+
+        // Descargar examen
+        function downloadExam(examId) {
+            showNotification('Descargando examen...', 'info');
+            
+            // Simular descarga
+            setTimeout(() => {
+                showNotification('Examen descargado exitosamente', 'success');
+            }, 1500);
+        }
+
+        // Mostrar notificaciones
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+            
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+                    ${message}
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        // Agregar estilos específicos
+        const style = document.createElement('style');
+        style.textContent = `
+            .info-item {
+                padding: 0.5rem 0;
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+            }
+            
+            .info-item:last-child {
+                border-bottom: none;
+            }
+            
+            .timeline-item {
+                position: relative;
+                padding-left: 3rem;
+                margin-bottom: 2rem;
+            }
+            
+            .timeline-icon {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .timeline-content {
+                background: rgba(var(--bs-light-rgb), 0.5);
+                border-radius: 0.5rem;
+                padding: 1rem;
+                border-left: 4px solid var(--bs-primary);
+            }
+            
+            .medication-card, .exam-item, .vaccine-item {
+                background: rgba(var(--bs-light-rgb), 0.3);
+                border-radius: 0.5rem;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border: 1px solid rgba(var(--bs-primary-rgb), 0.1);
+            }
+            
+            .exam-result {
+                background: rgba(var(--bs-white-rgb), 0.7);
+                border-radius: 0.375rem;
+                padding: 0.75rem;
+                text-align: center;
+            }
+            
+            .vaccine-icon {
+                width: 3rem;
+                height: 3rem;
+                border-radius: 50%;
+                background: rgba(var(--bs-light-rgb), 0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+            }
+            
+            .stat-card {
+                background: rgba(var(--bs-primary-rgb), 0.1);
+                border-radius: 0.5rem;
+                padding: 0.75rem;
+            }
+            
+            .stat-number {
+                font-size: 1.25rem;
+                font-weight: 600;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+                color: var(--bs-secondary);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyHosp - Dashboard Principal</title>    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados modernos -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">    <style>
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .icon-hover {
+            transition: transform 0.3s ease;
+        }
+        .icon-hover:hover {
+            transform: scale(1.1);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Mejoras adicionales del dashboard */
+        .dashboard-welcome {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, #17a2b8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-welcome::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .card-enhanced {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .quick-action-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .quick-action-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .appointment-card {
+            border-left: 4px solid;
+        }
+        
+        .appointment-card.cardiology {
+            border-left-color: var(--info-color);
+        }
+        
+        .appointment-card.dermatology {
+            border-left-color: var(--success-color);
+        }
+        
+        .location-item {
+            transition: all 0.3s ease;
+            border-radius: var(--border-radius);
+            padding: 12px;
+        }
+        
+        .location-item:hover {
+            background: var(--light-color);
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Asistente de voz Ana -->
+    <div id="ana-assistant" class="voice-assistant">
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="fas fa-toggle-on"></i>
+            </button>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
+            </button>
+        </div>
+        <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+            <i id="micIcon" class="fas fa-microphone"></i>
+        </button>
+        <div id="assistantStatus" class="assistant-status"></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar d-flex flex-column position-fixed vh-100" style="width: 16.666667%; z-index: 1030;">
+                    <div class="text-center py-3">
+                        <div class="logo">
+                            <img src="./img/logo.png" alt="MyHosp Logo" width="60" height="60" class="logo-image mb-2">
+                            <h5 class="text-white fw-bold mb-0">MyHosp</h5>
+                            <small class="text-white-50 fw-medium">Sistema Hospitalario</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column flex-grow-1 px-3">
+                        <a class="nav-link active" href="dashboard.index.html">
+                            <i class="bi bi-house-door"></i> Dashboard
+                        </a>
+                        <a class="nav-link" href="ver_citas.html">
+                            <i class="bi bi-calendar3"></i> Mis Citas
+                        </a>
+                        <a class="nav-link" href="crear_citas.html">
+                            <i class="bi bi-calendar-plus"></i> Nueva Cita
+                        </a>
+                        <a class="nav-link" href="historial_medico.html">
+                            <i class="bi bi-folder2-open"></i> Historial Médico
+                        </a>
+                        <a class="nav-link" href="consultas_online.html">
+                            <i class="bi bi-camera-video"></i> Consulta Online
+                        </a>
+                        <a class="nav-link" href="perfil.html">
+                            <i class="bi bi-person"></i> Mi Perfil
+                        </a>
+                        <a class="nav-link" href="Ayuda.html">
+                            <i class="bi bi-question-circle"></i> Ayuda
+                        </a>
+                    </nav>
+                      <div class="mt-auto p-3">
+                        <button class="logout-btn w-100" onclick="handleLogout()">
+                            <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Overlay para móvil -->
+                <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+            </div><!-- Contenido Principal -->
+            <div class="col-md-9 col-lg-10" style="margin-left: 16.666667%;">                <!-- Topbar -->
+                <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
+                    <div class="d-flex align-items-center">
+                        <!-- Botón hamburguesa para móvil -->
+                        <button class="mobile-menu-toggle me-3" type="button" onclick="toggleSidebar()">
+                            <i class="bi bi-list fs-5"></i>
+                        </button>
+                        <div>
+                            <h4 class="text-white mb-0">¡Bienvenido, <span id="username">Neymar Tapias</span>!</h4>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-white-50">Dashboard Principal</span>
+                                <span class="text-white-50">•</span>
+                                <span class="text-white-50 current-time"></span>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="d-flex align-items-center gap-3">
+                        <!-- Dropdown idioma -->
+                        <div class="dropdown language-dropdown">
+                            <button class="btn btn-language text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="flag-container">
+                                    <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image">
+                                </div>
+                                <span class="language-text">ES</span>
+                                <i class="bi bi-chevron-down small"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end language-menu">
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="es">
+                                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image me-2">
+                                        <span>Español</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="en">
+                                        <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15" class="flag-image me-2">
+                                        <span>English</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>                        
+                        <!-- Notificaciones -->
+                        <div class="dropdown notifications-dropdown">
+                            <button class="btn btn-notification text-white position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">3</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end notifications-menu" style="min-width: 300px;">
+                                <li class="dropdown-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">Notificaciones</h6>
+                                        <small class="text-muted">3 nuevas</small>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-primary">
+                                                <i class="bi bi-calendar-check text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Cita confirmada</p>
+                                                <small class="text-muted">Dr. García - Mañana 10:30 AM</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-success">
+                                                <i class="bi bi-chat-dots text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Mensaje del doctor</p>
+                                                <small class="text-muted">Resultados de exámenes listos</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-warning">
+                                                <i class="bi bi-exclamation-triangle text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Recordatorio</p>
+                                                <small class="text-muted">Tomar medicamento a las 8:00 PM</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-center text-primary" href="#">
+                                        Ver todas las notificaciones
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>                        
+                        <!-- Perfil de usuario -->
+                        <div class="dropdown user-profile-dropdown">
+                            <button class="btn btn-user-profile text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle user-avatar">
+                                <div class="user-info-text d-none d-md-block">
+                                    <span class="user-name">Neymar Tapias</span>
+                                    <small class="user-role d-block text-white-50">Paciente</small>
+                                </div>
+                                <i class="bi bi-chevron-down small d-none d-md-inline"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-menu">
+                                <li class="dropdown-header">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Usuario" width="50" class="rounded-circle me-3">
+                                        <div>
+                                            <h6 class="mb-0">Neymar Tapias</h6>
+                                            <small class="text-muted">paciente@myhosp.com</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="perfil.html">
+                                        <i class="bi bi-person me-2 text-primary"></i>Mi Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="editar_perfil.html">
+                                        <i class="bi bi-gear me-2 text-secondary"></i>Configuración
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="Ayuda.html">
+                                        <i class="bi bi-question-circle me-2 text-info"></i>Ayuda
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" onclick="handleLogout()">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>                
+                <!-- Contenido del Dashboard -->
+                <div class="container-fluid py-4">                    <!-- Sección Hero - Consulta Online -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card dashboard-welcome text-white fade-in-up">
+                                <div class="card-body p-4 position-relative" style="z-index: 2;">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <span class="badge bg-light text-primary px-3 py-2 rounded-pill">
+                                                    <i class="bi bi-star-fill me-1"></i>Servicio Premium
+                                                </span>
+                                            </div>
+                                            <h3 class="card-title mb-3 fw-bold">¡No necesitas salir de casa!</h3>
+                                            <p class="card-text mb-4 fs-5">Obtén tu consulta médica en línea con nuestros especialistas certificados. Disponibles 24/7 para atenderte.</p>
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="d-flex me-3">
+                                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=40&h=40&fit=crop&crop=face" alt="Doctor" class="rounded-circle me-2 border border-white border-2" width="40">
+                                                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=40&h=40&fit=crop&crop=face" alt="Doctora" class="rounded-circle me-2 border border-white border-2" width="40">
+                                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=40&h=40&fit=crop&crop=face" alt="Doctor" class="rounded-circle me-2 border border-white border-2" width="40">
+                                                    <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px; font-size: 0.8rem;">+177</div>
+                                                </div>
+                                                <span class="text-white-75 fw-medium">+180 doctores disponibles</span>
+                                            </div>
+                                            <a href="consultas_online.html" class="btn btn-light btn-lg px-4 py-3 rounded-pill shadow">
+                                                <i class="bi bi-camera-video me-2"></i>Iniciar Consulta Ahora
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <img src="https://images.unsplash.com/photo-1605684954998-685c79d6a018?w=300&h=250&fit=crop&crop=center" alt="Consulta Online" class="img-fluid rounded-4 shadow-lg" style="max-height: 250px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    <!-- Cards de Acceso Rápido -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="card h-100 text-center fade-in-up quick-action-card">
+                                <div class="card-body p-4">
+                                    <div class="icon-hover mb-3">
+                                        <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="bi bi-calendar-plus text-primary" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold">Nueva Cita</h5>
+                                    <p class="card-text text-muted">Agenda tu próxima cita médica de manera rápida y sencilla.</p>
+                                    <a href="crear_citas.html" class="btn btn-outline-primary rounded-pill px-4">
+                                        <i class="bi bi-plus-circle me-1"></i>Agendar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="card h-100 text-center fade-in-up quick-action-card">
+                                <div class="card-body p-4">
+                                    <div class="icon-hover mb-3">
+                                        <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="bi bi-calendar-check text-success" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold">Mis Citas</h5>
+                                    <p class="card-text text-muted">Revisa y gestiona todas tus citas médicas programadas.</p>
+                                    <a href="ver_citas.html" class="btn btn-outline-success rounded-pill px-4">
+                                        <i class="bi bi-eye me-1"></i>Ver Citas
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="card h-100 text-center fade-in-up quick-action-card">
+                                <div class="card-body p-4">
+                                    <div class="icon-hover mb-3">
+                                        <div class="rounded-circle bg-info bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="bi bi-folder2-open text-info" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold">Historial Médico</h5>
+                                    <p class="card-text text-muted">Accede a tu historial médico completo y documentos.</p>
+                                    <a href="historial_medico.html" class="btn btn-outline-info rounded-pill px-4">
+                                        <i class="bi bi-file-earmark-medical me-1"></i>Ver Historial
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="card h-100 text-center fade-in-up quick-action-card">
+                                <div class="card-body p-4">
+                                    <div class="icon-hover mb-3">
+                                        <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="bi bi-person-circle text-warning" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold">Mi Perfil</h5>
+                                    <p class="card-text text-muted">Actualiza tu información personal y preferencias.</p>
+                                    <a href="perfil.html" class="btn btn-outline-warning rounded-pill px-4">
+                                        <i class="bi bi-pencil me-1"></i>Editar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Próximas Citas y Ubicaciones -->
+                    <div class="row">                        <div class="col-lg-8 mb-4">
+                            <div class="card fade-in-up card-enhanced">
+                                <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0 fw-bold"><i class="bi bi-calendar3 me-2"></i>Próximas Citas</h5>
+                                    <a href="ver_citas.html" class="btn btn-sm btn-light text-primary rounded-pill px-3">Ver todas</a>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="alert alert-info appointment-card cardiology border-0 shadow-sm">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=50&h=50&fit=crop&crop=face" alt="Dr. García" width="50" class="rounded-circle me-3 border border-white border-2">
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1 fw-bold">Dr. Carlos García</h6>
+                                                        <span class="badge bg-info rounded-pill mb-2">Cardiología</span>
+                                                        <div class="d-flex flex-column gap-1">
+                                                            <small class="d-flex align-items-center text-muted">
+                                                                <i class="bi bi-calendar me-2"></i>26 Mayo, 2025
+                                                            </small>
+                                                            <small class="d-flex align-items-center text-muted">
+                                                                <i class="bi bi-clock me-2"></i>10:30 AM
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-primary rounded-pill">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="alert alert-success appointment-card dermatology border-0 shadow-sm">
+                                                <div class="d-flex align-items-center">
+                                                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=50&h=50&fit=crop&crop=face" alt="Dra. López" width="50" class="rounded-circle me-3 border border-white border-2">
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1 fw-bold">Dra. Ana López</h6>
+                                                        <span class="badge bg-success rounded-pill mb-2">Dermatología</span>
+                                                        <div class="d-flex flex-column gap-1">
+                                                            <small class="d-flex align-items-center text-muted">
+                                                                <i class="bi bi-calendar me-2"></i>28 Mayo, 2025
+                                                            </small>
+                                                            <small class="d-flex align-items-center text-muted">
+                                                                <i class="bi bi-clock me-2"></i>2:00 PM
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-success rounded-pill">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <a href="crear_citas.html" class="btn btn-primary rounded-pill px-4">
+                                            <i class="bi bi-plus-circle me-2"></i>Agendar Nueva Cita
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-lg-4 mb-4">
+                            <div class="card fade-in-up card-enhanced">
+                                <div class="card-header bg-gradient-primary text-white">
+                                    <h5 class="mb-0 fw-bold"><i class="bi bi-geo-alt me-2"></i>Centros Médicos Cercanos</h5>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="text-center mb-4">
+                                        <div class="alert alert-warning border-0 shadow-sm">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                                                    <i class="bi bi-geo-alt text-warning fs-4"></i>
+                                                </div>
+                                                <p class="mb-3 fw-medium">Activa tu ubicación para encontrar centros médicos cercanos</p>
+                                                <button class="btn btn-warning rounded-pill px-4">
+                                                    <i class="bi bi-geo-alt me-2"></i>Activar Ubicación
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column gap-3">
+                                        <div class="location-item d-flex align-items-center">
+                                            <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="bi bi-hospital text-primary fs-5"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1 fw-bold">Hospital San José</h6>
+                                                <small class="text-muted d-flex align-items-center">
+                                                    <i class="bi bi-geo-alt me-1"></i>2.3 km • 
+                                                    <span class="badge bg-success rounded-pill ms-1">Abierto 24h</span>
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="location-item d-flex align-items-center">
+                                            <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="bi bi-building text-success fs-5"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1 fw-bold">Clínica Santa María</h6>
+                                                <small class="text-muted d-flex align-items-center">
+                                                    <i class="bi bi-geo-alt me-1"></i>3.1 km • 
+                                                    <span class="badge bg-warning rounded-pill ms-1">Cierra 10:00 PM</span>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    <!-- Estadísticas Rápidas -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card fade-in-up card-enhanced">
+                                <div class="card-header bg-gradient-primary text-white">
+                                    <h5 class="mb-0 fw-bold"><i class="bi bi-graph-up me-2"></i>Tu Salud en Números</h5>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row g-4">
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stats-card glass-effect p-4 rounded-4 text-center h-100">
+                                                <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                                                    <i class="bi bi-calendar-check text-success" style="font-size: 2rem;"></i>
+                                                </div>
+                                                <h3 class="fw-bold text-success mb-2">12</h3>
+                                                <h6 class="text-muted mb-0">Citas Completadas</h6>
+                                                <small class="text-success fw-medium">+2 este mes</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stats-card glass-effect p-4 rounded-4 text-center h-100">
+                                                <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                                                    <i class="bi bi-clock text-warning" style="font-size: 2rem;"></i>
+                                                </div>
+                                                <h3 class="fw-bold text-warning mb-2">3</h3>
+                                                <h6 class="text-muted mb-0">Citas Pendientes</h6>
+                                                <small class="text-warning fw-medium">Próxima: Hoy</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stats-card glass-effect p-4 rounded-4 text-center h-100">
+                                                <div class="rounded-circle bg-info bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                                                    <i class="bi bi-file-earmark-medical text-info" style="font-size: 2rem;"></i>
+                                                </div>
+                                                <h3 class="fw-bold text-info mb-2">8</h3>
+                                                <h6 class="text-muted mb-0">Documentos Médicos</h6>
+                                                <small class="text-info fw-medium">Actualizado ayer</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="stats-card glass-effect p-4 rounded-4 text-center h-100">
+                                                <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                                                    <i class="bi bi-camera-video text-primary" style="font-size: 2rem;"></i>
+                                                </div>
+                                                <h3 class="fw-bold text-primary mb-2">5</h3>
+                                                <h6 class="text-muted mb-0">Consultas Online</h6>
+                                                <small class="text-primary fw-medium">Disponible 24/7</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Scripts del asistente Ana -->
+    <script src="./js/activation-prompt.js"></script>
+    <script src="./js/initial-notification.js"></script>
+    <script src="./js/ana-consent.js"></script>
+    <script src="./js/assistant-controls.js"></script>
+    <script type="module" src="./js/ViewModels/assistant.js"></script>
+    <script src="./js/ana-help-button.js"></script>
+    
+    <!-- Script de funcionalidades avanzadas del dashboard -->
+    <script src="./js/dashboard-enhanced.js"></script><!-- Scripts de funcionalidad del dashboard -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si el usuario está logueado
+            if (!localStorage.getItem('userLoggedIn')) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Actualizar nombre del usuario si está disponible
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                const usernameElements = document.querySelectorAll('#username, .user-name');
+                usernameElements.forEach(element => {
+                    if (element) {
+                        element.textContent = userName;
+                    }
+                });
+            }
+
+            // Configurar el asistente Ana
+            if (typeof AssistantViewModel !== 'undefined') {
+                window.assistantVM = new AssistantViewModel();
+            }
+
+            // Funcionalidad del selector de idiomas
+            initLanguageSelector();
+            
+            // Configurar tooltips de Bootstrap
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Animaciones de las cards de estadísticas
+            initStatsCardAnimations();
+        });
+
+        // Función de logout
+        function handleLogout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                // Mostrar spinner de carga
+                const loadingSpinner = document.createElement('div');
+                loadingSpinner.innerHTML = `
+                    <div class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.5); z-index: 9999;">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Cerrando sesión...</span>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(loadingSpinner);
+                
+                setTimeout(() => {
+                    localStorage.removeItem('userLoggedIn');
+                    localStorage.removeItem('userDocument');
+                    localStorage.removeItem('userName');
+                    window.location.href = 'login.html';
+                }, 1000);
+            }
+        }
+
+        // Función para inicializar el selector de idiomas
+        function initLanguageSelector() {
+            const languageOptions = document.querySelectorAll('.language-option');
+            const currentLanguage = document.querySelector('.language-text');
+            const currentFlag = document.querySelector('.flag-container img');
+
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const selectedLang = this.dataset.lang;
+                    const selectedText = this.querySelector('span').textContent;
+                    const selectedFlag = this.querySelector('img').src;
+
+                    // Actualizar la interfaz
+                    currentLanguage.textContent = selectedLang.toUpperCase();
+                    currentFlag.src = selectedFlag;
+
+                    // Guardar preferencia
+                    localStorage.setItem('selectedLanguage', selectedLang);
+
+                    // Mostrar mensaje de confirmación
+                    showToast(`Idioma cambiado a ${selectedText}`, 'success');
+                });
+            });
+        }
+
+        // Función para mostrar notificaciones toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.querySelector('.toast-container') || createToastContainer();
+            const toastId = 'toast-' + Date.now();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type} border-0`;
+            toast.id = toastId;
+            toast.setAttribute('role', 'alert');
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="bi bi-check-circle me-2"></i>${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            
+            // Remover el toast después de que se oculte
+            toast.addEventListener('hidden.bs.toast', () => {
+                toast.remove();
+            });
+        }
+
+        // Crear contenedor de toasts si no existe
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.className = 'toast-container position-fixed top-0 end-0 p-3';
+            container.style.zIndex = '1055';
+            document.body.appendChild(container);
+            return container;
+        }
+
+        // Animaciones de las cards de estadísticas
+        function initStatsCardAnimations() {
+            const statsCards = document.querySelectorAll('.stats-card');
+            
+            statsCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.03)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+                
+                // Efecto de clic
+                card.addEventListener('click', function() {
+                    this.style.transform = 'translateY(-5px) scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-8px) scale(1.03)';
+                    }, 150);
+                });
+            });
+        }
+
+        // Animaciones de entrada mejoradas
+        window.addEventListener('load', function() {
+            // Animar elementos con fade-in-up
+            document.querySelectorAll('.fade-in-up').forEach(function(element, index) {
+                setTimeout(function() {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+
+            // Efecto de conteo animado para las estadísticas
+            animateCounters();
+        });
+
+        // Función para animar contadores
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-card h3');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        }
+
+        // Función para actualizar el reloj en tiempo real
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            const clockElement = document.querySelector('.current-time');
+            if (clockElement) {
+                clockElement.textContent = timeString;
+            }
+        }
+
+        // Actualizar reloj cada segundo
+        setInterval(updateClock, 1000);
+        updateClock(); // Llamada inicial        // Función para toggle del sidebar en móvil
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            if (sidebar && overlay) {
+                const isShowing = sidebar.classList.contains('show');
+                
+                if (isShowing) {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                } else {
+                    sidebar.classList.add('show');
+                    overlay.classList.add('show');
+                }
+            }
+        }
+
+        // Cerrar sidebar al hacer click fuera de él en móvil
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            const toggleButton = document.querySelector('.mobile-menu-toggle');
+            
+            if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('show')) {
+                if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                }
+            }
+        });
+
+        // Cerrar sidebar al redimensionar ventana
+        window.addEventListener('resize', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            if (window.innerWidth > 768 && sidebar && overlay) {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

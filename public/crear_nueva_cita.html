@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyHosp - Crear Nueva Cita</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
+</head>
+<body>
+    <!-- Asistente de voz Ana -->
+    <div id="ana-assistant" class="voice-assistant">
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="fas fa-toggle-on"></i>
+            </button>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
+            </button>
+        </div>
+        <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+            <i id="micIcon" class="fas fa-microphone"></i>
+        </button>
+        <div id="assistantStatus" class="assistant-status"></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar d-flex flex-column vh-100">
+                    <div class="text-center py-3">
+                        <div class="logo">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=80&h=80&fit=crop&crop=center" alt="MyHosp Logo" width="80" class="rounded-circle">
+                            <h5 class="text-white mt-2 mb-0">MyHosp</h5>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column flex-grow-1">
+                        <a class="nav-link" href="dashboard.index.html">
+                            <i class="bi bi-house-door"></i> Dashboard
+                        </a>
+                        <a class="nav-link" href="ver_citas.html">
+                            <i class="bi bi-calendar3"></i> Mis Citas
+                        </a>
+                        <a class="nav-link active" href="crear_nueva_cita.html">
+                            <i class="bi bi-calendar-plus"></i> Nueva Cita
+                        </a>
+                        <a class="nav-link" href="historial_medico.html">
+                            <i class="bi bi-folder2-open"></i> Historial Médico
+                        </a>
+                        <a class="nav-link" href="consultas_online.html">
+                            <i class="bi bi-camera-video"></i> Consulta Online
+                        </a>
+                        <a class="nav-link" href="perfil.html">
+                            <i class="bi bi-person"></i> Mi Perfil
+                        </a>
+                        <a class="nav-link" href="Ayuda.html">
+                            <i class="bi bi-question-circle"></i> Ayuda
+                        </a>
+                    </nav>
+                    
+                    <div class="mt-auto p-3">
+                        <button class="logout-btn w-100" onclick="handleLogout()">
+                            <i class="bi bi-box-arrow-left"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido Principal -->
+            <div class="col-md-9 col-lg-10">
+                <!-- Topbar -->
+                <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
+                    <div>
+                        <h4 class="text-white mb-0">Crear Nueva Cita</h4>
+                        <span class="text-white-50">Agenda tu próxima consulta médica</span>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" class="rounded me-1"> ES
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" class="rounded me-2"> Español</a></li>
+                                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" alt="EN" width="24" class="rounded me-2"> English</a></li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-transparent text-white position-relative">
+                            <i class="bi bi-bell fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                        </button>
+                        
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle">
+                                <span id="username">Neymar Tapias</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
+                                <li><a class="dropdown-item" href="editar_perfil.html"><i class="bi bi-gear me-2"></i>Configuración</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenido de Crear Cita -->
+                <div class="container-fluid py-4">
+                    <!-- Pasos del Proceso -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card fade-in-up">
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-3">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                                    <i class="bi bi-person-lines-fill"></i>
+                                                </div>
+                                                <h6 class="mt-2 text-primary">1. Especialidad</h6>
+                                                <small class="text-muted">Selecciona la especialidad</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="bg-light text-muted rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                                    <i class="bi bi-person-badge"></i>
+                                                </div>
+                                                <h6 class="mt-2 text-muted">2. Médico</h6>
+                                                <small class="text-muted">Elige tu médico</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="bg-light text-muted rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </div>
+                                                <h6 class="mt-2 text-muted">3. Fecha y Hora</h6>
+                                                <small class="text-muted">Selecciona horario</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="bg-light text-muted rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                                    <i class="bi bi-check-circle"></i>
+                                                </div>
+                                                <h6 class="mt-2 text-muted">4. Confirmación</h6>
+                                                <small class="text-muted">Revisa y confirma</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Formulario Principal -->
+                        <div class="col-lg-8">
+                            <!-- Paso 1: Seleccionar Especialidad -->
+                            <div class="card mb-4 fade-in-up">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="bi bi-1-circle me-2"></i>Selecciona la Especialidad Médica</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card h-100 specialty-card" data-specialty="cardiologia">
+                                                <div class="card-body text-center p-4">
+                                                    <i class="bi bi-heart-pulse text-danger fs-1 mb-3"></i>
+                                                    <h6>Cardiología</h6>
+                                                    <p class="text-muted small">Especialista en corazón y sistema cardiovascular</p>
+                                                    <div class="mt-3">
+                                                        <span class="badge bg-success me-2">5 médicos</span>
+                                                        <span class="badge bg-info">Disponible hoy</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card h-100 specialty-card" data-specialty="dermatologia">
+                                                <div class="card-body text-center p-4">
+                                                    <i class="bi bi-bandaid text-warning fs-1 mb-3"></i>
+                                                    <h6>Dermatología</h6>
+                                                    <p class="text-muted small">Especialista en piel, cabello y uñas</p>
+                                                    <div class="mt-3">
+                                                        <span class="badge bg-success me-2">3 médicos</span>
+                                                        <span class="badge bg-info">Disponible hoy</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card h-100 specialty-card" data-specialty="pediatria">
+                                                <div class="card-body text-center p-4">
+                                                    <i class="bi bi-emoji-smile text-primary fs-1 mb-3"></i>
+                                                    <h6>Pediatría</h6>
+                                                    <p class="text-muted small">Especialista en salud infantil</p>
+                                                    <div class="mt-3">
+                                                        <span class="badge bg-success me-2">4 médicos</span>
+                                                        <span class="badge bg-warning">Mañana</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card h-100 specialty-card" data-specialty="neurologia">
+                                                <div class="card-body text-center p-4">
+                                                    <i class="bi bi-brain text-info fs-1 mb-3"></i>
+                                                    <h6>Neurología</h6>
+                                                    <p class="text-muted small">Especialista en sistema nervioso</p>
+                                                    <div class="mt-3">
+                                                        <span class="badge bg-success me-2">2 médicos</span>
+                                                        <span class="badge bg-info">Disponible hoy</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card h-100 specialty-card" data-specialty="ginecologia">
+                                                <div class="card-body text-center p-4">
+                                                    <i class="bi bi-gender-female text-danger fs-1 mb-3"></i>
+                                                    <h6>Ginecología</h6>
+                                                    <p class="text-muted small">Especialista en salud femenina</p>
+                                                    <div class="mt-3">
+                                                        <span class="badge bg-success me-2">3 médicos</span>
+                                                        <span class="badge bg-info">Disponible hoy</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card h-100 specialty-card" data-specialty="traumatologia">
+                                                <div class="card-body text-center p-4">
+                                                    <i class="bi bi-bandaid-fill text-success fs-1 mb-3"></i>
+                                                    <h6>Traumatología</h6>
+                                                    <p class="text-muted small">Especialista en huesos y articulaciones</p>
+                                                    <div class="mt-3">
+                                                        <span class="badge bg-success me-2">4 médicos</span>
+                                                        <span class="badge bg-warning">Mañana</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Información de la Cita Seleccionada -->
+                            <div class="card fade-in-up" id="selectedAppointmentInfo" style="display: none;">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0"><i class="bi bi-check-circle me-2"></i>Información de tu Cita</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Especialidad Seleccionada:</h6>
+                                            <p id="selectedSpecialty" class="text-primary fw-bold">-</p>
+                                            
+                                            <h6>Tipo de Consulta:</h6>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="consultationType" id="presencial" value="presencial" checked>
+                                                <label class="form-check-label" for="presencial">
+                                                    <i class="bi bi-hospital me-1"></i>Presencial
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="consultationType" id="virtual" value="virtual">
+                                                <label class="form-check-label" for="virtual">
+                                                    <i class="bi bi-camera-video me-1"></i>Virtual
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Motivo de la Consulta:</h6>
+                                            <textarea class="form-control" rows="4" placeholder="Describe brevemente el motivo de tu consulta..."></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary me-2">
+                                            <i class="bi bi-arrow-right me-1"></i>Continuar con Selección de Médico
+                                        </button>
+                                        <button class="btn btn-outline-secondary">
+                                            <i class="bi bi-arrow-left me-1"></i>Cambiar Especialidad
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel de Ayuda -->
+                        <div class="col-lg-4">
+                            <div class="card fade-in-up">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>¿Necesitas Ayuda?</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center mb-3">
+                                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face" alt="Ana Asistente" width="100" class="rounded-circle">
+                                        <h6 class="mt-2">Ana - Tu Asistente Virtual</h6>
+                                    </div>
+                                    
+                                    <div class="alert alert-light">
+                                        <p class="mb-2"><strong>¿No sabes qué especialidad elegir?</strong></p>
+                                        <p class="small">Puedo ayudarte a encontrar la especialidad correcta según tus síntomas.</p>
+                                    </div>
+                                    
+                                    <button class="btn btn-info w-100 mb-3">
+                                        <i class="bi bi-chat-dots me-1"></i>Hablar con Ana
+                                    </button>
+                                    
+                                    <h6>Especialidades más solicitadas:</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="bi bi-heart-pulse text-danger me-2"></i>
+                                            <span class="small">Cardiología - Dolor en el pecho</span>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-bandaid text-warning me-2"></i>
+                                            <span class="small">Dermatología - Problemas de piel</span>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-emoji-smile text-primary me-2"></i>
+                                            <span class="small">Pediatría - Salud infantil</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Horarios Disponibles -->
+                            <div class="card mt-4 fade-in-up">
+                                <div class="card-header bg-warning text-dark">
+                                    <h5 class="mb-0"><i class="bi bi-clock me-2"></i>Horarios de Atención</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <div class="border rounded p-2 mb-2">
+                                                <i class="bi bi-sun text-warning fs-4"></i>
+                                                <h6 class="mt-1">Mañana</h6>
+                                                <small class="text-muted">8:00 AM - 12:00 PM</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="border rounded p-2 mb-2">
+                                                <i class="bi bi-moon text-primary fs-4"></i>
+                                                <h6 class="mt-1">Tarde</h6>
+                                                <small class="text-muted">2:00 PM - 6:00 PM</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert alert-success">
+                                        <small><i class="bi bi-info-circle me-1"></i>Las citas virtuales están disponibles 24/7</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts del asistente Ana -->
+    <script src="./js/activation-prompt.js"></script>
+    <script src="./js/initial-notification.js"></script>
+    <script src="./js/ana-consent.js"></script>
+    <script src="./js/assistant-controls.js"></script>
+    <script type="module" src="./js/ViewModels/assistant.js"></script>
+    <script src="./js/ana-help-button.js"></script>
+</body>
+</html>
+                        <a class="nav-link" href="ver_citas.html">
+                            <i class="fas fa-calendar-alt me-2"></i>Ver Citas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="crear_citas.html">
+                            <i class="fas fa-plus me-2"></i>Crear Cita
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="historial_medico.html">
+                            <i class="fas fa-file-medical me-2"></i>Historial Médico
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="consultas_online.html">
+                            <i class="fas fa-video me-2"></i>Consultas Online
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="perfil.html">
+                            <i class="fas fa-user me-2"></i>Perfil
+                        </a>
+                    </li>
+                </ul>
+                <div class="mt-auto p-3">
+                    <button id="logoutBtn" class="btn btn-outline-danger w-100">
+                        <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="d-flex justify-content-between align-items-center py-3 mb-4 border-bottom">
+                    <h1 class="h3">Agendar Nueva Cita</h1>
+                    <a href="ver_citas.html" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a Mis Citas
+                    </a>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Información de la Cita</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="appointmentForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="specialty" class="form-label">Especialidad *</label>
+                                            <select class="form-select" id="specialty" required>
+                                                <option value="">Selecciona una especialidad</option>
+                                                <option value="pediatria">Pediatría</option>
+                                                <option value="cardiologia">Cardiología</option>
+                                                <option value="dermatologia">Dermatología</option>
+                                                <option value="neurologia">Neurología</option>
+                                                <option value="oftalmologia">Oftalmología</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="doctor" class="form-label">Doctor *</label>
+                                            <select class="form-select" id="doctor" required>
+                                                <option value="">Primero selecciona una especialidad</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="appointmentDate" class="form-label">Fecha *</label>
+                                            <input type="date" class="form-control" id="appointmentDate" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="appointmentTime" class="form-label">Hora *</label>
+                                            <select class="form-select" id="appointmentTime" required>
+                                                <option value="">Selecciona una hora</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="reason" class="form-label">Motivo de la consulta</label>
+                                        <textarea class="form-control" id="reason" rows="3" placeholder="Describe brevemente el motivo de tu consulta"></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="consultationType" class="form-label">Tipo de consulta *</label>
+                                        <select class="form-select" id="consultationType" required>
+                                            <option value="">Selecciona el tipo</option>
+                                            <option value="presencial">Presencial</option>
+                                            <option value="virtual">Virtual</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-secondary me-md-2" onclick="window.location.href='ver_citas.html'">
+                                            Cancelar
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Información Importante</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Recordatorio:</strong> Llega 15 minutos antes de tu cita.
+                                </div>
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Importante:</strong> Trae tu documento de identidad y carnet de EPS.
+                                </div>
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <strong>Cancelaciones:</strong> Puedes cancelar hasta 2 horas antes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón flotante de Ana -->
+    <button class="floating-action-button" id="ana-help-btn" aria-label="Asistente virtual Ana">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Scripts del asistente -->
+    <script src="./js/ana-help-button.js"></script>
+    <script src="./js/ViewModels/assistant-refactored.js"></script>
+    <script src="./js/notification-manager.js"></script>
+
+    <script>
+        // Datos de doctores por especialidad
+        const doctorsBySpecialty = {
+            pediatria: [
+                { id: 1, name: "Amanda Otero", schedule: ["09:00", "10:00", "11:00", "14:00", "15:00"] },
+                { id: 2, name: "Carlos Mendez", schedule: ["08:00", "09:00", "16:00", "17:00"] }
+            ],
+            cardiologia: [
+                { id: 3, name: "Pablo Ruiz", schedule: ["14:00", "14:30", "15:00", "15:30", "16:00"] },
+                { id: 4, name: "Ana García", schedule: ["08:00", "09:00", "10:00", "11:00"] }
+            ],
+            dermatologia: [
+                { id: 5, name: "Jessica Reyes", schedule: ["09:00", "10:00", "11:00", "15:00"] },
+                { id: 6, name: "Roberto Silva", schedule: ["14:00", "15:00", "16:00", "17:00"] }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticación
+            if (!localStorage.getItem('userLoggedIn')) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Inicializar asistente
+            if (typeof AssistantViewModel !== 'undefined') {
+                window.assistantVM = new AssistantViewModel();
+            }
+
+            // Configurar fecha mínima (hoy)
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').setAttribute('min', today);
+
+            // Precargar doctor si viene del dashboard
+            const selectedDoctor = localStorage.getItem('selectedDoctor');
+            const selectedSpecialty = localStorage.getItem('selectedSpecialty');
+            
+            if (selectedSpecialty) {
+                const specialtySelect = document.getElementById('specialty');
+                const specialtyValue = selectedSpecialty.toLowerCase();
+                if (specialtyValue.includes('pediatr')) {
+                    specialtySelect.value = 'pediatria';
+                } else if (specialtyValue.includes('cardio')) {
+                    specialtySelect.value = 'cardiologia';
+                } else if (specialtyValue.includes('dermat')) {
+                    specialtySelect.value = 'dermatologia';
+                }
+                updateDoctors();
+                
+                if (selectedDoctor) {
+                    setTimeout(() => {
+                        const doctorSelect = document.getElementById('doctor');
+                        for (let option of doctorSelect.options) {
+                            if (option.text.includes(selectedDoctor)) {
+                                option.selected = true;
+                                updateTimeSlots();
+                                break;
+                            }
+                        }
+                    }, 100);
+                }
+                
+                // Limpiar localStorage
+                localStorage.removeItem('selectedDoctor');
+                localStorage.removeItem('selectedSpecialty');
+            }
+
+            // Event listeners
+            document.getElementById('specialty').addEventListener('change', updateDoctors);
+            document.getElementById('doctor').addEventListener('change', updateTimeSlots);
+            document.getElementById('appointmentDate').addEventListener('change', updateTimeSlots);
+            document.getElementById('appointmentForm').addEventListener('submit', handleSubmit);
+            
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                    localStorage.removeItem('userLoggedIn');
+                    localStorage.removeItem('userDocument');
+                    localStorage.removeItem('userName');
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+
+        function updateDoctors() {
+            const specialty = document.getElementById('specialty').value;
+            const doctorSelect = document.getElementById('doctor');
+            const timeSelect = document.getElementById('appointmentTime');
+            
+            doctorSelect.innerHTML = '<option value="">Selecciona un doctor</option>';
+            timeSelect.innerHTML = '<option value="">Selecciona una hora</option>';
+            
+            if (specialty && doctorsBySpecialty[specialty]) {
+                doctorsBySpecialty[specialty].forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.id;
+                    option.textContent = `Dr. ${doctor.name}`;
+                    doctorSelect.appendChild(option);
+                });
+            }
+        }
+
+        function updateTimeSlots() {
+            const specialty = document.getElementById('specialty').value;
+            const doctorId = parseInt(document.getElementById('doctor').value);
+            const date = document.getElementById('appointmentDate').value;
+            const timeSelect = document.getElementById('appointmentTime');
+            
+            timeSelect.innerHTML = '<option value="">Selecciona una hora</option>';
+            
+            if (specialty && doctorId && date && doctorsBySpecialty[specialty]) {
+                const doctor = doctorsBySpecialty[specialty].find(d => d.id === doctorId);
+                if (doctor) {
+                    doctor.schedule.forEach(time => {
+                        const option = document.createElement('option');
+                        option.value = time;
+                        option.textContent = time;
+                        timeSelect.appendChild(option);
+                    });
+                }
+            }
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                specialty: document.getElementById('specialty').value,
+                doctor: document.getElementById('doctor').selectedOptions[0]?.text || '',
+                date: document.getElementById('appointmentDate').value,
+                time: document.getElementById('appointmentTime').value,
+                reason: document.getElementById('reason').value,
+                type: document.getElementById('consultationType').value
+            };
+            
+            if (!formData.specialty || !formData.doctor || !formData.date || !formData.time || !formData.type) {
+                alert('Por favor completa todos los campos obligatorios');
+                return;
+            }
+            
+            // Simular guardado
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Agendando...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('¡Cita agendada exitosamente!');
+                window.location.href = 'ver_citas.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

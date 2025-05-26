@@ -1,34 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MyHosp - Citas</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <!-- Estilos personalizados -->
-        <link rel="stylesheet" href="./css/style.css" />
-        <!-- Estilos específicos para autenticación -->
-        <link rel="stylesheet" href="./css/auth.css" />
-        <!-- Estilos del asistente -->
-        <link rel="stylesheet" href="./css/asistente.css" />
-        <!-- Estilos para el botón de ayuda de Ana -->
-        <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-        <link rel="stylesheet" href="./css/notifications.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHosp - Calendario de Citas</title>
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.min.css" rel="stylesheet">
+    
+    <!-- Estilos modernos -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    
+    <!-- Estilos específicos del asistente -->
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
     </head>
     <body>
         <!-- Asistente de voz Ana -->
@@ -57,27 +51,27 @@
             <div>
                 <div class="logo">
                     <img src="img/logo.png" alt="Logo" width="80">
-                </div>
-                <ul class="nav flex-column">
+                </div>                <ul class="nav flex-column">
                     <ul class="nav flex-column">
-                        <li><a class="nav-link" href="dashboard.html"><i
+                        <li><a class="nav-link" href="dashboard.index.html"><i
                                     class="bi bi-speedometer2"></i>
                                 Dashboard</a></li>
-                        <li><a class="nav-link active" href="citas.html"><i
+                        <li><a class="nav-link active" href="ver_citas.html"><i
                                     class="bi bi-calendar3"></i> Citas</a></li>
-                        <li><a class="nav-link "
+                        <li><a class="nav-link"
                                 href="historial_medico.html"><i
                                     class="bi bi-folder2-open"></i> Historial
                                 Médico</a></li>
                         <li><a class="nav-link" href="consultas_online.html"><i
                                     class="bi bi-camera-video"></i> Consulta
                                 Online</a></li>
-                        <li><a class="nav-link" href="ayuda.html"><i
+                        <li><a class="nav-link" href="perfil.html"><i
+                                    class="bi bi-person"></i> Perfil</a></li>
+                        <li><a class="nav-link" href="Ayuda.html"><i
                                     class="bi bi-question-circle"></i>
                                 Ayuda</a></li>
                     </ul>
-                </div>
-                <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
+                </div>                <button class="logout-btn" onclick="handleLogout()"><i class="bi bi-box-arrow-left"></i>
                     Salir</button>
             </div>
 
@@ -85,11 +79,10 @@
                 <!-- Navbar Perfil -->
                <div
                 class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
+                style="background-color: #0d99b4; color: white; height: 60px;">                <div>
+                    <strong>Hola, <span id="username">Usuario</span></strong><br>
                     <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+                        style="font-weight: 700; font-size: 1.25rem;">Calendario de Citas</span>
                 </div>
 
                 <div class="d-flex align-items-center gap-3 ms-auto">
@@ -173,18 +166,19 @@
                 </div>
             </div>
                 <!-- Contenido principal -->
-                <div class="p-4">
-                    <div class="d-flex gap-2 mb-4">
-                        <a class="btn btn-primary" style="background-color: #0d99b4;  border-color: #0d99b4; " href="crear_citas.html">
-                            +
-                            Nueva
-                            cita</a>
-                        <a class="btn btn-secondary"
-                            style="background-color: #0d99b4;  border-color: #0d99b4;"
-                            href="ver_citas.html">
-                            <i class="bi bi-list-ul"></i> Ver
-                            todas las citas
+                <div class="p-4">                    <div class="d-flex gap-2 mb-4">
+                        <a class="btn btn-primary" style="background-color: #0d99b4; border-color: #0d99b4;" href="crear_nueva_cita.html">
+                            <i class="bi bi-plus-circle me-1"></i>
+                            Nueva Cita
                         </a>
+                        <a class="btn btn-success" href="ver_citas.html">
+                            <i class="bi bi-list-ul me-1"></i> 
+                            Ver Todas las Citas
+                        </a>
+                        <button class="btn btn-outline-primary" onclick="refreshCalendar()">
+                            <i class="bi bi-arrow-clockwise me-1"></i>
+                            Actualizar
+                        </button>
                     </div>
 
                     <div class="row">
@@ -293,26 +287,3551 @@
             <!-- Script para el calendario -->
             <script
                 src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
             <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'es',
-        initialDate: '2025-01-01',
-        headerToolbar: {
-          left: 'prev',
-          center: 'title',
-          right: 'next'
-        },
-        events: [
-          { title: '01', start: '2025-01-03' },
-          { title: '02', start: '2025-01-03' },
-          { title: '03', start: '2025-01-24' }
-        ]
-      });
-      calendar.render();
-    });
-  </script>
-        </body>
-    </html>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index:  9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);
+                    setTimeout(() => notification.remove(), duration);
+                }
+            </script>
+
+            <!-- Script para el calendario -->
+            <script
+                src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+            
+            <!-- JavaScript para autenticación y funcionalidades -->
+            <script>
+                // Verificación de autenticación
+                document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    const username = localStorage.getItem('username') || 'Usuario';
+                    document.getElementById('username').textContent = username;
+                    showNotification('Calendario cargado exitosamente', 'success');
+                });
+
+                // Función de logout
+                function handleLogout() {
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('userEmail');
+                        window.location.href = 'login.html';
+                    }
+                }
+
+                // Función para refrescar calendario
+                function refreshCalendar() {
+                    location.reload();
+                    showNotification('Calendario actualizado', 'success');
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info', duration = 3000) {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+                    notification.style.cssText = `top: 20px; right: 20px; z-index: 9999; min-width: 300px;`;
+                    notification.innerHTML = `<div class="d-flex align-items-center"><span>${message}</span></div>`;
+                    document.body.appendChild(notification);

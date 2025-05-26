@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard Médico - MyHosp</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/asistente.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="img/logo.png" alt="Logo MyHosp" class="clinic-logo">
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <i class="fas fa-th-large nav-icon"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li class="nav-item" onclick="window.location.href='citas.html'">
+                    <i class="fas fa-calendar-alt nav-icon"></i>
+                    <span>Citas</span>
+                </li>
+                <li class="nav-item" onclick="window.location.href='historial_medico.html'">
+                    <i class="fas fa-file-medical nav-icon"></i>
+                    <span>Historial Médico</span>
+                </li>
+                <li class="nav-item" onclick="window.location.href='consultas_online.html'">
+                    <i class="fas fa-video nav-icon"></i>
+                    <span>Consulta Online</span>
+                </li>
+                <li class="nav-item" onclick="window.location.href='Ayuda.html'">
+                    <i class="fas fa-question-circle nav-icon"></i>
+                    <span>Ayuda</span>
+                </li>
+            </ul>
+            
+            <button class="logout-button" onclick="window.location.href='login.html'">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Salir</span>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="user-info">
+                    <h1 class="greeting">Hola, Neymar Tapias</h1>
+                    <h2 class="page-title">Dashboard</h2>
+                </div>
+                
+                <div class="user-controls">
+                    <div class="language-selector">
+                        <span class="language">ES</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    
+                    <div class="notifications">
+                        <i class="fas fa-bell notification-icon"></i>
+                        <div class="notification-indicator"></div>
+                    </div>
+                    
+                    <div class="user-profile" onclick="window.location.href='perfil.html'">
+                        <img class="user-avatar" src="img/DOCTOR.png" alt="Avatar de Neymar Tapias">
+                        <span class="user-name">Neymar Tapias</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Online Consultation Section -->
+                <section class="online-consultation">
+                    <div class="consultation-info">
+                        <h3 class="consultation-title">No es necesario visitar los hospitales cercanos</h3>
+                        <p class="consultation-description">Obtenga su consulta en línea</p>
+                        
+                        <div class="doctors-available">
+                            <div class="doctor-avatars">
+                                <img src="img/DOCTOR.png" alt="Doctor 1" class="doctor-avatar">
+                                <img src="img/DOCTOR.png" alt="Doctor 2" class="doctor-avatar">
+                                <img src="img/DOCTOR.png" alt="Doctor 3" class="doctor-avatar">
+                            </div>
+                            <p class="doctors-count">+180 doctores están disponibles para atenderte</p>
+                        </div>
+                    </div>
+                    
+                    <div class="consultation-image-wrapper">
+                        <img class="consultation-image" src="img/DOCTOR.png" alt="Doctores en línea">
+                    </div>
+                </section>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <!-- Nearby Locations -->
+                    <section class="nearby-locations">
+                        <h3 class="section-title">Sedes Cercanas</h3>
+                        
+                        <div class="location-activation">
+                            <i class="fas fa-map-marker-alt location-icon"></i>
+                            <p class="activation-message">
+                                Por favor activa tu ubicación, para que podamos encontrar hospitales cercanos
+                                <a href="#" class="activate-link">Activar</a>
+                            </p>
+                        </div>
+                        
+                        <div class="location-indicators">
+                            <span class="indicator active"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                        </div>
+                    </section>
+
+                    <!-- Appointments Calendar -->
+                    <section class="appointments">
+                        <div class="section-header">
+                            <h3 class="section-title">Próximas Citas</h3>
+                            <a href="citas.html" class="view-all">
+                                Ver <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="calendar">
+                            <div class="calendar-header">
+                                <span class="current-month">Mayo 2025</span>
+                                <div class="calendar-controls">
+                                    <button class="calendar-btn prev-month" aria-label="Mes anterior">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="calendar-btn next-month" aria-label="Mes siguiente">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                    <button class="calendar-btn expand-calendar" aria-label="Expandir calendario">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="calendar-body">
+                                <div class="weekdays">
+                                    <span>Lun</span>
+                                    <span>Mar</span>
+                                    <span>Mié</span>
+                                    <span>Jue</span>
+                                    <span>Vie</span>
+                                    <span>Sáb</span>
+                                    <span>Dom</span>
+                                </div>
+                                
+                                <div class="days" id="calendar-days">
+                                    <!-- Calendar days will be dynamically generated -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="no-appointments">
+                            <i class="fas fa-calendar-times appointment-icon"></i>
+                            <p>Ningún Evento Próximo</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Virtual Consultations -->
+                <section class="virtual-consultations">
+                    <div class="section-header">
+                        <h3 class="section-title">Consultas virtuales</h3>
+                        <a href="consultas_online.html" class="view-all">
+                            Ver Todo <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="doctors-list">
+                        <!-- Doctor Card 1 -->
+                        <article class="doctor-card">
+                            <div class="doctor-info">
+                                <img src="img/DOCTOR.png" alt="Foto de Amanda Otero" class="doctor-photo">
+                                <div class="doctor-details">
+                                    <h4 class="doctor-name">Amanda Otero</h4>
+                                    <p class="doctor-experience">especialista | 12 años de experiencia</p>
+                                    <span class="doctor-specialty">Pediatra</span>
+                                </div>
+                            </div>
+                            
+                            <hr class="doctor-card-divider">
+                            
+                            <div class="availability">
+                                <p class="availability-status">Agenda disponible</p>
+                                <div class="availability-time">
+                                    <i class="fas fa-clock clock-icon"></i>
+                                    <div class="time-details">
+                                        <p class="availability-days">Lun, Sáb</p>
+                                        <p class="availability-hours">10:00 AM - 01:00 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="schedule-appointment" onclick="window.location.href='crear_citas.html'">
+                                Agendar una cita
+                            </button>
+                        </article>
+
+                        <!-- Doctor Card 2 -->
+                        <article class="doctor-card">
+                            <div class="doctor-info">
+                                <img src="img/DOCTOR.png" alt="Foto de Pablo Ruiz" class="doctor-photo">
+                                <div class="doctor-details">
+                                    <h4 class="doctor-name">Pablo Ruiz</h4>
+                                    <p class="doctor-experience">especialista | 8 años de experiencia</p>
+                                    <span class="doctor-specialty">Cardiología</span>
+                                </div>
+                            </div>
+                            
+                            <hr class="doctor-card-divider">
+                            
+                            <div class="availability">
+                                <p class="availability-status">Agenda disponible</p>
+                                <div class="availability-time">
+                                    <i class="fas fa-clock clock-icon"></i>
+                                    <div class="time-details">
+                                        <p class="availability-days">Mar, Jue</p>
+                                        <p class="availability-hours">02:00 PM - 06:00 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="schedule-appointment" onclick="window.location.href='crear_citas.html'">
+                                Agendar una cita
+                            </button>
+                        </article>
+
+                        <!-- Doctor Card 3 -->
+                        <article class="doctor-card">
+                            <div class="doctor-info">
+                                <img src="img/DOCTOR.png" alt="Foto de Jessica Reyes" class="doctor-photo">
+                                <div class="doctor-details">
+                                    <h4 class="doctor-name">Jessica Reyes</h4>
+                                    <p class="doctor-experience">especialista | 15 años de experiencia</p>
+                                    <span class="doctor-specialty">Dermatología</span>
+                                </div>
+                            </div>
+                            
+                            <hr class="doctor-card-divider">
+                            
+                            <div class="availability">
+                                <p class="availability-status">Agenda disponible</p>
+                                <div class="availability-time">
+                                    <i class="fas fa-clock clock-icon"></i>
+                                    <div class="time-details">
+                                        <p class="availability-days">Vie, Dom</p>
+                                        <p class="availability-hours">09:00 AM - 12:00 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="schedule-appointment" onclick="window.location.href='crear_citas.html'">
+                                Agendar una cita
+                            </button>
+                        </article>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Floating Action Button (Assistant) -->
+        <button class="floating-action-button" id="anaAssistantBtn" aria-label="Asistente virtual Ana">
+            <i class="fas fa-microphone" id="micIcon"></i>
+        </button>
+
+        <!-- Assistant Status -->
+        <div id="assistantStatus" class="assistant-status">
+            <span>Ana está lista para ayudarte</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/ViewModels/assistant.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

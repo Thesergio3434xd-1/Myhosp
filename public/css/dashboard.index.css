@@ -1,0 +1,842 @@
+/* Dashboard Médico MyHosp - Estilos Modernos */
+
+/* Variables CSS para consistencia de colores */
+:root {
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --sidebar-width: 280px;
+    --header-height: 80px;
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Layout principal del dashboard */
+.dashboard {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-areas: 
+        "sidebar header"
+        "sidebar main";
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Header */
+.header {
+    grid-area: header;
+    background: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    box-shadow: var(--shadow);
+    z-index: 100;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.greeting {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.page-title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.user-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--light-bg);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.language-selector:hover {
+    background: var(--border-color);
+}
+
+.language {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.caret-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.notifications {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-indicator {
+    width: 24px;
+    height: 24px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    position: relative;
+}
+
+.notification-indicator::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: var(--danger-color);
+    border-radius: 50%;
+    border: 2px solid var(--white);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.user-profile:hover {
+    background: var(--light-bg);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Sidebar */
+.sidebar {
+    grid-area: sidebar;
+    background: var(--white);
+    padding: 2rem 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.clinic-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 2rem;
+    align-self: center;
+}
+
+.nav-menu {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.nav-item:hover {
+    background: var(--light-bg);
+    color: var(--text-primary);
+}
+
+.nav-item.active {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.nav-item img {
+    width: 24px;
+    height: 24px;
+    filter: opacity(0.7);
+}
+
+.nav-item.active img {
+    filter: brightness(0) invert(1);
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: none;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--danger-color);
+    font-weight: 500;
+    margin-top: auto;
+}
+
+.logout-button:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.logout-button img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Contenido principal */
+.main-content {
+    grid-area: main;
+    padding: 2rem;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 2rem;
+    grid-template-areas: 
+        "consultation consultation"
+        "locations appointments"
+        "virtual virtual";
+}
+
+/* Sección de consulta online */
+.online-consultation {
+    grid-area: consultation;
+    background: linear-gradient(135deg, var(--primary-color), #4dabf7);
+    border-radius: 16px;
+    padding: 2rem;
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.consultation-info {
+    flex: 1;
+}
+
+.consultation-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.consultation-description {
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.doctors-available {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.doctor-avatars {
+    display: flex;
+    margin-right: 0.5rem;
+}
+
+.doctor-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--white);
+    margin-left: -10px;
+    object-fit: cover;
+}
+
+.doctor-avatar:first-child {
+    margin-left: 0;
+}
+
+.doctors-count {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.consultation-image {
+    width: 200px;
+    height: auto;
+    margin-left: 2rem;
+}
+
+/* Sección de ubicaciones cercanas */
+.nearby-locations {
+    grid-area: locations;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.location-activation {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.location-icon {
+    width: 24px;
+    height: 24px;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+.activation-message {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.activate-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.activate-link:hover {
+    text-decoration: underline;
+}
+
+.location-indicators {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-color);
+    transition: background-color 0.2s;
+}
+
+.indicator.active {
+    background: var(--primary-color);
+}
+
+/* Sección de citas */
+.appointments {
+    grid-area: appointments;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.view-all {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+.view-all img {
+    width: 16px;
+    height: 16px;
+}
+
+/* Calendar */
+.calendar {
+    margin-bottom: 1.5rem;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.current-month {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.calendar-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.calendar-controls button {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.calendar-controls button:hover {
+    background: var(--light-bg);
+}
+
+.calendar-controls img {
+    width: 16px;
+    height: 16px;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.weekdays span {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.day:not(.empty):hover {
+    background: var(--light-bg);
+}
+
+.day.current {
+    background: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.day.empty {
+    cursor: default;
+}
+
+.no-appointments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    color: var(--text-secondary);
+}
+
+.no-appointments img {
+    width: 48px;
+    height: 48px;
+    opacity: 0.5;
+}
+
+.no-appointments p {
+    font-size: 0.875rem;
+}
+
+/* Sección de consultas virtuales */
+.virtual-consultations {
+    grid-area: virtual;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.doctors-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.doctor-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.doctor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.doctor-info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.doctor-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.doctor-details {
+    flex: 1;
+}
+
+.doctor-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.doctor-experience {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.doctor-specialty {
+    display: inline-block;
+    background: rgba(0, 123, 255, 0.1);
+    color: var(--primary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.doctor-card-divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1rem 0;
+}
+
+.availability {
+    margin-bottom: 1.5rem;
+}
+
+.availability-status {
+    color: var(--success-color);
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+}
+
+.availability-time {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.clock-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.availability-days {
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.availability-hours {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.schedule-appointment {
+    width: 100%;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.schedule-appointment:hover {
+    background: var(--primary-hover);
+}
+
+/* Botón flotante del asistente */
+.floating-action-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-action-button:hover {
+    background: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+.floating-action-button img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "consultation"
+            "locations"
+            "appointments"
+            "virtual";
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 0px;
+        --header-height: 70px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "header"
+            "main";
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: var(--sidebar-width);
+        height: 100vh;
+        transition: left 0.3s;
+        z-index: 1001;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .header {
+        padding: 0 1rem;
+    }
+
+    .greeting {
+        font-size: 1.25rem;
+    }
+
+    .user-controls {
+        gap: 1rem;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    .main-content {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .consultation-image {
+        display: none;
+    }
+
+    .doctors-list {
+        grid-template-columns: 1fr;
+    }
+
+    .floating-action-button {
+        width: 50px;
+        height: 50px;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .floating-action-button img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 0.75rem;
+    }
+
+    .online-consultation {
+        padding: 1.5rem;
+    }
+
+    .consultation-title {
+        font-size: 1.25rem;
+    }
+
+    .consultation-description {
+        font-size: 1rem;
+    }
+
+    .doctors-count {
+        font-size: 0.75rem;
+    }
+
+    .nearby-locations,
+    .appointments,
+    .virtual-consultations {
+        padding: 1rem;
+    }
+
+    .doctor-card {
+        padding: 1rem;
+    }
+}
+
+/* Animaciones */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.doctor-card,
+.nearby-locations,
+.appointments,
+.online-consultation {
+    animation: slideInUp 0.5s ease-out;
+}
+
+/* Estados de carga */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

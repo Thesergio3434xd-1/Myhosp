@@ -3,253 +3,379 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MyHosp - Citas</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHosp - Crear Cita</title>
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="./css/style.css" />
-    <!-- Estilos específicos para autenticación -->
-    <link rel="stylesheet" href="./css/auth.css" />
-    <!-- Estilos del asistente -->
-    <link rel="stylesheet" href="./css/asistente.css" />
-    <!-- Estilos para el botón de ayuda de Ana -->
-    <link rel="stylesheet" href="./css/ana-help-button.css" />
-            <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-  <link rel="stylesheet" href="./css/notifications.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos modernos -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    
+    <!-- Estilos específicos del asistente -->
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
 </head>
 
-<body>
-    <!-- Asistente de voz Ana -->
+<body>    <!-- Asistente de voz Ana -->
     <div id="ana-assistant" class="voice-assistant">
         <!-- Botones para controlar el asistente -->
         <div class="assistant-controls">
             <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
-                <i class="fas fa-toggle-on"></i>
+                <i class="bi bi-toggle-on"></i>
             </button>
             <button id="disableAssistant" class="control-button disable-button"
                 aria-label="Desactivar asistente de voz">
-                <i class="fas fa-toggle-off"></i>
+                <i class="bi bi-toggle-off"></i>
             </button>
         </div>
         <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
-            <i id="micIcon" class="fas fa-microphone"></i>
+            <i id="micIcon" class="bi bi-mic"></i>
         </button>
         <div id="assistantStatus" class="assistant-status"></div>
     </div>
 
+    <!-- Sidebar -->
     <div class="sidebar">
-        <div>
+        <div class="sidebar-header">
             <div class="logo">
-                <img src="img/logo.png" alt="Logo" width="80">
+                <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=100&h=100&fit=crop&crop=center" alt="MyHosp Logo" class="logo-img">
+                <span class="logo-text">MyHosp</span>
             </div>
-            <ul class="nav flex-column">
-                <li><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i>
-                        Dashboard</a></li>
-                <li><a class="nav-link" href="citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
-                <li><a class="nav-link active" href="historial_medico.html"><i class="bi bi-folder2-open"></i> Historial
-                        Médico</a></li>
-                <li><a class="nav-link" href="consultas_online.html"><i class="bi bi-camera-video"></i> Consulta
-                        Online</a></li>
-                <li><a class="nav-link" href="ayuda.html"><i class="bi bi-question-circle"></i>
-                        Ayuda</a></li>
-            </ul>
         </div>
-        <a class="logout-btn" href="index.html"><i class="bi bi-box-arrow-left"></i>
-            Salir</a>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.index.html" class="nav-item">
+                <i class="bi bi-house-door"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="citas.html" class="nav-item">
+                <i class="bi bi-calendar-check"></i>
+                <span>Mis Citas</span>
+            </a>
+            <a href="crear_nueva_cita.html" class="nav-item active">
+                <i class="bi bi-calendar-plus"></i>
+                <span>Nueva Cita</span>
+            </a>
+            <a href="historial_medico.html" class="nav-item">
+                <i class="bi bi-file-medical"></i>
+                <span>Historial Médico</span>
+            </a>
+            <a href="consultas_online.html" class="nav-item">
+                <i class="bi bi-camera-video"></i>
+                <span>Consultas Online</span>
+            </a>
+            <a href="perfil.html" class="nav-item">
+                <i class="bi bi-person-circle"></i>
+                <span>Mi Perfil</span>
+            </a>
+            <a href="ayuda.html" class="nav-item">
+                <i class="bi bi-question-circle"></i>
+                <span>Ayuda & Soporte</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="index.html" class="logout-btn">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Cerrar Sesión</span>
+            </a>
+        </div>
     </div>
 
-    <div class="main">
-        <!-- Navbar Perfil -->
-        <div
-                class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
-                    <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
-                </div>
-
-                <div class="d-flex align-items-center gap-3 ms-auto">
-                    <!-- Dropdown idioma -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                            type="button" id="dropdownIdioma"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
-                                width="24" height="auto"
-                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                            ES
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownIdioma"
-                            style="min-width: 70px; font-size: 0.85rem;">
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/co.png"
-                                        alt="ES" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    ES
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/us.png"
-                                        alt="EN" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    EN
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Notificaciones -->
-                    <button type="button"
-                        class="btn position-relative btn-transparent text-white p-0"
-                        style="background: transparent; border: none; font-size: 1rem;">
-                        <i class="bi bi-bell"></i>
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                            3
-                            <span class="visually-hidden">notificaciones
-                                nuevas</span>
-                        </span>
-                    </button>
-
-                    <!-- Dropdown perfil -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                            type="button" id="dropdownPerfil"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none;">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="User" width="32" height="32"
-                                class="rounded-circle">
-                            <span class="fw-semibold">Neymar Tapias</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownPerfil">
-                            <li><a class="dropdown-item" href="perfil.html">Mi
-                                    Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="#">Configuración</a>
-                            </li>
-                        </ul>
-                    </div>
-
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="page-title">
+                    <h1>Crear Nueva Cita</h1>
+                    <p>Agenda tu cita médica en pocos pasos</p>
                 </div>
             </div>
-        <br>
+            
+            <div class="topbar-right">
+                <!-- Dropdown idioma -->
+                <div class="dropdown">
+                    <button class="topbar-btn dropdown-toggle" type="button" id="dropdownIdioma" 
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15">
+                        <span>ES</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15">
+                                Español
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15">
+                                English
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Notificaciones -->
+                <div class="dropdown">
+                    <button class="topbar-btn position-relative" type="button" 
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+                        <li class="dropdown-header">Notificaciones (3)</li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item notification-item" href="#">
+                                <div class="notification-icon bg-info">
+                                    <i class="bi bi-calendar-plus"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <span class="notification-title">Nuevo horario disponible</span>
+                                    <span class="notification-text">Dr. García tiene horarios libres hoy</span>
+                                    <span class="notification-time">Hace 10 min</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Perfil de usuario -->
+                <div class="dropdown">
+                    <button class="topbar-btn user-btn dropdown-toggle" type="button" 
+                            id="dropdownPerfil" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" 
+                             alt="Usuario" class="user-avatar">
+                        <div class="user-info">
+                            <span class="user-name">Neymar Tapias</span>
+                            <span class="user-role">Paciente</span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="editar_perfil.html"><i class="bi bi-gear"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- Contenido principal -->
-        <div class="p-4">
-            <div class="bg-white p-4 shadow rounded">
-                <div class="row gx-5">
-                    <!-- Col Izquierda -->
-                    <div class="col-lg-4 border-right d-flex flex-column justify-content-between"
-                        style="min-height: 520px;">
-                        <form action="confirmar_citas.html">
-                            <div>
-                                <a class="btn" href="citas.html" role="button"
-                                    style="background-color: #0d99b4; color: #fff;"><i
-                                        class="bi bi-arrow-left-circle"></i></a>
-                                <br> <br>
-                                <div class="d-flex align-items-center mb-3">
-                                    <label class="form-label fw-semibold"><i class="bi bi-hospital"></i>
-                                        Especialidad</label>
+        <div class="page-content">
+            
+            <!-- Process Steps -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="glass-card">
+                        <div class="d-flex align-items-center justify-content-center mb-3">
+                            <div class="process-steps">
+                                <div class="step active">
+                                    <div class="step-number">1</div>
+                                    <span>Seleccionar</span>
                                 </div>
-                                <div class="mb-3">
-                                    <select class="form-select" aria-label="Especialidad">
-                                        <option selected>Escoger la
-                                            especialidad</option>
-                                        <option>Medicina General</option>
-                                        <option>Pediatría</option>
-                                        <option>Cardiología</option>
-                                        <option>Psicología</option>
-                                    </select>
+                                <div class="step-line"></div>
+                                <div class="step">
+                                    <div class="step-number">2</div>
+                                    <span>Agendar</span>
                                 </div>
+                                <div class="step-line"></div>
+                                <div class="step">
+                                    <div class="step-number">3</div>
+                                    <span>Confirmar</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-primary mb-2">Selecciona tu especialidad y médico</h3>
+                            <p class="text-muted">Escoge la especialidad médica y el profesional que mejor se adapte a tus necesidades</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                <div class="d-flex align-items-center mb-2">
-                                    <label class="form-label fw-semibold"><i class="bi bi-heart-pulse"></i>
-                                        Medico</label>
+            <div class="row">
+                <!-- Formulario de selección -->
+                <div class="col-lg-5 mb-4">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="bi bi-clipboard2-pulse text-primary me-2"></i>
+                                Información de la Cita
+                            </h5>
+                        </div>
+                        
+                        <form action="confirmar_citas.html" class="needs-validation" novalidate>
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-hospital me-2"></i>
+                                    Especialidad Médica
+                                </label>
+                                <select class="form-select" id="especialidad" required>
+                                    <option value="">Selecciona una especialidad</option>
+                                    <option value="medicina-general">Medicina General</option>
+                                    <option value="pediatria">Pediatría</option>
+                                    <option value="cardiologia">Cardiología</option>
+                                    <option value="psicologia">Psicología</option>
+                                    <option value="dermatologia">Dermatología</option>
+                                    <option value="ginecologia">Ginecología</option>
+                                    <option value="neurologia">Neurología</option>
+                                    <option value="traumatologia">Traumatología</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Por favor selecciona una especialidad.
                                 </div>
-                                <div class="mb-3">
-                                    <select id="especialista" class="form-select" aria-label="Especialista">
-                                        <option selected>Escoger el
-                                            especialista</option>
-                                        <option>Dr. Juan Pérez</option>
-                                        <option>Dra. Ana Gómez</option>
-                                        <option>Dr. Carlos Ruiz</option>
-                                    </select>
-                                </div>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold"><i class="bi bi-camera-video"></i> Tipo
-                                        de cita</label>
-                                    <div class="d-flex gap-4 mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="tipoCita"
-                                                id="presencial" />
-                                            <label class="form-check-label" for="presencial">
-                                                Presencial
-                                            </label>
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-person-badge me-2"></i>
+                                    Médico Especialista
+                                </label>
+                                <select id="especialista" class="form-select" required disabled>
+                                    <option value="">Primero selecciona una especialidad</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Por favor selecciona un médico.
+                                </div>
+                                
+                                <!-- Doctor info card (initially hidden) -->
+                                <div id="doctor-info" class="doctor-preview mt-3" style="display: none;">
+                                    <div class="d-flex align-items-center">
+                                        <img id="doctor-avatar" src="" alt="Doctor" class="doctor-avatar-sm me-3">
+                                        <div class="flex-grow-1">
+                                            <h6 id="doctor-name" class="mb-1"></h6>
+                                            <div id="doctor-specialty" class="text-muted small"></div>
+                                            <div id="doctor-rating" class="rating-stars small"></div>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="tipoCita" id="virtual"
-                                                checked />
-                                            <label class="form-check-label" for="virtual">
-                                                Virtual
-                                            </label>
+                                        <div class="doctor-status">
+                                            <span id="doctor-availability" class="badge bg-success">Disponible</span>
                                         </div>
-                                    </div>
-                                    <div class="mt-1 text-muted" style="font-size: 0.85rem;">
-                                        <i class="bi bi-clock"></i> 60 mins
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn w-100"
-                            style="background-color: #0d99b4; color: #fff;">Continuar</button>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-camera-video me-2"></i>
+                                    Modalidad de Consulta
+                                </label>
+                                <div class="consultation-types">
+                                    <div class="consultation-option">
+                                        <input class="form-check-input" type="radio" name="tipoCita" id="virtual" value="virtual" checked>
+                                        <label class="consultation-label" for="virtual">
+                                            <div class="consultation-icon">
+                                                <i class="bi bi-camera-video"></i>
+                                            </div>
+                                            <div class="consultation-details">
+                                                <span class="consultation-title">Consulta Virtual</span>
+                                                <span class="consultation-desc">Videollamada desde casa</span>
+                                                <span class="consultation-price">$60.000 COP</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="consultation-option">
+                                        <input class="form-check-input" type="radio" name="tipoCita" id="presencial" value="presencial">
+                                        <label class="consultation-label" for="presencial">
+                                            <div class="consultation-icon">
+                                                <i class="bi bi-building"></i>
+                                            </div>
+                                            <div class="consultation-details">
+                                                <span class="consultation-title">Consulta Presencial</span>
+                                                <span class="consultation-desc">En nuestras instalaciones</span>
+                                                <span class="consultation-price">$80.000 COP</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="appointment-summary">
+                                    <h6 class="mb-3">Resumen de la Cita</h6>
+                                    <div class="summary-item">
+                                        <i class="bi bi-clock"></i>
+                                        <span>Duración: 60 minutos</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <i class="bi bi-calendar3"></i>
+                                        <span id="selected-date">Selecciona fecha y hora</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <i class="bi bi-currency-dollar"></i>
+                                        <span id="total-price">$60.000 COP</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-3">
+                                <a href="citas.html" class="btn btn-outline-secondary flex-fill">
+                                    <i class="bi bi-arrow-left me-2"></i>
+                                    Volver
+                                </a>
+                                <button type="submit" class="btn btn-primary flex-fill" id="continue-btn" disabled>
+                                    <i class="bi bi-arrow-right me-2"></i>
+                                    Continuar
+                                </button>
+                            </div>
                         </form>
                     </div>
+                </div>
 
-                    <!-- Col Derecha -->
-                    <div class="col-lg-8 px-lg-5 mt-4 mt-lg-0">
-                        <h2 class="text-center mb-4" style="color: #0d99b4;">
-                            Documentos del
-                            historial médico
-                        </h2>
-                        <h5 class="text-center ">Seleccionar fecha y
-                            hora de la cita</h5>
-                        <div class="container" style="max-width: 400px;">
+                <!-- Calendar and time selection -->
+                <div class="col-lg-7">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="bi bi-calendar-event text-primary me-2"></i>
+                                Seleccionar Fecha y Hora
+                            </h5>
+                        </div>
+                        
+                        <div class="calendar-container">
                             <div id="calendar"></div>
+                        </div>
 
-                            <div class="mt-4">
-                                <p id="fechaSeleccionada" class="fw-semibold"></p>
-                                <div id="horarios" class="d-flex flex-wrap"></div>
+                        <div class="time-selection mt-4" id="time-selection" style="display: none;">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-clock me-2"></i>
+                                <h6 class="mb-0">Horarios Disponibles</h6>
+                            </div>
+                            <p id="selected-date-display" class="text-muted mb-3"></p>
+                            <div id="time-slots" class="time-slots-grid"></div>
+                        </div>
+
+                        <!-- Doctor availability info -->
+                        <div class="availability-info mt-4">
+                            <div class="alert alert-info d-flex align-items-start">
+                                <i class="bi bi-info-circle me-2 mt-1"></i>
+                                <div>
+                                    <strong>Información importante:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li>Los horarios mostrados están en hora local de Colombia</li>
+                                        <li>Puedes cancelar o reprogramar hasta 24 horas antes</li>
+                                        <li>Recibirás confirmación por email y SMS</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Bootstrap JS -->

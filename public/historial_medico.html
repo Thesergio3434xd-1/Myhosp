@@ -58,12 +58,11 @@
       <div>
         <div class="logo">
           <img src="img/logo.png" alt="Logo" width="80">
-        </div>
-        <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.html"><i
+        </div>        <ul class="nav flex-column">
+          <li><a class="nav-link" href="dashboard.index.html"><i
                 class="bi bi-speedometer2"></i>
               Dashboard</a></li>
-          <li><a class="nav-link" href="citas.html"><i
+          <li><a class="nav-link" href="ver_citas.html"><i
                 class="bi bi-calendar3"></i> Citas</a></li>
           <li><a class="nav-link active" href="historial_medico.html"><i
                 class="bi bi-folder2-open"></i> Historial
@@ -71,12 +70,11 @@
           <li><a class="nav-link" href="consultas_online.html"><i
                 class="bi bi-camera-video"></i> Consulta
               Online</a></li>
-          <li><a class="nav-link" href="ayuda.html"><i
-                class="bi bi-question-circle"></i>
-              Ayuda</a></li>
+          <li><a class="nav-link" href="perfil.html"><i
+                class="bi bi-user"></i>
+              Perfil</a></li>
         </ul>
-      </div>
-      <a class="logout-btn" href="index.html"><i class="bi bi-box-arrow-left"></i>
+      </div>      <a class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-left"></i>
         Salir</a>
     </div>
 
@@ -84,11 +82,10 @@
       <!-- Navbar Perfil -->
       <div
                 class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
+                style="background-color: #0d99b4; color: white; height: 60px;">                <div>
+                    <strong id="userGreeting">Hola, Neymar Tapias</strong><br>
                     <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+                        style="font-weight: 700; font-size: 1.25rem;">Historial Médico</span>
                 </div>
 
                 <div class="d-flex align-items-center gap-3 ms-auto">
@@ -170,27 +167,95 @@
                     </div>
 
                 </div>
-            </div>
-
-      <!-- Contenido principal -->
+            </div>      <!-- Contenido principal -->
       <div class="p-4">
-        <div class="d-flex gap-2 mb-4">
-          <button class="btn btn-outline-primary" data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop">+ Nueva
-            categoría</button>
-          <button class="btn btn-outline-secondary">General</button>
-          <button class="btn btn-outline-secondary">Exámenes
-            Médicos</button>
-          <button class="btn btn-outline-secondary">Medicina
-            General</button>
+        <!-- Estadísticas del historial -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <div class="card bg-primary text-white">
+              <div class="card-body text-center">
+                <h5 class="card-title">12</h5>
+                <p class="card-text">Total Documentos</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-success text-white">
+              <div class="card-body text-center">
+                <h5 class="card-title">8</h5>
+                <p class="card-text">Últimos 30 días</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-warning text-white">
+              <div class="card-body text-center">
+                <h5 class="card-title">3</h5>
+                <p class="card-text">Pendientes</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card bg-info text-white">
+              <div class="card-body text-center">
+                <h5 class="card-title">2025</h5>
+                <p class="card-text">Año actual</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="input-group mb-4" style="max-width: 400px;">
-          <input type="text" class="form-control"
-            placeholder="Buscar documento">
-          <button class="btn" style="background-color: #0d99b4;">
-            <i class="bi bi-search text-white"></i>
-          </button>
+        <!-- Filtros y categorías -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop">+ Nueva
+              categoría</button>
+            <button class="btn btn-outline-secondary filter-btn active" data-filter="all">Todos</button>
+            <button class="btn btn-outline-secondary filter-btn" data-filter="general">General</button>
+            <button class="btn btn-outline-secondary filter-btn" data-filter="examenes">Exámenes
+              Médicos</button>
+            <button class="btn btn-outline-secondary filter-btn" data-filter="medicina">Medicina
+              General</button>
+          </div>
+          
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary" id="uploadBtn">
+              <i class="bi bi-upload"></i> Subir Documento
+            </button>
+            <input type="file" id="fileInput" class="d-none" accept=".pdf,.doc,.docx,.jpg,.png">
+          </div>
+        </div>
+
+        <!-- Barra de búsqueda mejorada -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="text" class="form-control" id="searchInput"
+                placeholder="Buscar por nombre, fecha o categoría...">
+              <button class="btn" style="background-color: #0d99b4;" id="searchBtn">
+                <i class="bi bi-search text-white"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="dateFilter">
+              <option value="">Filtrar por fecha</option>
+              <option value="today">Hoy</option>
+              <option value="week">Última semana</option>
+              <option value="month">Último mes</option>
+              <option value="year">Último año</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="typeFilter">
+              <option value="">Todos los tipos</option>
+              <option value="consulta">Consultas</option>
+              <option value="examen">Exámenes</option>
+              <option value="receta">Recetas</option>
+              <option value="vacuna">Vacunas</option>
+            </select>
+          </div>
         </div>
 
         <div class="bg-white p-4 shadow rounded">
@@ -201,9 +266,12 @@
             </h2>
 
             <div class="row g-3">
-              <!-- Primera fila -->
-              <div class="col-md-6">
-                <div class="card card-bordered-red position-relative">
+              <!-- Primera fila -->              <div class="col-md-6">
+                <div class="card card-bordered-red position-relative" 
+                     data-category="medicina" 
+                     data-type="consulta" 
+                     data-date="2023-05-14" 
+                     data-title="Medicina General">
                   <div class="card-img-container">
                     <span class="star-grey">&#9734;</span>
                     <span class="card-header-icons">&#8942;</span>
@@ -217,7 +285,11 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="card card-bordered-green position-relative">
+                <div class="card card-bordered-green position-relative"
+                     data-category="examenes" 
+                     data-type="examen" 
+                     data-date="2023-05-14" 
+                     data-title="Examen de sangre">
                   <div class="card-img-container">
                     <span class="star-yellow">&#9733;</span>
                     <span class="card-header-icons">&#8942;</span>
@@ -229,11 +301,13 @@
                     <p class="text-date">May 14, 2023. 13:25 PM</p>
                   </div>
                 </div>
-              </div>
-
-              <!-- Segunda fila -->
+              </div>              <!-- Segunda fila -->
               <div class="col-md-6">
-                <div class="card position-relative">
+                <div class="card position-relative"
+                     data-category="psicologia" 
+                     data-type="consulta" 
+                     data-date="2023-04-20" 
+                     data-title="Psicólogo">
                   <div class="card-img-container">
                     <span class="star-yellow">&#9733;</span>
                     <span class="card-header-icons">&#8942;</span>
@@ -242,21 +316,66 @@
                   </div>
                   <div class="card-body text-center">
                     <h6 class="card-title">Psicólogo</h6>
-                    <p class="text-date">May 14, 2023. 13:25 PM</p>
+                    <p class="text-date">Apr 20, 2023. 10:15 AM</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="card position-relative">
+                <div class="card position-relative"
+                     data-category="nutricion" 
+                     data-type="consulta" 
+                     data-date="2023-03-15" 
+                     data-title="Nutricionista">
                   <div class="card-img-container">
-                    <span class="star-yellow">&#9733;</span>
+                    <span class="star-grey">&#9734;</span>
                     <span class="card-header-icons">&#8942;</span>
                     <img src="img/documento.png" class="card-img-top"
                       alt="Nutricionista" />
                   </div>
                   <div class="card-body text-center">
                     <h6 class="card-title">Nutricionista</h6>
-                    <p class="text-date">May 14, 2023. 13:25 PM</p>
+                    <p class="text-date">Mar 15, 2023. 14:30 PM</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tercera fila -->
+              <div class="col-md-6">
+                <div class="card card-bordered-blue position-relative"
+                     data-category="vacunas" 
+                     data-type="vacuna" 
+                     data-date="2023-02-10" 
+                     data-title="Vacuna COVID-19">
+                  <div class="card-img-container">
+                    <span class="star-grey">&#9734;</span>
+                    <span class="card-header-icons">&#8942;</span>
+                    <img src="img/documento.png" class="card-img-top"
+                      alt="Vacuna COVID-19" />
+                  </div>
+                  <div class="card-body text-center">
+                    <h6 class="card-title">Vacuna COVID-19</h6>
+                    <p class="text-date">Feb 10, 2023. 09:00 AM</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card card-bordered-orange position-relative"
+                     data-category="recetas" 
+                     data-type="receta" 
+                     data-date="2023-01-25" 
+                     data-title="Receta Médica">
+                  <div class="card-img-container">
+                    <span class="star-yellow">&#9733;</span>
+                    <span class="card-header-icons">&#8942;</span>
+                    <img src="img/documento.png" class="card-img-top"
+                      alt="Receta Médica" />
+                  </div>
+                  <div class="card-body text-center">
+                    <h6 class="card-title">Receta Médica</h6>
+                    <p class="text-date">Jan 25, 2023. 16:45 PM</p>
+                  </div>
+                </div>
+              </div>
                   </div>
                 </div>
               </div>
@@ -293,14 +412,12 @@
                 <input type="text" class="form-control"
                   id="descripcionCategoria"
                   placeholder="Ingrese la descripción de la categoría">
-              </div>
-
-              <div class="mb-3">
+              </div>              <div class="mb-3">
                 <label for="colorCategoria" class="form-label">Color de la
                   categoría</label>
                 <input type="color" class="form-control"
-                  id="descripcionCategoria"
-                  placeholder="Ingrese la descripción de la categoría">
+                  id="colorCategoria"
+                  value="#0d99b4">
               </div>
 
               <div class="mb-4">
@@ -309,10 +426,9 @@
               </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary"
-              data-bs-dismiss="modal"  style="background-color: #0d99b4;">Volver</button>
-            <button type="button" class="btn btn-primary" style="background-color: #0d99b4;">Crear
+          <div class="modal-footer">            <button type="button" class="btn btn-secondary"
+              data-bs-dismiss="modal"  style="background-color: #6c757d;">Cancelar</button>
+            <button type="button" class="btn btn-primary" style="background-color: #0d99b4;" onclick="createCategory()">Crear
               Categoria</button>
           </div>
         </div>
@@ -338,8 +454,467 @@
   <script src="./js/assistant-controls.js"></script>
   <!-- Asistente de voz -->
   <script type="module" src="./js/ViewModels/assistant.js"></script>
-  
-  <!-- Botón de ayuda de Ana -->
+    <!-- Botón de ayuda de Ana -->
   <script src="./js/ana-help-button.js"></script>
+  <script>
+    // Verificar autenticación al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar si el usuario está logueado
+      if (!localStorage.getItem('userLoggedIn')) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Actualizar nombre del usuario si está disponible
+      const userName = localStorage.getItem('userName');
+      if (userName) {
+        const userGreeting = document.getElementById('userGreeting');
+        if (userGreeting) {
+          userGreeting.textContent = `Hola, ${userName}`;
+        }
+      }
+
+      // Funcionalidad de logout
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+            // Limpiar datos de sesión
+            localStorage.removeItem('userLoggedIn');
+            localStorage.removeItem('userDocument');
+            localStorage.removeItem('userName');
+            
+            // Redirigir al login
+            window.location.href = 'login.html';
+          }
+        });
+      }
+
+      // Inicializar funcionalidades de la página
+      initializeFilters();
+      initializeSearch();
+      initializeFileUpload();
+      initializeDocumentActions();
+    });
+
+    // Funcionalidad de filtros
+    function initializeFilters() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const typeFilter = document.getElementById('typeFilter');
+      const dateFromFilter = document.getElementById('dateFrom');
+      const dateToFilter = document.getElementById('dateTo');
+
+      // Filtros por categoría (botones)
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Remover clase activa de todos los botones
+          filterButtons.forEach(b => b.classList.remove('active'));
+          
+          // Agregar clase activa al botón clickeado
+          this.classList.add('active');
+          
+          // Aplicar filtro
+          const filter = this.getAttribute('data-filter');
+          filterDocuments(filter, typeFilter.value, dateFromFilter.value, dateToFilter.value);
+        });
+      });
+
+      // Filtros por tipo y fecha
+      typeFilter.addEventListener('change', function() {
+        const activeFilter = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all';
+        filterDocuments(activeFilter, this.value, dateFromFilter.value, dateToFilter.value);
+      });
+
+      dateFromFilter.addEventListener('change', function() {
+        const activeFilter = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all';
+        filterDocuments(activeFilter, typeFilter.value, this.value, dateToFilter.value);
+      });
+
+      dateToFilter.addEventListener('change', function() {
+        const activeFilter = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all';
+        filterDocuments(activeFilter, typeFilter.value, dateFromFilter.value, this.value);
+      });
+    }
+
+    // Función para filtrar documentos
+    function filterDocuments(category, type, dateFrom, dateTo) {
+      const documentCards = document.querySelectorAll('.card[data-category]');
+      let visibleCount = 0;
+
+      documentCards.forEach(card => {
+        let shouldShow = true;
+
+        // Filtro por categoría
+        if (category !== 'all') {
+          const cardCategory = card.getAttribute('data-category');
+          if (cardCategory !== category) {
+            shouldShow = false;
+          }
+        }
+
+        // Filtro por tipo
+        if (type && shouldShow) {
+          const cardType = card.getAttribute('data-type');
+          if (cardType !== type) {
+            shouldShow = false;
+          }
+        }
+
+        // Filtro por fecha
+        if ((dateFrom || dateTo) && shouldShow) {
+          const cardDate = new Date(card.getAttribute('data-date'));
+          
+          if (dateFrom) {
+            const fromDate = new Date(dateFrom);
+            if (cardDate < fromDate) {
+              shouldShow = false;
+            }
+          }
+          
+          if (dateTo && shouldShow) {
+            const toDate = new Date(dateTo);
+            if (cardDate > toDate) {
+              shouldShow = false;
+            }
+          }
+        }
+
+        // Mostrar u ocultar tarjeta
+        if (shouldShow) {
+          card.style.display = 'block';
+          card.parentElement.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+          card.parentElement.style.display = 'none';
+        }
+      });
+
+      // Actualizar contador de resultados
+      updateResultsCounter(visibleCount);
+    }
+
+    // Función de búsqueda en tiempo real
+    function initializeSearch() {
+      const searchInput = document.getElementById('searchInput');
+      
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          const documentCards = document.querySelectorAll('.card[data-title]');
+          let visibleCount = 0;
+
+          documentCards.forEach(card => {
+            const title = card.getAttribute('data-title').toLowerCase();
+            const shouldShow = title.includes(searchTerm);
+
+            if (shouldShow) {
+              card.style.display = 'block';
+              card.parentElement.style.display = 'block';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
+              card.parentElement.style.display = 'none';
+            }
+          });
+
+          updateResultsCounter(visibleCount);
+        });
+      }
+    }
+
+    // Funcionalidad de subida de archivos
+    function initializeFileUpload() {
+      const fileInput = document.getElementById('formFile');
+      
+      if (fileInput) {
+        fileInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          
+          if (file) {
+            // Validar tipo de archivo
+            const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+            
+            if (!allowedTypes.includes(file.type)) {
+              alert('Tipo de archivo no permitido. Solo se aceptan PDF, JPG, PNG');
+              this.value = '';
+              return;
+            }
+            
+            // Validar tamaño (máximo 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+              alert('El archivo es demasiado grande. Máximo 5MB permitido');
+              this.value = '';
+              return;
+            }
+            
+            // Mostrar preview del archivo
+            showFilePreview(file);
+          }
+        });
+      }
+    }
+
+    // Mostrar preview del archivo
+    function showFilePreview(file) {
+      const previewContainer = document.getElementById('filePreview') || createFilePreviewContainer();
+      
+      previewContainer.innerHTML = `
+        <div class="alert alert-info d-flex align-items-center">
+          <i class="fas fa-file-upload me-2"></i>
+          <div>
+            <strong>Archivo seleccionado:</strong> ${file.name}<br>
+            <small>Tamaño: ${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-danger ms-auto" onclick="removeFilePreview()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    // Crear contenedor de preview si no existe
+    function createFilePreviewContainer() {
+      const container = document.createElement('div');
+      container.id = 'filePreview';
+      container.className = 'mb-3';
+      
+      const fileInput = document.getElementById('formFile');
+      fileInput.parentNode.insertBefore(container, fileInput.nextSibling);
+      
+      return container;
+    }
+
+    // Remover preview del archivo
+    function removeFilePreview() {
+      const fileInput = document.getElementById('formFile');
+      const previewContainer = document.getElementById('filePreview');
+      
+      if (fileInput) fileInput.value = '';
+      if (previewContainer) previewContainer.innerHTML = '';
+    }
+
+    // Acciones de documentos (favoritos, opciones)
+    function initializeDocumentActions() {
+      // Funcionalidad de favoritos
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('star-grey') || e.target.classList.contains('star-yellow')) {
+          toggleFavorite(e.target);
+        }
+        
+        if (e.target.textContent === '⋮') {
+          showDocumentOptions(e.target);
+        }
+      });
+    }
+
+    // Toggle favorito
+    function toggleFavorite(starElement) {
+      if (starElement.classList.contains('star-grey')) {
+        starElement.className = 'star-yellow';
+        starElement.innerHTML = '&#9733;';
+        showNotification('Documento agregado a favoritos', 'success');
+      } else {
+        starElement.className = 'star-grey';
+        starElement.innerHTML = '&#9734;';
+        showNotification('Documento removido de favoritos', 'info');
+      }
+    }
+
+    // Mostrar opciones de documento
+    function showDocumentOptions(optionsElement) {
+      const rect = optionsElement.getBoundingClientRect();
+      
+      // Remover menús existentes
+      const existingMenu = document.querySelector('.document-options-menu');
+      if (existingMenu) {
+        existingMenu.remove();
+      }
+      
+      const menu = document.createElement('div');
+      menu.className = 'document-options-menu';
+      menu.style.cssText = `
+        position: fixed;
+        top: ${rect.bottom + 5}px;
+        left: ${rect.left - 100}px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 1000;
+        min-width: 120px;
+      `;
+      
+      menu.innerHTML = `
+        <div class="p-2">
+          <button class="btn btn-sm btn-outline-primary w-100 mb-1" onclick="viewDocument(this)">
+            <i class="fas fa-eye"></i> Ver
+          </button>
+          <button class="btn btn-sm btn-outline-secondary w-100 mb-1" onclick="downloadDocument(this)">
+            <i class="fas fa-download"></i> Descargar
+          </button>
+          <button class="btn btn-sm btn-outline-danger w-100" onclick="deleteDocument(this)">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </div>
+      `;
+      
+      document.body.appendChild(menu);
+      
+      // Cerrar menú al hacer clic fuera
+      setTimeout(() => {
+        document.addEventListener('click', function closeMenu(e) {
+          if (!menu.contains(e.target)) {
+            menu.remove();
+            document.removeEventListener('click', closeMenu);
+          }
+        });
+      }, 100);
+    }
+
+    // Actualizar contador de resultados
+    function updateResultsCounter(count) {
+      let counter = document.getElementById('resultsCounter');
+      if (!counter) {
+        counter = document.createElement('div');
+        counter.id = 'resultsCounter';
+        counter.className = 'text-muted mb-3';
+        
+        const container = document.querySelector('.bg-white.p-4.shadow.rounded');
+        const title = container.querySelector('h2');
+        title.parentNode.insertBefore(counter, title.nextSibling);
+      }
+      
+      counter.textContent = `Mostrando ${count} documento${count !== 1 ? 's' : ''}`;
+    }
+
+    // Acciones de documentos
+    function viewDocument(btn) {
+      showNotification('Abriendo documento...', 'info');
+      // Aquí iría la lógica para abrir el documento
+    }
+
+    function downloadDocument(btn) {
+      showNotification('Descargando documento...', 'info');
+      // Aquí iría la lógica para descargar el documento
+    }
+
+    function deleteDocument(btn) {
+      if (confirm('¿Estás seguro de que deseas eliminar este documento?')) {
+        showNotification('Documento eliminado', 'success');
+        // Aquí iría la lógica para eliminar el documento
+      }
+    }
+
+    // Sistema de notificaciones
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} notification`;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        animation: slideIn 0.3s ease-out;
+      `;
+      
+      notification.innerHTML = `
+        <div class="d-flex align-items-center">
+          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+          ${message}
+          <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove después de 5 segundos
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 5000);
+    }
+
+    // Validación del formulario de categoría
+    function validateCategoryForm() {
+      const name = document.getElementById('nombreCategoria').value.trim();
+      const description = document.getElementById('descripcionCategoria').value.trim();
+      
+      if (!name) {
+        showNotification('El nombre de la categoría es obligatorio', 'error');
+        return false;
+      }
+      
+      if (!description) {
+        showNotification('La descripción de la categoría es obligatoria', 'error');
+        return false;
+      }
+      
+      return true;
+    }
+
+    // Crear categoría
+    function createCategory() {
+      if (validateCategoryForm()) {
+        const name = document.getElementById('nombreCategoria').value.trim();
+        const description = document.getElementById('descripcionCategoria').value.trim();
+        const color = document.getElementById('colorCategoria').value;
+        
+        // Aquí iría la lógica para crear la categoría
+        showNotification(`Categoría "${name}" creada exitosamente`, 'success');
+        
+        // Cerrar modal
+        const modal = bootstrap.Modal.getInstance(document.querySelector('.modal'));
+        if (modal) {
+          modal.hide();
+        }
+        
+        // Limpiar formulario
+        document.getElementById('nombreCategoria').value = '';
+        document.getElementById('descripcionCategoria').value = '';
+        document.getElementById('colorCategoria').value = '#000000';
+      }
+    }
+
+    // Agregar estilos CSS dinámicos
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      
+      .filter-btn.active {
+        background-color: #0d99b4 !important;
+        color: white !important;
+        border-color: #0d99b4 !important;
+      }
+      
+      .document-options-menu {
+        animation: fadeIn 0.2s ease-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      
+      .star-grey:hover, .star-yellow:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: transform 0.2s;
+      }
+      
+      .card-header-icons:hover {
+        cursor: pointer;
+        background-color: #f8f9fa;
+        border-radius: 50%;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
   </body>
 </html>

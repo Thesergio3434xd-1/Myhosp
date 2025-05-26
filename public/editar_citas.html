@@ -1,157 +1,131 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MyHosp - Citas</title>
-    <!-- Bootstrap CSS -->
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <!-- Estilos personalizados -->
-        <link rel="stylesheet" href="./css/style.css" />
-        <!-- Estilos específicos para autenticación -->
-        <link rel="stylesheet" href="./css/auth.css" />
-        <!-- Estilos del asistente -->
-        <link rel="stylesheet" href="./css/asistente.css" />
-        <!-- Estilos para el botón de ayuda de Ana -->
-        <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-  <link rel="stylesheet" href="./css/notifications.css" />
-  </head>
-  <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHosp - Editar Cita</title>
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos modernos -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+</head>
+
+<body>
     <!-- Asistente de voz Ana -->
     <div id="ana-assistant" class="voice-assistant">
-      <!-- Botones para controlar el asistente -->
-      <div class="assistant-controls">
-        <button id="enableAssistant"
-          class="control-button enable-button"
-          aria-label="Activar asistente de voz">
-          <i class="fas fa-toggle-on"></i>
-        </button>
-        <button id="disableAssistant"
-          class="control-button disable-button"
-          aria-label="Desactivar asistente de voz">
-          <i class="fas fa-toggle-off"></i>
-        </button>
-      </div>
-      <button id="micButton" class="mic-button"
-        aria-label="Activar asistente de voz">
-        <i id="micIcon" class="fas fa-microphone"></i>
-      </button>
-      <div id="assistantStatus" class="assistant-status"></div>
-    </div>
-
-    <div class="sidebar">
-      <div>
-        <div class="logo">
-          <img src="img/logo.png" alt="Logo" width="80">
+        <!-- Botones para controlar el asistente -->
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="bi bi-toggle-on"></i>
+            </button>
+            <button id="disableAssistant" class="control-button disable-button"
+                aria-label="Desactivar asistente de voz">
+                <i class="bi bi-toggle-off"></i>
+            </button>
         </div>
-        <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.html"><i
-                class="bi bi-speedometer2"></i>
-              Dashboard</a></li>
-          <li><a class="nav-link" href="citas.html"><i
-                class="bi bi-calendar3"></i> Citas</a></li>
-          <li><a class="nav-link active" href="historial_medico.html"><i
-                class="bi bi-folder2-open"></i> Historial
-              Médico</a></li>
-          <li><a class="nav-link" href="consultas_online.html"><i
-                class="bi bi-camera-video"></i> Consulta
-              Online</a></li>
-          <li><a class="nav-link" href="ayuda.html"><i
-                class="bi bi-question-circle"></i>
-              Ayuda</a></li>
-        </ul>
-      </div>
-      <a class="logout-btn" href="index.html"><i
-          class="bi bi-box-arrow-left"></i>
-        Salir</a>
+        <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+            <i id="micIcon" class="bi bi-mic"></i>
+        </button>
+        <div id="assistantStatus" class="assistant-status"></div>
     </div>
 
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=100&h=100&fit=crop&crop=center" alt="MyHosp Logo" class="logo-img">
+                <span class="logo-text">MyHosp</span>
+            </div>
+        </div>
+
+        <div class="sidebar-nav">
+            <a href="dashboard.index.html" class="nav-item">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="ver_citas.html" class="nav-item active">
+                <i class="bi bi-calendar3"></i>
+                <span>Citas</span>
+            </a>
+            <a href="historial_medico.html" class="nav-item">
+                <i class="bi bi-folder2-open"></i>
+                <span>Historial Médico</span>
+            </a>
+            <a href="consultas_online.html" class="nav-item">
+                <i class="bi bi-camera-video"></i>
+                <span>Consulta Online</span>
+            </a>
+            <a href="perfil.html" class="nav-item">
+                <i class="bi bi-person"></i>
+                <span>Perfil</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="logout-btn" id="logoutBtn">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
     <div class="main">
-      <!-- Navbar Perfil -->
-      <div
-                class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
-                    <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="page-title">
+                    <h4 class="mb-0">Editar Cita</h4>
+                    <small class="text-muted">Modifica los detalles de tu cita médica</small>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <!-- Selector de idioma -->
+                <div class="dropdown">
+                    <button class="btn btn-ghost dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15">
+                        <span>ES</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" width="20" height="15"> ES</a></li>
+                        <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" width="20" height="15"> EN</a></li>
+                    </ul>
                 </div>
 
-                <div class="d-flex align-items-center gap-3 ms-auto">
-                    <!-- Dropdown idioma -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                            type="button" id="dropdownIdioma"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
-                                width="24" height="auto"
-                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                            ES
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownIdioma"
-                            style="min-width: 70px; font-size: 0.85rem;">
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/co.png"
-                                        alt="ES" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    ES
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/us.png"
-                                        alt="EN" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    EN
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <!-- Notificaciones -->
+                <button class="btn btn-ghost position-relative">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
 
-                    <!-- Notificaciones -->
-                    <button type="button"
-                        class="btn position-relative btn-transparent text-white p-0"
-                        style="background: transparent; border: none; font-size: 1rem;">
-                        <i class="bi bi-bell"></i>
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                            3
-                            <span class="visually-hidden">notificaciones
-                                nuevas</span>
-                        </span>
+                <!-- Perfil -->
+                <div class="dropdown">
+                    <button class="btn btn-ghost dropdown-toggle user-dropdown" type="button" data-bs-toggle="dropdown">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Usuario" class="user-avatar">
+                        <span>Neymar Tapias</span>
                     </button>
-
-                    <!-- Dropdown perfil -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                            type="button" id="dropdownPerfil"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none;">
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn2"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
                             <img
                                 src="https://randomuser.me/api/portraits/men/32.jpg"
                                 alt="User" width="32" height="32"
@@ -171,85 +145,221 @@
                     </div>
 
                 </div>
-            </div>
+            </div>        <!-- Contenido principal -->
+        <div class="container-fluid px-4 py-4">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="dashboard.index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="ver_citas.html">Citas</a></li>
+                    <li class="breadcrumb-item active">Editar Cita</li>
+                </ol>
+            </nav>
 
-      <!-- Contenido principal -->
-      <div class="p-4">
-        <div class="bg-white p-4 shadow rounded">
-          <h2 class="text-center mb-4" style="color: #0d99b4;">
-            Editar Cita
-          </h2>
-          <hr>
-          <form>
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="especialidad"
-                  class="form-label">Especialidad</label>
-                <select class="form-select" id="especialidad">
-                  <option selected>Psicología</option>
-                  <option>Medicina General</option>
-                  <option>Pediatría</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label for="medico" class="form-label">Médico</label>
-                <select class="form-select" id="medico">
-                  <option selected>Dr. Alexander Moreno</option>
-                  <option>Dra. Laura Gómez</option>
-                </select>
-              </div>
-            </div>
+            <!-- Información de la cita actual -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="card glass-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="bi bi-calendar-check text-primary me-2"></i>
+                                Editar Cita Médica
+                            </h5>
+                            <span class="badge bg-success">CITA-001</span>
+                        </div>
+                        <div class="card-body">
+                            <form id="editarCitaForm">
+                                <div class="row g-3">
+                                    <!-- Especialidad -->
+                                    <div class="col-md-6">
+                                        <label for="especialidad" class="form-label">Especialidad</label>
+                                        <select class="form-select" id="especialidad" required>
+                                            <option value="">Seleccionar especialidad</option>
+                                            <option value="psicologia" selected>Psicología</option>
+                                            <option value="medicina-general">Medicina General</option>
+                                            <option value="pediatria">Pediatría</option>
+                                            <option value="cardiologia">Cardiología</option>
+                                            <option value="dermatologia">Dermatología</option>
+                                            <option value="neurologia">Neurología</option>
+                                        </select>
+                                    </div>
 
-            <div class="mb-3">
-              <label class="form-label">Tipo de cita</label><br>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="tipoCita"
-                  id="presencial" value="Presencial">
-                <label class="form-check-label"
-                  for="presencial">Presencial</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="tipoCita"
-                  id="virtual" value="Virtual" checked>
-                <label class="form-check-label" for="virtual">Virtual</label>
-              </div>
-            </div>
+                                    <!-- Médico -->
+                                    <div class="col-md-6">
+                                        <label for="medico" class="form-label">Médico</label>
+                                        <select class="form-select" id="medico" required>
+                                            <option value="">Seleccionar médico</option>
+                                            <option value="dr-moreno" selected>Dr. Alexander Moreno</option>
+                                            <option value="dra-gomez">Dra. Laura Gómez</option>
+                                            <option value="dr-rodriguez">Dr. Carlos Rodríguez</option>
+                                        </select>
+                                    </div>
 
-            <div class="mb-3">
-              <label for="fecha" class="form-label">Fecha de la cita</label>
-              <input type="date" class="form-control" id="fecha"
-                value="2025-04-10">
-            </div>
+                                    <!-- Tipo de cita -->
+                                    <div class="col-12">
+                                        <label class="form-label">Modalidad de consulta</label>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <div class="form-check-card">
+                                                    <input class="form-check-input" type="radio" name="tipoCita" id="presencial" value="Presencial">
+                                                    <label class="form-check-label-card" for="presencial">
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="bi bi-building text-primary me-3 fs-4"></i>
+                                                            <div>
+                                                                <div class="fw-semibold">Presencial</div>
+                                                                <small class="text-muted">Consulta en el hospital</small>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-check-card">
+                                                    <input class="form-check-input" type="radio" name="tipoCita" id="virtual" value="Virtual" checked>
+                                                    <label class="form-check-label-card" for="virtual">
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="bi bi-camera-video text-success me-3 fs-4"></i>
+                                                            <div>
+                                                                <div class="fw-semibold">Virtual</div>
+                                                                <small class="text-muted">Videollamada online</small>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-            <div class="mb-3">
-              <label for="hora" class="form-label">Hora de la cita</label>
-              <select class="form-select" id="hora">
-                <option selected>2:00 pm</option>
-                <option>10:00 am</option>
-                <option>4:00 pm</option>
-              </select>
-            </div>
+                                    <!-- Fecha -->
+                                    <div class="col-md-6">
+                                        <label for="fecha" class="form-label">Fecha de la cita</label>
+                                        <input type="date" class="form-control" id="fecha" value="2025-04-10" required>
+                                    </div>
 
-            <div class="mb-3">
-              <label for="problema" class="form-label">Problema</label>
-              <select class="form-select" id="problema">
-                <option selected>Depresión</option>
-                <option>Ansiedad</option>
-                <option>Estrés</option>
-              </select>
-            </div>
+                                    <!-- Hora -->
+                                    <div class="col-md-6">
+                                        <label for="hora" class="form-label">Hora de la cita</label>
+                                        <select class="form-select" id="hora" required>
+                                            <option value="">Seleccionar hora</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="14:00" selected>2:00 PM</option>
+                                            <option value="15:00">3:00 PM</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                        </select>
+                                    </div>
 
-            <div class="d-grid gap-2">
-              <button class="btn btn-primary" type="submit"
-                style="background-color: #0d99b4;">Editar</button>
-              <a class="btn btn-primary" style="background-color: #0d99b4;"
-                href="#">Eliminar</a>
-              <a class="btn btn-primary" style="background-color: #0d99b4;"
-                href="ver_citas.html">Volver</a>
+                                    <!-- Motivo de consulta -->
+                                    <div class="col-12">
+                                        <label for="problema" class="form-label">Motivo de consulta</label>
+                                        <select class="form-select" id="problema" required>
+                                            <option value="">Seleccionar motivo</option>
+                                            <option value="depresion" selected>Depresión</option>
+                                            <option value="ansiedad">Ansiedad</option>
+                                            <option value="estres">Estrés</option>
+                                            <option value="trastorno-sueno">Trastorno del sueño</option>
+                                            <option value="control-rutinario">Control rutinario</option>
+                                            <option value="otro">Otro</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Notas adicionales -->
+                                    <div class="col-12">
+                                        <label for="notas" class="form-label">Notas adicionales</label>
+                                        <textarea class="form-control" id="notas" rows="3" placeholder="Describe síntomas adicionales o información relevante...">Seguimiento de tratamiento para depresión post-natal</textarea>
+                                    </div>
+
+                                    <!-- Botones de acción -->
+                                    <div class="col-12">
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <button type="submit" class="btn btn-primary flex-fill" id="editarCitaBtn">
+                                                <i class="bi bi-check-circle me-2"></i>
+                                                Guardar Cambios
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger" id="eliminarCitaBtn">
+                                                <i class="bi bi-trash me-2"></i>
+                                                Eliminar
+                                            </button>
+                                            <a href="ver_citas.html" class="btn btn-outline-secondary">
+                                                <i class="bi bi-arrow-left me-2"></i>
+                                                Volver
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel de información del médico -->
+                <div class="col-md-4">
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <i class="bi bi-person-badge text-primary me-2"></i>
+                                Información del Médico
+                            </h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&h=150&fit=crop&crop=face" 
+                                 alt="Dr. Alexander Moreno" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                            <h6 class="mb-1">Dr. Alexander Moreno</h6>
+                            <p class="text-muted small mb-2">Especialista en Psicología</p>
+                            <div class="rating mb-3">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-half text-warning"></i>
+                                <span class="ms-2 small text-muted">4.8 (127 reseñas)</span>
+                            </div>
+                            <div class="row g-2 text-center">
+                                <div class="col-6">
+                                    <div class="stat-card">
+                                        <div class="stat-number">8+</div>
+                                        <div class="stat-label">Años</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-card">
+                                        <div class="stat-number">500+</div>
+                                        <div class="stat-label">Pacientes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de ayuda -->
+                    <div class="card glass-card mt-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <i class="bi bi-info-circle text-info me-2"></i>
+                                Información Importante
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="help-item">
+                                <i class="bi bi-clock text-warning me-2"></i>
+                                <small>Puedes modificar tu cita hasta 24 horas antes</small>
+                            </div>
+                            <div class="help-item">
+                                <i class="bi bi-telephone text-info me-2"></i>
+                                <small>Para citas virtuales, revisa tu conexión a internet</small>
+                            </div>
+                            <div class="help-item">
+                                <i class="bi bi-shield-check text-success me-2"></i>
+                                <small>Todos los datos están protegidos y son confidenciales</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </form>
         </div>
-      </div>
     </div>
 
     <!-- Bootstrap JS -->
@@ -270,9 +380,480 @@
     <!-- Script para controlar los botones del asistente -->
     <script src="./js/assistant-controls.js"></script>
     <!-- Asistente de voz -->
-    <script type="module" src="./js/ViewModels/assistant.js"></script>
+    <script type="module" src="./js/ViewModels/assistant.js"></script>    <!-- Botón de ayuda de Ana -->
+    <script src="./js/ana-help-button.js"></script>    <script>
+        // Verificar autenticación al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si el usuario está logueado
+            if (!localStorage.getItem('userLoggedIn')) {
+                window.location.href = 'login.html';
+                return;
+            }
 
-    <!-- Botón de ayuda de Ana -->
-    <script src="./js/ana-help-button.js"></script>
+            // Actualizar nombre del usuario si está disponible
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                const userGreeting = document.getElementById('userGreeting');
+                if (userGreeting) {
+                    userGreeting.textContent = `Hola, ${userName}`;
+                }
+            }
+
+            // Funcionalidad de logout
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                        // Limpiar datos de sesión
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('userDocument');
+                        localStorage.removeItem('userName');
+                        
+                        // Redirigir al login
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+
+            // Inicializar funcionalidades de la página
+            initializeEditAppointmentForm();
+            loadAppointmentData();
+            initializeDynamicSelectors();
+        });
+
+        // Datos de ejemplo para la cita
+        const appointmentData = {
+            id: 'CITA-001',
+            especialidad: 'Psicología',
+            medico: 'Dr. Alexander Moreno',
+            tipo: 'Virtual',
+            fecha: '2025-04-10',
+            hora: '2:00 pm',
+            problema: 'Depresión',
+            notas: 'Seguimiento de tratamiento para depresión post-natal'
+        };
+
+        // Cargar datos de la cita
+        function loadAppointmentData() {
+            // Poblar el formulario con los datos de la cita
+            document.getElementById('especialidad').value = appointmentData.especialidad;
+            document.getElementById('medico').value = appointmentData.medico;
+            document.getElementById('fecha').value = appointmentData.fecha;
+            document.getElementById('hora').value = appointmentData.hora;
+            document.getElementById('problema').value = appointmentData.problema;
+            
+            // Seleccionar el tipo de cita
+            const tipoRadio = document.querySelector(`input[name="tipoCita"][value="${appointmentData.tipo}"]`);
+            if (tipoRadio) {
+                tipoRadio.checked = true;
+            }
+        }
+
+        // Inicializar formulario de edición
+        function initializeEditAppointmentForm() {
+            const form = document.getElementById('editarCitaForm');
+            const editarBtn = document.getElementById('editarCitaBtn');
+            const eliminarBtn = document.getElementById('eliminarCitaBtn');
+
+            // Manejar envío del formulario
+            form.addEventListener('submit', handleFormSubmit);
+            
+            // Manejar eliminación de cita
+            eliminarBtn.addEventListener('click', handleDeleteAppointment);
+
+            // Validación en tiempo real
+            setupRealTimeValidation();
+        }
+
+        // Manejar envío del formulario
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                const formData = collectFormData();
+                updateAppointment(formData);
+            }
+        }
+
+        // Validar formulario
+        function validateForm() {
+            const especialidad = document.getElementById('especialidad').value;
+            const medico = document.getElementById('medico').value;
+            const fecha = document.getElementById('fecha').value;
+            const hora = document.getElementById('hora').value;
+            const tipo = document.querySelector('input[name="tipoCita"]:checked');
+
+            // Validar campos obligatorios
+            if (!especialidad || especialidad === 'Seleccione una especialidad') {
+                showNotification('Por favor seleccione una especialidad', 'error');
+                return false;
+            }
+
+            if (!medico || medico === 'Seleccione un médico') {
+                showNotification('Por favor seleccione un médico', 'error');
+                return false;
+            }
+
+            if (!fecha) {
+                showNotification('Por favor seleccione una fecha', 'error');
+                return false;
+            }
+
+            // Validar que la fecha no sea en el pasado
+            const selectedDate = new Date(fecha);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (selectedDate < today) {
+                showNotification('La fecha no puede ser anterior a hoy', 'error');
+                return false;
+            }
+
+            if (!hora) {
+                showNotification('Por favor seleccione una hora', 'error');
+                return false;
+            }
+
+            if (!tipo) {
+                showNotification('Por favor seleccione el tipo de cita', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Recopilar datos del formulario
+        function collectFormData() {
+            return {
+                id: appointmentData.id,
+                especialidad: document.getElementById('especialidad').value,
+                medico: document.getElementById('medico').value,
+                fecha: document.getElementById('fecha').value,
+                hora: document.getElementById('hora').value,
+                problema: document.getElementById('problema').value,
+                tipo: document.querySelector('input[name="tipoCita"]:checked').value,
+                notas: document.getElementById('notas')?.value || ''
+            };
+        }
+
+        // Actualizar cita
+        function updateAppointment(formData) {
+            // Mostrar indicador de carga
+            const editarBtn = document.getElementById('editarCitaBtn');
+            const originalText = editarBtn.textContent;
+            editarBtn.textContent = 'Guardando...';
+            editarBtn.disabled = true;
+
+            // Simular llamada al servidor
+            setTimeout(() => {
+                // Aquí iría la lógica para enviar los datos al servidor
+                console.log('Actualizando cita:', formData);
+                
+                // Mostrar mensaje de éxito
+                showNotification('Cita actualizada exitosamente', 'success');
+                
+                // Restaurar botón
+                editarBtn.textContent = originalText;
+                editarBtn.disabled = false;
+                
+                // Redirigir después de un momento
+                setTimeout(() => {
+                    window.location.href = 'ver_citas.html';
+                }, 2000);
+                
+            }, 1500);
+        }
+
+        // Manejar eliminación de cita
+        function handleDeleteAppointment() {
+            // Mostrar modal de confirmación personalizado
+            showDeleteConfirmationModal();
+        }
+
+        // Mostrar modal de confirmación de eliminación
+        function showDeleteConfirmationModal() {
+            const modal = createDeleteConfirmationModal();
+            document.body.appendChild(modal);
+            
+            const bootstrapModal = new bootstrap.Modal(modal);
+            bootstrapModal.show();
+            
+            // Limpiar modal al cerrar
+            modal.addEventListener('hidden.bs.modal', function() {
+                modal.remove();
+            });
+        }
+
+        // Crear modal de confirmación de eliminación
+        function createDeleteConfirmationModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal fade';
+            modal.id = 'deleteConfirmationModal';
+            
+            modal.innerHTML = `
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirmar Eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                                <h5>¿Estás seguro de que deseas eliminar esta cita?</h5>
+                                <p class="text-muted">Esta acción no se puede deshacer.</p>
+                                
+                                <div class="alert alert-info mt-3">
+                                    <strong>Cita a eliminar:</strong><br>
+                                    ${appointmentData.especialidad} con ${appointmentData.medico}<br>
+                                    ${appointmentData.fecha} a las ${appointmentData.hora}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" onclick="confirmDeleteAppointment()">Eliminar Cita</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return modal;
+        }
+
+        // Confirmar eliminación de cita
+        function confirmDeleteAppointment() {
+            // Cerrar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteConfirmationModal'));
+            modal.hide();
+            
+            // Mostrar indicador de carga
+            showNotification('Eliminando cita...', 'info');
+            
+            // Simular eliminación
+            setTimeout(() => {
+                showNotification('Cita eliminada exitosamente', 'success');
+                
+                // Redirigir a la lista de citas
+                setTimeout(() => {
+                    window.location.href = 'ver_citas.html';
+                }, 2000);
+            }, 1500);
+        }
+
+        // Inicializar selectores dinámicos
+        function initializeDynamicSelectors() {
+            const especialidadSelect = document.getElementById('especialidad');
+            const medicoSelect = document.getElementById('medico');
+            
+            // Datos de ejemplo para especialidades y médicos
+            const especialidadesMedicos = {
+                'Medicina General': [
+                    'Dr. Carlos Rodríguez',
+                    'Dra. Ana Martínez',
+                    'Dr. Pedro Gómez'
+                ],
+                'Psicología': [
+                    'Dr. Alexander Moreno',
+                    'Dra. Laura Fernández',
+                    'Dr. Miguel Ángel Torres'
+                ],
+                'Pediatría': [
+                    'Dra. Carmen López',
+                    'Dr. Roberto Silva',
+                    'Dra. María José Herrera'
+                ],
+                'Cardiología': [
+                    'Dr. Fernando Castro',
+                    'Dra. Patricia Ruiz'
+                ]
+            };
+
+            // Actualizar médicos cuando cambie la especialidad
+            especialidadSelect.addEventListener('change', function() {
+                const especialidadSeleccionada = this.value;
+                updateMedicoOptions(especialidadSeleccionada, especialidadesMedicos);
+            });
+
+            // Generar horarios disponibles dinámicamente
+            updateAvailableHours();
+        }
+
+        // Actualizar opciones de médicos
+        function updateMedicoOptions(especialidad, especialidadesMedicos) {
+            const medicoSelect = document.getElementById('medico');
+            
+            // Limpiar opciones existentes
+            medicoSelect.innerHTML = '<option value="">Seleccione un médico</option>';
+            
+            if (especialidadesMedicos[especialidad]) {
+                especialidadesMedicos[especialidad].forEach(medico => {
+                    const option = document.createElement('option');
+                    option.value = medico;
+                    option.textContent = medico;
+                    medicoSelect.appendChild(option);
+                });
+                
+                // Restaurar selección original si está disponible
+                if (especialidad === appointmentData.especialidad) {
+                    medicoSelect.value = appointmentData.medico;
+                }
+            }
+        }
+
+        // Actualizar horarios disponibles
+        function updateAvailableHours() {
+            const horaSelect = document.getElementById('hora');
+            const fechaInput = document.getElementById('fecha');
+            
+            fechaInput.addEventListener('change', function() {
+                generateAvailableHours(this.value);
+            });
+        }
+
+        // Generar horarios disponibles para una fecha
+        function generateAvailableHours(fecha) {
+            const horaSelect = document.getElementById('hora');
+            const horariosDisponibles = [
+                '8:00 am', '9:00 am', '10:00 am', '11:00 am',
+                '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm'
+            ];
+            
+            // Limpiar opciones existentes
+            horaSelect.innerHTML = '<option value="">Seleccione una hora</option>';
+            
+            horariosDisponibles.forEach(hora => {
+                const option = document.createElement('option');
+                option.value = hora;
+                option.textContent = hora;
+                horaSelect.appendChild(option);
+            });
+            
+            // Restaurar hora original si es la misma fecha
+            if (fecha === appointmentData.fecha) {
+                horaSelect.value = appointmentData.hora;
+            }
+        }
+
+        // Configurar validación en tiempo real
+        function setupRealTimeValidation() {
+            const inputs = document.querySelectorAll('input, select');
+            
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                
+                input.addEventListener('change', function() {
+                    clearFieldError(this);
+                });
+            });
+        }
+
+        // Validar campo individual
+        function validateField(field) {
+            const value = field.value.trim();
+            let isValid = true;
+            let message = '';
+            
+            if (field.hasAttribute('required') && !value) {
+                isValid = false;
+                message = 'Este campo es obligatorio';
+            }
+            
+            if (field.type === 'date' && value) {
+                const selectedDate = new Date(value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (selectedDate < today) {
+                    isValid = false;
+                    message = 'La fecha no puede ser anterior a hoy';
+                }
+            }
+            
+            // Mostrar/ocultar error
+            if (!isValid) {
+                showFieldError(field, message);
+            } else {
+                clearFieldError(field);
+            }
+            
+            return isValid;
+        }
+
+        // Mostrar error en campo
+        function showFieldError(field, message) {
+            clearFieldError(field);
+            
+            field.classList.add('is-invalid');
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'invalid-feedback';
+            errorDiv.textContent = message;
+            
+            field.parentNode.appendChild(errorDiv);
+        }
+
+        // Limpiar error de campo
+        function clearFieldError(field) {
+            field.classList.remove('is-invalid');
+            
+            const errorDiv = field.parentNode.querySelector('.invalid-feedback');
+            if (errorDiv) {
+                errorDiv.remove();
+            }
+        }
+
+        // Sistema de notificaciones
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} notification`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            notification.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove después de 5 segundos
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Agregar estilos CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            .is-invalid {
+                border-color: #dc3545 !important;
+            }
+            
+            .invalid-feedback {
+                display: block;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
   </body>
 </html>

@@ -58,13 +58,12 @@
             <div>
                 <div class="logo">
                     <img src="img/logo.png" alt="Logo" width="80">
-                </div>
-                <ul class="nav flex-column">
+                </div>                <ul class="nav flex-column">
                     <ul class="nav flex-column">
-                        <li><a class="nav-link" href="dashboard.html"><i
+                        <li><a class="nav-link" href="dashboard.index.html"><i
                                     class="bi bi-speedometer2"></i>
                                 Dashboard</a></li>
-                        <li><a class="nav-link" href="citas.html"><i
+                        <li><a class="nav-link" href="ver_citas.html"><i
                                     class="bi bi-calendar3"></i> Citas</a></li>
                         <li><a class="nav-link" href="historial_medico.html"><i
                                     class="bi bi-folder2-open"></i> Historial
@@ -72,12 +71,11 @@
                         <li><a class="nav-link" href="consultas_online.html"><i
                                     class="bi bi-camera-video"></i> Consulta
                                 Online</a></li>
-                        <li><a class="nav-link" href="ayuda.html"><i
-                                    class="bi bi-question-circle"></i>
-                                Ayuda</a></li>
+                        <li><a class="nav-link active" href="perfil.html"><i
+                                    class="bi bi-user"></i>
+                                Perfil</a></li>
                     </ul>
-                </div>
-                <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
+                </div>                <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-left"></i>
                     Salir</button>
             </div>
 
@@ -85,11 +83,10 @@
                 <!-- Navbar Perfil -->
                <div
                 class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
+                style="background-color: #0d99b4; color: white; height: 60px;">                <div>
+                    <strong id="userGreeting">Hola, Neymar Tapias</strong><br>
                     <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+                        style="font-weight: 700; font-size: 1.25rem;">Perfil</span>
                 </div>
 
                 <div class="d-flex align-items-center gap-3 ms-auto">
@@ -244,11 +241,10 @@
                     <!-- General -->
                     <div class="bg-white rounded shadow-sm p-3">
                         <h6>General</h6>
-                        <div class="row align-items-center mt-2">
-                            <div class="col-md-6">
+                        <div class="row align-items-center mt-2">                            <div class="col-md-6">
                                 <label>Cambiar Contraseña</label><br>
                                 <button
-                                    class="btn btn-outline-primary btn-sm">Cambiar</button>
+                                    class="btn btn-outline-primary btn-sm change-password-btn">Cambiar</button>
                             </div>
                             <div
                                 class="col-md-6 d-flex align-items-center justify-content-between mt-3 mt-md-0">
@@ -285,9 +281,372 @@
             <!-- Script para controlar los botones del asistente -->
             <script src="./js/assistant-controls.js"></script>
             <!-- Asistente de voz -->
-            <script type="module" src="./js/ViewModels/assistant.js"></script>
+            <script type="module" src="./js/ViewModels/assistant.js"></script>            <!-- Botón de ayuda de Ana -->
+            <script src="./js/ana-help-button.js"></script>            <script>
+                // Verificar autenticación al cargar la página
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Verificar si el usuario está logueado
+                    if (!localStorage.getItem('userLoggedIn')) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
 
-            <!-- Botón de ayuda de Ana -->
-            <script src="./js/ana-help-button.js"></script>
+                    // Actualizar nombre del usuario si está disponible
+                    const userName = localStorage.getItem('userName');
+                    if (userName) {
+                        const userGreeting = document.getElementById('userGreeting');
+                        if (userGreeting) {
+                            userGreeting.textContent = `Hola, ${userName}`;
+                        }
+                        
+                        // Actualizar nombre en la información personal
+                        updateProfileInfo(userName);
+                    }
+
+                    // Funcionalidad de logout
+                    const logoutBtn = document.getElementById('logoutBtn');
+                    if (logoutBtn) {
+                        logoutBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                                // Limpiar datos de sesión
+                                localStorage.removeItem('userLoggedIn');
+                                localStorage.removeItem('userDocument');
+                                localStorage.removeItem('userName');
+                                
+                                // Redirigir al login
+                                window.location.href = 'login.html';
+                            }
+                        });
+                    }
+
+                    // Inicializar funcionalidades de la página
+                    initializeProfileFeatures();
+                });
+
+                // Actualizar información del perfil
+                function updateProfileInfo(userName) {
+                    // Actualizar nombres en múltiples lugares
+                    const nameElements = document.querySelectorAll('.profile-name');
+                    nameElements.forEach(element => {
+                        element.textContent = userName;
+                    });
+                    
+                    // Actualizar saludo personalizado
+                    const greetingElement = document.querySelector('.profile-greeting');
+                    if (greetingElement) {
+                        greetingElement.textContent = `Hola, ${userName}`;
+                    }
+                }
+
+                // Inicializar funcionalidades del perfil
+                function initializeProfileFeatures() {
+                    // Funcionalidad de cambio de contraseña
+                    const changePasswordBtn = document.querySelector('.change-password-btn');
+                    if (changePasswordBtn) {
+                        changePasswordBtn.addEventListener('click', showChangePasswordModal);
+                    }
+
+                    // Funcionalidad de notificaciones
+                    const notificationSwitch = document.querySelector('.form-check-input');
+                    if (notificationSwitch) {
+                        notificationSwitch.addEventListener('change', toggleNotifications);
+                    }
+
+                    // Funcionalidad de edición de perfil
+                    initializeProfileEditing();
+                    
+                    // Agregar funcionalidad de subida de foto
+                    initializeProfilePhotoUpload();
+                }
+
+                // Modal de cambio de contraseña
+                function showChangePasswordModal() {
+                    const modal = createPasswordChangeModal();
+                    document.body.appendChild(modal);
+                    
+                    const bootstrapModal = new bootstrap.Modal(modal);
+                    bootstrapModal.show();
+                    
+                    // Limpiar modal al cerrar
+                    modal.addEventListener('hidden.bs.modal', function() {
+                        modal.remove();
+                    });
+                }
+
+                // Crear modal de cambio de contraseña
+                function createPasswordChangeModal() {
+                    const modal = document.createElement('div');
+                    modal.className = 'modal fade';
+                    modal.id = 'changePasswordModal';
+                    
+                    modal.innerHTML = `
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Cambiar Contraseña</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="changePasswordForm">
+                                        <div class="mb-3">
+                                            <label for="currentPassword" class="form-label">Contraseña Actual</label>
+                                            <input type="password" class="form-control" id="currentPassword" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newPassword" class="form-label">Nueva Contraseña</label>
+                                            <input type="password" class="form-control" id="newPassword" required minlength="8">
+                                            <div class="form-text">Mínimo 8 caracteres</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                                            <input type="password" class="form-control" id="confirmPassword" required>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" style="background-color: #0d99b4;" onclick="changePassword()">Cambiar Contraseña</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    return modal;
+                }
+
+                // Cambiar contraseña
+                function changePassword() {
+                    const currentPassword = document.getElementById('currentPassword').value;
+                    const newPassword = document.getElementById('newPassword').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    
+                    // Validaciones
+                    if (!currentPassword || !newPassword || !confirmPassword) {
+                        showNotification('Todos los campos son obligatorios', 'error');
+                        return;
+                    }
+                    
+                    if (newPassword !== confirmPassword) {
+                        showNotification('Las contraseñas no coinciden', 'error');
+                        return;
+                    }
+                    
+                    if (newPassword.length < 8) {
+                        showNotification('La contraseña debe tener al menos 8 caracteres', 'error');
+                        return;
+                    }
+                    
+                    // Simular cambio de contraseña
+                    showNotification('Contraseña cambiada exitosamente', 'success');
+                    
+                    // Cerrar modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
+                    modal.hide();
+                }
+
+                // Toggle notificaciones
+                function toggleNotifications(event) {
+                    const isEnabled = event.target.checked;
+                    const message = isEnabled ? 'Notificaciones habilitadas' : 'Notificaciones deshabilitadas';
+                    
+                    // Guardar preferencia
+                    localStorage.setItem('notificationsEnabled', isEnabled);
+                    
+                    showNotification(message, 'info');
+                }
+
+                // Inicializar edición de perfil inline
+                function initializeProfileEditing() {
+                    const editableFields = document.querySelectorAll('.editable-field');
+                    
+                    editableFields.forEach(field => {
+                        field.addEventListener('dblclick', function() {
+                            makeFieldEditable(this);
+                        });
+                    });
+                }
+
+                // Hacer campo editable
+                function makeFieldEditable(field) {
+                    const currentValue = field.textContent.trim();
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = currentValue;
+                    input.className = 'form-control form-control-sm';
+                    
+                    input.addEventListener('blur', function() {
+                        saveFieldEdit(field, this.value);
+                    });
+                    
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            this.blur();
+                        }
+                        if (e.key === 'Escape') {
+                            field.textContent = currentValue;
+                        }
+                    });
+                    
+                    field.innerHTML = '';
+                    field.appendChild(input);
+                    input.focus();
+                    input.select();
+                }
+
+                // Guardar edición de campo
+                function saveFieldEdit(field, newValue) {
+                    if (newValue.trim()) {
+                        field.textContent = newValue;
+                        showNotification('Campo actualizado', 'success');
+                        
+                        // Aquí se podría enviar la actualización al servidor
+                        // updateProfileField(field.dataset.field, newValue);
+                    } else {
+                        field.textContent = field.dataset.originalValue || 'Sin especificar';
+                    }
+                }
+
+                // Inicializar subida de foto de perfil
+                function initializeProfilePhotoUpload() {
+                    const profileImg = document.querySelector('.profile-img');
+                    
+                    if (profileImg) {
+                        profileImg.style.cursor = 'pointer';
+                        profileImg.title = 'Hacer clic para cambiar foto';
+                        
+                        profileImg.addEventListener('click', function() {
+                            const input = document.createElement('input');
+                            input.type = 'file';
+                            input.accept = 'image/*';
+                            
+                            input.addEventListener('change', function(e) {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    handleProfilePhotoUpload(file, profileImg);
+                                }
+                            });
+                            
+                            input.click();
+                        });
+                    }
+                }
+
+                // Manejar subida de foto de perfil
+                function handleProfilePhotoUpload(file, imgElement) {
+                    // Validar tipo de archivo
+                    if (!file.type.startsWith('image/')) {
+                        showNotification('Solo se permiten archivos de imagen', 'error');
+                        return;
+                    }
+                    
+                    // Validar tamaño (máximo 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        showNotification('La imagen debe ser menor a 2MB', 'error');
+                        return;
+                    }
+                    
+                    // Crear preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgElement.src = e.target.result;
+                        
+                        // Actualizar todas las imágenes de perfil en la página
+                        const allProfileImages = document.querySelectorAll('.profile-img');
+                        allProfileImages.forEach(img => {
+                            img.src = e.target.result;
+                        });
+                        
+                        showNotification('Foto de perfil actualizada', 'success');
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+
+                // Funciones adicionales del perfil
+                function addDiseaseTag() {
+                    const newDisease = prompt('Ingrese nueva enfermedad:');
+                    if (newDisease && newDisease.trim()) {
+                        const badge = document.createElement('span');
+                        badge.className = 'badge bg-secondary me-1';
+                        badge.textContent = newDisease.trim();
+                        
+                        // Agregar botón de eliminar
+                        const removeBtn = document.createElement('button');
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.className = 'btn btn-sm btn-outline-light ms-1';
+                        removeBtn.style.fontSize = '10px';
+                        removeBtn.onclick = function() {
+                            badge.remove();
+                            showNotification('Enfermedad eliminada', 'info');
+                        };
+                        
+                        badge.appendChild(removeBtn);
+                        
+                        // Agregar a la sección correspondiente
+                        const medicatedSection = document.querySelector('.badge').parentNode;
+                        medicatedSection.appendChild(badge);
+                        
+                        showNotification('Enfermedad agregada', 'success');
+                    }
+                }
+
+                // Sistema de notificaciones
+                function showNotification(message, type = 'info') {
+                    const notification = document.createElement('div');
+                    notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} notification`;
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        z-index: 9999;
+                        min-width: 300px;
+                        animation: slideIn 0.3s ease-out;
+                    `;
+                    
+                    notification.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                            ${message}
+                            <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(notification);
+                    
+                    // Auto-remove después de 5 segundos
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 5000);
+                }
+
+                // Agregar estilos CSS
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    
+                    .editable-field {
+                        cursor: pointer;
+                        padding: 2px 4px;
+                        border-radius: 4px;
+                        transition: background-color 0.2s;
+                    }
+                    
+                    .editable-field:hover {
+                        background-color: #f8f9fa;
+                    }
+                    
+                    .profile-img:hover {
+                        opacity: 0.8;
+                        transition: opacity 0.2s;
+                    }
+                `;
+                document.head.appendChild(style);
+            </script>
         </body>
     </html>
