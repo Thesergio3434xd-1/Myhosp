@@ -21,14 +21,21 @@ class NotificationManager {
     // Comprobar si ya se mostró el diálogo de consentimiento
     this.consentShown = localStorage.getItem('anaConsentShown') === 'true';
   }
-
   initializeNotifications() {
     // Solo ejecutar en la página principal
     if (!this.isMainPage()) return;
     
-    // No mostrar si hubo interacción reciente con controles
+    // No mostrar si hubo interacción reciente con controles (extendido a 30 segundos)
     const recentControlInteraction = sessionStorage.getItem('assistantControlInteraction');
-    if (recentControlInteraction && Date.now() - parseInt(recentControlInteraction) < 5000) {
+    if (recentControlInteraction && Date.now() - parseInt(recentControlInteraction) < 30000) {
+      console.log('Saltando modal de consentimiento por interacción reciente con controles');
+      return;
+    }
+    
+    // No mostrar si el usuario ya tiene una preferencia establecida
+    const hasPreference = localStorage.getItem('anaEnabled') !== null;
+    if (hasPreference) {
+      console.log('Saltando modal de consentimiento - usuario ya tiene preferencia establecida');
       return;
     }
     
@@ -37,7 +44,8 @@ class NotificationManager {
       setTimeout(() => {
         this.showConsentDialog();
       }, 1000);
-    }  }
+    }
+  }
 
   isMainPage() {
     const currentPath = window.location.pathname.toLowerCase();

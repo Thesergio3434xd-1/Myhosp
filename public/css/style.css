@@ -350,7 +350,109 @@ footer p {
   background-color: #18A0A9; /* Turquesa claro */
 }
 
-/* Responsive: para pantallas menores a 768px */
+/* Estilos mejorados para la sección App Móvil */
+.app-mockups-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: 400px;
+}
+
+.phone-mockup-primary {
+  flex: 0 0 60%;
+  max-width: 280px;
+  z-index: 2;
+  transform: translateX(-10px);
+}
+
+.phone-mockup-secondary {
+  flex: 0 0 40%;
+  max-width: 200px;
+  z-index: 1;
+  transform: rotate(8deg) translateY(-20px);
+  opacity: 0.9;
+}
+
+.phone-mockup-primary img,
+.phone-mockup-secondary img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 25px !important;
+}
+
+/* Responsive para tablets */
+@media (max-width: 991.98px) {
+  .app-mockups-container {
+    flex-direction: column;
+    gap: 2rem;
+    min-height: auto;
+  }
+  
+  .phone-mockup-primary,
+  .phone-mockup-secondary {
+    flex: none;
+    max-width: 250px;
+    transform: none;
+  }
+  
+  .phone-mockup-secondary {
+    transform: rotate(3deg);
+    opacity: 1;
+  }
+}
+
+/* Responsive para móviles */
+@media (max-width: 575.98px) {
+  .app-mockups-container {
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
+  
+  .phone-mockup-primary,
+  .phone-mockup-secondary {
+    max-width: 200px;
+  }
+  
+  .phone-mockup-secondary {
+    transform: none;
+  }
+}
+
+/* Mejorar el destacado de secciones para navegación por voz */
+.highlight-section {
+  outline: 3px solid rgba(59, 154, 184, 0.8) !important;
+  outline-offset: 5px;
+  border-radius: 8px;
+  animation: section-highlight 2.5s ease-in-out;
+  background-color: rgba(59, 154, 184, 0.05);
+  box-shadow: 0 0 20px rgba(59, 154, 184, 0.3);
+}
+
+@keyframes section-highlight {
+  0% { 
+    outline-color: rgba(59, 154, 184, 0.9);
+    outline-offset: 2px;
+    background-color: rgba(59, 154, 184, 0.1);
+    box-shadow: 0 0 25px rgba(59, 154, 184, 0.4);
+  }
+  50% { 
+    outline-color: rgba(59, 154, 184, 0.7);
+    outline-offset: 8px;
+    background-color: rgba(59, 154, 184, 0.08);
+    box-shadow: 0 0 30px rgba(59, 154, 184, 0.5);
+  }
+  100% { 
+    outline-color: rgba(59, 154, 184, 0.3);
+    outline-offset: 5px;
+    background-color: rgba(59, 154, 184, 0.02);
+    box-shadow: 0 0 15px rgba(59, 154, 184, 0.2);
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .menu-button {
     display: block;

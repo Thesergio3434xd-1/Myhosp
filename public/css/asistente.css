@@ -165,14 +165,35 @@ body {
 
 /* Estilos para destacar secciones al navegar */
 .highlight-section {
-    outline: 3px solid rgba(59, 154, 184, 0.7);
-    animation: section-highlight 2s ease-out;
+    outline: 3px solid rgba(59, 154, 184, 0.8) !important;
+    outline-offset: 5px;
+    border-radius: 8px;
+    animation: section-highlight 2.5s ease-in-out;
+    background-color: rgba(59, 154, 184, 0.05) !important;
+    box-shadow: 0 0 20px rgba(59, 154, 184, 0.3) !important;
+    position: relative;
+    z-index: 100;
 }
 
 @keyframes section-highlight {
-    0% { outline-color: rgba(59, 154, 184, 0.9); outline-offset: -3px; }
-    50% { outline-color: rgba(59, 154, 184, 0.6); outline-offset: 3px; }
-    100% { outline-color: rgba(59, 154, 184, 0); outline-offset: 0; }
+    0% { 
+        outline-color: rgba(59, 154, 184, 0.9);
+        outline-offset: 2px;
+        background-color: rgba(59, 154, 184, 0.1);
+        box-shadow: 0 0 25px rgba(59, 154, 184, 0.4);
+    }
+    50% { 
+        outline-color: rgba(59, 154, 184, 0.7);
+        outline-offset: 8px;
+        background-color: rgba(59, 154, 184, 0.08);
+        box-shadow: 0 0 30px rgba(59, 154, 184, 0.5);
+    }
+    100% { 
+        outline-color: rgba(59, 154, 184, 0.3);
+        outline-offset: 5px;
+        background-color: rgba(59, 154, 184, 0.02);
+        box-shadow: 0 0 15px rgba(59, 154, 184, 0.2);
+    }
 }
 
 /* Estilos específicos para el asistente en las páginas de autenticación */

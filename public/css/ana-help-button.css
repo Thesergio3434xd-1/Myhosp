@@ -1,40 +1,217 @@
-/* Ana Help Button CSS */
+/* Ana Help Button CSS - Sistema responsive con colores MyHosp */
 .ana-help-button {
   position: fixed;
   left: -2px;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background-color: #3B9AB8;
-  background: linear-gradient(135deg, #3B9AB8, #2980b9);
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 0 8px 8px 0;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #3B9AB8, #00789E);
+  box-shadow: 2px 2px 12px rgba(59, 154, 184, 0.3);
+  border-radius: 0 12px 12px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 9999;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   outline: none;
+  font-family: 'Lexend', sans-serif;
+  /* Asegurar visibilidad en todas las páginas */
+  backdrop-filter: blur(5px);
 }
 
 .ana-help-button i {
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   transition: all 0.3s ease;
 }
 
 .ana-help-button:hover {
-  width: 45px;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  width: 55px;
+  box-shadow: 3px 3px 15px rgba(59, 154, 184, 0.5);
+  background: linear-gradient(135deg, #6BBFD9, #3B9AB8);
+  transform: translateY(-50%) translateX(2px);
 }
 
 .ana-help-button:hover i {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(10deg);
+  color: #E0FFFC;
 }
 
 .ana-help-button:active {
   transform: translateY(-50%) scale(0.95);
+  box-shadow: 1px 1px 8px rgba(59, 154, 184, 0.4);
+}
+
+/* Animación de pulso para llamar la atención */
+.ana-help-button.pulse {
+  animation: helpButtonPulse 2s infinite;
+}
+
+@keyframes helpButtonPulse {
+  0% {
+    box-shadow: 2px 2px 12px rgba(59, 154, 184, 0.3);
+  }
+  50% {
+    box-shadow: 3px 3px 20px rgba(59, 154, 184, 0.6), 0 0 15px rgba(59, 154, 184, 0.4);
+  }
+  100% {
+    box-shadow: 2px 2px 12px rgba(59, 154, 184, 0.3);
+  }
+}
+
+/* Responsive design para diferentes tamaños de pantalla */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 768px) {
+  .ana-help-button {
+    width: 45px;
+    height: 45px;
+    left: -1px;
+    border-radius: 0 10px 10px 0;
+  }
+  
+  .ana-help-button i {
+    font-size: 18px;
+  }
+  
+  .ana-help-button:hover {
+    width: 48px;
+  }
+}
+
+/* Dispositivos móviles */
+@media (max-width: 480px) {
+  .ana-help-button {
+    width: 40px;
+    height: 40px;
+    left: 0px;
+    border-radius: 0 8px 8px 0;
+    top: 60%;
+  }
+  
+  .ana-help-button i {
+    font-size: 16px;
+  }
+  
+  .ana-help-button:hover {
+    width: 42px;
+    transform: translateY(-50%) translateX(1px);
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .ana-help-button {
+    width: 35px;
+    height: 35px;
+    top: 65%;
+  }
+  
+  .ana-help-button i {
+    font-size: 14px;
+  }
+  
+  .ana-help-button:hover {
+    width: 38px;
+  }
+}
+
+/* Adaptaciones para páginas específicas */
+
+/* Para páginas de autenticación (login, registro) */
+.auth-container ~ .ana-help-button,
+.login .ana-help-button,
+.register .ana-help-button {
+  background: linear-gradient(135deg, #3B9AB8, #00789E);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Para el dashboard */
+.dashboard .ana-help-button {
+  left: 2px; /* Ajustar para no interferir con la sidebar */
+}
+
+/* Para dispositivos con sidebar */
+@media (min-width: 992px) {
+  .sidebar ~ .main .ana-help-button {
+    left: 242px; /* Después de la sidebar de 240px */
+  }
+}
+
+/* Estados especiales */
+.ana-help-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.ana-help-button.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(-60px);
+}
+
+/* Animación de entrada */
+.ana-help-button.entering {
+  animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateY(-50%) translateX(-60px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Mejoras de accesibilidad */
+.ana-help-button:focus {
+  outline: 2px solid #E0FFFC;
+  outline-offset: 2px;
+}
+
+.ana-help-button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Para navegadores que soporten focus-visible */
+.ana-help-button:focus-visible {
+  outline: 2px solid #E0FFFC;
+  outline-offset: 2px;
+}
+
+/* Mejoras de contraste para modo alto contraste */
+@media (prefers-contrast: high) {
+  .ana-help-button {
+    border: 2px solid white;
+    background: #00789E;
+  }
+  
+  .ana-help-button:hover {
+    background: #3B9AB8;
+    border-color: #E0FFFC;
+  }
+}
+
+/* Reducción de movimiento para usuarios que lo prefieran */
+@media (prefers-reduced-motion: reduce) {
+  .ana-help-button,
+  .ana-help-button i {
+    transition: none;
+  }
+  
+  .ana-help-button.pulse {
+    animation: none;
+  }
+  
+  .ana-help-button:hover i {
+    transform: none;
+  }
 }

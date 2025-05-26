@@ -587,9 +587,7 @@ class Assistant {
           window.location.href = response.target;
         }, 1500);
         return;
-      }
-
-      // Navegación dentro de la misma página
+      }      // Navegación dentro de la misma página
       if (response.action === 'navigate' && response.target) {
         setTimeout(() => {
           const targetElement = document.querySelector(response.target);
@@ -599,11 +597,8 @@ class Assistant {
               block: 'start'
             });
 
-            // Resaltar la sección
-            targetElement.classList.add('highlight-section');
-            setTimeout(() => {
-              targetElement.classList.remove('highlight-section');
-            }, 2000);
+            // Resaltar la sección usando la función centralizada
+            this.highlightSection(targetElement, 3000);
           } else {
             console.error(`Elemento no encontrado: ${response.target}`);
           }
@@ -849,8 +844,7 @@ class Assistant {
           if (!isInViewport) {
             // Si no está en la sección, navegar primero y después leer
             const navigationMsg = `Llevándote a la sección ${targetSection}`;
-            this.speak(navigationMsg, false, () => {
-              // Esta función se ejecutará cuando termine de decir el mensaje de navegación
+            this.speak(navigationMsg, false, () => {              // Esta función se ejecutará cuando termine de decir el mensaje de navegación
 
               // Navegar a la sección
               sectionElement.scrollIntoView({
@@ -858,11 +852,8 @@ class Assistant {
                 block: 'start'
               });
 
-              // Resaltar la sección
-              sectionElement.classList.add('highlight-section');
-              setTimeout(() => {
-                sectionElement.classList.remove('highlight-section');
-              }, 2000);
+              // Resaltar la sección usando la función centralizada
+              this.highlightSection(sectionElement, 3000);
 
               // Esperar un poco para que termine la navegación
               setTimeout(() => {
@@ -942,8 +933,7 @@ class Assistant {
             this.speak(`Te llevo a la sección de ${sectionName}`);
           } else {
             // Para inicio, usar un mensaje más simple
-            this.speak("Mostrando la sección de inicio");
-          }
+            this.speak("Mostrando la sección de inicio");          }
           
           // Navegar visualmente
           targetElement.scrollIntoView({
@@ -951,11 +941,8 @@ class Assistant {
             block: 'start'
           });
 
-          // Añadir efecto de resaltado
-          targetElement.classList.add('highlight-section');
-          setTimeout(() => {
-            targetElement.classList.remove('highlight-section');
-          }, 2000);
+          // Añadir efecto de resaltado usando la función centralizada
+          this.highlightSection(targetElement, 3000);
         }
       }
     }    // Enviar comando al servidor solo si no hemos encontrado una navegación en el cliente
@@ -983,14 +970,10 @@ class Assistant {
     if (command.includes('contraseña') && 
         (command.includes('olvidé') || command.includes('olvidada') || command.includes('recuperar') || command.includes('restablecer'))) {
       this.speak('Para recuperar tu contraseña, haz clic en el enlace "¿Olvidaste tu contraseña?" debajo del formulario.');
-      
-      // Resaltar el enlace visualmente
+        // Resaltar el enlace visualmente usando la función centralizada
       const forgotPasswordLink = document.querySelector('.forgot-password');
       if (forgotPasswordLink) {
-        forgotPasswordLink.classList.add('highlight-section');
-        setTimeout(() => {
-          forgotPasswordLink.classList.remove('highlight-section');
-        }, 3000);
+        this.highlightSection(forgotPasswordLink, 3000);
       }
       return true;
     }
@@ -1044,15 +1027,11 @@ class Assistant {
     }
     
     // Comando para términos y condiciones
-    if (command.includes('términos') || command.includes('condiciones')) {
-      this.speak('Los términos y condiciones describen tus derechos y responsabilidades al usar nuestra plataforma. Es importante que los leas antes de registrarte.');
-      // Resaltar el enlace de términos
+    if (command.includes('términos') || command.includes('condiciones')) {      this.speak('Los términos y condiciones describen tus derechos y responsabilidades al usar nuestra plataforma. Es importante que los leas antes de registrarte.');
+      // Resaltar el enlace de términos usando la función centralizada
       const termsLink = document.querySelector('.term-link');
       if (termsLink) {
-        termsLink.classList.add('highlight-section');
-        setTimeout(() => {
-          termsLink.classList.remove('highlight-section');
-        }, 3000);
+        this.highlightSection(termsLink, 3000);
       }
       return true;
     }
@@ -1180,6 +1159,40 @@ class Assistant {
         this.speechSynthesis.speak(utterance);
       }, 100);
     }
+  }
+
+  // Función para destacar secciones durante la navegación por voz
+  highlightSection(element, duration = 3000) {
+    if (!element) return;
+    
+    // Remover cualquier destacado previo
+    const previousHighlighted = document.querySelector('.highlight-section');
+    if (previousHighlighted) {
+      previousHighlighted.classList.remove('highlight-section');
+    }
+    
+    // Agregar el destacado a la nueva sección
+    element.classList.add('highlight-section');
+    
+    // Asegurar que la sección esté visible
+    const rect = element.getBoundingClientRect();
+    const isFullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+    
+    if (!isFullyVisible) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+    
+    // Remover el destacado después del tiempo especificado
+    setTimeout(() => {
+      if (element.classList.contains('highlight-section')) {
+        element.classList.remove('highlight-section');
+      }
+    }, duration);
+    
+    console.log(`Sección destacada: ${element.id || element.className} por ${duration}ms`);
   }
 }
 

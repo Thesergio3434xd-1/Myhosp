@@ -119,8 +119,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
+    // Función para marcar interacción del usuario y prevenir modal
+    function markUserInteraction() {
+        sessionStorage.setItem('assistantControlInteraction', Date.now().toString());
+        localStorage.setItem('anaConsentShown', 'true');
+        console.log('Interacción del usuario registrada - modal de consentimiento deshabilitado');
+    }
+    
     // Función para activar el asistente
     function enableAssistant() {
+        // Marcar interacción del usuario primero
+        markUserInteraction();
+        
         // Guardar estado en localStorage y cookies
         saveValue('anaEnabled', 'true');
         saveValue('anaConsentShown', 'true');
@@ -135,27 +145,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Actualizar estilos de botones
-        enableButton.classList.add('active');
-        disableButton.classList.remove('active');
+        if (enableButton && disableButton) {
+            enableButton.classList.add('active');
+            disableButton.classList.remove('active');
+        }
         
         // Mostrar notificación
-        showNotification('Asistente de voz activado en todas las páginas', 'success', 'fa-check-circle');
+        showNotification('Asistente de voz activado', 'success', 'fa-check-circle');
         
-        // Recargar la página para inicializar el asistente
-        setTimeout(() => {
-            window.location.reload();
-        }, 300);
+        // Activar el asistente directamente sin recargar la página
+        if (window.ana && typeof window.ana.initialize === 'function') {
+            window.ana.initialize();
+        } else {
+            // Si el asistente no está disponible, inicializar después de un breve delay
+            setTimeout(() => {
+                if (window.ana && typeof window.ana.initialize === 'function') {
+                    window.ana.initialize();
+                }
+            }, 500);
+        }
+        
+        // Emitir evento personalizado para informar sobre la activación
+        document.dispatchEvent(new CustomEvent('anaConsentDecided', {
+            detail: { enabled: true }
+        }));
     }
     
     // Función para desactivar el asistente
     function disableAssistant() {
         console.log('Desactivando asistente de voz...');
         
-        // 1. Guardar estado en localStorage y cookies
+        // Marcar interacción del usuario primero
+        markUserInteraction();
+        
+        // Guardar estado en localStorage y cookies
         saveValue('anaEnabled', 'false');
         saveValue('anaConsentShown', 'true');
         
-        // 2. Aplicar cambios visuales inmediatamente
+        // Aplicar cambios visuales inmediatamente
         if (assistantElement) {
             assistantElement.classList.add('disabled');
         }
@@ -164,11 +191,13 @@ document.addEventListener('DOMContentLoaded', function() {
             micIcon.classList.add('disabled');
         }
         
-        // 3. Actualizar estilos de botones
-        disableButton.classList.add('active');
-        enableButton.classList.remove('active');
+        // Actualizar estilos de botones
+        if (enableButton && disableButton) {
+            disableButton.classList.add('active');
+            enableButton.classList.remove('active');
+        }
         
-        // 4. Detener todos los procesos de reconocimiento de voz de forma agresiva
+        // Detener todos los procesos de reconocimiento de voz
         if (window.SpeechRecognition || window.webkitSpeechRecognition) {
             try {
                 // Detener cualquier instancia global de reconocimiento
@@ -225,36 +254,34 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (window.assistantInstance.updateUI) {
                         window.assistantInstance.updateUI(false, 'Asistente desactivado', false);
                     }
-                    
-                    console.log('Asistente detenido completamente');
                 }
             } catch (error) {
                 console.error('Error al detener procesos del asistente:', error);
             }
         }
         
-        // 5. Detener todos los speechSynthesis activos (redundante, pero por seguridad)
+        // Detener todos los speechSynthesis activos
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
         }
         
-        // 6. Mostrar notificación
-        showNotification('Asistente de voz desactivado en todas las páginas', 'info', 'fa-microphone-slash');
+        // Mostrar notificación
+        showNotification('Asistente de voz desactivado', 'info', 'fa-microphone-slash');
         
-        // 7. Como última medida, recargar la página después de un breve retardo
-        // Esto garantiza que todos los procesos se detengan completamente
-        setTimeout(() => {
-            console.log('Recargando página para asegurar detención completa...');
-            window.location.reload();
-        }, 300);
+        // Emitir evento personalizado para informar sobre la desactivación
+        document.dispatchEvent(new CustomEvent('anaConsentDecided', {
+            detail: { enabled: false }
+        }));
     }
     
     // Verificar el estado actual y aplicar los estilos iniciales
     const anaEnabled = getValue('anaEnabled') === 'true';
     
     if (anaEnabled) {
-        enableButton.classList.add('active');
-        disableButton.classList.remove('active');
+        if (enableButton && disableButton) {
+            enableButton.classList.add('active');
+            disableButton.classList.remove('active');
+        }
         
         if (assistantElement) {
             assistantElement.classList.remove('disabled');
@@ -264,8 +291,10 @@ document.addEventListener('DOMContentLoaded', function() {
             micIcon.classList.remove('disabled');
         }
     } else {
-        disableButton.classList.add('active');
-        enableButton.classList.remove('active');
+        if (enableButton && disableButton) {
+            disableButton.classList.add('active');
+            enableButton.classList.remove('active');
+        }
         
         if (assistantElement) {
             assistantElement.classList.add('disabled');
@@ -285,3 +314,19 @@ document.addEventListener('DOMContentLoaded', function() {
         disableButton.addEventListener('click', disableAssistant);
     }
 });
+
+// Función global para probar el estado del asistente
+window.checkAssistantState = function() {
+    const enabled = localStorage.getItem('anaEnabled') === 'true';
+    const consentShown = localStorage.getItem('anaConsentShown') === 'true';
+    const recentInteraction = sessionStorage.getItem('assistantControlInteraction');
+    
+    console.log('Estado del Asistente:', {
+        enabled: enabled,
+        consentShown: consentShown,
+        recentInteraction: recentInteraction ? new Date(parseInt(recentInteraction)) : null,
+        timeSinceInteraction: recentInteraction ? Date.now() - parseInt(recentInteraction) : null
+    });
+    
+    return { enabled, consentShown, recentInteraction };
+};

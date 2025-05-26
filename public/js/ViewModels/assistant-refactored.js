@@ -430,17 +430,13 @@ class Assistant {
       // Manejar diferentes tipos de acciones
       switch (response.action) {
         case 'navigate':
-          // Navegar a una sección en la misma página
-          const element = document.querySelector(response.target);
+          // Navegar a una sección en la misma página          const element = document.querySelector(response.target);
           if (element) {
             this.speak(response.text);
             setTimeout(() => {
               element.scrollIntoView({ behavior: 'smooth' });
-              // Resaltar la sección brevemente
-              element.classList.add('highlight-section');
-              setTimeout(() => {
-                element.classList.remove('highlight-section');
-              }, 2000);
+              // Resaltar la sección brevemente usando la función centralizada
+              this.highlightSection(element, 2000);
             }, 500);
           }
           break;
@@ -768,8 +764,7 @@ class Assistant {
           if (!isInViewport) {
             // Si no está en la sección, navegar primero y después leer
             const navigationMsg = `Llevándote a la sección ${targetSection}`;
-            this.speak(navigationMsg, false, () => {
-              // Esta función se ejecutará cuando termine de decir el mensaje de navegación
+            this.speak(navigationMsg, false, () => {            // Esta función se ejecutará cuando termine de decir el mensaje de navegación
 
               // Navegar a la sección
               sectionElement.scrollIntoView({
@@ -777,11 +772,8 @@ class Assistant {
                 block: 'start'
               });
 
-              // Resaltar la sección
-              sectionElement.classList.add('highlight-section');
-              setTimeout(() => {
-                sectionElement.classList.remove('highlight-section');
-              }, 2000);
+              // Resaltar la sección usando la función centralizada
+              this.highlightSection(sectionElement, 2000);
 
               // Esperar un poco para que termine la navegación
               setTimeout(() => {
@@ -871,13 +863,8 @@ class Assistant {
           targetElement.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
-          });
-
-          // Añadir efecto de resaltado
-          targetElement.classList.add('highlight-section');
-          setTimeout(() => {
-            targetElement.classList.remove('highlight-section');
-          }, 2000);
+          });          // Añadir efecto de resaltado usando la función centralizada
+          this.highlightSection(targetElement, 2000);
         }
       }
     }
@@ -908,14 +895,10 @@ class Assistant {
     if (command.includes('contraseña') && 
         (command.includes('olvidé') || command.includes('olvidada') || command.includes('recuperar') || command.includes('restablecer'))) {
       this.speak('Para recuperar tu contraseña, haz clic en el enlace "¿Olvidaste tu contraseña?" debajo del formulario.');
-      
-      // Resaltar el enlace visualmente
+        // Resaltar el enlace visualmente usando la función centralizada
       const forgotPasswordLink = document.querySelector('a[href="#"].small');
       if (forgotPasswordLink) {
-        forgotPasswordLink.classList.add('highlight-section');
-        setTimeout(() => {
-          forgotPasswordLink.classList.remove('highlight-section');
-        }, 3000);
+        this.highlightSection(forgotPasswordLink, 3000);
       }
       return true;
     }
@@ -970,14 +953,10 @@ class Assistant {
     
     // Comando para términos y condiciones
     if (command.includes('términos') || command.includes('condiciones')) {
-      this.speak('Los términos y condiciones describen tus derechos y responsabilidades al usar nuestra plataforma. Es importante que los leas antes de registrarte.');
-      // Resaltar el enlace de términos
+      this.speak('Los términos y condiciones describen tus derechos y responsabilidades al usar nuestra plataforma. Es importante que los leas antes de registrarte.');      // Resaltar el enlace de términos usando la función centralizada
       const termsLink = document.querySelector('.term-link');
       if (termsLink) {
-        termsLink.classList.add('highlight-section');
-        setTimeout(() => {
-          termsLink.classList.remove('highlight-section');
-        }, 3000);
+        this.highlightSection(termsLink, 3000);
       }
       return true;
     }
@@ -1118,11 +1097,43 @@ class Assistant {
             }
             // Si es la bienvenida, mantenemos el texto visible
           }, 500);
-        };
-
-        this.speechSynthesis.speak(utterance);
+        };        this.speechSynthesis.speak(utterance);
       }, 100);
     }
+  }
+
+  // Función para destacar secciones durante la navegación por voz
+  highlightSection(element, duration = 3000) {
+    if (!element) return;
+    
+    // Remover cualquier destacado previo
+    const previousHighlighted = document.querySelector('.highlight-section');
+    if (previousHighlighted) {
+      previousHighlighted.classList.remove('highlight-section');
+    }
+    
+    // Agregar el destacado a la nueva sección
+    element.classList.add('highlight-section');
+    
+    // Asegurar que la sección esté visible
+    const rect = element.getBoundingClientRect();
+    const isFullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+    
+    if (!isFullyVisible) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+    
+    // Remover el destacado después del tiempo especificado
+    setTimeout(() => {
+      if (element.classList.contains('highlight-section')) {
+        element.classList.remove('highlight-section');
+      }
+    }, duration);
+    
+    console.log(`Sección destacada: ${element.id || element.className} por ${duration}ms`);
   }
 }
 
