@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MyHosp - Citas</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+        <!-- Font Awesome -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+            rel="stylesheet">
+        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <!-- Estilos personalizados -->
+        <link rel="stylesheet" href="./css/style.css" />
+        <!-- Estilos específicos para autenticación -->
+        <link rel="stylesheet" href="./css/auth.css" />
+        <!-- Estilos del asistente -->
+        <link rel="stylesheet" href="./css/asistente.css" />
+        <!-- Estilos para el botón de ayuda de Ana -->
+        <link rel="stylesheet" href="./css/ana-help-button.css" />
+        <link rel="stylesheet" href="./css/dashboard.css" />
+        <!-- Estilos unificados para notificaciones -->
+  <link rel="stylesheet" href="./css/notifications.css" />
+    </head>
+    <body>
+        <!-- Asistente de voz Ana -->
+        <div id="ana-assistant" class="voice-assistant">
+            <!-- Botones para controlar el asistente -->
+            <div class="assistant-controls">
+                <button id="enableAssistant"
+                    class="control-button enable-button"
+                    aria-label="Activar asistente de voz">
+                    <i class="fas fa-toggle-on"></i>
+                </button>
+                <button id="disableAssistant"
+                    class="control-button disable-button"
+                    aria-label="Desactivar asistente de voz">
+                    <i class="fas fa-toggle-off"></i>
+                </button>
+            </div>
+            <button id="micButton" class="mic-button"
+                aria-label="Activar asistente de voz">
+                <i id="micIcon" class="fas fa-microphone"></i>
+            </button>
+            <div id="assistantStatus" class="assistant-status"></div>
+        </div>
+
+        <div class="sidebar">
+            <div>
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo" width="80">
+                </div>
+                <ul class="nav flex-column">
+                    <ul class="nav flex-column">
+                        <li><a class="nav-link" href="dashboard.html"><i
+                                    class="bi bi-speedometer2"></i>
+                                Dashboard</a></li>
+                        <li><a class="nav-link" href="citas.html"><i
+                                    class="bi bi-calendar3"></i> Citas</a></li>
+                        <li><a class="nav-link" href="historial_medico.html"><i
+                                    class="bi bi-folder2-open"></i> Historial
+                                Médico</a></li>
+                        <li><a class="nav-link" href="consultas_online.html"><i
+                                    class="bi bi-camera-video"></i> Consulta
+                                Online</a></li>
+                        <li><a class="nav-link" href="ayuda.html"><i
+                                    class="bi bi-question-circle"></i>
+                                Ayuda</a></li>
+                    </ul>
+                </div>
+                <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
+                    Salir</button>
+            </div>
+
+            <div class="main">
+                <!-- Navbar Perfil -->
+                <div
+                class="topbar d-flex justify-content-between align-items-center px-4"
+                style="background-color: #0d99b4; color: white; height: 60px;">
+                <div>
+                    <strong>Hola, Neymar Tapias</strong><br>
+                    <span
+                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 ms-auto">
+                    <!-- Dropdown idioma -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
+                            type="button" id="dropdownIdioma"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none; font-size: 0.85rem;">
+                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
+                                width="24" height="auto"
+                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                            ES
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownIdioma"
+                            style="min-width: 70px; font-size: 0.85rem;">
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/co.png"
+                                        alt="ES" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    ES
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/us.png"
+                                        alt="EN" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    EN
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Notificaciones -->
+                    <button type="button"
+                        class="btn position-relative btn-transparent text-white p-0"
+                        style="background: transparent; border: none; font-size: 1rem;">
+                        <i class="bi bi-bell"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
+                            3
+                            <span class="visually-hidden">notificaciones
+                                nuevas</span>
+                        </span>
+                    </button>
+
+                    <!-- Dropdown perfil -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
+                            type="button" id="dropdownPerfil"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none;">
+                            <img
+                                src="https://randomuser.me/api/portraits/men/32.jpg"
+                                alt="User" width="32" height="32"
+                                class="rounded-circle">
+                            <span class="fw-semibold">Neymar Tapias</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownPerfil">
+                            <li><a class="dropdown-item" href="perfil.html">Mi
+                                    Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="#">Configuración</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+                <!-- Contenido principal -->
+                <div class="p-4">
+                    <div class="container bg-white p-5 shadow rounded">
+                        <h2 class="text-center mb-4"
+                            style="color: #0d99b4;">Información
+                            Personal</h2>
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control"
+                                        value="Neymar">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Apellidos</label>
+                                    <input type="text" class="form-control"
+                                        value="Tapias">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de
+                                    nacimiento</label>
+                                <input type="date" class="form-control"
+                                    value="2025-04-10">
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Edad</label>
+                                    <input type="number" class="form-control"
+                                        value="24">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Sexo</label>
+                                    <select class="form-select">
+                                        <option selected>Masculino</option>
+                                        <option>Femenino</option>
+                                        <option>Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Celular</label>
+                                    <input type="text" class="form-control"
+                                        value="3118975422">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Correo
+                                        Electrónico</label>
+                                    <input type="email" class="form-control"
+                                        value="NeymarTapias@yahoo.es">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Dirección</label>
+                                <input type="text" class="form-control"
+                                    value="Cra69d#99-01">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Departamento</label>
+                                <select class="form-select">
+                                    <option selected>Caracas</option>
+                                    <option>Antioquia</option>
+                                    <option>Cundinamarca</option>
+                                </select>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Grupo
+                                        Sanguíneo</label>
+                                    <input type="text" class="form-control"
+                                        value="AB-">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Estado
+                                        Civil</label>
+                                    <select class="form-select">
+                                        <option selected>Soltero</option>
+                                        <option>Casado</option>
+                                        <option>Unión Libre</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">EPS</label>
+                                <select class="form-select">
+                                    <option selected>Compensar EPS</option>
+                                    <option>Sanitas</option>
+                                    <option>Famisanar</option>
+                                </select>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit"
+                                    class="btn btn-info text-white"
+                                    style="background-color: #0d99b4;  border-color: #0d99b4;">Guardar
+                                    cambios</button>
+                                <a class="btn btn-secondary"
+                                    style="background-color: #0d99b4;  border-color: #0d99b4;"
+                                    href="perfil.html">Volver</a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Bootstrap JS -->
+                <script
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+                <!-- Socket.IO -->
+                <script
+                    src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+                <!-- Script de notificación inicial para el asistente -->
+                <script src="./js/activation-prompt.js"></script>
+
+                <!-- Script para notificación inicial sobre capacidades de Ana -->
+                <script src="./js/initial-notification.js"></script>
+
+                <!-- Script de consentimiento para Ana -->
+                <script src="./js/ana-consent.js"></script>
+
+                <!-- Script para controlar los botones del asistente -->
+                <script src="./js/assistant-controls.js"></script>
+                <!-- Asistente de voz -->
+                <script type="module"
+                    src="./js/ViewModels/assistant.js"></script>
+
+                <!-- Botón de ayuda de Ana -->
+                <script src="./js/ana-help-button.js"></script>
+            </body>
+        </html>
