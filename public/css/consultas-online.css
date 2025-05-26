@@ -1,0 +1,907 @@
+/* MyHosp - Estilos para Consultas Online */
+
+/* Variables específicas para Consultas Online */
+:root {
+    --consultas-primary: #0d99b4;
+    --consultas-secondary: #17a2b8;
+    --consultas-accent: #20c997;
+    --consultas-bg: #f8f9fa;
+    --consultas-card-bg: #ffffff;
+    --consultas-shadow: 0 4px 12px rgba(13, 153, 180, 0.1);
+    --consultas-shadow-hover: 0 8px 25px rgba(13, 153, 180, 0.15);
+    --consultas-border: rgba(13, 153, 180, 0.1);
+    --consultas-success: #28a745;
+    --consultas-warning: #ffc107;
+    --consultas-danger: #dc3545;
+    --consultas-info: #17a2b8;
+    --consultas-online: #28a745;
+    --consultas-offline: #6c757d;
+    --consultas-busy: #ffc107;
+}
+
+/* Contenedor principal de consultas */
+.consultas-container {
+    padding: 2rem;
+    background: var(--consultas-bg);
+    min-height: 100vh;
+}
+
+/* Header de consultas online */
+.consultas-header {
+    background: linear-gradient(135deg, var(--consultas-primary) 0%, var(--consultas-secondary) 100%);
+    border-radius: var(--border-radius-lg);
+    padding: 3rem 2rem;
+    color: white;
+    margin-bottom: 2rem;
+    box-shadow: var(--consultas-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.consultas-header::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,0.1)"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>') no-repeat center;
+    background-size: 120px 120px;
+    opacity: 0.2;
+}
+
+.consultas-header-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consultas-header-info {
+    flex: 1;
+}
+
+.consultas-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.consultas-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.consultas-quick-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.consultas-quick-stat {
+    text-align: center;
+}
+
+.consultas-quick-stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: block;
+}
+
+.consultas-quick-stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.consultas-header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.consultas-new-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.consultas-new-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Status indicator */
+.consultas-status-indicator {
+    background: var(--consultas-card-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--consultas-shadow);
+    border: 1px solid var(--consultas-border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.consultas-status-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.consultas-status-icon.online {
+    background: var(--consultas-online);
+}
+
+.consultas-status-icon.offline {
+    background: var(--consultas-offline);
+}
+
+.consultas-status-icon.busy {
+    background: var(--consultas-busy);
+}
+
+.consultas-status-info {
+    flex: 1;
+}
+
+.consultas-status-title {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+
+.consultas-status-description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.consultas-status-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.consultas-status-btn {
+    background: none;
+    border: 1px solid var(--consultas-border);
+    color: var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.consultas-status-btn:hover {
+    background: var(--consultas-primary);
+    color: white;
+    border-color: var(--consultas-primary);
+}
+
+/* Navegación de tabs */
+.consultas-nav {
+    background: var(--consultas-card-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--consultas-shadow);
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+}
+
+.consultas-nav-item {
+    flex: 1;
+    min-width: 150px;
+    padding: 1rem;
+    text-align: center;
+    border-radius: var(--border-radius);
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.consultas-nav-item:hover {
+    background: rgba(13, 153, 180, 0.1);
+    color: var(--consultas-primary);
+}
+
+.consultas-nav-item.active {
+    background: var(--consultas-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 153, 180, 0.3);
+}
+
+.consultas-nav-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--consultas-danger);
+    color: white;
+    border-radius: 10px;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+.consultas-nav-item.active .consultas-nav-badge {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Grid de consultas */
+.consultas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Cards de consulta */
+.consulta-card {
+    background: var(--consultas-card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--consultas-shadow);
+    border: 1px solid var(--consultas-border);
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+}
+
+.consulta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--consultas-shadow-hover);
+}
+
+.consulta-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--consultas-border);
+    position: relative;
+}
+
+.consulta-card-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.consulta-card-status.pendiente {
+    background: var(--consultas-warning);
+}
+
+.consulta-card-status.confirmada {
+    background: var(--consultas-success);
+}
+
+.consulta-card-status.en-progreso {
+    background: var(--consultas-info);
+    animation: pulse 2s infinite;
+}
+
+.consulta-card-status.completada {
+    background: var(--consultas-primary);
+}
+
+.consulta-card-status.cancelada {
+    background: var(--consultas-danger);
+}
+
+.consulta-card-patient {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.consulta-card-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--consultas-border);
+    object-fit: cover;
+}
+
+.consulta-card-patient-info {
+    flex: 1;
+}
+
+.consulta-card-patient-name {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+}
+
+.consulta-card-patient-details {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.consulta-card-time {
+    background: rgba(13, 153, 180, 0.1);
+    color: var(--consultas-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.consulta-card-body {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.consulta-card-type {
+    background: var(--consultas-accent);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--border-radius);
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.consulta-card-description {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.consulta-card-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.consulta-tag {
+    background: rgba(13, 153, 180, 0.1);
+    color: var(--consultas-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.consulta-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.consulta-card-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.consulta-card-btn-primary {
+    background: var(--consultas-primary);
+    color: white;
+}
+
+.consulta-card-btn-primary:hover {
+    background: var(--consultas-secondary);
+    transform: translateY(-1px);
+}
+
+.consulta-card-btn-secondary {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--consultas-border);
+}
+
+.consulta-card-btn-secondary:hover {
+    background: var(--consultas-border);
+    color: var(--text-dark);
+}
+
+.consulta-card-btn-danger {
+    background: var(--consultas-danger);
+    color: white;
+}
+
+.consulta-card-btn-danger:hover {
+    background: #dc3545;
+    transform: translateY(-1px);
+}
+
+/* Video call interface */
+.consulta-video-container {
+    background: var(--consultas-card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--consultas-shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.consulta-video-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--consultas-border);
+}
+
+.consulta-video-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.consulta-video-timer {
+    background: var(--consultas-success);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-family: monospace;
+}
+
+.consulta-video-main {
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.consulta-video-preview {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 200px;
+    aspect-ratio: 16/9;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: var(--border-radius);
+    border: 2px solid white;
+}
+
+.consulta-video-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius);
+}
+
+.consulta-video-control {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.consulta-video-control.mute {
+    background: var(--consultas-warning);
+}
+
+.consulta-video-control.camera {
+    background: var(--consultas-info);
+}
+
+.consulta-video-control.hang-up {
+    background: var(--consultas-danger);
+}
+
+.consulta-video-control.screen {
+    background: var(--consultas-primary);
+}
+
+.consulta-video-control:hover {
+    transform: scale(1.1);
+}
+
+/* Chat lateral */
+.consulta-chat {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 400px;
+    background: var(--consultas-card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--consultas-shadow-hover);
+    border: 1px solid var(--consultas-border);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+}
+
+.consulta-chat.show {
+    display: flex;
+}
+
+.consulta-chat-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--consultas-border);
+    background: var(--consultas-primary);
+    color: white;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consulta-chat-title {
+    font-weight: 600;
+    margin: 0;
+}
+
+.consulta-chat-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.25rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.consulta-chat-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.consulta-chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.consulta-chat-message {
+    max-width: 80%;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.consulta-chat-message.sent {
+    background: var(--consultas-primary);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.consulta-chat-message.received {
+    background: rgba(13, 153, 180, 0.1);
+    color: var(--text-dark);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.consulta-chat-input-container {
+    padding: 1rem;
+    border-top: 1px solid var(--consultas-border);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.consulta-chat-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--consultas-border);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    resize: none;
+    max-height: 80px;
+}
+
+.consulta-chat-send {
+    background: var(--consultas-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.consulta-chat-send:hover {
+    background: var(--consultas-secondary);
+}
+
+/* Estados vacíos */
+.consultas-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+}
+
+.consultas-empty-icon {
+    font-size: 4rem;
+    color: var(--consultas-border);
+    margin-bottom: 1rem;
+}
+
+.consultas-empty-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.consultas-empty-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.consultas-empty-action {
+    background: var(--consultas-primary);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.consultas-empty-action:hover {
+    background: var(--consultas-secondary);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .consultas-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .consulta-chat {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        height: auto;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .consultas-container {
+        padding: 1rem;
+    }
+    
+    .consultas-header {
+        padding: 2rem 1rem;
+    }
+    
+    .consultas-header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .consultas-title {
+        font-size: 2rem;
+    }
+    
+    .consultas-quick-stats {
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .consultas-nav {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .consultas-nav-item {
+        min-width: auto;
+        border-radius: 0;
+        border-bottom: 1px solid var(--consultas-border);
+    }
+    
+    .consultas-nav-item:last-child {
+        border-bottom: none;
+    }
+    
+    .consultas-nav-item.active {
+        transform: none;
+        border-radius: 0;
+    }
+    
+    .consultas-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .consulta-video-preview {
+        width: 120px;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    .consulta-video-controls {
+        gap: 0.5rem;
+    }
+    
+    .consulta-video-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .consultas-header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .consultas-title {
+        font-size: 1.6rem;
+    }
+    
+    .consulta-card-header,
+    .consulta-card-body {
+        padding: 1rem;
+    }
+    
+    .consulta-card-actions {
+        flex-direction: column;
+    }
+    
+    .consulta-card-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .consulta-video-container {
+        padding: 1rem;
+    }
+}
+
+/* Animaciones específicas */
+@keyframes consultasFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.consultas-animate {
+    animation: consultasFadeIn 0.6s ease-out;
+}
+
+@keyframes consultasSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.consulta-card {
+    animation: consultasSlideIn 0.6s ease-out;
+}
+
+/* Notificaciones de consulta */
+.consulta-notification {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: var(--consultas-card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--consultas-shadow-hover);
+    border: 1px solid var(--consultas-border);
+    padding: 1rem;
+    z-index: 1100;
+    max-width: 350px;
+    transform: translateX(100%);
+    transition: var(--transition);
+}
+
+.consulta-notification.show {
+    transform: translateX(0);
+}
+
+.consulta-notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.consulta-notification-title {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+.consulta-notification-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.consulta-notification-close:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--consultas-danger);
+}
+
+.consulta-notification-body {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}

@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyHosp - Mi Perfil</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts - Lexend -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Estilos base modernos -->
+  <link rel="stylesheet" href="./css/modern-design.css" />
+  <!-- Estilos específicos del módulo de Perfil -->
+  <link rel="stylesheet" href="./css/perfil.css" />
+  <!-- Estilos del asistente Ana -->
+  <link rel="stylesheet" href="./css/asistente.css" />
+  <link rel="stylesheet" href="./css/ana-help-button.css" />
+</head>
+
+<body>
+  <!-- Asistente de voz Ana -->
+  <div id="ana-assistant" class="voice-assistant">
+    <div class="assistant-controls">
+      <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+        <i class="fas fa-toggle-on"></i>
+      </button>
+      <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+        <i class="fas fa-toggle-off"></i>
+      </button>
+    </div>
+    <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+      <i id="micIcon" class="fas fa-microphone"></i>
+    </button>
+    <div id="assistantStatus" class="assistant-status"></div>
+  </div>
+
+  <!-- Layout principal -->
+  <div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <img src="img/logo.png" alt="MyHosp Logo" width="80">
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column">
+          <li><a class="nav-link" href="dashboard.index.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+          <li><a class="nav-link" href="ver_citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
+          <li><a class="nav-link" href="historial_medico.html"><i class="bi bi-folder2-open"></i> Historial Médico</a></li>
+          <li><a class="nav-link" href="consultas_online.html"><i class="bi bi-camera-video"></i> Consulta Online</a></li>
+          <li><a class="nav-link active" href="perfil.html"><i class="bi bi-person"></i> Perfil</a></li>
+          <li><a class="nav-link" href="Ayuda.html"><i class="bi bi-question-circle"></i> Ayuda</a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="handleLogout()">
+          <i class="bi bi-box-arrow-left"></i> Salir
+        </button>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="topbar-content">
+          <div class="welcome-section">
+            <h1>Mi Perfil</h1>
+            <p>Gestiona tu información personal y configuración</p>
+          </div>
+
+          <div class="header-actions">
+            <!-- Dropdown idioma -->
+            <div class="dropdown">
+              <button class="btn btn-header dropdown-toggle" type="button" id="dropdownIdioma" data-bs-toggle="dropdown">
+                <img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" height="auto">
+                ES
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" alt="ES" width="24"> ES</a></li>
+                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" alt="EN" width="24"> EN</a></li>
+              </ul>
+            </div>
+
+            <!-- Notificaciones -->
+            <button type="button" class="btn btn-header position-relative">
+              <i class="bi bi-bell"></i>
+              <span class="notification-badge">3</span>
+            </button>
+
+            <!-- Dropdown perfil -->
+            <div class="dropdown">
+              <button class="btn btn-header dropdown-toggle" type="button" id="dropdownPerfil" data-bs-toggle="dropdown">
+                <img id="profileHeaderImage" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" width="32" height="32" class="rounded-circle">
+                <span id="profileHeaderName">Neymar Tapias</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="perfil.html">Mi Perfil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Configuración</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Contenido del módulo de Perfil -->
+      <div class="profile-container">
+        <!-- Perfil Principal -->
+        <div class="profile-main">
+          <!-- Profile Header Card -->
+          <div class="profile-header-card">
+            <div class="profile-cover"></div>
+            <div class="profile-info">
+              <div class="profile-avatar">
+                <img id="profileMainImage" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Foto de perfil">
+                <button class="avatar-edit-btn" onclick="changeProfilePicture()">
+                  <i class="bi bi-camera"></i>
+                </button>
+              </div>
+              <div class="profile-details">
+                <h2 id="profileName">Neymar Tapias</h2>
+                <p id="profileEmail">neymar.tapias@email.com</p>
+                <div class="profile-badges">
+                  <span class="badge badge-verified">
+                    <i class="bi bi-check-circle-fill"></i> Verificado
+                  </span>
+                  <span class="badge badge-premium">
+                    <i class="bi bi-star-fill"></i> Premium
+                  </span>
+                </div>
+              </div>
+              <div class="profile-actions">
+                <button class="btn btn-primary" onclick="editProfile()">
+                  <i class="bi bi-pencil"></i> Editar Perfil
+                </button>
+                <button class="btn btn-outline-primary" onclick="shareProfile()">
+                  <i class="bi bi-share"></i> Compartir
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabs de navegación -->
+          <div class="profile-tabs">
+            <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-content" type="button" role="tab">
+                  <i class="bi bi-person"></i> Información Personal
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="medical-tab" data-bs-toggle="tab" data-bs-target="#medical-content" type="button" role="tab">
+                  <i class="bi bi-heart-pulse"></i> Información Médica
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="preferences-tab" data-bs-toggle="tab" data-bs-target="#preferences-content" type="button" role="tab">
+                  <i class="bi bi-gear"></i> Preferencias
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security-content" type="button" role="tab">
+                  <i class="bi bi-shield-check"></i> Seguridad
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="profileTabsContent">
+              <!-- Información Personal -->
+              <div class="tab-pane fade show active" id="info-content" role="tabpanel">
+                <div class="info-grid">
+                  <div class="info-card">
+                    <div class="info-header">
+                      <h4><i class="bi bi-person-lines-fill"></i> Datos Básicos</h4>
+                      <button class="btn btn-sm btn-outline-primary" onclick="editPersonalInfo()">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </div>
+                    <div class="info-content">
+                      <div class="info-item">
+                        <label>Nombre completo:</label>
+                        <span id="fullName">Neymar Tapias González</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Documento de identidad:</label>
+                        <span id="documentId">1.234.567.890</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Fecha de nacimiento:</label>
+                        <span id="birthDate">5 de febrero, 1992</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Género:</label>
+                        <span id="gender">Masculino</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Estado civil:</label>
+                        <span id="maritalStatus">Soltero</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="info-card">
+                    <div class="info-header">
+                      <h4><i class="bi bi-geo-alt-fill"></i> Información de Contacto</h4>
+                      <button class="btn btn-sm btn-outline-primary" onclick="editContactInfo()">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </div>
+                    <div class="info-content">
+                      <div class="info-item">
+                        <label>Email:</label>
+                        <span id="email">neymar.tapias@email.com</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Teléfono:</label>
+                        <span id="phone">+57 310 123 4567</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Dirección:</label>
+                        <span id="address">Calle 123 #45-67, Bogotá, Colombia</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Ciudad:</label>
+                        <span id="city">Bogotá</span>
+                      </div>
+                      <div class="info-item">
+                        <label>País:</label>
+                        <span id="country">Colombia</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="info-card">
+                    <div class="info-header">
+                      <h4><i class="bi bi-briefcase-fill"></i> Información Laboral</h4>
+                      <button class="btn btn-sm btn-outline-primary" onclick="editWorkInfo()">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </div>
+                    <div class="info-content">
+                      <div class="info-item">
+                        <label>Ocupación:</label>
+                        <span id="occupation">Futbolista Profesional</span>
+                      </div>
+                      <div class="info-item">
+                        <label>Empresa/Club:</label>
+                        <span id="company">Al Hilal FC</span>
+                      </div>
+                      <div class="info-item">
+                        <label>EPS:</label>
+                        <span id="eps">Sura EPS</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Información Médica -->
+              <div class="tab-pane fade" id="medical-content" role="tabpanel">
+                <div class="medical-grid">
+                  <div class="medical-card">
+                    <div class="medical-header">
+                      <h4><i class="bi bi-heart-pulse-fill"></i> Información Médica Básica</h4>
+                      <button class="btn btn-sm btn-outline-primary" onclick="editMedicalInfo()">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </div>
+                    <div class="medical-content">
+                      <div class="medical-item">
+                        <label>Tipo de sangre:</label>
+                        <span class="blood-type">O+</span>
+                      </div>
+                      <div class="medical-item">
+                        <label>Altura:</label>
+                        <span>175 cm</span>
+                      </div>
+                      <div class="medical-item">
+                        <label>Peso:</label>
+                        <span>68 kg</span>
+                      </div>
+                      <div class="medical-item">
+                        <label>IMC:</label>
+                        <span class="imc-normal">22.2 (Normal)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="medical-card">
+                    <div class="medical-header">
+                      <h4><i class="bi bi-exclamation-triangle-fill"></i> Alergias y Condiciones</h4>
+                      <button class="btn btn-sm btn-outline-primary" onclick="editAllergies()">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </div>
+                    <div class="medical-content">
+                      <div class="allergies-list">
+                        <div class="allergy-item">
+                          <span class="allergy-name">Penicilina</span>
+                          <span class="allergy-severity high">Alta</span>
+                        </div>
+                        <div class="allergy-item">
+                          <span class="allergy-name">Mariscos</span>
+                          <span class="allergy-severity medium">Media</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="medical-card">
+                    <div class="medical-header">
+                      <h4><i class="bi bi-capsule"></i> Medicamentos Actuales</h4>
+                      <button class="btn btn-sm btn-outline-primary" onclick="editMedications()">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </div>
+                    <div class="medical-content">
+                      <div class="medications-list">
+                        <div class="medication-item">
+                          <span class="medication-name">Vitamina D3</span>
+                          <span class="medication-dose">1000 UI/día</span>
+                        </div>
+                        <div class="medication-item">
+                          <span class="medication-name">Omega-3</span>
+                          <span class="medication-dose">500mg/día</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="medical-card">
+                    <div class="medical-header">
+                      <h4><i class="bi bi-telephone-fill"></i> Contactos de Emergencia</h4>
+                      <button class="btn btn-sm btn-outline-primary" onclick="editEmergencyContacts()">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                    </div>
+                    <div class="medical-content">
+                      <div class="emergency-contact">
+                        <div class="contact-name">María González (Madre)</div>
+                        <div class="contact-phone">+57 300 123 4567</div>
+                        <div class="contact-relation">Familiar directo</div>
+                      </div>
+                      <div class="emergency-contact">
+                        <div class="contact-name">Dr. Carlos Ramírez</div>
+                        <div class="contact-phone">+57 301 987 6543</div>
+                        <div class="contact-relation">Médico de cabecera</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Preferencias -->
+              <div class="tab-pane fade" id="preferences-content" role="tabpanel">
+                <div class="preferences-grid">
+                  <div class="preferences-card">
+                    <div class="preferences-header">
+                      <h4><i class="bi bi-bell-fill"></i> Notificaciones</h4>
+                    </div>
+                    <div class="preferences-content">
+                      <div class="preference-item">
+                        <div class="preference-info">
+                          <label>Recordatorios de citas</label>
+                          <span>Recibir notificaciones antes de las citas</span>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="citasNotif" checked>
+                        </div>
+                      </div>
+                      <div class="preference-item">
+                        <div class="preference-info">
+                          <label>Resultados médicos</label>
+                          <span>Notificar cuando estén listos los resultados</span>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="resultadosNotif" checked>
+                        </div>
+                      </div>
+                      <div class="preference-item">
+                        <div class="preference-info">
+                          <label>Promociones</label>
+                          <span>Recibir ofertas y promociones especiales</span>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="promocionesNotif">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="preferences-card">
+                    <div class="preferences-header">
+                      <h4><i class="bi bi-globe"></i> Idioma y Región</h4>
+                    </div>
+                    <div class="preferences-content">
+                      <div class="preference-item">
+                        <label>Idioma preferido:</label>
+                        <select class="form-select" id="languageSelect">
+                          <option value="es" selected>Español</option>
+                          <option value="en">English</option>
+                          <option value="pt">Português</option>
+                        </select>
+                      </div>
+                      <div class="preference-item">
+                        <label>Zona horaria:</label>
+                        <select class="form-select" id="timezoneSelect">
+                          <option value="America/Bogota" selected>Colombia (UTC-5)</option>
+                          <option value="America/New_York">New York (UTC-5)</option>
+                          <option value="Europe/Madrid">Madrid (UTC+1)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="preferences-card">
+                    <div class="preferences-header">
+                      <h4><i class="bi bi-shield-check-fill"></i> Privacidad</h4>
+                    </div>
+                    <div class="preferences-content">
+                      <div class="preference-item">
+                        <div class="preference-info">
+                          <label>Perfil público</label>
+                          <span>Permitir que otros usuarios vean tu perfil</span>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="publicProfile">
+                        </div>
+                      </div>
+                      <div class="preference-item">
+                        <div class="preference-info">
+                          <label>Compartir datos médicos</label>
+                          <span>Para investigación médica anónima</span>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="shareData">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Seguridad -->
+              <div class="tab-pane fade" id="security-content" role="tabpanel">
+                <div class="security-grid">
+                  <div class="security-card">
+                    <div class="security-header">
+                      <h4><i class="bi bi-key-fill"></i> Contraseña y Acceso</h4>
+                    </div>
+                    <div class="security-content">
+                      <div class="security-item">
+                        <div class="security-info">
+                          <label>Contraseña</label>
+                          <span>Última actualización: hace 30 días</span>
+                        </div>
+                        <button class="btn btn-outline-primary" onclick="changePassword()">
+                          Cambiar Contraseña
+                        </button>
+                      </div>
+                      <div class="security-item">
+                        <div class="security-info">
+                          <label>Autenticación de dos factores</label>
+                          <span class="text-success">Activada</span>
+                        </div>
+                        <button class="btn btn-outline-danger" onclick="disable2FA()">
+                          Desactivar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="security-card">
+                    <div class="security-header">
+                      <h4><i class="bi bi-clock-history"></i> Actividad Reciente</h4>
+                    </div>
+                    <div class="security-content">
+                      <div class="activity-list">
+                        <div class="activity-item">
+                          <div class="activity-icon">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                          </div>
+                          <div class="activity-info">
+                            <span>Inicio de sesión exitoso</span>
+                            <small>Hace 2 horas - Chrome en Windows</small>
+                          </div>
+                        </div>
+                        <div class="activity-item">
+                          <div class="activity-icon">
+                            <i class="bi bi-pencil-square text-info"></i>
+                          </div>
+                          <div class="activity-info">
+                            <span>Perfil actualizado</span>
+                            <small>Hace 1 día - Chrome en Windows</small>
+                          </div>
+                        </div>
+                        <div class="activity-item">
+                          <div class="activity-icon">
+                            <i class="bi bi-shield-check text-primary"></i>
+                          </div>
+                          <div class="activity-info">
+                            <span>Contraseña cambiada</span>
+                            <small>Hace 30 días - Firefox en Android</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="security-card">
+                    <div class="security-header">
+                      <h4><i class="bi bi-download"></i> Mis Datos</h4>
+                    </div>
+                    <div class="security-content">
+                      <div class="data-actions">
+                        <button class="btn btn-outline-primary" onclick="downloadData()">
+                          <i class="bi bi-download"></i> Descargar mis datos
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="deleteAccount()">
+                          <i class="bi bi-trash"></i> Eliminar cuenta
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar de estadísticas -->
+        <div class="profile-sidebar">
+          <div class="stats-card">
+            <div class="stats-header">
+              <h4>Estadísticas</h4>
+            </div>
+            <div class="stats-content">
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="bi bi-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                  <span class="stat-number">24</span>
+                  <span class="stat-label">Citas realizadas</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="bi bi-file-medical"></i>
+                </div>
+                <div class="stat-info">
+                  <span class="stat-number">12</span>
+                  <span class="stat-label">Exámenes</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="bi bi-camera-video"></i>
+                </div>
+                <div class="stat-info">
+                  <span class="stat-number">8</span>
+                  <span class="stat-label">Consultas online</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-actions-card">
+            <div class="quick-actions-header">
+              <h4>Acciones Rápidas</h4>
+            </div>
+            <div class="quick-actions-content">
+              <button class="quick-action-btn" onclick="scheduleAppointment()">
+                <i class="bi bi-calendar-plus"></i>
+                <span>Agendar Cita</span>
+              </button>
+              <button class="quick-action-btn" onclick="viewMedicalHistory()">
+                <i class="bi bi-file-medical"></i>
+                <span>Ver Historial</span>
+              </button>
+              <button class="quick-action-btn" onclick="startOnlineConsultation()">
+                <i class="bi bi-camera-video"></i>
+                <span>Consulta Online</span>
+              </button>
+              <button class="quick-action-btn" onclick="contactSupport()">
+                <i class="bi bi-headset"></i>
+                <span>Soporte</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript para funcionalidades del perfil -->
+  <script>
+    // Verificación de autenticación
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar si el usuario está logueado
+      if (!localStorage.getItem('userLoggedIn')) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Cargar datos del perfil
+      loadProfileData();
+      
+      // Mostrar notificación de bienvenida
+      showNotification('¡Bienvenido a tu perfil!', 'info');
+    });
+
+    // Cargar datos del perfil
+    function loadProfileData() {
+      const username = localStorage.getItem('username') || 'Usuario';
+      const email = localStorage.getItem('userEmail') || 'usuario@email.com';
+      
+      // Actualizar elementos del perfil
+      document.getElementById('profileHeaderName').textContent = username;
+      document.getElementById('profileName').textContent = username;
+      document.getElementById('profileEmail').textContent = email;
+      document.getElementById('fullName').textContent = username;
+      document.getElementById('email').textContent = email;
+    }
+
+    // Función de logout
+    function handleLogout() {
+      if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('userEmail');
+        showNotification('Sesión cerrada exitosamente', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+      }
+    }
+
+    // Funciones de edición
+    function editProfile() {
+      window.location.href = 'editar_perfil.html';
+    }
+
+    function editPersonalInfo() {
+      showNotification('Redirigiendo a editar información personal...', 'info');
+      setTimeout(() => {
+        window.location.href = 'editar_perfil.html#personal';
+      }, 1000);
+    }
+
+    function editContactInfo() {
+      showNotification('Redirigiendo a editar información de contacto...', 'info');
+      setTimeout(() => {
+        window.location.href = 'editar_perfil.html#contact';
+      }, 1000);
+    }
+
+    function editWorkInfo() {
+      showNotification('Redirigiendo a editar información laboral...', 'info');
+      setTimeout(() => {
+        window.location.href = 'editar_perfil.html#work';
+      }, 1000);
+    }
+
+    function editMedicalInfo() {
+      showNotification('Redirigiendo a editar información médica...', 'info');
+      setTimeout(() => {
+        window.location.href = 'editar_perfil.html#medical';
+      }, 1000);
+    }
+
+    function editAllergies() {
+      showNotification('Abriendo editor de alergias...', 'info');
+    }
+
+    function editMedications() {
+      showNotification('Abriendo editor de medicamentos...', 'info');
+    }
+
+    function editEmergencyContacts() {
+      showNotification('Abriendo editor de contactos de emergencia...', 'info');
+    }
+
+    // Funciones de seguridad
+    function changePassword() {
+      showNotification('Abriendo formulario de cambio de contraseña...', 'info');
+    }
+
+    function disable2FA() {
+      if (confirm('¿Estás seguro de que deseas desactivar la autenticación de dos factores?')) {
+        showNotification('Autenticación de dos factores desactivada', 'warning');
+      }
+    }
+
+    function downloadData() {
+      showNotification('Preparando descarga de datos...', 'info');
+    }
+
+    function deleteAccount() {
+      if (confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')) {
+        showNotification('Proceso de eliminación de cuenta iniciado', 'warning');
+      }
+    }
+
+    // Funciones de acción rápida
+    function scheduleAppointment() {
+      window.location.href = 'ver_citas.html';
+    }
+
+    function viewMedicalHistory() {
+      window.location.href = 'historial_medico.html';
+    }
+
+    function startOnlineConsultation() {
+      window.location.href = 'consultas_online.html';
+    }
+
+    function contactSupport() {
+      window.location.href = 'Ayuda.html';
+    }
+
+    // Función para cambiar foto de perfil
+    function changeProfilePicture() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            document.getElementById('profileMainImage').src = e.target.result;
+            document.getElementById('profileHeaderImage').src = e.target.result;
+            showNotification('Foto de perfil actualizada', 'success');
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    }
+
+    function shareProfile() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Mi perfil de MyHosp',
+          text: 'Mira mi perfil médico en MyHosp',
+          url: window.location.href
+        });
+      } else {
+        // Fallback para navegadores que no soportan Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        showNotification('Enlace copiado al portapapeles', 'success');
+      }
+    }
+
+    // Sistema de notificaciones
+    function showNotification(message, type = 'info', duration = 3000) {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      notification.style.cssText = `
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      `;
+      
+      notification.innerHTML = `
+        <div class="d-flex align-items-center">
+          <i class="bi bi-${getNotificationIcon(type)} me-2"></i>
+          <span>${message}</span>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification && notification.parentNode) {
+          notification.remove();
+        }
+      }, duration);
+    }
+
+    // Función para obtener iconos de notificación
+    function getNotificationIcon(type) {
+      switch(type) {
+        case 'success': return 'check-circle-fill';
+        case 'error': return 'exclamation-triangle-fill';
+        case 'warning': return 'exclamation-triangle-fill';
+        case 'info': return 'info-circle-fill';
+        default: return 'info-circle-fill';
+      }
+    }
+
+    // Guardar preferencias cuando cambian
+    document.addEventListener('DOMContentLoaded', function() {
+      // Event listeners para switches de preferencias
+      const switches = document.querySelectorAll('.form-check-input');
+      switches.forEach(switchElement => {
+        switchElement.addEventListener('change', function() {
+          const setting = this.id;
+          const value = this.checked;
+          localStorage.setItem(`pref_${setting}`, value);
+          showNotification('Preferencia guardada', 'success');
+        });
+      });
+
+      // Event listeners para selects
+      const selects = document.querySelectorAll('.form-select');
+      selects.forEach(select => {
+        select.addEventListener('change', function() {
+          const setting = this.id;
+          const value = this.value;
+          localStorage.setItem(`pref_${setting}`, value);
+          showNotification('Configuración actualizada', 'success');
+        });
+      });
+
+      // Cargar preferencias guardadas
+      loadSavedPreferences();
+    });
+
+    // Cargar preferencias guardadas
+    function loadSavedPreferences() {
+      const switches = document.querySelectorAll('.form-check-input');
+      switches.forEach(switchElement => {
+        const setting = `pref_${switchElement.id}`;
+        const saved = localStorage.getItem(setting);
+        if (saved !== null) {
+          switchElement.checked = saved === 'true';
+        }
+      });
+
+      const selects = document.querySelectorAll('.form-select');
+      selects.forEach(select => {
+        const setting = `pref_${select.id}`;
+        const saved = localStorage.getItem(setting);
+        if (saved !== null) {
+          select.value = saved;
+        }
+      });
+    }
+  </script>
+
+  <!-- Scripts del asistente Ana -->
+  <script src="./js/activation-prompt.js"></script>
+  <script src="./js/initial-notification.js"></script>
+  <script src="./js/ana-consent.js"></script>
+  <script src="./js/assistant-controls.js"></script>
+  <script type="module" src="./js/ViewModels/assistant.js"></script>
+  <script src="./js/ana-help-button.js"></script>
+</body>
+
+</html>

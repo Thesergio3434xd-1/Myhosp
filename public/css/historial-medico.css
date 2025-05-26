@@ -1,0 +1,773 @@
+/* MyHosp - Estilos para Historial Médico */
+
+/* Variables específicas para Historial Médico */
+:root {
+    --historial-primary: #0d99b4;
+    --historial-secondary: #17a2b8;
+    --historial-accent: #20c997;
+    --historial-bg: #f8f9fa;
+    --historial-card-bg: #ffffff;
+    --historial-shadow: 0 4px 12px rgba(13, 153, 180, 0.1);
+    --historial-shadow-hover: 0 8px 25px rgba(13, 153, 180, 0.15);
+    --historial-border: rgba(13, 153, 180, 0.1);
+    --historial-success: #28a745;
+    --historial-warning: #ffc107;
+    --historial-danger: #dc3545;
+    --historial-info: #17a2b8;
+}
+
+/* Contenedor principal del historial */
+.historial-container {
+    padding: 2rem;
+    background: var(--historial-bg);
+    min-height: 100vh;
+}
+
+/* Header del historial médico */
+.historial-header {
+    background: linear-gradient(135deg, var(--historial-primary) 0%, var(--historial-secondary) 100%);
+    border-radius: var(--border-radius-lg);
+    padding: 2.5rem 2rem;
+    color: white;
+    margin-bottom: 2rem;
+    box-shadow: var(--historial-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.historial-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,0.1)"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>') no-repeat center;
+    background-size: 100px 100px;
+    opacity: 0.1;
+}
+
+.historial-header-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.historial-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.historial-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.historial-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.historial-stat {
+    text-align: center;
+}
+
+.historial-stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: block;
+}
+
+.historial-stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.historial-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.historial-export-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.historial-export-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Filtros y búsqueda */
+.historial-controls {
+    background: var(--historial-card-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--historial-shadow);
+    border: 1px solid var(--historial-border);
+}
+
+.historial-controls-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.historial-controls-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.historial-controls-toggle {
+    background: none;
+    border: none;
+    color: var(--historial-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.historial-controls-toggle:hover {
+    background: rgba(13, 153, 180, 0.1);
+}
+
+.historial-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.historial-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.historial-filter-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.historial-filter-input {
+    padding: 0.75rem;
+    border: 2px solid var(--historial-border);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    transition: var(--transition);
+    background: white;
+}
+
+.historial-filter-input:focus {
+    outline: none;
+    border-color: var(--historial-primary);
+    box-shadow: 0 0 0 3px rgba(13, 153, 180, 0.1);
+}
+
+.historial-search-container {
+    position: relative;
+    grid-column: 1 / -1;
+}
+
+.historial-search-input {
+    width: 100%;
+    padding: 0.875rem 3rem 0.875rem 1rem;
+    border: 2px solid var(--historial-border);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.historial-search-input:focus {
+    outline: none;
+    border-color: var(--historial-primary);
+    box-shadow: 0 0 0 3px rgba(13, 153, 180, 0.1);
+}
+
+.historial-search-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+/* Timeline del historial */
+.historial-timeline {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.historial-timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--historial-primary), var(--historial-secondary));
+}
+
+.historial-timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    margin-left: 3rem;
+}
+
+.historial-timeline-marker {
+    position: absolute;
+    left: -3.25rem;
+    top: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--historial-card-bg);
+    border: 3px solid var(--historial-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--historial-primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: var(--historial-shadow);
+}
+
+.historial-timeline-marker.consulta {
+    border-color: var(--historial-info);
+    color: var(--historial-info);
+}
+
+.historial-timeline-marker.examen {
+    border-color: var(--historial-warning);
+    color: var(--historial-warning);
+}
+
+.historial-timeline-marker.tratamiento {
+    border-color: var(--historial-success);
+    color: var(--historial-success);
+}
+
+.historial-timeline-marker.urgencia {
+    border-color: var(--historial-danger);
+    color: var(--historial-danger);
+}
+
+/* Cards del historial */
+.historial-card {
+    background: var(--historial-card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--historial-shadow);
+    border: 1px solid var(--historial-border);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.historial-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--historial-shadow-hover);
+}
+
+.historial-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--historial-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.historial-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.historial-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.historial-card-date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.historial-card-doctor {
+    color: var(--historial-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.historial-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.historial-card-btn {
+    background: none;
+    border: 1px solid var(--historial-border);
+    color: var(--text-muted);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+}
+
+.historial-card-btn:hover {
+    background: var(--historial-primary);
+    color: white;
+    border-color: var(--historial-primary);
+}
+
+.historial-card-body {
+    padding: 1.5rem;
+}
+
+.historial-card-content {
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.historial-card-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.historial-tag {
+    background: rgba(13, 153, 180, 0.1);
+    color: var(--historial-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--border-radius);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.historial-tag.urgente {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--historial-danger);
+}
+
+.historial-tag.importante {
+    background: rgba(255, 193, 7, 0.1);
+    color: var(--historial-warning);
+}
+
+.historial-card-attachments {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.historial-attachment {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(13, 153, 180, 0.05);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius);
+    color: var(--historial-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.historial-attachment:hover {
+    background: rgba(13, 153, 180, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Estadísticas del historial */
+.historial-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.historial-stat-card {
+    background: var(--historial-card-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--historial-shadow);
+    border: 1px solid var(--historial-border);
+    transition: var(--transition);
+}
+
+.historial-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--historial-shadow-hover);
+}
+
+.historial-stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.historial-stat-icon.consultas {
+    background: var(--historial-info);
+}
+
+.historial-stat-icon.examenes {
+    background: var(--historial-warning);
+}
+
+.historial-stat-icon.tratamientos {
+    background: var(--historial-success);
+}
+
+.historial-stat-icon.urgencias {
+    background: var(--historial-danger);
+}
+
+.historial-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.historial-stat-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Modal de detalles */
+.historial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.historial-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.historial-modal-content {
+    background: var(--historial-card-bg);
+    border-radius: var(--border-radius-lg);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8);
+    transition: var(--transition);
+}
+
+.historial-modal.show .historial-modal-content {
+    transform: scale(1);
+}
+
+.historial-modal-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--historial-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.historial-modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.historial-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.historial-modal-close:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--historial-danger);
+}
+
+.historial-modal-body {
+    padding: 2rem;
+}
+
+/* Filtros de estado */
+.historial-status-filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.historial-status-filter {
+    background: var(--historial-card-bg);
+    border: 2px solid var(--historial-border);
+    color: var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.historial-status-filter:hover {
+    border-color: var(--historial-primary);
+    color: var(--historial-primary);
+}
+
+.historial-status-filter.active {
+    background: var(--historial-primary);
+    border-color: var(--historial-primary);
+    color: white;
+}
+
+/* Estados vacíos */
+.historial-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+}
+
+.historial-empty-icon {
+    font-size: 4rem;
+    color: var(--historial-border);
+    margin-bottom: 1rem;
+}
+
+.historial-empty-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.historial-empty-text {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .historial-filters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .historial-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .historial-container {
+        padding: 1rem;
+    }
+    
+    .historial-header {
+        padding: 2rem 1rem;
+    }
+    
+    .historial-header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .historial-title {
+        font-size: 1.8rem;
+    }
+    
+    .historial-stats {
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .historial-actions {
+        justify-content: center;
+    }
+    
+    .historial-timeline {
+        margin-left: 0;
+    }
+    
+    .historial-timeline::before {
+        left: 15px;
+    }
+    
+    .historial-timeline-item {
+        margin-left: 2.5rem;
+    }
+    
+    .historial-timeline-marker {
+        left: -2.75rem;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+    
+    .historial-filters {
+        grid-template-columns: 1fr;
+    }
+    
+    .historial-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .historial-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .historial-modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .historial-modal-header,
+    .historial-modal-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .historial-header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .historial-title {
+        font-size: 1.5rem;
+    }
+    
+    .historial-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .historial-card-body {
+        padding: 1rem;
+    }
+    
+    .historial-status-filters {
+        justify-content: center;
+    }
+}
+
+/* Animaciones específicas */
+@keyframes historialFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.historial-animate {
+    animation: historialFadeIn 0.6s ease-out;
+}
+
+@keyframes timelineSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.historial-timeline-item {
+    animation: timelineSlide 0.6s ease-out;
+}
+
+/* Print styles */
+@media print {
+    .historial-container {
+        padding: 0;
+        background: white;
+    }
+    
+    .historial-header {
+        background: white !important;
+        color: black !important;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .historial-controls,
+    .historial-card-actions,
+    .historial-export-btn {
+        display: none !important;
+    }
+    
+    .historial-card {
+        break-inside: avoid;
+        margin-bottom: 1rem;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}

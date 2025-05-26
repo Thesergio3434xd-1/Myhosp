@@ -1,0 +1,649 @@
+/* MyHosp - Estilos para Módulo de Ayuda */
+
+/* Variables específicas para Ayuda - alineadas con modern-design.css */
+:root {
+    --help-primary: var(--primary-color, #0d99b4);
+    --help-secondary: var(--info-color, #17a2b8);
+    --help-accent: var(--success-color, #28a745);
+    --help-bg: var(--light-color, #f8f9fa);
+    --help-card-bg: var(--white, #ffffff);
+    --help-shadow: var(--shadow, 0 2px 10px rgba(0,0,0,0.1));
+    --help-shadow-hover: var(--shadow-lg, 0 4px 20px rgba(0,0,0,0.15));
+    --help-border-radius: var(--border-radius, 10px);
+    --help-border-radius-lg: var(--border-radius-lg, 15px);
+    --help-transition: var(--transition, all 0.3s ease);
+    --text-dark: var(--dark-color, #212529);
+    --text-muted: var(--secondary-color, #495057);
+    --text-light: #f8f9fa;
+    /* Contraste mejorado */
+    --text-contrast-dark: #1a1a1a;
+    --text-contrast-medium: #2d2d2d;
+    --help-primary-dark: #0a7a8e;
+    --help-border-light: rgba(13, 153, 180, 0.15);
+}
+
+/* Contenedor principal de ayuda */
+.help-container {
+    width: 0%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout principal de ayuda */
+.main-content {
+    padding: 2rem;
+    background: var(--help-bg);
+    min-height: calc(100vh - 70px);
+    margin-left: 0; /* Ajuste para mover el contenido a la izquierda */
+    margin-top: 7px;
+    width: 100%;
+    max-width: none;
+}
+
+/* Ajuste específico para desktop */
+@media (min-width: 992px) {
+    .main-content {
+        margin-left: 0; /* Quitar el margen para alinear totalmente a la izquierda */
+        width: 100%;
+        padding: 2rem 1.5rem; /* Padding horizontal reducido */
+    }
+    
+    .help-hero,
+    .help-categories,
+    .faq-section,
+    .quick-actions {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/* Hero section de ayuda */
+.help-hero {
+    background: linear-gradient(135deg, var(--help-primary) 0%, var(--help-secondary) 100%);
+    border-radius: var(--help-border-radius-lg);
+    padding: 3rem 2rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: var(--help-shadow);
+    width: 100%;
+    max-width: 100%;
+}
+
+.help-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.help-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+/* Barra de búsqueda de ayuda */
+.help-search-container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+.help-search-input {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: block;
+    padding: 1rem 3rem 1rem 1.5rem;
+    border: none;
+    border-radius: var(--help-border-radius-lg);
+    font-size: 1.1rem;
+    box-shadow: var(--help-shadow);
+    transition: var(--help-transition);
+    background: var(--help-card-bg);
+}
+
+.help-search-input:focus {
+    outline: none;
+    box-shadow: var(--help-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.help-search-btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: var(--help-primary);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: var(--help-border-radius);
+    transition: var(--help-transition);
+    z-index: 1;
+}
+
+.help-search-btn:hover {
+    background: var(--help-secondary);
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* Categorías de ayuda */
+.help-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.help-category-card {
+    background: var(--help-card-bg);
+    border-radius: var(--help-border-radius-lg);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--help-shadow);
+    transition: var(--help-transition);
+    border: 1px solid rgba(13, 153, 180, 0.1);
+    cursor: pointer;
+}
+
+.help-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--help-shadow-hover);
+    border-color: var(--help-primary);
+}
+
+.help-category-icon {
+    font-size: 3rem;
+    color: var(--help-primary);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.help-category-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-contrast-dark);
+    margin-bottom: 0.5rem;
+}
+
+.help-category-description {
+    color: var(--text-contrast-medium);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* FAQ Section */
+.faq-section {
+    background: var(--help-card-bg);
+    border-radius: var(--help-border-radius-lg);
+    padding: 2rem;
+    box-shadow: var(--help-shadow);
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.faq-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-contrast-dark);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--help-border-light);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.faq-question {
+    font-weight: 600;
+    color: var(--help-primary-dark);
+    cursor: pointer;
+    padding: 1rem;
+    background: rgba(13, 153, 180, 0.08);
+    border-radius: var(--help-border-radius);
+    margin-bottom: 0.5rem;
+    transition: var(--help-transition);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-question:hover {
+    background: rgba(13, 153, 180, 0.15);
+    transform: translateX(5px);
+    color: var(--help-primary);
+}
+
+.faq-question::after {
+    content: "+";
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: auto;
+    transition: var(--help-transition);
+}
+
+.faq-question.active::after {
+    content: "−";
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    padding: 1rem;
+    color: var(--text-contrast-medium);
+    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: var(--help-border-radius);
+    border-left: 3px solid var(--help-primary);
+    display: none;
+    margin-top: 0.5rem;
+}
+
+.faq-answer.show {
+    display: block;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+/* Chat de ayuda */
+.help-chat-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 350px;
+    max-height: 500px;
+    background: var(--help-card-bg);
+    border-radius: var(--help-border-radius-lg);
+    box-shadow: var(--help-shadow-hover);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.help-chat-header {
+    background: var(--help-primary);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.help-chat-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.help-chat-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.help-chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.help-chat-message {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--help-border-radius);
+    max-width: 80%;
+}
+
+.help-chat-message.user {
+    background: var(--help-primary);
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.help-chat-message.assistant {
+    background: rgba(13, 153, 180, 0.1);
+    color: var(--text-contrast-dark);
+    border: 1px solid var(--help-border-light);
+}
+
+.help-chat-input-container {
+    padding: 1rem;
+    border-top: 1px solid var(--help-border-light);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.help-chat-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--help-border-light);
+    border-radius: var(--help-border-radius);
+    font-size: 0.9rem;
+    color: var(--text-contrast-dark);
+}
+
+.help-chat-input:focus {
+    outline: none;
+    border-color: var(--help-primary);
+    box-shadow: 0 0 0 2px rgba(13, 153, 180, 0.2);
+}
+
+.help-chat-send {
+    background: var(--help-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: var(--help-border-radius);
+    cursor: pointer;
+    transition: var(--help-transition);
+}
+
+.help-chat-send:hover {
+    background: var(--help-secondary);
+    transform: scale(1.05);
+}
+
+/* Botón flotante de chat */
+.help-chat-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--help-primary);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--help-shadow-hover);
+    transition: var(--help-transition);
+    z-index: 999;
+}
+
+.help-chat-toggle:hover {
+    background: var(--help-secondary);
+    transform: scale(1.1);
+}
+
+/* Acciones rápidas */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quick-action-btn {
+    background: var(--help-card-bg);
+    border: 2px solid var(--help-primary);
+    color: var(--help-primary-dark);
+    padding: 1rem;
+    border-radius: var(--help-border-radius-lg);
+    text-decoration: none;
+    transition: var(--help-transition);
+    text-align: center;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.quick-action-btn:hover {
+    background: var(--help-primary);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: var(--help-shadow-hover);
+    text-decoration: none;
+}
+
+/* Estilos específicos para el navbar móvil */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1025;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* Estados del sidebar para móvil */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: inline-block;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        margin-top: 70px;
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .topbar {
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    .help-hero {
+        padding: 2rem 1rem;
+    }
+    
+    .help-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .help-categories {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .help-category-card {
+        padding: 1.5rem;
+    }
+    
+    .help-chat-container {
+        width: calc(100vw - 2rem);
+        right: 1rem;
+        left: 1rem;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Media queries adicionales para móviles pequeños */
+@media (max-width: 576px) {
+    .main-content {
+        padding: 1rem 0.5rem;
+    }
+    
+    .help-hero {
+        padding: 1.5rem 1rem;
+        margin: 0 0.5rem 1.5rem 0.5rem;
+    }
+    
+    .help-hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .help-hero p {
+        font-size: 1rem;
+    }
+    
+    .help-search-input {
+        padding: 0.75rem 2.5rem 0.75rem 1rem;
+        font-size: 1rem;
+        max-width: 100%;
+    }
+    
+    .help-search-container {
+        margin: 0 0.5rem 1.5rem 0.5rem;
+    }
+    
+    .help-categories {
+        margin: 0 0.5rem 2rem 0.5rem;
+    }
+    
+    .faq-section {
+        padding: 1rem;
+        margin: 0 0.5rem 1.5rem 0.5rem;
+    }
+    
+    .help-chat-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        bottom: 1rem;
+        right: 1rem;
+    }
+    
+    .help-category-card {
+        padding: 1rem;
+    }
+}
+
+/* Media query para tablets */
+@media (min-width: 769px) and (max-width: 991px) {
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1.5rem;
+    }
+}
+
+/* Mejoras de contraste para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-contrast-dark: #ffffff;
+        --text-contrast-medium: #e9ecef;
+        --help-card-bg: #2d3748;
+        --help-bg: #1a202c;
+        --help-border-light: rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Estilos adicionales para mejorar la accesibilidad */
+.help-category-card:focus,
+.faq-question:focus,
+.quick-action-btn:focus {
+    outline: 2px solid var(--help-primary);
+    outline-offset: 2px;
+}
+
+.help-search-input:focus {
+    border-color: var(--help-primary);
+    box-shadow: 0 0 0 3px rgba(13, 153, 180, 0.25);
+}
+
+/* Animación mejorada para el spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes helpFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.help-animate {
+    animation: helpFadeIn 0.6s ease-out;
+}
+
+/* Estados de carga */
+.help-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.help-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(13, 153, 180, 0.1);
+    border-left: 4px solid var(--help-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Asegurar que todos los elementos principales ocupen el ancho completo */
+.help-categories,
+.faq-section,
+.quick-actions,
+.help-hero {
+    box-sizing: border-box;
+}
+
+/* Corrección para elementos que podrían desbordarse */
+* {
+    box-sizing: border-box;
+}

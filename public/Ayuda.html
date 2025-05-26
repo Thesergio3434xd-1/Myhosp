@@ -4,32 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MyHosp - Ayuda</title>
- <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <!-- Estilos personalizados -->
-        <link rel="stylesheet" href="./css/style.css" />
-        <!-- Estilos específicos para autenticación -->
-        <link rel="stylesheet" href="./css/auth.css" />
-        <!-- Estilos del asistente -->
-        <link rel="stylesheet" href="./css/asistente.css" />
-        <!-- Estilos para el botón de ayuda de Ana -->
-        <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-        <link rel="stylesheet" href="./css/notifications.css" />
+  <title>MyHosp - Centro de Ayuda</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts - Lexend -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Estilos base modernos -->
+  <link rel="stylesheet" href="./css/modern-design.css" />
+  <!-- Estilos específicos del módulo de Ayuda -->
+  <link rel="stylesheet" href="./css/ayuda.css" />
+  <!-- Estilos del asistente Ana -->
+  <link rel="stylesheet" href="./css/asistente.css" />
+  <link rel="stylesheet" href="./css/ana-help-button.css" />
 </head>
 
 <body>
@@ -49,283 +41,431 @@
     </button>
     <div id="assistantStatus" class="assistant-status"></div>
   </div>
-
-  <div class="sidebar">
-    <div>
-      <div class="logo">
-        <img src="img/logo.png" alt="Logo" width="80">
-      </div>
-      <ul class="nav flex-column">        <ul class="nav flex-column">
-          <li><a class="nav-link" href="dashboard.index.html"><i class="bi bi-speedometer2"></i>
-              Dashboard</a></li>
-          <li><a class="nav-link" href="ver_citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
-          <li><a class="nav-link" href="historial_medico.html"><i class="bi bi-folder2-open"></i> Historial
-              Médico</a></li>
-          <li><a class="nav-link" href="consultas_online.html"><i class="bi bi-camera-video"></i> Consulta
-              Online</a></li>
-          <li><a class="nav-link" href="perfil.html"><i class="bi bi-person"></i> Perfil</a></li>
-          <li><a class="nav-link active" href="Ayuda.html"><i class="bi bi-question-circle"></i>
-              Ayuda</a></li>
-        </ul>
-    </div>    <button class="logout-btn" onclick="handleLogout()"><i class="bi bi-box-arrow-left"></i>
-      Salir</button>
-  </div>
-
-  <div class="main">
-    <!-- Navbar Perfil -->
-    <div
-                class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">                <div>
-                    <strong>Hola, <span id="username">Usuario</span></strong><br>
-                    <span
-                        style="font-weight: 700; font-size: 1.25rem;">Centro de Ayuda</span>
-                </div>
-
-                <div class="d-flex align-items-center gap-3 ms-auto">
-                    <!-- Dropdown idioma -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                            type="button" id="dropdownIdioma"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
-                                width="24" height="auto"
-                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                            ES
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownIdioma"
-                            style="min-width: 70px; font-size: 0.85rem;">
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/co.png"
-                                        alt="ES" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    ES
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/us.png"
-                                        alt="EN" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    EN
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Notificaciones -->
-                    <button type="button"
-                        class="btn position-relative btn-transparent text-white p-0"
-                        style="background: transparent; border: none; font-size: 1rem;">
-                        <i class="bi bi-bell"></i>
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                            3
-                            <span class="visually-hidden">notificaciones
-                                nuevas</span>
-                        </span>
-                    </button>
-
-                    <!-- Dropdown perfil -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                            type="button" id="dropdownPerfil"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none;">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="User" width="32" height="32"
-                                class="rounded-circle">
-                            <span class="fw-semibold">Neymar Tapias</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownPerfil">
-                            <li><a class="dropdown-item" href="perfil.html">Mi
-                                    Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="#">Configuración</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 px-0">
+        <div class="sidebar d-flex flex-column position-fixed vh-100" style="width: 16.666667%; z-index: 1030;">
+          <div class="text-center py-3">
+            <div class="logo">
+              <img src="./img/logo.png" alt="MyHosp Logo" width="60" height="60" class="logo-image mb-2">
+              <h5 class="text-white fw-bold mb-0">MyHosp</h5>
+              <small class="text-white-50 fw-medium">Sistema Hospitalario</small>
             </div>
-    <br>
-    <!-- Contenido principal -->
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-6">
-
-        <div class="card" id="chat2">
-          <div class="card-header d-flex justify-content-between align-items-center p-3">
-            <h5 class="mb-0">Chat con Ana</h5>
           </div>
+          
+          <nav class="nav flex-column flex-grow-1 px-3">
+            <a class="nav-link" href="dashboard.index.html">
+              <i class="bi bi-house-door"></i> Dashboard
+            </a>
+            <a class="nav-link" href="ver_citas.html">
+              <i class="bi bi-calendar3"></i> Mis Citas
+            </a>
+            <a class="nav-link" href="crear_citas.html">
+              <i class="bi bi-calendar-plus"></i> Nueva Cita
+            </a>
+            <a class="nav-link" href="historial_medico.html">
+              <i class="bi bi-folder2-open"></i> Historial Médico
+            </a>
+            <a class="nav-link" href="consultas_online.html">
+              <i class="bi bi-camera-video"></i> Consulta Online
+            </a>
+            <a class="nav-link" href="perfil.html">
+              <i class="bi bi-person"></i> Mi Perfil
+            </a>
+            <a class="nav-link active" href="Ayuda.html">
+              <i class="bi bi-question-circle"></i> Ayuda
+            </a>
+          </nav>
+          
+          <div class="mt-auto p-3">
+            <button class="logout-btn w-100" onclick="handleLogout()">
+              <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
+            </button>
+          </div>
+        </div>
+        
+        <!-- Overlay para móvil -->
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+      </div>
 
-          <div class="card-body" data-mdb-perfect-scrollbar-init
-            style="position: relative; height: 400px; overflow-y: auto;">            <div class="d-flex flex-row justify-content-start">
-              <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="avatar Ana"
-                style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
-              <div>
-                <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">¡Hola! Soy Ana, tu asistente virtual de MyHosp. 
-                  Estoy aquí para ayudarte con cualquier duda que tengas sobre nuestros servicios. 
-                  ¿En qué puedo ayudarte hoy?</p>
+      <!-- Contenido Principal -->
+      <div class="col-md-9 col-lg-10" style="margin-left: 16.666667%;">        <!-- Topbar -->
+        <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
+          <div class="d-flex align-items-center">
+            <!-- Botón hamburguesa para móvil -->
+            <button class="mobile-menu-toggle me-3" type="button" onclick="toggleSidebar()">
+              <i class="bi bi-list fs-5"></i>
+            </button>
+            <div>
+              <h4 class="text-white mb-0">¡Bienvenido, <span id="username">Neymar Tapias</span>!</h4>
+              <div class="d-flex align-items-center gap-2">
+                <span class="text-white-50">Centro de Ayuda</span>
+                <span class="text-white-50">•</span>
+                <span class="text-white-50 current-time"></span>
               </div>
             </div>
-
-            <div class="divider d-flex align-items-center mb-4">
-              <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Hoy</p>
-            </div>            <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-              <div>
-                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">¿Podrías mostrarme las preguntas más frecuentes de los usuarios?</p>
-              </div>
-              <img id="userAvatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="avatar usuario"
-                style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;" class="me-2">
+          </div>
+          
+          <div class="d-flex align-items-center gap-3">
+            <!-- Dropdown idioma -->
+            <div class="dropdown language-dropdown">
+              <button class="btn btn-language text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="flag-container">
+                  <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image">
+                </div>
+                <span class="language-text">ES</span>
+                <i class="bi bi-chevron-down small"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end language-menu">
+                <li>
+                  <a class="dropdown-item language-option" href="#" data-lang="es">
+                    <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image me-2">
+                    <span>Español</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item language-option" href="#" data-lang="en">
+                    <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15" class="flag-image me-2">
+                    <span>English</span>
+                  </a>
+                </li>
+              </ul>
             </div>
-
-            <div class="d-flex flex-row justify-content-start">
-              <img src="https://www.baoss.es/wp-content/uploads/2024/12/asistente-virtual-3.jpg" alt="avatar 1"
-                style="width: 45px; height: 100%;">
-              <div>
-                <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Claro,
-                  aquí tienes las preguntas que más frecuentan los usuarios
-                  dentro de MyHosp. ¡Espero que te sea de ayuda!</p>
-              </div>
+            
+            <!-- Notificaciones -->
+            <div class="dropdown notifications-dropdown">
+              <button class="btn btn-notification text-white position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell fs-5"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">3</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end notifications-menu" style="min-width: 300px;">
+                <li class="dropdown-header">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Notificaciones</h6>
+                    <small class="text-muted">3 nuevas</small>
+                  </div>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item notification-item" href="#">
+                    <div class="d-flex align-items-start">
+                      <div class="notification-icon bg-primary">
+                        <i class="bi bi-calendar-check text-white"></i>
+                      </div>
+                      <div class="notification-content">
+                        <p class="mb-1 fw-medium">Cita confirmada</p>
+                        <small class="text-muted">Dr. García - Mañana 10:30 AM</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item notification-item" href="#">
+                    <div class="d-flex align-items-start">
+                      <div class="notification-icon bg-success">
+                        <i class="bi bi-chat-dots text-white"></i>
+                      </div>
+                      <div class="notification-content">
+                        <p class="mb-1 fw-medium">Mensaje del doctor</p>
+                        <small class="text-muted">Resultados de exámenes listos</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item notification-item" href="#">
+                    <div class="d-flex align-items-start">
+                      <div class="notification-icon bg-warning">
+                        <i class="bi bi-exclamation-triangle text-white"></i>
+                      </div>
+                      <div class="notification-content">
+                        <p class="mb-1 fw-medium">Recordatorio</p>
+                        <small class="text-muted">Tomar medicamento a las 8:00 PM</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item text-center text-primary" href="#">
+                    Ver todas las notificaciones
+                  </a>
+                </li>
+              </ul>
             </div>
-            <!-- FAQ dentro del chat -->
-            <div class="accordion mt-3" id="faqAccordion">              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne">
-                    <i class="bi bi-person-gear me-2 text-primary"></i>
-                    ¿Cómo actualizo mi información personal?
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                  <div class="accordion-body">
-                    <p><strong>Para actualizar tu información personal:</strong></p>
-                    <ol>
-                      <li>Ve a tu <a href="perfil.html" class="text-primary">Perfil</a> desde el menú lateral</li>
-                      <li>Haz clic en "Editar" en cualquier campo que desees modificar</li>
-                      <li>Actualiza la información requerida</li>
-                      <li>Guarda los cambios</li>
-                    </ol>
-                    <div class="alert alert-info">
-                      <i class="bi bi-info-circle me-2"></i>
-                      Algunos cambios pueden requerir verificación por email.
+            
+            <!-- Perfil de usuario -->
+            <div class="dropdown user-profile-dropdown">
+              <button class="btn btn-user-profile text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle user-avatar">
+                <div class="user-info-text d-none d-md-block">
+                  <span class="user-name">Neymar Tapias</span>
+                  <small class="user-role d-block text-white-50">Paciente</small>
+                </div>
+                <i class="bi bi-chevron-down small d-none d-md-inline"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="dropdown-header">
+                  <div class="d-flex align-items-center">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Usuario" width="50" class="rounded-circle me-3">
+                    <div>
+                      <h6 class="mb-0">Neymar Tapias</h6>
+                      <small class="text-muted">paciente@myhosp.com</small>
                     </div>
                   </div>
-                </div>
-              </div>              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo">
-                    <i class="bi bi-card-checklist me-2 text-success"></i>
-                    ¿Qué servicios incluye MyHosp?
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                  <div class="accordion-body">
-                    <p><strong>MyHosp incluye:</strong></p>
-                    <ul>
-                      <li><i class="bi bi-calendar-check text-primary"></i> Agendamiento de citas médicas</li>
-                      <li><i class="bi bi-camera-video text-info"></i> Consultas virtuales</li>
-                      <li><i class="bi bi-file-medical text-success"></i> Historial médico digital</li>
-                      <li><i class="bi bi-chat-dots text-warning"></i> Asistente virtual Ana</li>
-                      <li><i class="bi bi-bell text-danger"></i> Recordatorios automáticos</li>
-                      <li><i class="bi bi-shield-check text-dark"></i> Seguridad de datos médicos</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree">
-                    <i class="bi bi-credit-card me-2 text-success"></i>
-                    ¿Cómo funcionan los pagos?
-                  </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                  <div class="accordion-body">
-                    <p><strong>Métodos de pago aceptados:</strong></p>
-                    <ul>
-                      <li><i class="bi bi-credit-card text-primary"></i> Tarjetas de crédito/débito</li>
-                      <li><i class="bi bi-paypal text-info"></i> PayPal</li>
-                      <li><i class="bi bi-bank text-success"></i> Transferencia bancaria</li>
-                      <li><i class="bi bi-cash text-warning"></i> Efectivo en clínica</li>
-                    </ul>
-                    <div class="alert alert-success">
-                      <i class="bi bi-shield-check me-2"></i>
-                      Todos los pagos están protegidos con SSL.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFour">
-                    ¿Cómo cancelo o modifico una cita?
-                  </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                  <div class="accordion-body">
-                    Aquí va la guía para cancelar o modificar una cita.
-                  </div>
-                </div>
-              </div>
-
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFive">
-                    ¿Ofrecen algún programa de fidelidad o recompensas?
-                  </button>
-                </h2>
-                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                  <div class="accordion-body">
-                    Aquí va la información sobre programas de fidelidad o
-                    recompensas.
-                  </div>
-                </div>
-              </div>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item" href="perfil.html">
+                    <i class="bi bi-person me-2 text-primary"></i>Mi Perfil
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="editar_perfil.html">
+                    <i class="bi bi-gear me-2 text-secondary"></i>Configuración
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="Ayuda.html">
+                    <i class="bi bi-question-circle me-2 text-info"></i>Ayuda
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="#" onclick="handleLogout()">
+                    <i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
+                  </a>
+                </li>
+              </ul>
             </div>
-            <!-- Fin FAQ -->
-          </div>          <div class="card-footer text-muted d-flex align-items-center p-3">
-            <img id="userAvatarFooter" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="avatar usuario" 
-              style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;" class="me-2">
+          </div>
+        </div><!-- Main Content -->
+    <div class="main-content">
+      <!-- Hero Section -->
+      <div class="help-hero">
+        <h1><i class="fas fa-hands-helping me-3"></i>Centro de Ayuda MyHosp</h1>
+        <p>Encuentra respuestas rápidas a tus preguntas o contacta con nuestro equipo de soporte</p>
+        
+        <!-- Barra de búsqueda -->
+        <div class="help-search-container">
+          <input type="text" class="help-search-input" placeholder="Busca cualquier tema de ayuda..." id="helpSearchInput">
+          <button class="help-search-btn" onclick="searchHelp()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
 
-            <div class="position-relative flex-grow-1">
-              <input type="text" id="helpInput" class="form-control form-control-lg pe-5"
-                placeholder="Escribe tu pregunta sobre MyHosp..." onkeypress="handleHelpQuestion(event)">
-              <i class="fas fa-paper-plane text-primary position-absolute top-50 end-0 translate-middle-y me-3" 
-                style="cursor: pointer;" onclick="sendHelpQuestion()"></i>
+      <!-- Categorías de ayuda -->
+      <div class="help-categories">
+        <div class="help-category-card" onclick="showCategory('account')">
+          <i class="fas fa-user-circle help-category-icon"></i>
+          <h3 class="help-category-title">Mi Cuenta</h3>
+          <p class="help-category-description">Gestión de perfil, configuración y datos personales</p>
+        </div>
+
+        <div class="help-category-card" onclick="showCategory('appointments')">
+          <i class="fas fa-calendar-alt help-category-icon"></i>
+          <h3 class="help-category-title">Citas Médicas</h3>
+          <p class="help-category-description">Agendar, modificar y gestionar tus citas</p>
+        </div>
+
+        <div class="help-category-card" onclick="showCategory('consultations')">
+          <i class="fas fa-video help-category-icon"></i>
+          <h3 class="help-category-title">Consultas Online</h3>
+          <p class="help-category-description">Videollamadas y consultas virtuales</p>
+        </div>
+
+        <div class="help-category-card" onclick="showCategory('medical')">
+          <i class="fas fa-file-medical help-category-icon"></i>
+          <h3 class="help-category-title">Historial Médico</h3>
+          <p class="help-category-description">Acceso y gestión de tu historial clínico</p>
+        </div>
+
+        <div class="help-category-card" onclick="showCategory('payments')">
+          <i class="fas fa-credit-card help-category-icon"></i>
+          <h3 class="help-category-title">Pagos</h3>
+          <p class="help-category-description">Métodos de pago y facturación</p>
+        </div>
+
+        <div class="help-category-card" onclick="showCategory('technical')">
+          <i class="fas fa-cog help-category-icon"></i>
+          <h3 class="help-category-title">Soporte Técnico</h3>
+          <p class="help-category-description">Problemas técnicos y configuración</p>
+        </div>
+      </div>
+
+      <!-- Acciones rápidas -->
+      <div class="quick-actions">
+        <a href="mailto:soporte@myhosp.com" class="quick-action-btn">
+          <i class="fas fa-envelope"></i>
+          Contactar Soporte
+        </a>
+        <a href="tel:+1234567890" class="quick-action-btn">
+          <i class="fas fa-phone"></i>
+          Llamar Ahora
+        </a>
+        <button class="quick-action-btn" onclick="toggleChat()">
+          <i class="fas fa-comments"></i>
+          Chat en Vivo
+        </button>
+        <a href="#" class="quick-action-btn" onclick="downloadGuide()">
+          <i class="fas fa-download"></i>
+          Guía de Usuario
+        </a>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="faq-section">
+        <h2 class="faq-title">Preguntas Frecuentes</h2>
+        
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            ¿Cómo actualizo mi información personal?
+          </div>
+          <div class="faq-answer">
+            <p><strong>Para actualizar tu información personal:</strong></p>
+            <ol>
+              <li>Ve a tu <a href="perfil.html" class="text-primary">Perfil</a> desde el menú lateral</li>
+              <li>Haz clic en "Editar" en cualquier campo que desees modificar</li>
+              <li>Actualiza la información requerida</li>
+              <li>Guarda los cambios</li>
+            </ol>
+            <div class="alert alert-info mt-3">
+              <i class="fas fa-info-circle me-2"></i>
+              Algunos cambios pueden requerir verificación por email.
             </div>
           </div>
         </div>
 
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            ¿Qué servicios incluye MyHosp?
+          </div>
+          <div class="faq-answer">
+            <p><strong>MyHosp incluye:</strong></p>
+            <ul>
+              <li><i class="fas fa-calendar-check text-primary me-2"></i> Agendamiento de citas médicas</li>
+              <li><i class="fas fa-video text-info me-2"></i> Consultas virtuales</li>
+              <li><i class="fas fa-file-medical text-success me-2"></i> Historial médico digital</li>
+              <li><i class="fas fa-robot text-warning me-2"></i> Asistente virtual Ana</li>
+              <li><i class="fas fa-bell text-danger me-2"></i> Recordatorios automáticos</li>
+              <li><i class="fas fa-shield-alt text-dark me-2"></i> Seguridad de datos médicos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            ¿Cómo funcionan los pagos?
+          </div>
+          <div class="faq-answer">
+            <p><strong>Métodos de pago aceptados:</strong></p>
+            <ul>
+              <li><i class="fas fa-credit-card text-primary me-2"></i> Tarjetas de crédito/débito</li>
+              <li><i class="fab fa-paypal text-info me-2"></i> PayPal</li>
+              <li><i class="fas fa-university text-success me-2"></i> Transferencia bancaria</li>
+              <li><i class="fas fa-money-bill text-warning me-2"></i> Efectivo en clínica</li>
+            </ul>
+            <div class="alert alert-success mt-3">
+              <i class="fas fa-shield-alt me-2"></i>
+              Todos los pagos están protegidos con SSL.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            ¿Cómo cancelo o modifico una cita?
+          </div>
+          <div class="faq-answer">
+            <p><strong>Para cancelar o modificar una cita:</strong></p>
+            <ol>
+              <li>Ve a la sección <a href="ver_citas.html" class="text-primary">"Mis Citas"</a></li>
+              <li>Busca la cita que deseas modificar</li>
+              <li>Haz clic en "Editar" o "Cancelar"</li>
+              <li>Confirma los cambios</li>
+            </ol>
+            <div class="alert alert-warning mt-3">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              Las cancelaciones deben hacerse al menos 24 horas antes.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            ¿Ofrecen algún programa de fidelidad o recompensas?
+          </div>
+          <div class="faq-answer">
+            <p><strong>Sí, ofrecemos el programa MyHosp Plus:</strong></p>
+            <ul>
+              <li><i class="fas fa-star text-warning me-2"></i> Descuentos en consultas</li>
+              <li><i class="fas fa-gift text-primary me-2"></i> Puntos por cada cita</li>
+              <li><i class="fas fa-crown text-warning me-2"></i> Acceso prioritario</li>
+              <li><i class="fas fa-percentage text-success me-2"></i> Promociones exclusivas</li>
+            </ul>
+          </div>
+        </div>
+      </div>    </div>
+
+    <!-- Chat flotante de ayuda -->
+    <div class="help-chat-container" id="helpChatContainer">
+      <div class="help-chat-header">
+        <span>Chat con Ana</span>
+        <button class="help-chat-close" onclick="toggleChat()">×</button>
+      </div>
+      <div class="help-chat-messages" id="helpChatMessages">
+        <div class="help-chat-message assistant">
+          ¡Hola! Soy Ana, tu asistente virtual de MyHosp. ¿En qué puedo ayudarte hoy?
+        </div>
+      </div>
+      <div class="help-chat-input-container">
+        <input type="text" class="help-chat-input" id="helpChatInput" placeholder="Escribe tu pregunta..." onkeypress="handleChatInput(event)">
+        <button class="help-chat-send" onclick="sendChatMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>    <!-- Botón flotante del chat -->
+    <button class="help-chat-toggle" id="helpChatToggle" onclick="toggleChat()">
+      <i class="fas fa-comments"></i>
+    </button>
+        </div>
       </div>
     </div>
-
   </div>
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Socket.IO -->
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  
   <!-- JavaScript para autenticación y funcionalidades -->
   <script>
+    // Funciones del navbar
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.querySelector('.sidebar-overlay');
+      
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('mobile-open');
+        overlay.classList.toggle('active');
+      }
+    }
+
+    // Función para actualizar la hora actual
+    function updateCurrentTime() {
+      const timeElements = document.querySelectorAll('.current-time');
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('es-ES', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+      
+      timeElements.forEach(element => {
+        element.textContent = timeString;
+      });
+    }
+
     // Verificación de autenticación
     document.addEventListener('DOMContentLoaded', function() {
       // Verificar si el usuario está logueado
@@ -336,11 +476,25 @@
 
       // Actualizar nombre de usuario
       const username = localStorage.getItem('username') || 'Usuario';
-      document.getElementById('username').textContent = username;
+      const usernameElements = document.querySelectorAll('#username, .user-name');
+      usernameElements.forEach(element => {
+        element.textContent = username;
+      });      // Inicializar hora actual
+      updateCurrentTime();
+      setInterval(updateCurrentTime, 60000); // Actualizar cada minuto
+
+      // Configurar notificaciones
+      setupNotifications();
       
       // Mostrar notificación de bienvenida
       showNotification('¡Bienvenido al Centro de Ayuda de MyHosp!', 'info');
     });
+
+    // Función para configurar notificaciones
+    function setupNotifications() {
+      // Aquí se puede configurar el sistema de notificaciones
+      console.log('Sistema de notificaciones configurado');
+    }
 
     // Función de logout
     function handleLogout() {
@@ -355,67 +509,111 @@
       }
     }
 
-    // Función para manejar preguntas de ayuda
-    function handleHelpQuestion(event) {
-      if (event.key === 'Enter') {
-        sendHelpQuestion();
-      }
-    }
-
-    // Función para enviar pregunta de ayuda
-    function sendHelpQuestion() {
-      const input = document.getElementById('helpInput');
-      const question = input.value.trim();
+    // Función para búsqueda de ayuda
+    function searchHelp() {
+      const input = document.getElementById('helpSearchInput');
+      const query = input.value.trim();
       
-      if (question === '') {
-        showNotification('Por favor escribe tu pregunta', 'warning');
+      if (query === '') {
+        showNotification('Por favor escribe algo para buscar', 'warning');
         return;
       }
 
-      // Agregar pregunta del usuario al chat
-      addMessageToChat(question, 'user');
+      // Simular búsqueda
+      showNotification(`Buscando: "${query}"...`, 'info');
+      
+      // Aquí iría la lógica de búsqueda real
+      setTimeout(() => {
+        showNotification('Búsqueda completada', 'success');
+      }, 1000);
+    }
+
+    // Función para mostrar categorías
+    function showCategory(category) {
+      const categories = {
+        'account': 'Mi Cuenta',
+        'appointments': 'Citas Médicas',
+        'consultations': 'Consultas Online',
+        'medical': 'Historial Médico',
+        'payments': 'Pagos',
+        'technical': 'Soporte Técnico'
+      };
+      
+      showNotification(`Mostrando ayuda para: ${categories[category]}`, 'info');
+      
+      // Aquí iría la lógica para filtrar contenido por categoría
+    }
+
+    // Función para toggle FAQ
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const isOpen = answer.classList.contains('show');
+      
+      // Cerrar todas las FAQs
+      document.querySelectorAll('.faq-answer.show').forEach(item => {
+        item.classList.remove('show');
+        item.previousElementSibling.classList.remove('active');
+      });
+      
+      // Abrir la seleccionada si no estaba abierta
+      if (!isOpen) {
+        answer.classList.add('show');
+        element.classList.add('active');
+      }
+    }
+
+    // Función para toggle del chat
+    function toggleChat() {
+      const chatContainer = document.getElementById('helpChatContainer');
+      const chatToggle = document.getElementById('helpChatToggle');
+      
+      if (chatContainer.style.display === 'flex') {
+        chatContainer.style.display = 'none';
+        chatToggle.style.display = 'flex';
+      } else {
+        chatContainer.style.display = 'flex';
+        chatToggle.style.display = 'none';
+      }
+    }
+
+    // Función para manejar input del chat
+    function handleChatInput(event) {
+      if (event.key === 'Enter') {
+        sendChatMessage();
+      }
+    }
+
+    // Función para enviar mensaje del chat
+    function sendChatMessage() {
+      const input = document.getElementById('helpChatInput');
+      const message = input.value.trim();
+      
+      if (message === '') {
+        return;
+      }
+
+      // Agregar mensaje del usuario
+      addChatMessage(message, 'user');
       
       // Limpiar input
       input.value = '';
       
       // Simular respuesta de Ana después de un breve delay
       setTimeout(() => {
-        const response = generateAnaResponse(question);
-        addMessageToChat(response, 'ana');
+        const response = generateAnaResponse(message);
+        addChatMessage(response, 'assistant');
       }, 1000);
     }
 
     // Función para agregar mensajes al chat
-    function addMessageToChat(message, sender) {
-      const chatBody = document.querySelector('.card-body[data-mdb-perfect-scrollbar-init]');
+    function addChatMessage(message, sender) {
+      const chatMessages = document.getElementById('helpChatMessages');
       const messageDiv = document.createElement('div');
+      messageDiv.className = `help-chat-message ${sender}`;
+      messageDiv.textContent = message;
       
-      if (sender === 'user') {
-        messageDiv.className = 'd-flex flex-row justify-content-end mb-4 pt-1';
-        messageDiv.innerHTML = `
-          <div>
-            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${message}</p>
-          </div>
-          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="avatar usuario"
-            style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;" class="me-2">
-        `;
-      } else {
-        messageDiv.className = 'd-flex flex-row justify-content-start mb-4';
-        messageDiv.innerHTML = `
-          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="avatar Ana"
-            style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
-          <div>
-            <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">${message}</p>
-          </div>
-        `;
-      }
-      
-      // Insertar antes del FAQ
-      const faqSection = chatBody.querySelector('.accordion');
-      chatBody.insertBefore(messageDiv, faqSection);
-      
-      // Scroll hacia abajo
-      chatBody.scrollTop = chatBody.scrollHeight;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     // Función para generar respuestas de Ana
@@ -437,6 +635,15 @@
       }
     }
 
+    // Función para descargar guía
+    function downloadGuide() {
+      showNotification('Descargando guía de usuario...', 'info');
+      // Aquí iría la lógica para descargar el archivo
+      setTimeout(() => {
+        showNotification('Guía descargada exitosamente', 'success');
+      }, 2000);
+    }
+
     // Sistema de notificaciones
     function showNotification(message, type = 'info', duration = 3000) {
       // Crear elemento de notificación
@@ -452,7 +659,7 @@
       
       notification.innerHTML = `
         <div class="d-flex align-items-center">
-          <i class="bi bi-${getNotificationIcon(type)} me-2"></i>
+          <i class="fas fa-${getNotificationIcon(type)} me-2"></i>
           <span>${message}</span>
           <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
         </div>
@@ -471,11 +678,11 @@
     // Función para obtener iconos de notificación
     function getNotificationIcon(type) {
       switch(type) {
-        case 'success': return 'check-circle-fill';
-        case 'error': return 'exclamation-triangle-fill';
-        case 'warning': return 'exclamation-triangle-fill';
-        case 'info': return 'info-circle-fill';
-        default: return 'info-circle-fill';
+        case 'success': return 'check-circle';
+        case 'error': return 'exclamation-triangle';
+        case 'warning': return 'exclamation-triangle';
+        case 'info': return 'info-circle';
+        default: return 'info-circle';
       }
     }
 
@@ -487,16 +694,30 @@
       }, 500);
     }
 
-    // Agregar funcionalidad a los enlaces del FAQ
+    // Event listeners adicionales
     document.addEventListener('DOMContentLoaded', function() {
       // Mejorar experiencia de navegación en FAQ
-      const faqLinks = document.querySelectorAll('.accordion-body a');
+      const faqLinks = document.querySelectorAll('.faq-answer a');
       faqLinks.forEach(link => {
         link.addEventListener('click', function(e) {
           e.preventDefault();
           const href = this.getAttribute('href');
           quickNavigate(href);
         });
+      });
+
+      // Agregar animaciones a las categorías
+      const categoryCards = document.querySelectorAll('.help-category-card');
+      categoryCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('help-animate');
+      });
+
+      // Funcionalidad de búsqueda con Enter
+      document.getElementById('helpSearchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          searchHelp();
+        }
       });
     });
   </script>

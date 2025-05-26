@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyHosp - Editar Perfil</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts - Lexend -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Estilos base modernos -->
+  <link rel="stylesheet" href="./css/modern-design.css" />
+  <!-- Estilos específicos del módulo de Editar Perfil -->
+  <link rel="stylesheet" href="./css/editar-perfil.css" />
+  <!-- Estilos del asistente Ana -->
+  <link rel="stylesheet" href="./css/asistente.css" />
+  <link rel="stylesheet" href="./css/ana-help-button.css" />
+</head>
+
+<body>
+  <!-- Asistente de voz Ana -->
+  <div id="ana-assistant" class="voice-assistant">
+    <div class="assistant-controls">
+      <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+        <i class="fas fa-toggle-on"></i>
+      </button>
+      <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+        <i class="fas fa-toggle-off"></i>
+      </button>
+    </div>
+    <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+      <i id="micIcon" class="fas fa-microphone"></i>
+    </button>
+    <div id="assistantStatus" class="assistant-status"></div>
+  </div>
+
+  <!-- Layout principal -->
+  <div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <img src="img/logo.png" alt="MyHosp Logo" width="80">
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column">
+          <li><a class="nav-link" href="dashboard.index.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+          <li><a class="nav-link" href="ver_citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
+          <li><a class="nav-link" href="historial_medico.html"><i class="bi bi-folder2-open"></i> Historial Médico</a></li>
+          <li><a class="nav-link" href="consultas_online.html"><i class="bi bi-camera-video"></i> Consulta Online</a></li>
+          <li><a class="nav-link active" href="perfil.html"><i class="bi bi-person"></i> Perfil</a></li>
+          <li><a class="nav-link" href="Ayuda.html"><i class="bi bi-question-circle"></i> Ayuda</a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="handleLogout()">
+          <i class="bi bi-box-arrow-left"></i> Salir
+        </button>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="topbar-content">
+          <div class="welcome-section">
+            <h1>Editar Perfil</h1>
+            <p>Actualiza tu información personal y médica</p>
+          </div>
+
+          <div class="header-actions">
+            <!-- Dropdown idioma -->
+            <div class="dropdown">
+              <button class="btn btn-header dropdown-toggle" type="button" id="dropdownIdioma" data-bs-toggle="dropdown">
+                <img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" height="auto">
+                ES
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" alt="ES" width="24"> ES</a></li>
+                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" alt="EN" width="24"> EN</a></li>
+              </ul>
+            </div>
+
+            <!-- Notificaciones -->
+            <button type="button" class="btn btn-header position-relative">
+              <i class="bi bi-bell"></i>
+              <span class="notification-badge">3</span>
+            </button>
+
+            <!-- Dropdown perfil -->
+            <div class="dropdown">
+              <button class="btn btn-header dropdown-toggle" type="button" id="dropdownPerfil" data-bs-toggle="dropdown">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" width="32" height="32" class="rounded-circle">
+                <span id="headerUsername">Neymar Tapias</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="perfil.html">Mi Perfil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Configuración</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb-nav">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="perfil.html">Mi Perfil</a></li>
+          <li class="breadcrumb-item active">Editar Perfil</li>
+        </ol>
+      </nav>
+
+      <!-- Contenido del módulo de Editar Perfil -->
+      <div class="edit-profile-container">
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+          <div class="progress-step active" data-step="1">
+            <div class="step-circle">1</div>
+            <span>Información Personal</span>
+          </div>
+          <div class="progress-step" data-step="2">
+            <div class="step-circle">2</div>
+            <span>Información Médica</span>
+          </div>
+          <div class="progress-step" data-step="3">
+            <div class="step-circle">3</div>
+            <span>Configuración</span>
+          </div>
+        </div>
+
+        <!-- Formulario Multi-paso -->
+        <form id="editProfileForm" class="edit-form">
+          <!-- Paso 1: Información Personal -->
+          <div class="form-step active" id="step1">
+            <div class="form-section">
+              <div class="section-header">
+                <h3><i class="bi bi-person-lines-fill"></i> Información Personal</h3>
+                <p>Actualiza tus datos básicos y de contacto</p>
+              </div>
+
+              <div class="form-grid">
+                <!-- Foto de perfil -->
+                <div class="form-group photo-upload">
+                  <label class="form-label">Foto de perfil</label>
+                  <div class="photo-upload-area">
+                    <div class="current-photo">
+                      <img id="profilePreview" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Foto actual">
+                    </div>
+                    <div class="upload-controls">
+                      <input type="file" id="profilePhoto" accept="image/*" class="d-none">
+                      <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('profilePhoto').click()">
+                        <i class="bi bi-camera"></i> Cambiar foto
+                      </button>
+                      <button type="button" class="btn btn-outline-danger" onclick="removePhoto()">
+                        <i class="bi bi-trash"></i> Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Datos básicos -->
+                <div class="form-group">
+                  <label for="firstName" class="form-label required">Nombres</label>
+                  <input type="text" class="form-control" id="firstName" value="Neymar" required>
+                  <div class="invalid-feedback">Por favor ingresa tu nombre</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="lastName" class="form-label required">Apellidos</label>
+                  <input type="text" class="form-control" id="lastName" value="Tapias González" required>
+                  <div class="invalid-feedback">Por favor ingresa tus apellidos</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="documentType" class="form-label required">Tipo de documento</label>
+                  <select class="form-select" id="documentType" required>
+                    <option value="">Seleccionar tipo</option>
+                    <option value="CC" selected>Cédula de Ciudadanía</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PP">Pasaporte</option>
+                    <option value="TI">Tarjeta de Identidad</option>
+                  </select>
+                  <div class="invalid-feedback">Selecciona el tipo de documento</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="documentNumber" class="form-label required">Número de documento</label>
+                  <input type="text" class="form-control" id="documentNumber" value="1234567890" required>
+                  <div class="invalid-feedback">Ingresa un número de documento válido</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="birthDate" class="form-label required">Fecha de nacimiento</label>
+                  <input type="date" class="form-control" id="birthDate" value="1992-02-05" required>
+                  <div class="invalid-feedback">Selecciona tu fecha de nacimiento</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="gender" class="form-label required">Género</label>
+                  <select class="form-select" id="gender" required>
+                    <option value="">Seleccionar género</option>
+                    <option value="M" selected>Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="O">Otro</option>
+                    <option value="NR">Prefiero no responder</option>
+                  </select>
+                  <div class="invalid-feedback">Selecciona tu género</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="maritalStatus" class="form-label">Estado civil</label>
+                  <select class="form-select" id="maritalStatus">
+                    <option value="">Seleccionar estado</option>
+                    <option value="soltero" selected>Soltero/a</option>
+                    <option value="casado">Casado/a</option>
+                    <option value="divorciado">Divorciado/a</option>
+                    <option value="viudo">Viudo/a</option>
+                    <option value="union_libre">Unión libre</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="email" class="form-label required">Correo electrónico</label>
+                  <input type="email" class="form-control" id="email" value="neymar.tapias@email.com" required>
+                  <div class="invalid-feedback">Ingresa un email válido</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="phone" class="form-label required">Teléfono</label>
+                  <input type="tel" class="form-control" id="phone" value="+57 310 123 4567" required>
+                  <div class="invalid-feedback">Ingresa un número de teléfono válido</div>
+                </div>
+
+                <div class="form-group span-2">
+                  <label for="address" class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="address" value="Calle 123 #45-67">
+                </div>
+
+                <div class="form-group">
+                  <label for="city" class="form-label">Ciudad</label>
+                  <input type="text" class="form-control" id="city" value="Bogotá">
+                </div>
+
+                <div class="form-group">
+                  <label for="country" class="form-label">País</label>
+                  <select class="form-select" id="country">
+                    <option value="CO" selected>Colombia</option>
+                    <option value="US">Estados Unidos</option>
+                    <option value="MX">México</option>
+                    <option value="AR">Argentina</option>
+                    <option value="BR">Brasil</option>
+                  </select>
+                </div>
+
+                <!-- Información laboral -->
+                <div class="form-group">
+                  <label for="occupation" class="form-label">Ocupación</label>
+                  <input type="text" class="form-control" id="occupation" value="Futbolista Profesional">
+                </div>
+
+                <div class="form-group">
+                  <label for="company" class="form-label">Empresa/Institución</label>
+                  <input type="text" class="form-control" id="company" value="Al Hilal FC">
+                </div>
+
+                <div class="form-group">
+                  <label for="eps" class="form-label">EPS</label>
+                  <select class="form-select" id="eps">
+                    <option value="">Seleccionar EPS</option>
+                    <option value="sura" selected>Sura EPS</option>
+                    <option value="salud_total">Salud Total</option>
+                    <option value="compensar">Compensar</option>
+                    <option value="sanitas">Sanitas</option>
+                    <option value="famisanar">Famisanar</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paso 2: Información Médica -->
+          <div class="form-step" id="step2">
+            <div class="form-section">
+              <div class="section-header">
+                <h3><i class="bi bi-heart-pulse-fill"></i> Información Médica</h3>
+                <p>Proporciona información médica relevante para un mejor cuidado</p>
+              </div>
+
+              <div class="form-grid">
+                <!-- Información médica básica -->
+                <div class="form-group">
+                  <label for="bloodType" class="form-label">Tipo de sangre</label>
+                  <select class="form-select" id="bloodType">
+                    <option value="">Seleccionar tipo</option>
+                    <option value="A+" selected>A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+" selected>O+</option>
+                    <option value="O-">O-</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="height" class="form-label">Altura (cm)</label>
+                  <input type="number" class="form-control" id="height" value="175" min="50" max="250">
+                </div>
+
+                <div class="form-group">
+                  <label for="weight" class="form-label">Peso (kg)</label>
+                  <input type="number" class="form-control" id="weight" value="68" min="20" max="300" step="0.1">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">IMC</label>
+                  <div class="imc-display">
+                    <span id="imcValue">22.2</span>
+                    <span id="imcStatus" class="imc-normal">Normal</span>
+                  </div>
+                </div>
+
+                <!-- Alergias -->
+                <div class="form-group span-2">
+                  <label class="form-label">Alergias</label>
+                  <div class="allergies-section">
+                    <div class="allergies-list" id="allergiesList">
+                      <div class="allergy-item">
+                        <span class="allergy-name">Penicilina</span>
+                        <select class="allergy-severity">
+                          <option value="baja">Baja</option>
+                          <option value="media">Media</option>
+                          <option value="alta" selected>Alta</option>
+                        </select>
+                        <button type="button" class="btn-remove" onclick="removeAllergy(this)">
+                          <i class="bi bi-x"></i>
+                        </button>
+                      </div>
+                      <div class="allergy-item">
+                        <span class="allergy-name">Mariscos</span>
+                        <select class="allergy-severity">
+                          <option value="baja">Baja</option>
+                          <option value="media" selected>Media</option>
+                          <option value="alta">Alta</option>
+                        </select>
+                        <button type="button" class="btn-remove" onclick="removeAllergy(this)">
+                          <i class="bi bi-x"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="add-allergy">
+                      <input type="text" class="form-control" id="newAllergy" placeholder="Agregar nueva alergia">
+                      <button type="button" class="btn btn-outline-primary" onclick="addAllergy()">
+                        <i class="bi bi-plus"></i> Agregar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Medicamentos actuales -->
+                <div class="form-group span-2">
+                  <label class="form-label">Medicamentos actuales</label>
+                  <div class="medications-section">
+                    <div class="medications-list" id="medicationsList">
+                      <div class="medication-item">
+                        <input type="text" class="form-control medication-name" value="Vitamina D3">
+                        <input type="text" class="form-control medication-dose" value="1000 UI/día">
+                        <button type="button" class="btn-remove" onclick="removeMedication(this)">
+                          <i class="bi bi-x"></i>
+                        </button>
+                      </div>
+                      <div class="medication-item">
+                        <input type="text" class="form-control medication-name" value="Omega-3">
+                        <input type="text" class="form-control medication-dose" value="500mg/día">
+                        <button type="button" class="btn-remove" onclick="removeMedication(this)">
+                          <i class="bi bi-x"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" onclick="addMedication()">
+                      <i class="bi bi-plus"></i> Agregar medicamento
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Condiciones médicas -->
+                <div class="form-group span-2">
+                  <label for="medicalConditions" class="form-label">Condiciones médicas relevantes</label>
+                  <textarea class="form-control" id="medicalConditions" rows="3" placeholder="Describe cualquier condición médica relevante..."></textarea>
+                </div>
+
+                <!-- Contactos de emergencia -->
+                <div class="form-group span-2">
+                  <label class="form-label">Contactos de emergencia</label>
+                  <div class="emergency-contacts" id="emergencyContacts">
+                    <div class="emergency-contact">
+                      <div class="contact-inputs">
+                        <input type="text" class="form-control" placeholder="Nombre completo" value="María González">
+                        <input type="tel" class="form-control" placeholder="Teléfono" value="+57 300 123 4567">
+                        <select class="form-select">
+                          <option value="familiar">Familiar</option>
+                          <option value="amigo">Amigo</option>
+                          <option value="medico">Médico</option>
+                          <option value="otro">Otro</option>
+                        </select>
+                        <button type="button" class="btn-remove" onclick="removeEmergencyContact(this)">
+                          <i class="bi bi-x"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-outline-primary" onclick="addEmergencyContact()">
+                    <i class="bi bi-plus"></i> Agregar contacto
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paso 3: Configuración -->
+          <div class="form-step" id="step3">
+            <div class="form-section">
+              <div class="section-header">
+                <h3><i class="bi bi-gear-fill"></i> Configuración y Preferencias</h3>
+                <p>Personaliza tu experiencia en MyHosp</p>
+              </div>
+
+              <div class="config-grid">
+                <!-- Notificaciones -->
+                <div class="config-card">
+                  <div class="config-header">
+                    <h4><i class="bi bi-bell-fill"></i> Notificaciones</h4>
+                  </div>
+                  <div class="config-content">
+                    <div class="config-item">
+                      <div class="config-info">
+                        <label>Recordatorios de citas</label>
+                        <span>Recibir notificaciones antes de las citas</span>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="appointmentReminders" checked>
+                      </div>
+                    </div>
+                    <div class="config-item">
+                      <div class="config-info">
+                        <label>Resultados médicos</label>
+                        <span>Notificar cuando estén listos los resultados</span>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="medicalResults" checked>
+                      </div>
+                    </div>
+                    <div class="config-item">
+                      <div class="config-info">
+                        <label>Promociones y ofertas</label>
+                        <span>Recibir información sobre promociones</span>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="promotions">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Idioma y región -->
+                <div class="config-card">
+                  <div class="config-header">
+                    <h4><i class="bi bi-globe"></i> Idioma y Región</h4>
+                  </div>
+                  <div class="config-content">
+                    <div class="config-item">
+                      <label for="language">Idioma preferido</label>
+                      <select class="form-select" id="language">
+                        <option value="es" selected>Español</option>
+                        <option value="en">English</option>
+                        <option value="pt">Português</option>
+                      </select>
+                    </div>
+                    <div class="config-item">
+                      <label for="timezone">Zona horaria</label>
+                      <select class="form-select" id="timezone">
+                        <option value="America/Bogota" selected>Colombia (UTC-5)</option>
+                        <option value="America/New_York">New York (UTC-5)</option>
+                        <option value="Europe/Madrid">Madrid (UTC+1)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Privacidad -->
+                <div class="config-card">
+                  <div class="config-header">
+                    <h4><i class="bi bi-shield-check-fill"></i> Privacidad</h4>
+                  </div>
+                  <div class="config-content">
+                    <div class="config-item">
+                      <div class="config-info">
+                        <label>Perfil público</label>
+                        <span>Permitir que otros usuarios vean tu perfil básico</span>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="publicProfile">
+                      </div>
+                    </div>
+                    <div class="config-item">
+                      <div class="config-info">
+                        <label>Compartir datos para investigación</label>
+                        <span>Contribuir de forma anónima a la investigación médica</span>
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="shareResearch">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Seguridad -->
+                <div class="config-card">
+                  <div class="config-header">
+                    <h4><i class="bi bi-key-fill"></i> Seguridad</h4>
+                  </div>
+                  <div class="config-content">
+                    <div class="config-item">
+                      <label>Cambiar contraseña</label>
+                      <button type="button" class="btn btn-outline-primary" onclick="openPasswordModal()">
+                        <i class="bi bi-key"></i> Cambiar contraseña
+                      </button>
+                    </div>
+                    <div class="config-item">
+                      <div class="config-info">
+                        <label>Autenticación de dos factores</label>
+                        <span class="text-success">Activada</span>
+                      </div>
+                      <button type="button" class="btn btn-outline-danger" onclick="disable2FA()">
+                        Desactivar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de navegación -->
+          <div class="form-navigation">
+            <button type="button" class="btn btn-outline-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">
+              <i class="bi bi-arrow-left"></i> Anterior
+            </button>
+            <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+              Siguiente <i class="bi bi-arrow-right"></i>
+            </button>
+            <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+              <i class="bi bi-check-circle"></i> Guardar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal para cambiar contraseña -->
+  <div class="modal fade" id="passwordModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Cambiar Contraseña</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="passwordForm">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Contraseña actual</label>
+              <input type="password" class="form-control" id="currentPassword" required>
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">Nueva contraseña</label>
+              <input type="password" class="form-control" id="newPassword" required>
+              <div class="password-strength">
+                <div class="strength-bar">
+                  <div class="strength-fill"></div>
+                </div>
+                <span class="strength-text">Ingresa una contraseña</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmar nueva contraseña</label>
+              <input type="password" class="form-control" id="confirmPassword" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="changePassword()">Cambiar contraseña</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript para funcionalidades del formulario -->
+  <script>
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    // Verificación de autenticación
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar si el usuario está logueado
+      if (!localStorage.getItem('userLoggedIn')) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Cargar datos del usuario
+      loadUserData();
+      
+      // Configurar validación del formulario
+      setupFormValidation();
+      
+      // Configurar calculadora de IMC
+      setupIMCCalculator();
+      
+      // Configurar preview de foto
+      setupPhotoPreview();
+      
+      // Mostrar notificación de bienvenida
+      showNotification('Edita tu perfil con seguridad', 'info');
+    });
+
+    // Cargar datos del usuario
+    function loadUserData() {
+      const username = localStorage.getItem('username') || 'Usuario';
+      const email = localStorage.getItem('userEmail') || 'usuario@email.com';
+      
+      document.getElementById('headerUsername').textContent = username;
+      document.getElementById('firstName').value = username.split(' ')[0] || username;
+      document.getElementById('email').value = email;
+    }
+
+    // Navegación entre pasos
+    function nextStep() {
+      if (validateCurrentStep()) {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          showStep(currentStep);
+        }
+      }
+    }
+
+    function previousStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    }
+
+    function showStep(step) {
+      // Ocultar todos los pasos
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.progress-step').forEach(s => s.classList.remove('active'));
+      
+      // Mostrar paso actual
+      document.getElementById(`step${step}`).classList.add('active');
+      document.querySelector(`[data-step="${step}"]`).classList.add('active');
+      
+      // Actualizar botones
+      document.getElementById('prevBtn').style.display = step > 1 ? 'block' : 'none';
+      document.getElementById('nextBtn').style.display = step < totalSteps ? 'block' : 'none';
+      document.getElementById('submitBtn').style.display = step === totalSteps ? 'block' : 'none';
+      
+      // Scroll hacia arriba
+      document.querySelector('.edit-profile-container').scrollTop = 0;
+    }
+
+    // Validación del paso actual
+    function validateCurrentStep() {
+      const currentStepElement = document.getElementById(`step${currentStep}`);
+      const requiredFields = currentStepElement.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          field.classList.remove('is-invalid');
+          field.classList.add('is-valid');
+        }
+      });
+
+      if (!isValid) {
+        showNotification('Por favor completa todos los campos requeridos', 'error');
+      }
+
+      return isValid;
+    }
+
+    // Configurar validación del formulario
+    function setupFormValidation() {
+      const form = document.getElementById('editProfileForm');
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (validateAllSteps()) {
+          saveProfile();
+        }
+      });
+
+      // Validación en tiempo real
+      const inputs = form.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+          validateField(this);
+        });
+      });
+    }
+
+    function validateAllSteps() {
+      let isValid = true;
+      
+      for (let i = 1; i <= totalSteps; i++) {
+        const stepElement = document.getElementById(`step${i}`);
+        const requiredFields = stepElement.querySelectorAll('[required]');
+        
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            field.classList.add('is-invalid');
+            isValid = false;
+          }
+        });
+      }
+      
+      return isValid;
+    }
+
+    function validateField(field) {
+      if (field.hasAttribute('required') && !field.value.trim()) {
+        field.classList.add('is-invalid');
+        return false;
+      } else {
+        field.classList.remove('is-invalid');
+        field.classList.add('is-valid');
+        return true;
+      }
+    }
+
+    // Configurar calculadora de IMC
+    function setupIMCCalculator() {
+      const heightInput = document.getElementById('height');
+      const weightInput = document.getElementById('weight');
+      
+      [heightInput, weightInput].forEach(input => {
+        input.addEventListener('input', calculateIMC);
+      });
+    }
+
+    function calculateIMC() {
+      const height = parseFloat(document.getElementById('height').value) / 100; // cm to m
+      const weight = parseFloat(document.getElementById('weight').value);
+      
+      if (height && weight) {
+        const imc = weight / (height * height);
+        const imcValue = document.getElementById('imcValue');
+        const imcStatus = document.getElementById('imcStatus');
+        
+        imcValue.textContent = imc.toFixed(1);
+        
+        // Clasificar IMC
+        if (imc < 18.5) {
+          imcStatus.textContent = 'Bajo peso';
+          imcStatus.className = 'imc-underweight';
+        } else if (imc < 25) {
+          imcStatus.textContent = 'Normal';
+          imcStatus.className = 'imc-normal';
+        } else if (imc < 30) {
+          imcStatus.textContent = 'Sobrepeso';
+          imcStatus.className = 'imc-overweight';
+        } else {
+          imcStatus.textContent = 'Obesidad';
+          imcStatus.className = 'imc-obese';
+        }
+      }
+    }
+
+    // Configurar preview de foto
+    function setupPhotoPreview() {
+      const photoInput = document.getElementById('profilePhoto');
+      const preview = document.getElementById('profilePreview');
+      
+      photoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            preview.src = e.target.result;
+            showNotification('Foto actualizada', 'success');
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    function removePhoto() {
+      document.getElementById('profilePreview').src = 'https://via.placeholder.com/150x150?text=Sin+Foto';
+      document.getElementById('profilePhoto').value = '';
+      showNotification('Foto eliminada', 'info');
+    }
+
+    // Funciones para alergias
+    function addAllergy() {
+      const input = document.getElementById('newAllergy');
+      const allergyName = input.value.trim();
+      
+      if (allergyName) {
+        const allergiesList = document.getElementById('allergiesList');
+        const allergyItem = document.createElement('div');
+        allergyItem.className = 'allergy-item';
+        allergyItem.innerHTML = `
+          <span class="allergy-name">${allergyName}</span>
+          <select class="allergy-severity">
+            <option value="baja">Baja</option>
+            <option value="media" selected>Media</option>
+            <option value="alta">Alta</option>
+          </select>
+          <button type="button" class="btn-remove" onclick="removeAllergy(this)">
+            <i class="bi bi-x"></i>
+          </button>
+        `;
+        allergiesList.appendChild(allergyItem);
+        input.value = '';
+        showNotification('Alergia agregada', 'success');
+      }
+    }
+
+    function removeAllergy(button) {
+      button.parentElement.remove();
+      showNotification('Alergia eliminada', 'info');
+    }
+
+    // Funciones para medicamentos
+    function addMedication() {
+      const medicationsList = document.getElementById('medicationsList');
+      const medicationItem = document.createElement('div');
+      medicationItem.className = 'medication-item';
+      medicationItem.innerHTML = `
+        <input type="text" class="form-control medication-name" placeholder="Nombre del medicamento">
+        <input type="text" class="form-control medication-dose" placeholder="Dosis (ej: 500mg/día)">
+        <button type="button" class="btn-remove" onclick="removeMedication(this)">
+          <i class="bi bi-x"></i>
+        </button>
+      `;
+      medicationsList.appendChild(medicationItem);
+    }
+
+    function removeMedication(button) {
+      button.parentElement.remove();
+      showNotification('Medicamento eliminado', 'info');
+    }
+
+    // Funciones para contactos de emergencia
+    function addEmergencyContact() {
+      const contactsList = document.getElementById('emergencyContacts');
+      const contactItem = document.createElement('div');
+      contactItem.className = 'emergency-contact';
+      contactItem.innerHTML = `
+        <div class="contact-inputs">
+          <input type="text" class="form-control" placeholder="Nombre completo">
+          <input type="tel" class="form-control" placeholder="Teléfono">
+          <select class="form-select">
+            <option value="familiar">Familiar</option>
+            <option value="amigo">Amigo</option>
+            <option value="medico">Médico</option>
+            <option value="otro">Otro</option>
+          </select>
+          <button type="button" class="btn-remove" onclick="removeEmergencyContact(this)">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      `;
+      contactsList.appendChild(contactItem);
+    }
+
+    function removeEmergencyContact(button) {
+      button.closest('.emergency-contact').remove();
+      showNotification('Contacto eliminado', 'info');
+    }
+
+    // Funciones de seguridad
+    function openPasswordModal() {
+      const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
+      modal.show();
+    }
+
+    function changePassword() {
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        showNotification('Por favor completa todos los campos', 'error');
+        return;
+      }
+      
+      if (newPassword !== confirmPassword) {
+        showNotification('Las contraseñas no coinciden', 'error');
+        return;
+      }
+      
+      // Aquí iría la lógica para cambiar la contraseña
+      showNotification('Contraseña cambiada exitosamente', 'success');
+      bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+    }
+
+    function disable2FA() {
+      if (confirm('¿Estás seguro de que deseas desactivar la autenticación de dos factores?')) {
+        showNotification('Autenticación de dos factores desactivada', 'warning');
+      }
+    }
+
+    // Guardar perfil
+    function saveProfile() {
+      // Simular guardado
+      showNotification('Guardando cambios...', 'info');
+      
+      setTimeout(() => {
+        showNotification('Perfil actualizado exitosamente', 'success');
+        setTimeout(() => {
+          window.location.href = 'perfil.html';
+        }, 2000);
+      }, 1500);
+    }
+
+    // Función de logout
+    function handleLogout() {
+      if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('userEmail');
+        showNotification('Sesión cerrada exitosamente', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+      }
+    }
+
+    // Sistema de notificaciones
+    function showNotification(message, type = 'info', duration = 3000) {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      notification.style.cssText = `
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      `;
+      
+      notification.innerHTML = `
+        <div class="d-flex align-items-center">
+          <i class="bi bi-${getNotificationIcon(type)} me-2"></i>
+          <span>${message}</span>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification && notification.parentNode) {
+          notification.remove();
+        }
+      }, duration);
+    }
+
+    function getNotificationIcon(type) {
+      switch(type) {
+        case 'success': return 'check-circle-fill';
+        case 'error': return 'exclamation-triangle-fill';
+        case 'warning': return 'exclamation-triangle-fill';
+        case 'info': return 'info-circle-fill';
+        default: return 'info-circle-fill';
+      }
+    }
+
+    // Configurar indicador de fuerza de contraseña
+    document.addEventListener('DOMContentLoaded', function() {
+      const newPasswordInput = document.getElementById('newPassword');
+      if (newPasswordInput) {
+        newPasswordInput.addEventListener('input', function() {
+          updatePasswordStrength(this.value);
+        });
+      }
+    });
+
+    function updatePasswordStrength(password) {
+      const strengthBar = document.querySelector('.strength-fill');
+      const strengthText = document.querySelector('.strength-text');
+      
+      let strength = 0;
+      let text = '';
+      let color = '';
+      
+      if (password.length >= 8) strength += 25;
+      if (/[a-z]/.test(password)) strength += 25;
+      if (/[A-Z]/.test(password)) strength += 25;
+      if (/[0-9]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength += 25;
+      
+      if (strength === 0) {
+        text = 'Ingresa una contraseña';
+        color = '#dee2e6';
+      } else if (strength <= 25) {
+        text = 'Muy débil';
+        color = '#dc3545';
+      } else if (strength <= 50) {
+        text = 'Débil';
+        color = '#fd7e14';
+      } else if (strength <= 75) {
+        text = 'Buena';
+        color = '#ffc107';
+      } else {
+        text = 'Muy fuerte';
+        color = '#198754';
+      }
+      
+      strengthBar.style.width = strength + '%';
+      strengthBar.style.backgroundColor = color;
+      strengthText.textContent = text;
+      strengthText.style.color = color;
+    }
+  </script>
+
+  <!-- Scripts del asistente Ana -->
+  <script src="./js/activation-prompt.js"></script>
+  <script src="./js/initial-notification.js"></script>
+  <script src="./js/ana-consent.js"></script>
+  <script src="./js/assistant-controls.js"></script>
+  <script type="module" src="./js/ViewModels/assistant.js"></script>
+  <script src="./js/ana-help-button.js"></script>
+</body>
+
+</html>

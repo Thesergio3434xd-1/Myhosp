@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyHosp - Centro de Ayuda</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts - Lexend -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Estilos base modernos -->
+  <link rel="stylesheet" href="./css/modern-design.css" />
+  <!-- Estilos específicos del módulo de Ayuda -->
+  <link rel="stylesheet" href="./css/ayuda.css" />
+  <!-- Estilos del asistente Ana -->
+  <link rel="stylesheet" href="./css/asistente.css" />
+  <link rel="stylesheet" href="./css/ana-help-button.css" />
+</head>
+
+<body>
+  <!-- Asistente de voz Ana -->
+  <div id="ana-assistant" class="voice-assistant">
+    <div class="assistant-controls">
+      <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+        <i class="fas fa-toggle-on"></i>
+      </button>
+      <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+        <i class="fas fa-toggle-off"></i>
+      </button>
+    </div>
+    <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+      <i id="micIcon" class="fas fa-microphone"></i>
+    </button>
+    <div id="assistantStatus" class="assistant-status"></div>
+  </div>
+
+  <!-- Layout principal -->
+  <div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <img src="img/logo.png" alt="MyHosp Logo" width="80">
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul class="nav flex-column">
+          <li><a class="nav-link" href="dashboard.index.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+          <li><a class="nav-link" href="ver_citas.html"><i class="bi bi-calendar3"></i> Citas</a></li>
+          <li><a class="nav-link" href="historial_medico.html"><i class="bi bi-folder2-open"></i> Historial Médico</a></li>
+          <li><a class="nav-link" href="consultas_online.html"><i class="bi bi-camera-video"></i> Consulta Online</a></li>
+          <li><a class="nav-link" href="perfil.html"><i class="bi bi-person"></i> Perfil</a></li>
+          <li><a class="nav-link active" href="Ayuda.html"><i class="bi bi-question-circle"></i> Ayuda</a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="handleLogout()">
+          <i class="bi bi-box-arrow-left"></i> Salir
+        </button>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="topbar-content">
+          <div class="welcome-section">
+            <h1>Centro de Ayuda</h1>
+            <p>Hola, <span id="username">Usuario</span></p>
+          </div>
+
+          <div class="header-actions">
+            <!-- Dropdown idioma -->
+            <div class="dropdown">
+              <button class="btn btn-header dropdown-toggle" type="button" id="dropdownIdioma" data-bs-toggle="dropdown">
+                <img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" height="auto">
+                ES
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" alt="ES" width="24"> ES</a></li>
+                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" alt="EN" width="24"> EN</a></li>
+              </ul>
+            </div>
+
+            <!-- Notificaciones -->
+            <button type="button" class="btn btn-header position-relative">
+              <i class="bi bi-bell"></i>
+              <span class="notification-badge">3</span>
+            </button>
+
+            <!-- Dropdown perfil -->
+            <div class="dropdown">
+              <button class="btn btn-header dropdown-toggle" type="button" id="dropdownPerfil" data-bs-toggle="dropdown">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" width="32" height="32" class="rounded-circle">
+                <span>Neymar Tapias</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="perfil.html">Mi Perfil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Configuración</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Contenido del módulo de Ayuda -->
+      <div class="help-container">
+        <!-- Chat con Ana -->
+        <div class="ana-chat-section">
+          <div class="chat-card">
+            <div class="chat-header">
+              <div class="ana-avatar">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="Ana">
+              </div>
+              <div class="chat-info">
+                <h5>Chat con Ana</h5>
+                <p>Tu asistente virtual de MyHosp</p>
+              </div>
+              <div class="chat-status">
+                <span class="status-indicator online"></span>
+                <span>En línea</span>
+              </div>
+            </div>
+
+            <div class="chat-body" id="chatBody">
+              <!-- Mensaje de bienvenida de Ana -->
+              <div class="message-bubble ana-message">
+                <div class="message-avatar">
+                  <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="Ana">
+                </div>
+                <div class="message-content">
+                  <p>¡Hola! Soy Ana, tu asistente virtual de MyHosp. Estoy aquí para ayudarte con cualquier duda que tengas sobre nuestros servicios. ¿En qué puedo ayudarte hoy?</p>
+                  <span class="message-time">Ahora</span>
+                </div>
+              </div>
+
+              <!-- Mensaje del usuario -->
+              <div class="message-bubble user-message">
+                <div class="message-content">
+                  <p>¿Podrías mostrarme las preguntas más frecuentes de los usuarios?</p>
+                  <span class="message-time">Ahora</span>
+                </div>
+                <div class="message-avatar">
+                  <img id="userAvatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="Usuario">
+                </div>
+              </div>
+
+              <!-- Respuesta de Ana -->
+              <div class="message-bubble ana-message">
+                <div class="message-avatar">
+                  <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="Ana">
+                </div>
+                <div class="message-content">
+                  <p>¡Claro! Aquí tienes las preguntas que más frecuentan los usuarios dentro de MyHosp. ¡Espero que te sea de ayuda!</p>
+                  <span class="message-time">Ahora</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-input">
+              <div class="input-group">
+                <input type="text" id="messageInput" class="form-control" placeholder="Escribe tu pregunta aquí..." maxlength="500">
+                <button class="btn btn-send" type="button" onclick="sendMessage()">
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+          <div class="section-header">
+            <h2>Preguntas Frecuentes</h2>
+            <p>Encuentra respuestas rápidas a las dudas más comunes</p>
+          </div>
+
+          <div class="faq-grid">
+            <div class="faq-category">
+              <div class="category-header">
+                <i class="bi bi-calendar-check"></i>
+                <h3>Citas Médicas</h3>
+              </div>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    <span>¿Cómo puedo agendar una cita médica?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq1">
+                    <p>Para agendar una cita médica, ve a la sección "Citas" en el menú lateral, haz clic en "Nueva Cita", selecciona tu especialista preferido, elige fecha y hora disponible, y confirma tu cita.</p>
+                    <a href="ver_citas.html" class="btn-link">Ir a Citas <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    <span>¿Puedo cambiar o cancelar mi cita?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq2">
+                    <p>Sí, puedes modificar o cancelar tu cita hasta 24 horas antes del horario programado. Ve a "Mis Citas" y selecciona la opción correspondiente.</p>
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    <span>¿Qué pasa si llego tarde a mi cita?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq3">
+                    <p>Si llegas tarde, tu cita puede ser reprogramada dependiendo de la disponibilidad del especialista. Te recomendamos llegar 15 minutos antes.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-category">
+              <div class="category-header">
+                <i class="bi bi-credit-card"></i>
+                <h3>Pagos y Facturación</h3>
+              </div>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq4">
+                    <span>¿Qué métodos de pago aceptan?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq4">
+                    <p>Aceptamos tarjetas de crédito/débito (Visa, MasterCard), PayPal, transferencias bancarias y pagos en efectivo en nuestras instalaciones.</p>
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq5">
+                    <span>¿Cómo obtengo mi factura?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq5">
+                    <p>Todas las facturas se envían automáticamente a tu correo electrónico después del pago. También puedes descargarlas desde tu perfil en la sección "Historial de Pagos".</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-category">
+              <div class="category-header">
+                <i class="bi bi-camera-video"></i>
+                <h3>Consultas Online</h3>
+              </div>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq6">
+                    <span>¿Cómo funciona una consulta online?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq6">
+                    <p>Las consultas online se realizan por videollamada. Necesitas una conexión estable a internet, cámara y micrófono. El médico te enviará un enlace de acceso.</p>
+                    <a href="consultas_online.html" class="btn-link">Iniciar Consulta <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq7">
+                    <span>¿Qué requisitos técnicos necesito?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq7">
+                    <p>Necesitas un dispositivo con cámara y micrófono, navegador web actualizado (Chrome, Firefox, Safari) y conexión a internet de al menos 1 Mbps.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-category">
+              <div class="category-header">
+                <i class="bi bi-file-medical"></i>
+                <h3>Historial Médico</h3>
+              </div>
+              <div class="faq-list">
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq8">
+                    <span>¿Cómo accedo a mi historial médico?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq8">
+                    <p>Puedes acceder a tu historial médico desde el menú lateral. Allí encontrarás todas tus consultas, exámenes, diagnósticos y tratamientos organizados cronológicamente.</p>
+                    <a href="historial_medico.html" class="btn-link">Ver Historial <i class="bi bi-arrow-right"></i></a>
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq9">
+                    <span>¿Puedo compartir mi historial con otro médico?</span>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                  <div class="faq-answer collapse" id="faq9">
+                    <p>Sí, puedes generar un reporte PDF de tu historial médico y compartirlo con cualquier profesional de la salud. También puedes dar acceso temporal a través de la plataforma.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de contacto -->
+        <div class="contact-section">
+          <div class="contact-card">
+            <div class="contact-header">
+              <h3>¿No encontraste lo que buscabas?</h3>
+              <p>Nuestro equipo de soporte está aquí para ayudarte</p>
+            </div>
+            
+            <div class="contact-methods">
+              <div class="contact-method">
+                <div class="method-icon">
+                  <i class="bi bi-telephone"></i>
+                </div>
+                <div class="method-info">
+                  <h4>Teléfono</h4>
+                  <p>+57 (1) 234-5678</p>
+                  <span>Lun - Vie: 8:00 AM - 6:00 PM</span>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <div class="method-info">
+                  <h4>Email</h4>
+                  <p>soporte@myhosp.com</p>
+                  <span>Respuesta en 24 horas</span>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="method-icon">
+                  <i class="bi bi-chat-dots"></i>
+                </div>
+                <div class="method-info">
+                  <h4>Chat en vivo</h4>
+                  <p>Disponible ahora</p>
+                  <button class="btn btn-primary btn-sm">Iniciar Chat</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript para funcionalidades del módulo de ayuda -->
+  <script>
+    // Verificación de autenticación
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar si el usuario está logueado
+      if (!localStorage.getItem('userLoggedIn')) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Actualizar nombre de usuario
+      const username = localStorage.getItem('username') || 'Usuario';
+      document.getElementById('username').textContent = username;
+      
+      // Mostrar notificación de bienvenida
+      showNotification('¡Bienvenido al Centro de Ayuda de MyHosp!', 'info');
+    });
+
+    // Función de logout
+    function handleLogout() {
+      if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('userEmail');
+        showNotification('Sesión cerrada exitosamente', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+      }
+    }
+
+    // Función para enviar mensaje
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value.trim();
+      
+      if (message === '') {
+        showNotification('Por favor escribe tu pregunta', 'warning');
+        return;
+      }
+
+      // Agregar mensaje del usuario al chat
+      addMessageToChat(message, 'user');
+      
+      // Limpiar input
+      input.value = '';
+      
+      // Simular respuesta de Ana después de un breve delay
+      setTimeout(() => {
+        const response = generateAnaResponse(message);
+        addMessageToChat(response, 'ana');
+      }, 1000);
+    }
+
+    // Función para agregar mensajes al chat
+    function addMessageToChat(message, sender) {
+      const chatBody = document.getElementById('chatBody');
+      const messageDiv = document.createElement('div');
+      
+      if (sender === 'user') {
+        messageDiv.className = 'message-bubble user-message';
+        messageDiv.innerHTML = `
+          <div class="message-content">
+            <p>${message}</p>
+            <span class="message-time">Ahora</span>
+          </div>
+          <div class="message-avatar">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=45&h=45&fit=crop&crop=face" alt="Usuario">
+          </div>
+        `;
+      } else {
+        messageDiv.className = 'message-bubble ana-message';
+        messageDiv.innerHTML = `
+          <div class="message-avatar">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=45&h=45&fit=crop&crop=face" alt="Ana">
+          </div>
+          <div class="message-content">
+            <p>${message}</p>
+            <span class="message-time">Ahora</span>
+          </div>
+        `;
+      }
+      
+      chatBody.appendChild(messageDiv);
+      
+      // Scroll hacia abajo
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // Función para generar respuestas de Ana
+    function generateAnaResponse(question) {
+      const lowerQuestion = question.toLowerCase();
+      
+      if (lowerQuestion.includes('cita') || lowerQuestion.includes('agendar')) {
+        return 'Para agendar una cita, ve a la sección "Citas" en el menú lateral y selecciona "Nueva Cita". ¿Necesitas ayuda con algo específico sobre las citas?';
+      } else if (lowerQuestion.includes('pago') || lowerQuestion.includes('cobro')) {
+        return 'Aceptamos varios métodos de pago incluyendo tarjetas de crédito, PayPal y transferencias bancarias. Todos los pagos están protegidos con encriptación SSL.';
+      } else if (lowerQuestion.includes('historial') || lowerQuestion.includes('médico')) {
+        return 'Puedes acceder a tu historial médico desde el menú lateral. Allí encontrarás todos tus documentos, consultas y reportes médicos organizados por fecha.';
+      } else if (lowerQuestion.includes('consulta online') || lowerQuestion.includes('virtual')) {
+        return 'Las consultas online se realizan por videollamada. Ve a "Consulta Online" en el menú y sigue las instrucciones para conectarte con tu médico.';
+      } else if (lowerQuestion.includes('perfil') || lowerQuestion.includes('información')) {
+        return 'Para actualizar tu información personal, ve a tu "Perfil" desde el menú lateral. Allí puedes editar todos tus datos de forma segura.';
+      } else {
+        return 'Gracias por tu pregunta. Te recomiendo revisar las preguntas frecuentes arriba o contactar a nuestro equipo de soporte para ayuda personalizada.';
+      }
+    }
+
+    // Sistema de notificaciones
+    function showNotification(message, type = 'info', duration = 3000) {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      notification.style.cssText = `
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      `;
+      
+      notification.innerHTML = `
+        <div class="d-flex align-items-center">
+          <i class="bi bi-${getNotificationIcon(type)} me-2"></i>
+          <span>${message}</span>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification && notification.parentNode) {
+          notification.remove();
+        }
+      }, duration);
+    }
+
+    // Función para obtener iconos de notificación
+    function getNotificationIcon(type) {
+      switch(type) {
+        case 'success': return 'check-circle-fill';
+        case 'error': return 'exclamation-triangle-fill';
+        case 'warning': return 'exclamation-triangle-fill';
+        case 'info': return 'info-circle-fill';
+        default: return 'info-circle-fill';
+      }
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // Enter para enviar mensaje
+      document.getElementById('messageInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+
+      // Mejorar experiencia de navegación en FAQ
+      const faqLinks = document.querySelectorAll('.faq-answer a');
+      faqLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+          showNotification(`Navegando a ${href}...`, 'info', 1000);
+          setTimeout(() => {
+            window.location.href = href;
+          }, 500);
+        });
+      });
+    });
+  </script>
+
+  <!-- Scripts del asistente Ana -->
+  <script src="./js/activation-prompt.js"></script>
+  <script src="./js/initial-notification.js"></script>
+  <script src="./js/ana-consent.js"></script>
+  <script src="./js/assistant-controls.js"></script>
+  <script type="module" src="./js/ViewModels/assistant.js"></script>
+  <script src="./js/ana-help-button.js"></script>
+</body>
+
+</html>
