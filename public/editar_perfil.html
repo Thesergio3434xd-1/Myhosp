@@ -1,313 +1,740 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MyHosp - Citas</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <!-- Estilos personalizados -->
-        <link rel="stylesheet" href="./css/style.css" />
-        <!-- Estilos específicos para autenticación -->
-        <link rel="stylesheet" href="./css/auth.css" />
-        <!-- Estilos del asistente -->
-        <link rel="stylesheet" href="./css/asistente.css" />
-        <!-- Estilos para el botón de ayuda de Ana -->
-        <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-  <link rel="stylesheet" href="./css/notifications.css" />
-    </head>
-    <body>
-        <!-- Asistente de voz Ana -->
-        <div id="ana-assistant" class="voice-assistant">
-            <!-- Botones para controlar el asistente -->
-            <div class="assistant-controls">
-                <button id="enableAssistant"
-                    class="control-button enable-button"
-                    aria-label="Activar asistente de voz">
-                    <i class="fas fa-toggle-on"></i>
-                </button>
-                <button id="disableAssistant"
-                    class="control-button disable-button"
-                    aria-label="Desactivar asistente de voz">
-                    <i class="fas fa-toggle-off"></i>
-                </button>
-            </div>
-            <button id="micButton" class="mic-button"
-                aria-label="Activar asistente de voz">
-                <i id="micIcon" class="fas fa-microphone"></i>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyHosp - Editar Perfil</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados modernos -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    <link rel="stylesheet" href="./css/editar-perfil.css">
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
+</head><body>
+    <!-- Asistente de voz Ana -->
+    <div id="ana-assistant" class="voice-assistant">
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="fas fa-toggle-on"></i>
             </button>
-            <div id="assistantStatus" class="assistant-status"></div>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
+            </button>
         </div>
+        <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+            <i id="micIcon" class="fas fa-microphone"></i>
+        </button>
+        <div id="assistantStatus" class="assistant-status"></div>
+    </div>
 
-        <div class="sidebar">
-            <div>
-                <div class="logo">
-                    <img src="img/logo.png" alt="Logo" width="80">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar d-flex flex-column position-fixed vh-100" style="width: 16.666667%; z-index: 1030;">
+                    <div class="text-center py-3">
+                        <div class="logo">
+                            <img src="./img/logo.png" alt="MyHosp Logo" width="60" height="60" class="logo-image mb-2">
+                            <h5 class="text-white fw-bold mb-0">MyHosp</h5>
+                            <small class="text-white-50 fw-medium">Sistema Hospitalario</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column flex-grow-1 px-3">
+                        <a class="nav-link" href="dashboard.index.html">
+                            <i class="bi bi-house-door"></i> Dashboard
+                        </a>
+                        <a class="nav-link" href="ver_citas.html">
+                            <i class="bi bi-calendar3"></i> Mis Citas
+                        </a>
+                        <a class="nav-link" href="crear_citas.html">
+                            <i class="bi bi-calendar-plus"></i> Nueva Cita
+                        </a>
+                        <a class="nav-link" href="historial_medico.html">
+                            <i class="bi bi-folder2-open"></i> Historial Médico
+                        </a>
+                        <a class="nav-link" href="consultas_online.html">
+                            <i class="bi bi-camera-video"></i> Consulta Online
+                        </a>
+                        <a class="nav-link active" href="perfil.html">
+                            <i class="bi bi-person"></i> Mi Perfil
+                        </a>
+                        <a class="nav-link" href="Ayuda.html">
+                            <i class="bi bi-question-circle"></i> Ayuda
+                        </a>
+                    </nav>
+                    
+                    <div class="mt-auto p-3">
+                        <button class="logout-btn w-100" onclick="handleLogout()">
+                            <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
+                        </button>
+                    </div>
                 </div>
-                <ul class="nav flex-column">
-                    <ul class="nav flex-column">
-                        <li><a class="nav-link" href="dashboard.html"><i
-                                    class="bi bi-speedometer2"></i>
-                                Dashboard</a></li>
-                        <li><a class="nav-link" href="citas.html"><i
-                                    class="bi bi-calendar3"></i> Citas</a></li>
-                        <li><a class="nav-link" href="historial_medico.html"><i
-                                    class="bi bi-folder2-open"></i> Historial
-                                Médico</a></li>
-                        <li><a class="nav-link" href="consultas_online.html"><i
-                                    class="bi bi-camera-video"></i> Consulta
-                                Online</a></li>
-                        <li><a class="nav-link" href="ayuda.html"><i
-                                    class="bi bi-question-circle"></i>
-                                Ayuda</a></li>
-                    </ul>
-                </div>
-                <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
-                    Salir</button>
+                
+                <!-- Overlay para móvil -->
+                <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
             </div>
 
-            <div class="main">
-                <!-- Navbar Perfil -->
-                <div
-                class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
-                    <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+            <!-- Contenido Principal -->
+            <div class="col-md-9 col-lg-10" style="margin-left: 16.666667%;">
+                <!-- Topbar -->
+                <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
+                    <div class="d-flex align-items-center">
+                        <!-- Botón hamburguesa para móvil -->
+                        <button class="mobile-menu-toggle me-3" type="button" onclick="toggleSidebar()">
+                            <i class="bi bi-list fs-5"></i>
+                        </button>
+                        <div>
+                            <h4 class="text-white mb-0">Editar Perfil</h4>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-white-50">Actualiza tu información personal</span>
+                                <span class="text-white-50">•</span>
+                                <span class="text-white-50 current-time"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- Dropdown idioma -->
+                        <div class="dropdown language-dropdown">
+                            <button class="btn btn-language text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="flag-container">
+                                    <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image">
+                                </div>
+                                <span class="language-text">ES</span>
+                                <i class="bi bi-chevron-down small"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end language-menu">
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="es">
+                                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image me-2">
+                                        <span>Español</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="en">
+                                        <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15" class="flag-image me-2">
+                                        <span>English</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Notificaciones -->
+                        <div class="dropdown notifications-dropdown">
+                            <button class="btn btn-notification text-white position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">3</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end notifications-menu" style="min-width: 300px;">
+                                <li class="dropdown-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">Notificaciones</h6>
+                                        <small class="text-muted">3 nuevas</small>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-success">
+                                                <i class="bi bi-check-circle text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Perfil actualizado</p>
+                                                <small class="text-muted">Tu información fue guardada exitosamente</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-primary">
+                                                <i class="bi bi-calendar-check text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Cita próxima</p>
+                                                <small class="text-muted">Dr. García - Mañana 10:30 AM</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-info">
+                                                <i class="bi bi-shield-check text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Seguridad</p>
+                                                <small class="text-muted">Contraseña actualizada correctamente</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-center text-primary" href="#">
+                                        Ver todas las notificaciones
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Perfil de usuario -->
+                        <div class="dropdown user-profile-dropdown">
+                            <button class="btn btn-user-profile text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle user-avatar">
+                                <div class="user-info-text d-none d-md-block">
+                                    <span class="user-name">Neymar Tapias</span>
+                                    <small class="user-role d-block text-white-50">Paciente</small>
+                                </div>
+                                <i class="bi bi-chevron-down small d-none d-md-inline"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-menu">
+                                <li class="dropdown-header">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Usuario" width="50" class="rounded-circle me-3">
+                                        <div>
+                                            <h6 class="mb-0">Neymar Tapias</h6>
+                                            <small class="text-muted">paciente@myhosp.com</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="perfil.html">
+                                        <i class="bi bi-person me-2 text-primary"></i>Mi Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="editar_perfil.html">
+                                        <i class="bi bi-gear me-2 text-secondary"></i>Configuración
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="Ayuda.html">
+                                        <i class="bi bi-question-circle me-2 text-info"></i>Ayuda
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" onclick="handleLogout()">
+                                        <i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="d-flex align-items-center gap-3 ms-auto">
-                    <!-- Dropdown idioma -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                            type="button" id="dropdownIdioma"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
-                                width="24" height="auto"
-                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                            ES
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownIdioma"
-                            style="min-width: 70px; font-size: 0.85rem;">
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/co.png"
-                                        alt="ES" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    ES
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/us.png"
-                                        alt="EN" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    EN
-                                </a>
-                            </li>
-                        </ul>
+                <!-- Contenido del Dashboard -->
+                <div class="container-fluid py-4">
+                    <!-- Hero Section - Editar Perfil -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card dashboard-welcome profile-hero text-white fade-in-up">
+                                <div class="card-body p-4 position-relative" style="z-index: 2;">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <span class="badge bg-light text-primary px-3 py-2 rounded-pill">
+                                                    <i class="bi bi-pencil-square me-1"></i>Editar Perfil
+                                                </span>
+                                            </div>
+                                            <h3 class="card-title mb-3 fw-bold">Actualiza tu Información</h3>
+                                            <p class="card-text mb-3">Mantén tu perfil actualizado para un mejor servicio médico</p>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <span class="badge bg-light text-warning fs-6 px-3 py-2">
+                                                    <i class="bi bi-exclamation-triangle me-1"></i> Información Importante
+                                                </span>
+                                                <span class="badge bg-light text-info fs-6 px-3 py-2">
+                                                    <i class="bi bi-shield-lock me-1"></i> Datos Seguros
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            <div class="hero-actions">
+                                                <button class="btn btn-light btn-lg me-2" onclick="previewChanges()">
+                                                    <i class="bi bi-eye me-2"></i>Vista Previa
+                                                </button>
+                                                <button class="btn btn-outline-light btn-lg" onclick="window.location.href='perfil.html'">
+                                                    <i class="bi bi-arrow-left me-2"></i>Volver
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Notificaciones -->
-                    <button type="button"
-                        class="btn position-relative btn-transparent text-white p-0"
-                        style="background: transparent; border: none; font-size: 1rem;">
-                        <i class="bi bi-bell"></i>
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                            3
-                            <span class="visually-hidden">notificaciones
-                                nuevas</span>
-                        </span>
+                    <!-- Formulario de Edición -->
+                    <form id="editProfileForm" class="needs-validation" novalidate>
+                        <div class="row">
+                            <!-- Información Personal -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card edit-form-card fade-in-up">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <i class="bi bi-person-circle me-2"></i>Información Personal
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="firstName" class="form-label">Nombres <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="firstName" name="firstName" value="Neymar" required>
+                                                <div class="invalid-feedback">
+                                                    Por favor ingresa tu nombre.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="lastName" class="form-label">Apellidos <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="lastName" name="lastName" value="Tapias" required>
+                                                <div class="invalid-feedback">
+                                                    Por favor ingresa tus apellidos.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="birthDate" class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label>
+                                                <input type="date" class="form-control" id="birthDate" name="birthDate" value="1999-04-10" required>
+                                                <div class="invalid-feedback">
+                                                    Por favor selecciona tu fecha de nacimiento.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="gender" class="form-label">Género <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="gender" name="gender" required>
+                                                    <option value="">Seleccionar género</option>
+                                                    <option value="masculino" selected>Masculino</option>
+                                                    <option value="femenino">Femenino</option>
+                                                    <option value="otro">Otro</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Por favor selecciona tu género.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="maritalStatus" class="form-label">Estado Civil</label>
+                                                <select class="form-select" id="maritalStatus" name="maritalStatus">
+                                                    <option value="">Seleccionar estado civil</option>
+                                                    <option value="soltero" selected>Soltero/a</option>
+                                                    <option value="casado">Casado/a</option>
+                                                    <option value="union_libre">Unión Libre</option>
+                                                    <option value="divorciado">Divorciado/a</option>
+                                                    <option value="viudo">Viudo/a</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="identification" class="form-label">Documento de Identidad</label>
+                                                <input type="text" class="form-control" id="identification" name="identification" value="1024578963" placeholder="Número de cédula">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Información de Contacto -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card edit-form-card fade-in-up">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <i class="bi bi-telephone me-2"></i>Información de Contacto
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="phone" class="form-label">Teléfono/Celular <span class="text-danger">*</span></label>
+                                                <input type="tel" class="form-control" id="phone" name="phone" value="3118975422" required>
+                                                <div class="invalid-feedback">
+                                                    Por favor ingresa tu número de teléfono.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="email" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
+                                                <input type="email" class="form-control" id="email" name="email" value="NeymarTapias@yahoo.es" required>
+                                                <div class="invalid-feedback">
+                                                    Por favor ingresa un correo electrónico válido.
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="address" class="form-label">Dirección <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="address" name="address" value="Cra69d#99-01" required>
+                                                <div class="invalid-feedback">
+                                                    Por favor ingresa tu dirección.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="city" class="form-label">Ciudad <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="city" name="city" value="Bogotá" required>
+                                                <div class="invalid-feedback">
+                                                    Por favor ingresa tu ciudad.
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="department" class="form-label">Departamento <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="department" name="department" required>
+                                                    <option value="">Seleccionar departamento</option>
+                                                    <option value="cundinamarca" selected>Cundinamarca</option>
+                                                    <option value="antioquia">Antioquia</option>
+                                                    <option value="valle_del_cauca">Valle del Cauca</option>
+                                                    <option value="atlantico">Atlántico</option>
+                                                    <option value="bolivar">Bolívar</option>
+                                                    <option value="santander">Santander</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Por favor selecciona tu departamento.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Información Médica -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card edit-form-card fade-in-up">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <i class="bi bi-heart-pulse me-2"></i>Información Médica
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="bloodType" class="form-label">Grupo Sanguíneo</label>
+                                                <select class="form-select" id="bloodType" name="bloodType">
+                                                    <option value="">Seleccionar grupo sanguíneo</option>
+                                                    <option value="A+">A+</option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="B+">B+</option>
+                                                    <option value="B-">B-</option>
+                                                    <option value="AB+" selected>AB+</option>
+                                                    <option value="AB-">AB-</option>
+                                                    <option value="O+">O+</option>
+                                                    <option value="O-">O-</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="eps" class="form-label">EPS/Aseguradora</label>
+                                                <select class="form-select" id="eps" name="eps">
+                                                    <option value="">Seleccionar EPS</option>
+                                                    <option value="compensar" selected>Compensar EPS</option>
+                                                    <option value="sanitas">Sanitas</option>
+                                                    <option value="famisanar">Famisanar</option>
+                                                    <option value="sura">Sura</option>
+                                                    <option value="colpatria">Colpatria</option>
+                                                    <option value="nueva_eps">Nueva EPS</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="allergies" class="form-label">Alergias</label>
+                                                <textarea class="form-control" id="allergies" name="allergies" rows="3" placeholder="Describe cualquier alergia conocida (medicamentos, alimentos, etc.)"></textarea>
+                                                <div class="form-text">Información importante para tu atención médica</div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="emergencyContact" class="form-label">Contacto de Emergencia</label>
+                                                <input type="text" class="form-control" id="emergencyContact" name="emergencyContact" placeholder="Nombre y teléfono del contacto de emergencia">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Configuraciones de Cuenta -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card edit-form-card fade-in-up">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <i class="bi bi-gear me-2"></i>Configuraciones de Cuenta
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="emailNotifications" name="emailNotifications" checked>
+                                                    <label class="form-check-label" for="emailNotifications">
+                                                        Recibir notificaciones por correo electrónico
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="smsNotifications" name="smsNotifications" checked>
+                                                    <label class="form-check-label" for="smsNotifications">
+                                                        Recibir notificaciones por SMS
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="appointmentReminders" name="appointmentReminders" checked>
+                                                    <label class="form-check-label" for="appointmentReminders">
+                                                        Recordatorios de citas médicas
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="language" class="form-label">Idioma Preferido</label>
+                                                <select class="form-select" id="language" name="language">
+                                                    <option value="es" selected>Español</option>
+                                                    <option value="en">English</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="timezone" class="form-label">Zona Horaria</label>
+                                                <select class="form-select" id="timezone" name="timezone">
+                                                    <option value="America/Bogota" selected>Colombia (GMT-5)</option>
+                                                    <option value="America/New_York">Estados Unidos Este (GMT-5)</option>
+                                                    <option value="America/Los_Angeles">Estados Unidos Oeste (GMT-8)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de Acción -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card edit-form-card fade-in-up">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                            <div>
+                                                <h6 class="mb-1">¿Listo para guardar los cambios?</h6>
+                                                <small class="text-muted">Asegúrate de que toda la información sea correcta</small>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">
+                                                    <i class="bi bi-arrow-counterclockwise me-2"></i>Restablecer
+                                                </button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="previewChanges()">
+                                                    <i class="bi bi-eye me-2"></i>Vista Previa
+                                                </button>
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="bi bi-check-circle me-2"></i>Guardar Cambios
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Vista Previa -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">
+                        <i class="bi bi-eye me-2"></i>Vista Previa de Cambios
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="previewContent">
+                    <!-- Contenido de vista previa se generará dinámicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="submitForm()">
+                        <i class="bi bi-check-circle me-2"></i>Confirmar y Guardar
                     </button>
-
-                    <!-- Dropdown perfil -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                            type="button" id="dropdownPerfil"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none;">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="User" width="32" height="32"
-                                class="rounded-circle">
-                            <span class="fw-semibold">Neymar Tapias</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownPerfil">
-                            <li><a class="dropdown-item" href="perfil.html">Mi
-                                    Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="#">Configuración</a>
-                            </li>
-                        </ul>
-                    </div>
-
                 </div>
             </div>
+        </div>
+    </div>
 
-                <!-- Contenido principal -->
-                <div class="p-4">
-                    <div class="container bg-white p-5 shadow rounded">
-                        <h2 class="text-center mb-4"
-                            style="color: #0d99b4;">Información
-                            Personal</h2>
-                        <form>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Nombre</label>
-                                    <input type="text" class="form-control"
-                                        value="Neymar">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Apellidos</label>
-                                    <input type="text" class="form-control"
-                                        value="Tapias">
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Fecha de
-                                    nacimiento</label>
-                                <input type="date" class="form-control"
-                                    value="2025-04-10">
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Edad</label>
-                                    <input type="number" class="form-control"
-                                        value="24">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Sexo</label>
-                                    <select class="form-select">
-                                        <option selected>Masculino</option>
-                                        <option>Femenino</option>
-                                        <option>Otro</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Celular</label>
-                                    <input type="text" class="form-control"
-                                        value="3118975422">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Correo
-                                        Electrónico</label>
-                                    <input type="email" class="form-control"
-                                        value="NeymarTapias@yahoo.es">
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Dirección</label>
-                                <input type="text" class="form-control"
-                                    value="Cra69d#99-01">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Departamento</label>
-                                <select class="form-select">
-                                    <option selected>Caracas</option>
-                                    <option>Antioquia</option>
-                                    <option>Cundinamarca</option>
-                                </select>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Grupo
-                                        Sanguíneo</label>
-                                    <input type="text" class="form-control"
-                                        value="AB-">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Estado
-                                        Civil</label>
-                                    <select class="form-select">
-                                        <option selected>Soltero</option>
-                                        <option>Casado</option>
-                                        <option>Unión Libre</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">EPS</label>
-                                <select class="form-select">
-                                    <option selected>Compensar EPS</option>
-                                    <option>Sanitas</option>
-                                    <option>Famisanar</option>
-                                </select>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit"
-                                    class="btn btn-info text-white"
-                                    style="background-color: #0d99b4;  border-color: #0d99b4;">Guardar
-                                    cambios</button>
-                                <a class="btn btn-secondary"
-                                    style="background-color: #0d99b4;  border-color: #0d99b4;"
-                                    href="perfil.html">Volver</a>
-                            </div>
-                        </form>
-                    </div>
-
+    <!-- Modal de Confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">
+                        <i class="bi bi-check-circle me-2 text-success"></i>Cambios Guardados
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <p>Tu perfil ha sido actualizado exitosamente.</p>
+                    <p class="text-muted mb-0">Los cambios se reflejarán inmediatamente en tu cuenta.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='perfil.html'">
+                        <i class="bi bi-person me-2"></i>Ver Mi Perfil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <!-- Bootstrap JS -->
-                <script
-                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    
+    <!-- Scripts del asistente Ana -->
+    <script src="./js/activation-prompt.js"></script>
+    <script src="./js/initial-notification.js"></script>
+    <script src="./js/ana-consent.js"></script>
+    <script src="./js/assistant-controls.js"></script>
+    <script type="module" src="./js/ViewModels/assistant.js"></script>
+    <script src="./js/ana-help-button.js"></script>
 
-                <!-- Socket.IO -->
-                <script
-                    src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-                <!-- Script de notificación inicial para el asistente -->
-                <script src="./js/activation-prompt.js"></script>
+    <!-- Script específico para editar perfil -->
+    <script>
+        // Funciones para el formulario de editar perfil
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
 
-                <!-- Script para notificación inicial sobre capacidades de Ana -->
-                <script src="./js/initial-notification.js"></script>
+        function updateCurrentTime() {
+            const timeElement = document.querySelector('.current-time');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('es-CO', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+                timeElement.textContent = timeString;
+            }
+        }
 
-                <!-- Script de consentimiento para Ana -->
-                <script src="./js/ana-consent.js"></script>
+        function previewChanges() {
+            const form = document.getElementById('editProfileForm');
+            const formData = new FormData(form);
+            const previewContent = document.getElementById('previewContent');
+            
+            let previewHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-primary mb-3">Información Personal</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Nombre:</strong> ${formData.get('firstName')} ${formData.get('lastName')}</li>
+                            <li><strong>Fecha de Nacimiento:</strong> ${formData.get('birthDate')}</li>
+                            <li><strong>Género:</strong> ${formData.get('gender')}</li>
+                            <li><strong>Estado Civil:</strong> ${formData.get('maritalStatus') || 'No especificado'}</li>
+                            <li><strong>Documento:</strong> ${formData.get('identification') || 'No especificado'}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary mb-3">Información de Contacto</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Teléfono:</strong> ${formData.get('phone')}</li>
+                            <li><strong>Email:</strong> ${formData.get('email')}</li>
+                            <li><strong>Dirección:</strong> ${formData.get('address')}</li>
+                            <li><strong>Ciudad:</strong> ${formData.get('city')}</li>
+                            <li><strong>Departamento:</strong> ${formData.get('department')}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary mb-3">Información Médica</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Grupo Sanguíneo:</strong> ${formData.get('bloodType') || 'No especificado'}</li>
+                            <li><strong>EPS:</strong> ${formData.get('eps') || 'No especificado'}</li>
+                            <li><strong>Alergias:</strong> ${formData.get('allergies') || 'Ninguna especificada'}</li>
+                            <li><strong>Contacto de Emergencia:</strong> ${formData.get('emergencyContact') || 'No especificado'}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary mb-3">Configuraciones</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Notificaciones Email:</strong> ${formData.get('emailNotifications') ? 'Activadas' : 'Desactivadas'}</li>
+                            <li><strong>Notificaciones SMS:</strong> ${formData.get('smsNotifications') ? 'Activadas' : 'Desactivadas'}</li>
+                            <li><strong>Recordatorios:</strong> ${formData.get('appointmentReminders') ? 'Activados' : 'Desactivados'}</li>
+                            <li><strong>Idioma:</strong> ${formData.get('language')}</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            previewContent.innerHTML = previewHTML;
+            
+            const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+            previewModal.show();
+        }
 
-                <!-- Script para controlar los botones del asistente -->
-                <script src="./js/assistant-controls.js"></script>
-                <!-- Asistente de voz -->
-                <script type="module"
-                    src="./js/ViewModels/assistant.js"></script>
+        function resetForm() {
+            if (confirm('¿Estás seguro de que deseas restablecer todos los campos a sus valores originales?')) {
+                document.getElementById('editProfileForm').reset();
+            }
+        }
 
-                <!-- Botón de ayuda de Ana -->
-                <script src="./js/ana-help-button.js"></script>
-            </body>
-        </html>
+        function submitForm() {
+            const form = document.getElementById('editProfileForm');
+            
+            if (form.checkValidity()) {
+                // Simular guardado
+                setTimeout(() => {
+                    // Cerrar modal de vista previa
+                    const previewModal = bootstrap.Modal.getInstance(document.getElementById('previewModal'));
+                    if (previewModal) {
+                        previewModal.hide();
+                    }
+                    
+                    // Mostrar modal de confirmación
+                    const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+                    confirmModal.show();
+                }, 1000);
+            } else {
+                form.classList.add('was-validated');
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Validación en tiempo real del formulario
+        document.getElementById('editProfileForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            if (this.checkValidity()) {
+                submitForm();
+            } else {
+                this.classList.add('was-validated');
+            }
+        });
+
+        // Inicializar componentes
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 60000); // Actualizar cada minuto
+            
+            // Añadir animaciones de aparición
+            const cards = document.querySelectorAll('.fade-in-up');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

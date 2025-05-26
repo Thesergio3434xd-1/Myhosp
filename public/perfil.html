@@ -1,267 +1,471 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MyHosp - Perfil</title>
-        <!-- Bootstrap CSS -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            rel="stylesheet" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            rel="stylesheet">
-        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <!-- Estilos personalizados -->
-        <link rel="stylesheet" href="./css/style.css" />
-        <!-- Estilos específicos para autenticación -->
-        <link rel="stylesheet" href="./css/auth.css" />
-        <!-- Estilos del asistente -->
-        <link rel="stylesheet" href="./css/asistente.css" />
-        <!-- Estilos para el botón de ayuda de Ana -->
-        <link rel="stylesheet" href="./css/ana-help-button.css" />
-        <link rel="stylesheet" href="./css/dashboard.css" />
-        <!-- Estilos unificados para notificaciones -->
-  <link rel="stylesheet" href="./css/notifications.css" />
-    </head>
-    <body>
-        <!-- Asistente de voz Ana -->
-        <div id="ana-assistant" class="voice-assistant">
-            <!-- Botones para controlar el asistente -->
-            <div class="assistant-controls">
-                <button id="enableAssistant"
-                    class="control-button enable-button"
-                    aria-label="Activar asistente de voz">
-                    <i class="fas fa-toggle-on"></i>
-                </button>
-                <button id="disableAssistant"
-                    class="control-button disable-button"
-                    aria-label="Desactivar asistente de voz">
-                    <i class="fas fa-toggle-off"></i>
-                </button>
-            </div>
-            <button id="micButton" class="mic-button"
-                aria-label="Activar asistente de voz">
-                <i id="micIcon" class="fas fa-microphone"></i>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyHosp - Mi Perfil</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados modernos -->
+    <link rel="stylesheet" href="./css/modern-design.css">
+    <link rel="stylesheet" href="./css/perfil-moderno.css">
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
+</head><body>
+    <!-- Asistente de voz Ana -->
+    <div id="ana-assistant" class="voice-assistant">
+        <div class="assistant-controls">
+            <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
+                <i class="fas fa-toggle-on"></i>
             </button>
-            <div id="assistantStatus" class="assistant-status"></div>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
+            </button>
         </div>
+        <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
+            <i id="micIcon" class="fas fa-microphone"></i>
+        </button>
+        <div id="assistantStatus" class="assistant-status"></div>
+    </div>
 
-        <div class="sidebar">
-            <div>
-                <div class="logo">
-                    <img src="img/logo.png" alt="Logo" width="80">
-                </div>                <ul class="nav flex-column">
-                    <ul class="nav flex-column">
-                        <li><a class="nav-link" href="dashboard.index.html"><i
-                                    class="bi bi-speedometer2"></i>
-                                Dashboard</a></li>
-                        <li><a class="nav-link" href="ver_citas.html"><i
-                                    class="bi bi-calendar3"></i> Citas</a></li>
-                        <li><a class="nav-link" href="historial_medico.html"><i
-                                    class="bi bi-folder2-open"></i> Historial
-                                Médico</a></li>
-                        <li><a class="nav-link" href="consultas_online.html"><i
-                                    class="bi bi-camera-video"></i> Consulta
-                                Online</a></li>
-                        <li><a class="nav-link active" href="perfil.html"><i
-                                    class="bi bi-user"></i>
-                                Perfil</a></li>
-                    </ul>
-                </div>                <button class="logout-btn" id="logoutBtn"><i class="bi bi-box-arrow-left"></i>
-                    Salir</button>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar d-flex flex-column position-fixed vh-100" style="width: 16.666667%; z-index: 1030;">
+                    <div class="text-center py-3">
+                        <div class="logo">
+                            <img src="./img/logo.png" alt="MyHosp Logo" width="60" height="60" class="logo-image mb-2">
+                            <h5 class="text-white fw-bold mb-0">MyHosp</h5>
+                            <small class="text-white-50 fw-medium">Sistema Hospitalario</small>
+                        </div>
+                    </div>
+                    
+                    <nav class="nav flex-column flex-grow-1 px-3">
+                        <a class="nav-link" href="dashboard.index.html">
+                            <i class="bi bi-house-door"></i> Dashboard
+                        </a>
+                        <a class="nav-link" href="ver_citas.html">
+                            <i class="bi bi-calendar3"></i> Mis Citas
+                        </a>
+                        <a class="nav-link" href="crear_citas.html">
+                            <i class="bi bi-calendar-plus"></i> Nueva Cita
+                        </a>
+                        <a class="nav-link" href="historial_medico.html">
+                            <i class="bi bi-folder2-open"></i> Historial Médico
+                        </a>
+                        <a class="nav-link" href="consultas_online.html">
+                            <i class="bi bi-camera-video"></i> Consulta Online
+                        </a>
+                        <a class="nav-link active" href="perfil.html">
+                            <i class="bi bi-person"></i> Mi Perfil
+                        </a>
+                        <a class="nav-link" href="Ayuda.html">
+                            <i class="bi bi-question-circle"></i> Ayuda
+                        </a>
+                    </nav>
+                    
+                    <div class="mt-auto p-3">
+                        <button class="logout-btn w-100" onclick="handleLogout()">
+                            <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Overlay para móvil -->
+                <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
             </div>
 
-            <div class="main">
-                <!-- Navbar Perfil -->
-               <div
-                class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">                <div>
-                    <strong id="userGreeting">Hola, Neymar Tapias</strong><br>
-                    <span
-                        style="font-weight: 700; font-size: 1.25rem;">Perfil</span>
+            <!-- Contenido Principal -->
+            <div class="col-md-9 col-lg-10" style="margin-left: 16.666667%;">
+                <!-- Topbar -->
+                <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
+                    <div class="d-flex align-items-center">
+                        <!-- Botón hamburguesa para móvil -->
+                        <button class="mobile-menu-toggle me-3" type="button" onclick="toggleSidebar()">
+                            <i class="bi bi-list fs-5"></i>
+                        </button>
+                        <div>
+                            <h4 class="text-white mb-0">Mi Perfil</h4>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-white-50">Gestiona tu información personal</span>
+                                <span class="text-white-50">•</span>
+                                <span class="text-white-50 current-time"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- Dropdown idioma -->
+                        <div class="dropdown language-dropdown">
+                            <button class="btn btn-language text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="flag-container">
+                                    <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image">
+                                </div>
+                                <span class="language-text">ES</span>
+                                <i class="bi bi-chevron-down small"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end language-menu">
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="es">
+                                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image me-2">
+                                        <span>Español</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="en">
+                                        <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15" class="flag-image me-2">
+                                        <span>English</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Notificaciones -->
+                        <div class="dropdown notifications-dropdown">
+                            <button class="btn btn-notification text-white position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">3</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end notifications-menu" style="min-width: 300px;">
+                                <li class="dropdown-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">Notificaciones</h6>
+                                        <small class="text-muted">3 nuevas</small>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-success">
+                                                <i class="bi bi-check-circle text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Perfil actualizado</p>
+                                                <small class="text-muted">Tu información fue guardada exitosamente</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-primary">
+                                                <i class="bi bi-calendar-check text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Cita próxima</p>
+                                                <small class="text-muted">Dr. García - Mañana 10:30 AM</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-info">
+                                                <i class="bi bi-shield-check text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Seguridad</p>
+                                                <small class="text-muted">Contraseña actualizada correctamente</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-center text-primary" href="#">
+                                        Ver todas las notificaciones
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Perfil de usuario -->
+                        <div class="dropdown user-profile-dropdown">
+                            <button class="btn btn-user-profile text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle user-avatar">
+                                <div class="user-info-text d-none d-md-block">
+                                    <span class="user-name">Neymar Tapias</span>
+                                    <small class="user-role d-block text-white-50">Paciente</small>
+                                </div>
+                                <i class="bi bi-chevron-down small d-none d-md-inline"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-menu">
+                                <li class="dropdown-header">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Usuario" width="50" class="rounded-circle me-3">
+                                        <div>
+                                            <h6 class="mb-0">Neymar Tapias</h6>
+                                            <small class="text-muted">paciente@myhosp.com</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="perfil.html">
+                                        <i class="bi bi-person me-2 text-primary"></i>Mi Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="editar_perfil.html">
+                                        <i class="bi bi-gear me-2 text-secondary"></i>Configuración
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="Ayuda.html">
+                                        <i class="bi bi-question-circle me-2 text-info"></i>Ayuda
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" onclick="handleLogout()">
+                                        <i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="d-flex align-items-center gap-3 ms-auto">
-                    <!-- Dropdown idioma -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                            type="button" id="dropdownIdioma"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
-                                width="24" height="auto"
-                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                            ES
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownIdioma"
-                            style="min-width: 70px; font-size: 0.85rem;">
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/co.png"
-                                        alt="ES" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    ES
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/us.png"
-                                        alt="EN" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    EN
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Notificaciones -->
-                    <button type="button"
-                        class="btn position-relative btn-transparent text-white p-0"
-                        style="background: transparent; border: none; font-size: 1rem;">
-                        <i class="bi bi-bell"></i>
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                            3
-                            <span class="visually-hidden">notificaciones
-                                nuevas</span>
-                        </span>
-                    </button>
-
-                    <!-- Dropdown perfil -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                            type="button" id="dropdownPerfil"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none;">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="User" width="32" height="32"
-                                class="rounded-circle">
-                            <span class="fw-semibold">Neymar Tapias</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownPerfil">
-                            <li><a class="dropdown-item" href="perfil.html">Mi
-                                    Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="#">Configuración</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-               
-                <!-- Contenido principal -->
-                <div class="p-4">
-                    <button type="button" class="btn btn-warning"
-                            style="background-color: #ffffff;  border-color:#ffffff; ">
-                            General
-                    </button>
-                    <!-- Cabecera -->
-                      <br><br>
-                    <div class="bg-white rounded shadow-sm p-3 mb-4">
-                        <div class="d-flex align-items-center">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="Perfil"
-                                class="profile-img me-3 rounded-circle"
-                                width="100">
-                            <div>
-                                <h5 class="mb-0">Neymar Tapias <small
-                                        class="text-muted">(Masculino)</small></h5>
-                                <small class="text-muted">Paciente<br>Bogotá,
-                                    Colombia</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Información personal -->
-                    <div class="bg-white rounded shadow-sm p-3 mb-4">
-                        <div
-                            class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="mb-0">Información Personal</h6>
-                            <a class="btn btn-outline-secondary btn-sm" href="editar_perfil.html">
-                                <i class="bi bi-pencil"></i> Editar
-                            </a>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <strong>Nombre:</strong> <br> Neymar Tapias
-                            </div>
-                            <div class="col-md-4">
-                                <strong>Fecha de nacimiento:</strong> <br>
-                                07/01/1997
-                            </div>
-                            <div class="col-md-4">
-                                <strong>Edad:</strong> <br> 26
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <strong>Número de Celular:</strong> <br> +57 325
-                                346 347
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <strong>Correo:</strong> <br>
-                                neymar.tapias@gmail.com
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enfermedades -->
-                    <div class="bg-white rounded shadow-sm p-3 mb-4">
-                        <h6>Enfermedades Diagnosticadas</h6>
-                        <div class="mt-2">
-                            <strong>Medicadas:</strong><br>
-                            <span class="badge bg-secondary">Asma</span>
-                        </div>
-                        <div class="mt-2">
-                            <strong>Físico:</strong><br>
-                            <span class="badge bg-secondary">Artitris</span>
-                        </div>
-                    </div>
-
-                    <!-- General -->
-                    <div class="bg-white rounded shadow-sm p-3">
-                        <h6>General</h6>
-                        <div class="row align-items-center mt-2">                            <div class="col-md-6">
-                                <label>Cambiar Contraseña</label><br>
-                                <button
-                                    class="btn btn-outline-primary btn-sm change-password-btn">Cambiar</button>
-                            </div>
-                            <div
-                                class="col-md-6 d-flex align-items-center justify-content-between mt-3 mt-md-0">
-                                <label class="me-2 mb-0">Notificaciones</label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input"
-                                        type="checkbox" checked>
-                                    <label class="form-check-label">Habilitar
-                                        Notificaciones</label>
+                <!-- Contenido del Dashboard -->
+                <div class="container-fluid py-4">
+                    <!-- Hero Section - Perfil -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card dashboard-welcome profile-hero text-white fade-in-up">
+                                <div class="card-body p-4 position-relative" style="z-index: 2;">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8">
+                                            <div class="mb-2">
+                                                <span class="badge bg-light text-primary px-3 py-2 rounded-pill">
+                                                    <i class="bi bi-person-circle me-1"></i>Mi Perfil
+                                                </span>
+                                            </div>
+                                            <h3 class="card-title mb-3 fw-bold">Bienvenido, Neymar Tapias</h3>
+                                            <p class="card-text mb-3">Gestiona tu información personal y configuraciones</p>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <span class="badge bg-light text-success fs-6 px-3 py-2">
+                                                    <i class="bi bi-shield-check me-1"></i> Perfil Verificado
+                                                </span>
+                                                <span class="badge bg-light text-info fs-6 px-3 py-2">
+                                                    <i class="bi bi-geo-alt me-1"></i> Bogotá, Colombia
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            <div class="hero-actions">
+                                                <button class="btn btn-light btn-lg me-2" onclick="window.location.href='editar_perfil.html'">
+                                                    <i class="bi bi-pencil me-2"></i>Editar Perfil
+                                                </button>
+                                                <button class="btn btn-outline-light btn-lg" onclick="showChangePasswordModal()">
+                                                    <i class="bi bi-key me-2"></i>Cambiar Clave
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
+                    <div class="row">
+                        <!-- Información del Usuario -->
+                        <div class="col-lg-4 mb-4">
+                            <div class="profile-card fade-in-up">
+                                <div class="card-header">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-person-circle me-2"></i>Información del Usuario
+                                    </h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face" 
+                                         alt="Perfil" 
+                                         class="profile-img rounded-circle mb-3" 
+                                         width="120" 
+                                         height="120"
+                                         title="Hacer clic para cambiar foto">
+                                    <div class="user-info">
+                                        <h5>Neymar Tapias</h5>
+                                        <span class="user-status">Paciente Activo</span>
+                                        <p class="user-location">
+                                            <i class="bi bi-geo-alt me-1"></i>Bogotá, Colombia
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <!-- Información Personal -->
+                        <div class="col-lg-8 mb-4">
+                            <div class="profile-card fade-in-up">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-info-circle me-2"></i>Información Personal
+                                    </h6>
+                                    <button class="btn btn-profile-edit btn-sm" onclick="window.location.href='editar_perfil.html'">
+                                        <i class="bi bi-pencil me-1"></i> Editar
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="info-row d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <div class="info-label">Nombre Completo</div>
+                                                    <div class="info-value editable-field" data-field="name">Neymar Tapias</div>
+                                                </div>
+                                                <i class="bi bi-person icon-hover"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-row d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <div class="info-label">Fecha de Nacimiento</div>
+                                                    <div class="info-value editable-field" data-field="birthdate">07/01/1997</div>
+                                                </div>
+                                                <i class="bi bi-calendar icon-hover"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-row d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <div class="info-label">Edad</div>
+                                                    <div class="info-value">28 años</div>
+                                                </div>
+                                                <i class="bi bi-clock icon-hover"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-row d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <div class="info-label">Género</div>
+                                                    <div class="info-value editable-field" data-field="gender">Masculino</div>
+                                                </div>
+                                                <i class="bi bi-gender-male icon-hover"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="contact-info mt-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="info-row d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="info-label">Teléfono</div>
+                                                        <div class="info-value editable-field" data-field="phone">+57 325 346 347</div>
+                                                    </div>
+                                                    <i class="bi bi-telephone icon-hover"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="info-row d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <div class="info-label">Correo Electrónico</div>
+                                                        <div class="info-value editable-field" data-field="email">neymar.tapias@gmail.com</div>
+                                                    </div>
+                                                    <i class="bi bi-envelope icon-hover"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Información Médica -->
+                        <div class="col-lg-8 mb-4">
+                            <div class="profile-card fade-in-up">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-heart-pulse me-2"></i>Información Médica
+                                    </h6>
+                                    <button class="btn btn-profile-edit btn-sm" onclick="addDiseaseTag()">
+                                        <i class="bi bi-plus me-1"></i> Agregar
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="medical-info">
+                                        <div class="mb-3">
+                                            <div class="info-label mb-2">Enfermedades Medicadas</div>
+                                            <div id="medicatedDiseases">
+                                                <span class="disease-badge">
+                                                    <i class="bi bi-lungs me-1"></i>
+                                                    Asma
+                                                    <button class="remove-btn" onclick="this.parentElement.remove(); showNotification('Enfermedad eliminada', 'info')">×</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <div class="info-label mb-2">Condiciones Físicas</div>
+                                            <div id="physicalConditions">
+                                                <span class="disease-badge">
+                                                    <i class="bi bi-bandaid me-1"></i>
+                                                    Artritis
+                                                    <button class="remove-btn" onclick="this.parentElement.remove(); showNotification('Condición eliminada', 'info')">×</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <i class="bi bi-info-circle me-2"></i>
+                                            <strong>Importante:</strong> Mantén tu información médica actualizada para recibir el mejor cuidado posible.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configuraciones -->
+                        <div class="col-lg-4 mb-4">
+                            <div class="profile-card fade-in-up">
+                                <div class="card-header">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-gear me-2"></i>Configuración General
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="general-settings">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div>
+                                                <div class="info-label">Cambiar Contraseña</div>
+                                                <small class="text-muted">Actualiza tu contraseña de acceso</small>
+                                            </div>
+                                            <button class="btn btn-change-password btn-sm" onclick="showChangePasswordModal()">
+                                                <i class="bi bi-key me-1"></i> Cambiar
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="notification-switch">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <div class="info-label">Notificaciones</div>
+                                                    <small class="text-muted">Recibe alertas importantes</small>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="notificationSwitch" checked onchange="toggleNotifications(event)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
 
             <!-- Bootstrap JS -->
             <script
@@ -285,6 +489,9 @@
             <script src="./js/ana-help-button.js"></script>            <script>
                 // Verificar autenticación al cargar la página
                 document.addEventListener('DOMContentLoaded', function() {
+                    // Inicializar animaciones
+                    initializeAnimations();
+                    
                     // Verificar si el usuario está logueado
                     if (!localStorage.getItem('userLoggedIn')) {
                         window.location.href = 'login.html';
@@ -322,6 +529,10 @@
 
                     // Inicializar funcionalidades de la página
                     initializeProfileFeatures();
+                    
+                    // Actualizar hora en tiempo real
+                    updateCurrentTime();
+                    setInterval(updateCurrentTime, 1000);
                 });
 
                 // Actualizar información del perfil
@@ -337,9 +548,7 @@
                     if (greetingElement) {
                         greetingElement.textContent = `Hola, ${userName}`;
                     }
-                }
-
-                // Inicializar funcionalidades del perfil
+                }                // Inicializar funcionalidades del perfil
                 function initializeProfileFeatures() {
                     // Funcionalidad de cambio de contraseña
                     const changePasswordBtn = document.querySelector('.change-password-btn');
@@ -358,6 +567,32 @@
                     
                     // Agregar funcionalidad de subida de foto
                     initializeProfilePhotoUpload();
+                }
+
+                // Inicializar animaciones
+                function initializeAnimations() {
+                    // Activar animaciones fade-in-up
+                    setTimeout(() => {
+                        const fadeElements = document.querySelectorAll('.fade-in-up');
+                        fadeElements.forEach((element, index) => {
+                            setTimeout(() => {
+                                element.classList.add('animate');
+                            }, index * 100);
+                        });
+                    }, 100);
+                }
+
+                // Actualizar hora actual
+                function updateCurrentTime() {
+                    const timeElement = document.querySelector('.current-time');
+                    if (timeElement) {
+                        const now = new Date();
+                        const timeString = now.toLocaleTimeString('es-ES', { 
+                            hour: '2-digit', 
+                            minute: '2-digit'
+                        });
+                        timeElement.textContent = timeString;
+                    }
                 }
 
                 // Modal de cambio de contraseña

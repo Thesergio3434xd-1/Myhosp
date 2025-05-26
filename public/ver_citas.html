@@ -4,18 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyHosp - Mis Citas Médicas</title>
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Estilos personalizados -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Estilos personalizados modernos -->
     <link rel="stylesheet" href="./css/modern-design.css">
     <link rel="stylesheet" href="./css/asistente.css">
     <link rel="stylesheet" href="./css/ana-help-button.css">
+    
+    <style>
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .icon-hover {
+            transition: transform 0.3s ease;
+        }
+        .icon-hover:hover {
+            transform: scale(1.1);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Estilos específicos para ver citas */
+        .appointment-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, #17a2b8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .appointment-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .appointment-card {
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            border-radius: var(--border-radius);
+        }
+        
+        .appointment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .appointment-card.pending {
+            border-left-color: #ffc107;
+        }
+        
+        .appointment-card.confirmed {
+            border-left-color: #28a745;
+        }
+        
+        .appointment-card.completed {
+            border-left-color: #17a2b8;
+        }
+        
+        .appointment-card.cancelled {
+            border-left-color: #dc3545;
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .filter-tabs .nav-link {
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.25rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tabs .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .doctor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .appointment-actions .btn {
+            border-radius: 20px;
+            font-size: 0.875rem;
+            padding: 0.375rem 1rem;
+        }
+        
+        .stats-overview {
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            border-radius: var(--border-radius);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .search-filters {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .icon-badge {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-actions .btn {
+            border-radius: var(--border-radius);
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+    </style>
 </head>
 <body>
     <!-- Asistente de voz Ana -->
@@ -38,22 +184,23 @@
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 px-0">
-                <div class="sidebar d-flex flex-column vh-100">
+                <div class="sidebar d-flex flex-column position-fixed vh-100" style="width: 16.666667%; z-index: 1030;">
                     <div class="text-center py-3">
                         <div class="logo">
-                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=80&h=80&fit=crop&crop=center" alt="MyHosp Logo" width="80" class="rounded-circle">
-                            <h5 class="text-white mt-2 mb-0">MyHosp</h5>
+                            <img src="./img/logo.png" alt="MyHosp Logo" width="60" height="60" class="logo-image mb-2">
+                            <h5 class="text-white fw-bold mb-0">MyHosp</h5>
+                            <small class="text-white-50 fw-medium">Sistema Hospitalario</small>
                         </div>
                     </div>
                     
-                    <nav class="nav flex-column flex-grow-1">
+                    <nav class="nav flex-column flex-grow-1 px-3">
                         <a class="nav-link" href="dashboard.index.html">
                             <i class="bi bi-house-door"></i> Dashboard
                         </a>
                         <a class="nav-link active" href="ver_citas.html">
                             <i class="bi bi-calendar3"></i> Mis Citas
                         </a>
-                        <a class="nav-link" href="crear_nueva_cita.html">
+                        <a class="nav-link" href="crear_citas.html">
                             <i class="bi bi-calendar-plus"></i> Nueva Cita
                         </a>
                         <a class="nav-link" href="historial_medico.html">
@@ -72,366 +219,549 @@
                     
                     <div class="mt-auto p-3">
                         <button class="logout-btn w-100" onclick="handleLogout()">
-                            <i class="bi bi-box-arrow-left"></i> Cerrar Sesión
+                            <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
                         </button>
                     </div>
                 </div>
+                
+                <!-- Overlay para móvil -->
+                <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
             </div>
 
             <!-- Contenido Principal -->
-            <div class="col-md-9 col-lg-10">
+            <div class="col-md-9 col-lg-10" style="margin-left: 16.666667%;">
                 <!-- Topbar -->
                 <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
-                    <div>
-                        <h4 class="text-white mb-0">Mis Citas Médicas</h4>
-                        <span class="text-white-50">Gestiona y revisa todas tus citas</span>
+                    <div class="d-flex align-items-center">
+                        <!-- Botón hamburguesa para móvil -->
+                        <button class="mobile-menu-toggle me-3" type="button" onclick="toggleSidebar()">
+                            <i class="bi bi-list fs-5"></i>
+                        </button>
+                        <div>
+                            <h4 class="text-white mb-0">Mis Citas Médicas</h4>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-white-50">Gestiona y revisa todas tus citas</span>
+                                <span class="text-white-50">•</span>
+                                <span class="text-white-50 current-time"></span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="d-flex align-items-center gap-3">
-                        <button class="btn btn-light">
-                            <i class="bi bi-calendar-plus me-1"></i> Nueva Cita
-                        </button>
-                        
-                        <div class="dropdown">
-                            <button class="btn btn-transparent text-white dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" class="rounded me-1"> ES
+                        <!-- Dropdown idioma -->
+                        <div class="dropdown language-dropdown">
+                            <button class="btn btn-language text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="flag-container">
+                                    <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image">
+                                </div>
+                                <span class="language-text">ES</span>
+                                <i class="bi bi-chevron-down small"></i>
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" alt="ES" width="24" class="rounded me-2"> Español</a></li>
-                                <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" alt="EN" width="24" class="rounded me-2"> English</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end language-menu">
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="es">
+                                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image me-2">
+                                        <span>Español</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="en">
+                                        <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15" class="flag-image me-2">
+                                        <span>English</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         
-                        <button class="btn btn-transparent text-white position-relative">
-                            <i class="bi bi-bell fs-5"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
-                        </button>
-                        
-                        <div class="dropdown">
-                            <button class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle">
-                                <span id="username">Neymar Tapias</span>
+                        <!-- Notificaciones -->
+                        <div class="dropdown notifications-dropdown">
+                            <button class="btn btn-notification text-white position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">2</span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi Perfil</a></li>
-                                <li><a class="dropdown-item" href="editar_perfil.html"><i class="bi bi-gear me-2"></i>Configuración</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end notifications-menu" style="min-width: 300px;">
+                                <li class="dropdown-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">Notificaciones</h6>
+                                        <small class="text-muted">2 nuevas</small>
+                                    </div>
+                                </li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-primary">
+                                                <i class="bi bi-calendar-check text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Cita confirmada</p>
+                                                <small class="text-muted">Dr. García - Mañana 10:30 AM</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-warning">
+                                                <i class="bi bi-clock text-white"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Recordatorio de cita</p>
+                                                <small class="text-muted">Cita en 2 horas - Dr. López</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-center text-primary" href="#">
+                                        Ver todas las notificaciones
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Perfil de usuario -->
+                        <div class="dropdown user-profile-dropdown">
+                            <button class="btn btn-user-profile text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle user-avatar">
+                                <div class="user-info-text d-none d-md-block">
+                                    <span class="user-name">Neymar Tapias</span>
+                                    <small class="user-role d-block text-white-50">Paciente</small>
+                                </div>
+                                <i class="bi bi-chevron-down small d-none d-md-inline"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-menu">
+                                <li class="dropdown-header">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Usuario" width="50" class="rounded-circle me-3">
+                                        <div>
+                                            <h6 class="mb-0">Neymar Tapias</h6>
+                                            <small class="text-muted">paciente@myhosp.com</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="perfil.html">
+                                        <i class="bi bi-person me-2 text-primary"></i>Mi Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="editar_perfil.html">
+                                        <i class="bi bi-gear me-2 text-secondary"></i>Configuración
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="Ayuda.html">
+                                        <i class="bi bi-question-circle me-2 text-info"></i>Ayuda
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" onclick="handleLogout()">
+                                        <i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
-                </div>                
-                <!-- Contenido de Citas -->
-                <div class="container-fluid py-4">
-                    <!-- Estadísticas Rápidas -->
-                    <div class="row mb-4">
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card bg-gradient-primary text-white fade-in-up">
-                                <div class="card-body text-center">
-                                    <i class="bi bi-calendar-check fs-1 mb-2"></i>
-                                    <h4>5</h4>
-                                    <p class="mb-0">Citas Programadas</p>
+                </div>
+
+                <!-- Hero Section -->
+                <div class="appointment-hero text-white py-5">
+                    <div class="container-fluid px-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-badge me-3">
+                                        <i class="bi bi-calendar3 fs-1"></i>
+                                    </div>
+                                    <div>
+                                        <h1 class="display-5 fw-bold mb-2">Mis Citas Médicas</h1>
+                                        <p class="lead mb-0">Gestiona y revisa todas tus citas de manera eficiente</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-light text-primary fs-6 px-3 py-2">
+                                        <i class="bi bi-calendar-check me-1"></i> 8 Citas Programadas
+                                    </span>
+                                    <span class="badge bg-light text-success fs-6 px-3 py-2">
+                                        <i class="bi bi-clock me-1"></i> 2 Próximas Esta Semana
+                                    </span>
+                                    <span class="badge bg-light text-info fs-6 px-3 py-2">
+                                        <i class="bi bi-hospital me-1"></i> 5 Especialidades
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="hero-actions">
+                                    <button class="btn btn-light btn-lg me-2" onclick="window.location.href='crear_citas.html'">
+                                        <i class="bi bi-calendar-plus me-2"></i>Nueva Cita
+                                    </button>
+                                    <button class="btn btn-outline-light btn-lg">
+                                        <i class="bi bi-calendar3-event me-2"></i>Calendario
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card bg-gradient-success text-white fade-in-up">
-                                <div class="card-body text-center">
-                                    <i class="bi bi-check-circle fs-1 mb-2"></i>
-                                    <h4>12</h4>
-                                    <p class="mb-0">Citas Completadas</p>
+                    </div>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="container-fluid px-4">
+                    <div class="stats-overview">
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-3">
+                                <div class="card stat-card border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <div class="icon-wrapper mb-3">
+                                            <i class="bi bi-calendar-check text-primary" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                        <h3 class="fw-bold text-primary mb-1">8</h3>
+                                        <p class="text-muted mb-0">Citas Programadas</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card bg-gradient-info text-white fade-in-up">
-                                <div class="card-body text-center">
-                                    <i class="bi bi-clock fs-1 mb-2"></i>
-                                    <h4>2</h4>
-                                    <p class="mb-0">Pendientes Hoy</p>
+                            <div class="col-md-3">
+                                <div class="card stat-card border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <div class="icon-wrapper mb-3">
+                                            <i class="bi bi-clock text-warning" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                        <h3 class="fw-bold text-warning mb-1">2</h3>
+                                        <p class="text-muted mb-0">Próximas</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card text-white" style="background: linear-gradient(135deg, #fd7e14 0%, #e55347 100%);">
-                                <div class="card-body text-center fade-in-up">
-                                    <i class="bi bi-x-circle fs-1 mb-2"></i>
-                                    <h4>1</h4>
-                                    <p class="mb-0">Canceladas</p>
+                            <div class="col-md-3">
+                                <div class="card stat-card border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <div class="icon-wrapper mb-3">
+                                            <i class="bi bi-check-circle text-success" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                        <h3 class="fw-bold text-success mb-1">15</h3>
+                                        <p class="text-muted mb-0">Completadas</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card stat-card border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <div class="icon-wrapper mb-3">
+                                            <i class="bi bi-hospital text-info" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                        <h3 class="fw-bold text-info mb-1">5</h3>
+                                        <p class="text-muted mb-0">Especialidades</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Filtros de Búsqueda -->
-                    <div class="card mb-4 fade-in-up">
-                        <div class="card-header">
-                            <h5 class="mb-0"><i class="bi bi-funnel me-2"></i>Filtros de Búsqueda</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">Estado de la Cita</label>
-                                    <select class="form-select" id="filterStatus">
+                    <!-- Search and Filters -->
+                    <div class="search-filters p-4 mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Buscar citas por doctor, especialidad o fecha..." id="searchInput">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <select class="form-select" style="max-width: 150px;" id="statusFilter">
                                         <option value="">Todos los estados</option>
-                                        <option value="programada">Programada</option>
-                                        <option value="completada">Completada</option>
-                                        <option value="cancelada">Cancelada</option>
-                                        <option value="en-proceso">En Proceso</option>
+                                        <option value="pending">Pendientes</option>
+                                        <option value="confirmed">Confirmadas</option>
+                                        <option value="completed">Completadas</option>
+                                        <option value="cancelled">Canceladas</option>
                                     </select>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" id="filterDate">
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">Especialidad</label>
-                                    <select class="form-select" id="filterSpecialty">
-                                        <option value="">Todas las especialidades</option>
-                                        <option value="cardiologia">Cardiología</option>
-                                        <option value="dermatologia">Dermatología</option>
-                                        <option value="pediatria">Pediatría</option>
-                                        <option value="neurologia">Neurología</option>
-                                        <option value="ginecologia">Ginecología</option>
+                                    <select class="form-select" style="max-width: 150px;" id="dateFilter">
+                                        <option value="">Todas las fechas</option>
+                                        <option value="today">Hoy</option>
+                                        <option value="week">Esta semana</option>
+                                        <option value="month">Este mes</option>
+                                        <option value="upcoming">Próximas</option>
                                     </select>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">Médico</label>
-                                    <input type="text" class="form-control" id="filterDoctor" placeholder="Buscar por médico...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <button class="btn btn-primary me-2">
-                                        <i class="bi bi-search me-1"></i>Buscar
-                                    </button>
-                                    <button class="btn btn-outline-secondary">
-                                        <i class="bi bi-arrow-repeat me-1"></i>Limpiar Filtros
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Lista de Citas -->
-                    <div class="card fade-in-up">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0"><i class="bi bi-calendar3 me-2"></i>Mis Citas Médicas</h5>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-outline-primary active">
-                                    <i class="bi bi-list"></i> Lista
+                    <!-- Filter Tabs -->
+                    <div class="filter-tabs mb-4">
+                        <ul class="nav nav-pills justify-content-center" id="appointmentTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="all-tab" data-bs-toggle="pill" data-bs-target="#all" type="button" role="tab">
+                                    <i class="bi bi-calendar3 me-1"></i>Todas (8)
                                 </button>
-                                <button type="button" class="btn btn-outline-primary">
-                                    <i class="bi bi-calendar3"></i> Calendario
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="upcoming-tab" data-bs-toggle="pill" data-bs-target="#upcoming" type="button" role="tab">
+                                    <i class="bi bi-clock me-1"></i>Próximas (2)
                                 </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="completed-tab" data-bs-toggle="pill" data-bs-target="#completed" type="button" role="tab">
+                                    <i class="bi bi-check-circle me-1"></i>Completadas (5)
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="cancelled-tab" data-bs-toggle="pill" data-bs-target="#cancelled" type="button" role="tab">
+                                    <i class="bi bi-x-circle me-1"></i>Canceladas (1)
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Appointments Content -->
+                    <div class="tab-content" id="appointmentsContent">
+                        <!-- All Appointments -->
+                        <div class="tab-pane fade show active" id="all" role="tabpanel">
+                            <div class="row g-4">
+                                <!-- Próxima Cita - Cardiología -->
+                                <div class="col-12">
+                                    <div class="card appointment-card confirmed border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=80&h=80&fit=crop&crop=face" alt="Dr. García" class="doctor-avatar mb-2">
+                                                    <span class="status-badge bg-success text-white">Confirmada</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="fw-bold mb-1">Dr. Carlos García</h5>
+                                                    <p class="text-primary mb-1"><i class="bi bi-heart-pulse me-1"></i>Cardiología</p>
+                                                    <p class="text-muted mb-2">Consulta de seguimiento y revisión de exámenes</p>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <span class="text-muted"><i class="bi bi-calendar3 me-1"></i>27 Mayo 2025</span>
+                                                        <span class="text-muted"><i class="bi bi-clock me-1"></i>10:30 AM</span>
+                                                        <span class="text-muted"><i class="bi bi-camera-video me-1"></i>Virtual</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="appointment-actions d-flex gap-2 justify-content-end">
+                                                        <button class="btn btn-primary btn-sm">
+                                                            <i class="bi bi-camera-video me-1"></i>Unirse
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary btn-sm">
+                                                            <i class="bi bi-pencil me-1"></i>Editar
+                                                        </button>
+                                                        <button class="btn btn-outline-danger btn-sm">
+                                                            <i class="bi bi-x-lg me-1"></i>Cancelar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Segunda Cita - Dermatología -->
+                                <div class="col-12">
+                                    <div class="card appointment-card pending border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <img src="https://images.unsplash.com/photo-1594824371349-4211ebb0ef8b?w=80&h=80&fit=crop&crop=face" alt="Dra. López" class="doctor-avatar mb-2">
+                                                    <span class="status-badge bg-warning text-white">Pendiente</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="fw-bold mb-1">Dra. María López</h5>
+                                                    <p class="text-primary mb-1"><i class="bi bi-bandaid me-1"></i>Dermatología</p>
+                                                    <p class="text-muted mb-2">Revisión de lunar y consulta general</p>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <span class="text-muted"><i class="bi bi-calendar3 me-1"></i>30 Mayo 2025</span>
+                                                        <span class="text-muted"><i class="bi bi-clock me-1"></i>2:00 PM</span>
+                                                        <span class="text-muted"><i class="bi bi-hospital me-1"></i>Presencial</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="appointment-actions d-flex gap-2 justify-content-end">
+                                                        <button class="btn btn-success btn-sm">
+                                                            <i class="bi bi-check-lg me-1"></i>Confirmar
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary btn-sm">
+                                                            <i class="bi bi-pencil me-1"></i>Editar
+                                                        </button>
+                                                        <button class="btn btn-outline-danger btn-sm">
+                                                            <i class="bi bi-x-lg me-1"></i>Cancelar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cita Completada - Oftalmología -->
+                                <div class="col-12">
+                                    <div class="card appointment-card completed border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=80&h=80&fit=crop&crop=face" alt="Dr. Hernández" class="doctor-avatar mb-2">
+                                                    <span class="status-badge bg-info text-white">Completada</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="fw-bold mb-1">Dr. Luis Hernández</h5>
+                                                    <p class="text-primary mb-1"><i class="bi bi-eye me-1"></i>Oftalmología</p>
+                                                    <p class="text-muted mb-2">Examen de vista y graduación de lentes</p>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <span class="text-muted"><i class="bi bi-calendar3 me-1"></i>20 Mayo 2025</span>
+                                                        <span class="text-muted"><i class="bi bi-clock me-1"></i>9:00 AM</span>
+                                                        <span class="text-muted"><i class="bi bi-hospital me-1"></i>Presencial</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="appointment-actions d-flex gap-2 justify-content-end">
+                                                        <button class="btn btn-primary btn-sm">
+                                                            <i class="bi bi-file-earmark-text me-1"></i>Ver Resultado
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary btn-sm">
+                                                            <i class="bi bi-download me-1"></i>Descargar
+                                                        </button>
+                                                        <button class="btn btn-outline-primary btn-sm">
+                                                            <i class="bi bi-arrow-repeat me-1"></i>Reagendar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Más citas... -->
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-outline-primary">
+                                        <i class="bi bi-plus-circle me-2"></i>Cargar más citas
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div id="appointmentsList">
-                                <!-- Cita 1 - Próxima -->
-                                <div class="row mb-4 p-3 border rounded-3 bg-light">
-                                    <div class="col-md-2 text-center">
-                                        <div class="bg-primary text-white rounded p-3">
-                                            <div class="fs-4 fw-bold">26</div>
-                                            <div class="small">Mayo</div>
-                                            <div class="small">2025</div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <span class="badge bg-success">Próxima</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=60&h=60&fit=crop&crop=face" alt="Dr. García" width="60" class="rounded-circle me-3">
-                                            <div>
-                                                <h5 class="mb-1">Dr. Carlos García</h5>
-                                                <p class="text-muted mb-1">Cardiólogo</p>
-                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Hospital San José</small>
-                                            </div>
-                                        </div>
-                                        <div class="row text-muted small">
-                                            <div class="col-6">
-                                                <i class="bi bi-clock me-1"></i>10:30 AM - 11:00 AM
-                                            </div>
-                                            <div class="col-6">
-                                                <i class="bi bi-telephone me-1"></i>Consulta Presencial
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-end">
-                                        <div class="mb-2">
-                                            <span class="badge bg-warning text-dark">Confirmar Asistencia</span>
-                                        </div>
-                                        <div class="btn-group-vertical d-grid gap-2">
-                                            <a href="confirmar_citas.html" class="btn btn-success btn-sm">
-                                                <i class="bi bi-check-circle me-1"></i>Confirmar
-                                            </a>
-                                            <button class="btn btn-outline-primary btn-sm">
-                                                <i class="bi bi-pencil me-1"></i>Reagendar
-                                            </button>
-                                            <button class="btn btn-outline-danger btn-sm">
-                                                <i class="bi bi-x-circle me-1"></i>Cancelar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <!-- Cita 2 - Programada -->
-                                <div class="row mb-4 p-3 border rounded-3">
-                                    <div class="col-md-2 text-center">
-                                        <div class="bg-info text-white rounded p-3">
-                                            <div class="fs-4 fw-bold">28</div>
-                                            <div class="small">Mayo</div>
-                                            <div class="small">2025</div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <span class="badge bg-primary">Programada</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=60&h=60&fit=crop&crop=face" alt="Dra. López" width="60" class="rounded-circle me-3">
-                                            <div>
-                                                <h5 class="mb-1">Dra. Ana López</h5>
-                                                <p class="text-muted mb-1">Dermatóloga</p>
-                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Clínica Santa María</small>
+                        <!-- Upcoming Appointments -->
+                        <div class="tab-pane fade" id="upcoming" role="tabpanel">
+                            <div class="row g-4">
+                                <!-- Solo las próximas 2 citas -->
+                                <div class="col-12">
+                                    <div class="card appointment-card confirmed border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=80&h=80&fit=crop&crop=face" alt="Dr. García" class="doctor-avatar mb-2">
+                                                    <span class="status-badge bg-success text-white">Confirmada</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="fw-bold mb-1">Dr. Carlos García</h5>
+                                                    <p class="text-primary mb-1"><i class="bi bi-heart-pulse me-1"></i>Cardiología</p>
+                                                    <p class="text-muted mb-2">Consulta de seguimiento y revisión de exámenes</p>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <span class="text-muted"><i class="bi bi-calendar3 me-1"></i>27 Mayo 2025</span>
+                                                        <span class="text-muted"><i class="bi bi-clock me-1"></i>10:30 AM</span>
+                                                        <span class="text-muted"><i class="bi bi-camera-video me-1"></i>Virtual</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="appointment-actions d-flex gap-2 justify-content-end">
+                                                        <button class="btn btn-primary btn-sm">
+                                                            <i class="bi bi-camera-video me-1"></i>Unirse
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary btn-sm">
+                                                            <i class="bi bi-pencil me-1"></i>Editar
+                                                        </button>
+                                                        <button class="btn btn-outline-danger btn-sm">
+                                                            <i class="bi bi-x-lg me-1"></i>Cancelar
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row text-muted small">
-                                            <div class="col-6">
-                                                <i class="bi bi-clock me-1"></i>2:00 PM - 2:30 PM
-                                            </div>
-                                            <div class="col-6">
-                                                <i class="bi bi-camera-video me-1"></i>Consulta Virtual
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-end">
-                                        <div class="mb-2">
-                                            <span class="badge bg-success">Confirmada</span>
-                                        </div>
-                                        <div class="btn-group-vertical d-grid gap-2">
-                                            <button class="btn btn-primary btn-sm">
-                                                <i class="bi bi-camera-video me-1"></i>Unirse
-                                            </button>
-                                            <button class="btn btn-outline-primary btn-sm">
-                                                <i class="bi bi-pencil me-1"></i>Reagendar
-                                            </button>
-                                            <button class="btn btn-outline-danger btn-sm">
-                                                <i class="bi bi-x-circle me-1"></i>Cancelar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Cita 3 - Completada -->
-                                <div class="row mb-4 p-3 border rounded-3 opacity-75">
-                                    <div class="col-md-2 text-center">
-                                        <div class="bg-success text-white rounded p-3">
-                                            <div class="fs-4 fw-bold">22</div>
-                                            <div class="small">Mayo</div>
-                                            <div class="small">2025</div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <span class="badge bg-success">Completada</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=60&h=60&fit=crop&crop=face" alt="Dr. Martínez" width="60" class="rounded-circle me-3">
-                                            <div>
-                                                <h5 class="mb-1">Dr. Luis Martínez</h5>
-                                                <p class="text-muted mb-1">Pediatra</p>
-                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Hospital Central</small>
-                                            </div>
-                                        </div>
-                                        <div class="row text-muted small">
-                                            <div class="col-6">
-                                                <i class="bi bi-clock me-1"></i>9:00 AM - 9:30 AM
-                                            </div>
-                                            <div class="col-6">
-                                                <i class="bi bi-telephone me-1"></i>Consulta Presencial
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-end">
-                                        <div class="mb-2">
-                                            <span class="badge bg-success">Atendida</span>
-                                        </div>
-                                        <div class="btn-group-vertical d-grid gap-2">
-                                            <button class="btn btn-outline-info btn-sm">
-                                                <i class="bi bi-file-earmark-medical me-1"></i>Ver Resultados
-                                            </button>
-                                            <button class="btn btn-outline-warning btn-sm">
-                                                <i class="bi bi-star me-1"></i>Calificar
-                                            </button>
-                                            <button class="btn btn-outline-success btn-sm">
-                                                <i class="bi bi-arrow-repeat me-1"></i>Repetir Cita
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Cita 4 - Cancelada -->
-                                <div class="row mb-4 p-3 border rounded-3 bg-danger bg-opacity-10">
-                                    <div class="col-md-2 text-center">
-                                        <div class="bg-danger text-white rounded p-3">
-                                            <div class="fs-4 fw-bold">20</div>
-                                            <div class="small">Mayo</div>
-                                            <div class="small">2025</div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <span class="badge bg-danger">Cancelada</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <img src="https://images.unsplash.com/photo-1594824797077-d0e4cf08b3c8?w=60&h=60&fit=crop&crop=face" alt="Dra. Rodríguez" width="60" class="rounded-circle me-3">
-                                            <div>
-                                                <h5 class="mb-1">Dra. María Rodríguez</h5>
-                                                <p class="text-muted mb-1">Neuróloga</p>
-                                                <small class="text-primary"><i class="bi bi-geo-alt me-1"></i>Clínica Norte</small>
-                                            </div>
-                                        </div>
-                                        <div class="row text-muted small">
-                                            <div class="col-6">
-                                                <i class="bi bi-clock me-1"></i>4:00 PM - 4:30 PM
-                                            </div>
-                                            <div class="col-6">
-                                                <i class="bi bi-x-circle me-1"></i>Cancelada por médico
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-end">
-                                        <div class="mb-2">
-                                            <span class="badge bg-danger">Motivo: Emergencia</span>
-                                        </div>
-                                        <div class="btn-group-vertical d-grid gap-2">
-                                            <button class="btn btn-primary btn-sm">
-                                                <i class="bi bi-calendar-plus me-1"></i>Reagendar
-                                            </button>
-                                            <button class="btn btn-outline-info btn-sm">
-                                                <i class="bi bi-info-circle me-1"></i>Ver Detalles
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Paginación -->
-                            <nav aria-label="Navegación de citas">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Siguiente</a>
-                                    </li>
-                                </ul>
-                            </nav>
+                        <!-- Completed Appointments -->
+                        <div class="tab-pane fade" id="completed" role="tabpanel">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="card appointment-card completed border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=80&h=80&fit=crop&crop=face" alt="Dr. Hernández" class="doctor-avatar mb-2">
+                                                    <span class="status-badge bg-info text-white">Completada</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="fw-bold mb-1">Dr. Luis Hernández</h5>
+                                                    <p class="text-primary mb-1"><i class="bi bi-eye me-1"></i>Oftalmología</p>
+                                                    <p class="text-muted mb-2">Examen de vista y graduación de lentes</p>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <span class="text-muted"><i class="bi bi-calendar3 me-1"></i>20 Mayo 2025</span>
+                                                        <span class="text-muted"><i class="bi bi-clock me-1"></i>9:00 AM</span>
+                                                        <span class="text-muted"><i class="bi bi-hospital me-1"></i>Presencial</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="appointment-actions d-flex gap-2 justify-content-end">
+                                                        <button class="btn btn-primary btn-sm">
+                                                            <i class="bi bi-file-earmark-text me-1"></i>Ver Resultado
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary btn-sm">
+                                                            <i class="bi bi-download me-1"></i>Descargar
+                                                        </button>
+                                                        <button class="btn btn-outline-primary btn-sm">
+                                                            <i class="bi bi-arrow-repeat me-1"></i>Reagendar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cancelled Appointments -->
+                        <div class="tab-pane fade" id="cancelled" role="tabpanel">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="card appointment-card cancelled border-0 shadow-sm">
+                                        <div class="card-body p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=80&h=80&fit=crop&crop=face" alt="Dr. Ruiz" class="doctor-avatar mb-2">
+                                                    <span class="status-badge bg-danger text-white">Cancelada</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="fw-bold mb-1">Dr. Roberto Ruiz</h5>
+                                                    <p class="text-primary mb-1"><i class="bi bi-clipboard-pulse me-1"></i>Medicina General</p>
+                                                    <p class="text-muted mb-2">Consulta general y chequeo de rutina</p>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <span class="text-muted"><i class="bi bi-calendar3 me-1"></i>15 Mayo 2025</span>
+                                                        <span class="text-muted"><i class="bi bi-clock me-1"></i>11:00 AM</span>
+                                                        <span class="text-muted"><i class="bi bi-hospital me-1"></i>Presencial</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="appointment-actions d-flex gap-2 justify-content-end">
+                                                        <button class="btn btn-primary btn-sm">
+                                                            <i class="bi bi-arrow-repeat me-1"></i>Reagendar
+                                                        </button>
+                                                        <button class="btn btn-outline-info btn-sm">
+                                                            <i class="bi bi-info-circle me-1"></i>Ver Motivo
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -441,492 +771,301 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Scripts del asistente Ana -->
-    <script src="./js/activation-prompt.js"></script>
-    <script src="./js/initial-notification.js"></script>
-    <script src="./js/ana-consent.js"></script>
-    <script src="./js/assistant-controls.js"></script>
-    <script type="module" src="./js/ViewModels/assistant.js"></script>
+    <!-- Scripts del asistente -->
+    <script src="./js/ViewModels/assistant-refactored.js"></script>
     <script src="./js/ana-help-button.js"></script>
+    <script src="./js/assistant-controls.js"></script>
+    <script src="./js/notification-manager.js"></script>
+
+    <script>
+        // Inicialización del dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar tiempo actual
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 60000);
+            
+            // Inicializar funcionalidades
+            initializeSearch();
+            initializeFilters();
+            initializeTabs();
+            initializeAppointmentActions();
+            
+            // Animaciones de entrada
+            animateCards();
+        });
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            });
+            const elements = document.querySelectorAll('.current-time');
+            elements.forEach(element => {
+                element.textContent = timeString;
+            });
+        }
+
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    filterAppointments(searchTerm);
+                });
+            }
+        }
+
+        function initializeFilters() {
+            const statusFilter = document.getElementById('statusFilter');
+            const dateFilter = document.getElementById('dateFilter');
+            
+            if (statusFilter) {
+                statusFilter.addEventListener('change', function(e) {
+                    filterByStatus(e.target.value);
+                });
+            }
+            
+            if (dateFilter) {
+                dateFilter.addEventListener('change', function(e) {
+                    filterByDate(e.target.value);
+                });
+            }
+        }
+
+        function initializeTabs() {
+            const tabButtons = document.querySelectorAll('#appointmentTabs button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-bs-target');
+                    showAppointmentsByTab(targetTab);
+                });
+            });
+        }
+
+        function initializeAppointmentActions() {
+            // Botones de unirse a videollamada
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn') && e.target.closest('.btn').innerHTML.includes('bi-camera-video')) {
+                    e.preventDefault();
+                    joinVideoCall();
+                }
+                
+                if (e.target.closest('.btn') && e.target.closest('.btn').innerHTML.includes('bi-pencil')) {
+                    e.preventDefault();
+                    editAppointment(e.target.closest('.appointment-card'));
+                }
+                
+                if (e.target.closest('.btn') && e.target.closest('.btn').innerHTML.includes('bi-x-lg')) {
+                    e.preventDefault();
+                    cancelAppointment(e.target.closest('.appointment-card'));
+                }
+                
+                if (e.target.closest('.btn') && e.target.closest('.btn').innerHTML.includes('bi-check-lg')) {
+                    e.preventDefault();
+                    confirmAppointment(e.target.closest('.appointment-card'));
+                }
+            });
+        }
+
+        function filterAppointments(searchTerm) {
+            const appointmentCards = document.querySelectorAll('.appointment-card');
+            appointmentCards.forEach(card => {
+                const doctorName = card.querySelector('h5').textContent.toLowerCase();
+                const specialty = card.querySelector('.text-primary').textContent.toLowerCase();
+                const description = card.querySelector('.text-muted').textContent.toLowerCase();
+                
+                const matches = doctorName.includes(searchTerm) || 
+                               specialty.includes(searchTerm) || 
+                               description.includes(searchTerm);
+                
+                card.closest('.col-12').style.display = matches ? 'block' : 'none';
+            });
+        }
+
+        function filterByStatus(status) {
+            const appointmentCards = document.querySelectorAll('.appointment-card');
+            appointmentCards.forEach(card => {
+                if (!status) {
+                    card.closest('.col-12').style.display = 'block';
+                } else {
+                    const hasStatus = card.classList.contains(status);
+                    card.closest('.col-12').style.display = hasStatus ? 'block' : 'none';
+                }
+            });
+        }
+
+        function filterByDate(dateRange) {
+            // Implementar filtro por rango de fechas
+            console.log('Filtrar por fecha:', dateRange);
+            // Aquí iría la lógica de filtrado por fechas
+        }
+
+        function showAppointmentsByTab(targetTab) {
+            // Ya manejado por Bootstrap, pero se puede extender funcionalidad
+            console.log('Mostrar pestaña:', targetTab);
+        }
+
+        function joinVideoCall() {
+            // Mostrar modal de videollamada o redirigir
+            showNotification('Iniciando videollamada...', 'info');
+            setTimeout(() => {
+                window.location.href = 'consultas_online.html';
+            }, 1500);
+        }
+
+        function editAppointment(appointmentCard) {
+            // Extraer datos de la cita y redirigir a edición
+            const doctorName = appointmentCard.querySelector('h5').textContent;
+            showNotification(`Editando cita con ${doctorName}`, 'info');
+            setTimeout(() => {
+                window.location.href = 'editar_citas.html';
+            }, 1000);
+        }
+
+        function cancelAppointment(appointmentCard) {
+            const doctorName = appointmentCard.querySelector('h5').textContent;
+            
+            if (confirm(`¿Estás seguro de que deseas cancelar la cita con ${doctorName}?`)) {
+                // Simular cancelación
+                appointmentCard.classList.remove('confirmed', 'pending');
+                appointmentCard.classList.add('cancelled');
+                
+                const statusBadge = appointmentCard.querySelector('.status-badge');
+                statusBadge.className = 'status-badge bg-danger text-white';
+                statusBadge.textContent = 'Cancelada';
+                
+                showNotification('Cita cancelada exitosamente', 'success');
+                
+                // Actualizar acciones disponibles
+                const actionsContainer = appointmentCard.querySelector('.appointment-actions');
+                actionsContainer.innerHTML = `
+                    <button class="btn btn-primary btn-sm">
+                        <i class="bi bi-arrow-repeat me-1"></i>Reagendar
+                    </button>
+                    <button class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-info-circle me-1"></i>Ver Motivo
+                    </button>
+                `;
+            }
+        }
+
+        function confirmAppointment(appointmentCard) {
+            const doctorName = appointmentCard.querySelector('h5').textContent;
+            
+            // Simular confirmación
+            appointmentCard.classList.remove('pending');
+            appointmentCard.classList.add('confirmed');
+            
+            const statusBadge = appointmentCard.querySelector('.status-badge');
+            statusBadge.className = 'status-badge bg-success text-white';
+            statusBadge.textContent = 'Confirmada';
+            
+            showNotification(`Cita con ${doctorName} confirmada`, 'success');
+            
+            // Actualizar acciones disponibles
+            const actionsContainer = appointmentCard.querySelector('.appointment-actions');
+            actionsContainer.innerHTML = `
+                <button class="btn btn-primary btn-sm">
+                    <i class="bi bi-camera-video me-1"></i>Unirse
+                </button>
+                <button class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-pencil me-1"></i>Editar
+                </button>
+                <button class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-x-lg me-1"></i>Cancelar
+                </button>
+            `;
+        }
+
+        function animateCards() {
+            const cards = document.querySelectorAll('.appointment-card, .stat-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        function showNotification(message, type = 'info') {
+            // Crear notificación temporal
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remover después de 3 segundos
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        // Sidebar toggle para móvil
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
+
+        // Función de logout
+        function handleLogout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                showNotification('Cerrando sesión...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }
+        }
+
+        // Manejo de cambio de idioma
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.language-option')) {
+                e.preventDefault();
+                const lang = e.target.closest('.language-option').getAttribute('data-lang');
+                changeLanguage(lang);
+            }
+        });
+
+        function changeLanguage(lang) {
+            const langData = {
+                'es': {
+                    flag: 'https://flagcdn.com/w24/co.png',
+                    text: 'ES',
+                    name: 'Español'
+                },
+                'en': {
+                    flag: 'https://flagcdn.com/w24/us.png',
+                    text: 'EN',
+                    name: 'English'
+                }
+            };
+            
+            if (langData[lang]) {
+                const flagImg = document.querySelector('.language-dropdown .flag-image');
+                const langText = document.querySelector('.language-dropdown .language-text');
+                
+                flagImg.src = langData[lang].flag;
+                flagImg.alt = langData[lang].text;
+                langText.textContent = langData[lang].text;
+                
+                showNotification(`Idioma cambiado a ${langData[lang].name}`, 'success');
+            }
+        }
+    </script>
 </body>
 </html>
-        <script src="./js/ana-help-button.js"></script>
-        <script src="./js/ViewModels/assistant-refactored.js"></script>
-        <script src="./js/notification-manager.js"></script>
-
-        <script>
-            // Datos de ejemplo de citas
-            const sampleAppointments = [
-                {
-                    id: 1,
-                    doctor: "Amanda Otero",
-                    specialty: "Pediatría",
-                    date: "2025-05-28",
-                    time: "10:00",
-                    status: "programada",
-                    location: "Consultorio 201"
-                },
-                {
-                    id: 2,
-                    doctor: "Pablo Ruiz",
-                    specialty: "Cardiología",
-                    date: "2025-05-30",
-                    time: "14:30",
-                    status: "programada",
-                    location: "Consultorio 305"
-                },
-                {
-                    id: 3,
-                    doctor: "Jessica Reyes",
-                    specialty: "Dermatología",
-                    date: "2025-05-25",
-                    time: "09:15",
-                    status: "completada",
-                    location: "Consultorio 102"
-                }
-            ];
-
-            document.addEventListener('DOMContentLoaded', function() {
-                // Verificar autenticación
-                if (!localStorage.getItem('userLoggedIn')) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-
-                // Inicializar asistente
-                if (typeof AssistantViewModel !== 'undefined') {
-                    window.assistantVM = new AssistantViewModel();
-                }
-
-                // Cargar citas
-                displayAppointments(sampleAppointments);
-
-                // Funcionalidad de logout
-                document.getElementById('logoutBtn').addEventListener('click', function() {
-                    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-                        localStorage.removeItem('userLoggedIn');
-                        localStorage.removeItem('userDocument');
-                        localStorage.removeItem('userName');
-                        window.location.href = 'login.html';
-                    }
-                });
-
-                // Filtros
-                document.getElementById('filterStatus').addEventListener('change', filterAppointments);
-                document.getElementById('filterDate').addEventListener('change', filterAppointments);
-                document.getElementById('filterSpecialty').addEventListener('change', filterAppointments);
-            });
-
-            function displayAppointments(appointments) {
-                const container = document.getElementById('appointmentsList');
-                
-                if (appointments.length === 0) {
-                    container.innerHTML = `
-                        <div class="text-center py-5">
-                            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
-                            <h5 class="text-muted">No tienes citas programadas</h5>
-                            <a href="crear_citas.html" class="btn btn-primary mt-3">Agendar una cita</a>
-                        </div>
-                    `;
-                    return;
-                }
-
-                container.innerHTML = appointments.map(appointment => `
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-md-8">
-                                    <h5 class="card-title mb-1">Dr. ${appointment.doctor}</h5>
-                                    <p class="text-muted mb-2">${appointment.specialty}</p>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <i class="fas fa-calendar me-2 text-primary"></i>
-                                        <span>${formatDate(appointment.date)} a las ${appointment.time}</span>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
-                                        <span>${appointment.location}</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 text-end">
-                                    <span class="badge ${getStatusBadgeClass(appointment.status)} mb-3">
-                                        ${getStatusText(appointment.status)}
-                                    </span>
-                                    <div>
-                                        ${appointment.status === 'programada' ? `
-                                            <button class="btn btn-sm btn-outline-primary me-2" onclick="editAppointment(${appointment.id})">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" onclick="cancelAppointment(${appointment.id})">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        ` : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            function formatDate(dateString) {
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                return new Date(dateString).toLocaleDateString('es-ES', options);
-            }
-
-            function getStatusBadgeClass(status) {
-                switch(status) {
-                    case 'programada': return 'bg-warning text-dark';
-                    case 'completada': return 'bg-success';
-                    case 'cancelada': return 'bg-danger';
-                    default: return 'bg-secondary';
-                }
-            }
-
-            function getStatusText(status) {
-                switch(status) {
-                    case 'programada': return 'Programada';
-                    case 'completada': return 'Completada';
-                    case 'cancelada': return 'Cancelada';
-                    default: return status;
-                }
-            }
-
-            function filterAppointments() {
-                const statusFilter = document.getElementById('filterStatus').value;
-                const dateFilter = document.getElementById('filterDate').value;
-                const specialtyFilter = document.getElementById('filterSpecialty').value;
-
-                let filtered = sampleAppointments.filter(appointment => {
-                    if (statusFilter && appointment.status !== statusFilter) return false;
-                    if (dateFilter && appointment.date !== dateFilter) return false;
-                    if (specialtyFilter && appointment.specialty.toLowerCase() !== specialtyFilter) return false;
-                    return true;
-                });
-
-                displayAppointments(filtered);
-            }
-
-            function editAppointment(id) {
-                localStorage.setItem('editAppointmentId', id);
-                window.location.href = 'editar_citas.html';
-            }
-
-            function cancelAppointment(id) {
-                if (confirm('¿Estás seguro de que deseas cancelar esta cita?')) {
-                    alert('Cita cancelada exitosamente');
-                    // En un caso real, aquí se haría la llamada al servidor
-                    location.reload();
-                }
-            }
-        </script>
-                <i id="micIcon" class="fas fa-microphone"></i>
-            </button>
-            <div id="assistantStatus" class="assistant-status"></div>
-        </div>
-
-        <div class="sidebar">
-            <div>
-                <div class="logo">
-                    <img src="img/logo.png" alt="Logo" width="80">
-                </div>
-                <ul class="nav flex-column">
-                    <ul class="nav flex-column">
-                        <li><a class="nav-link" href="dashboard.html"><i
-                                    class="bi bi-speedometer2"></i>
-                                Dashboard</a></li>
-                        <li><a class="nav-link active" href="citas.html"><i
-                                    class="bi bi-calendar3"></i> Citas</a></li>
-                        <li><a class="nav-link "
-                                href="historial_medico.html"><i
-                                    class="bi bi-folder2-open"></i> Historial
-                                Médico</a></li>
-                        <li><a class="nav-link" href="consultas_online.html"><i
-                                    class="bi bi-camera-video"></i> Consulta
-                                Online</a></li>
-                        <li><a class="nav-link" href="ayuda.html"><i
-                                    class="bi bi-question-circle"></i>
-                                Ayuda</a></li>
-                    </ul>
-                </div>
-                <button class="logout-btn"><i class="bi bi-box-arrow-left"></i>
-                    Salir</button>
-            </div>
-
-            <div class="main">
-                <!-- Navbar Perfil -->
-                <div
-                class="topbar d-flex justify-content-between align-items-center px-4"
-                style="background-color: #0d99b4; color: white; height: 60px;">
-                <div>
-                    <strong>Hola, Neymar Tapias</strong><br>
-                    <span
-                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
-                </div>
-
-                <div class="d-flex align-items-center gap-3 ms-auto">
-                    <!-- Dropdown idioma -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
-                            type="button" id="dropdownIdioma"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none; font-size: 0.85rem;">
-                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
-                                width="24" height="auto"
-                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                            ES
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownIdioma"
-                            style="min-width: 70px; font-size: 0.85rem;">
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/co.png"
-                                        alt="ES" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    ES
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="dropdown-item d-flex align-items-center gap-2"
-                                    href="#">
-                                    <img src="https://flagcdn.com/w24/us.png"
-                                        alt="EN" width="24" height="auto"
-                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
-                                    EN
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Notificaciones -->
-                    <button type="button"
-                        class="btn position-relative btn-transparent text-white p-0"
-                        style="background: transparent; border: none; font-size: 1rem;">
-                        <i class="bi bi-bell"></i>
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
-                            3
-                            <span class="visually-hidden">notificaciones
-                                nuevas</span>
-                        </span>
-                    </button>
-
-                    <!-- Dropdown perfil -->
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
-                            type="button" id="dropdownPerfil"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background: transparent; border: none;">
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="User" width="32" height="32"
-                                class="rounded-circle">
-                            <span class="fw-semibold">Neymar Tapias</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownPerfil">
-                            <li><a class="dropdown-item" href="perfil.html">Mi
-                                    Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="#">Configuración</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-                <!-- Contenido principal -->
-                <div class="p-4">
-                    <ul class="nav nav-tabs mb-3">
-                        <li class="nav-item">
-                            <button class="nav-link active">Hoy</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link"
-                                style="color: #0d99b4;">Mañana</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link"
-                                style="color: #0d99b4;">Miércoles</button>
-                        </li>
-                        <li class="ms-auto">
-                            <select class="form-select form-select-sm w-auto">
-                                <option>ver 10</option>
-                                <option>ver 20</option>
-                                <option>ver 50</option>
-                            </select>
-                        </li>
-                    </ul>
-
-                    <!-- CITA -->
-                    <div class="card mb-2">
-                        <div class="card-body d-flex align-items-start gap-3">
-                            <div class="text-center">
-                                <div class="fw-bold">Lun</div>
-                                <div class="fs-5">15</div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="text-muted small">
-                                    <i class="bi bi-clock me-1"></i> 09:00am -
-                                    09:30am
-                                </div>
-                                <div class="text-muted small">
-                                    <i class="bi bi-person me-1"></i> Juan
-                                    Carlos Villamizar Rojas
-                                </div>
-                                <div class="fw-semibold">Psicología por primera
-                                    vez</div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button
-                                        class="btn btn-light btn-sm dropdown-toggle"
-                                        data-bs-toggle="dropdown">Edit</button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item"
-                                                href="editar_citas.html">Editar</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="#">Eliminar</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Repite bloques similares con diferentes datos -->
-
-                    <div class="card mb-2">
-                        <div class="card-body d-flex align-items-start gap-3">
-                            <div class="text-center">
-                                <div class="fw-bold">Mar</div>
-                                <div class="fs-5">16</div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="text-muted small">
-                                    <i class="bi bi-clock me-1"></i> 06:00am -
-                                    07:30am
-                                </div>
-                                <div class="text-muted small">
-                                    <i class="bi bi-person me-1"></i>
-                                    Laboratorio
-                                </div>
-                                <div class="fw-semibold">Exámenes médico</div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button
-                                        class="btn btn-light btn-sm dropdown-toggle"
-                                        data-bs-toggle="dropdown">Edit</button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item"
-                                                href="#">Editar</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="#">Eliminar</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-2">
-                        <div class="card-body d-flex align-items-start gap-3">
-                            <div class="text-center">
-                                <div class="fw-bold">Mier</div>
-                                <div class="fs-5">17</div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="text-muted small">
-                                    <i class="bi bi-clock me-1"></i> 09:00am -
-                                    09:30am
-                                </div>
-                                <div class="text-muted small">
-                                    <i class="bi bi-person me-1"></i>
-                                    Juan Carlos Villamizar Rojas
-                                </div>
-                                <div class="fw-semibold">Psicología</div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button
-                                        class="btn btn-light btn-sm dropdown-toggle"
-                                        data-bs-toggle="dropdown">Edit</button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item"
-                                                href="#">Editar</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="#">Eliminar</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-2">
-                        <div class="card-body d-flex align-items-start gap-3">
-                            <div class="text-center">
-                                <div class="fw-bold">Vier</div>
-                                <div class="fs-5">28</div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="text-muted small">
-                                    <i class="bi bi-clock me-1"></i> 05:00pm -
-                                    06:30am
-                                </div>
-                                <div class="text-muted small">
-                                    <i class="bi bi-person me-1"></i>
-                                    Maria Eugenia Lourdes Martinez
-                                </div>
-                                <div class="fw-semibold">Endocrinologia por primera vez</div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button
-                                        class="btn btn-light btn-sm dropdown-toggle"
-                                        data-bs-toggle="dropdown">Edit</button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item"
-                                                href="#">Editar</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="#">Eliminar</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Bootstrap JS -->
-            <script
-                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-            <!-- Socket.IO -->
-            <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-            <!-- Script de notificación inicial para el asistente -->
-            <script src="./js/activation-prompt.js"></script>
-
-            <!-- Script para notificación inicial sobre capacidades de Ana -->
-            <script src="./js/initial-notification.js"></script>
-
-            <!-- Script de consentimiento para Ana -->
-            <script src="./js/ana-consent.js"></script>
-
-            <!-- Script para controlar los botones del asistente -->
-            <script src="./js/assistant-controls.js"></script>
-            <!-- Asistente de voz -->
-            <script type="module" src="./js/ViewModels/assistant.js"></script>
-
-            <!-- Botón de ayuda de Ana -->
-            <script src="./js/ana-help-button.js"></script>
-        </body>
-    </html>

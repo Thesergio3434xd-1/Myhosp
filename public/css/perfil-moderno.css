@@ -1,0 +1,484 @@
+/* MyHosp - Estilos específicos para Perfil */
+/* USAMOS ÚNICAMENTE LOS COLORES DE modern-design.css */
+
+/* Animaciones */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.fade-in-up.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Efectos de cristal */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Tarjetas de perfil */
+.profile-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.profile-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.profile-card .card-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--info-color) 100%);
+    color: white;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    border: none;
+    padding: 1.25rem 1.5rem;
+}
+
+.profile-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Imagen de perfil mejorada */
+.profile-img {
+    cursor: pointer;
+    border: 4px solid rgba(13, 153, 180, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.profile-img:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(13, 153, 180, 0.2);
+}
+
+/* Información del usuario */
+.user-info h5 {
+    color: var(--dark-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.user-info .user-status {
+    background: linear-gradient(135deg, var(--success-color) 0%, #20c997 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.user-info .user-location {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}
+
+/* Campos editables */
+.editable-field {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    background: rgba(13, 153, 180, 0.02);
+}
+
+.editable-field:hover {
+    background: rgba(13, 153, 180, 0.05);
+    border-color: rgba(13, 153, 180, 0.1);
+    transform: translateX(2px);
+}
+
+.editable-field.editing {
+    background: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 180, 0.15);
+}
+
+/* Badges de enfermedades */
+.disease-badge {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #6c757d 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.disease-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.disease-badge .remove-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.disease-badge .remove-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Botones mejorados */
+.btn-profile-edit {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #17a2b8 100%);
+    border: none;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(13, 110, 180, 0.2);
+}
+
+.btn-profile-edit:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #138496 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 110, 180, 0.3);
+}
+
+.btn-change-password {
+    background: linear-gradient(135deg, var(--warning-color) 0%, #e0a800 100%);
+    border: none;
+    color: var(--dark-color);
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(255, 193, 7, 0.2);
+}
+
+.btn-change-password:hover {
+    background: linear-gradient(135deg, #e0a800 0%, #d39e00 100%);
+    color: var(--dark-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
+}
+
+/* Switch de notificaciones mejorado */
+.notification-switch {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid rgba(13, 110, 180, 0.1);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.form-check-input:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 180, 0.25);
+}
+
+/* Modal mejorado */
+.modal-content {
+    border: none;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #17a2b8 100%);
+    color: white;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    border: none;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    border: none;
+    padding: 1rem 2rem 2rem;
+}
+
+/* Campos de formulario en modal */
+.modal .form-control {
+    border: 2px solid #e1e5e9;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.modal .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 180, 0.15);
+}
+
+.modal .form-label {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Información en filas */
+.info-row {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.info-row:hover {
+    background: rgba(13, 110, 180, 0.02);
+    border-radius: var(--border-radius);
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    color: var(--dark-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Notificaciones mejoradas */
+.notification {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    border-left: 4px solid;
+}
+
+.notification.alert-success {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(32, 201, 151, 0.1) 100%);
+    border-left-color: var(--success-color);
+    color: #155724;
+}
+
+.notification.alert-danger {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.1) 100%);
+    border-left-color: var(--danger-color);
+    color: #721c24;
+}
+
+.notification.alert-info {
+    background: linear-gradient(135deg, rgba(23, 162, 184, 0.1) 0%, rgba(13, 110, 180, 0.1) 100%);
+    border-left-color: var(--info-color);
+    color: #0c5460;
+}
+
+/* Hero section del perfil */
+.profile-hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, #17a2b8 100%);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    animation: float 20s ease-in-out infinite;
+    z-index: 1;
+}
+
+.profile-hero .card-body {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Animaciones de entrada */
+@keyframes slideIn {
+    from { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+/* Efectos de hover para iconos */
+.icon-hover {
+    transition: all 0.3s ease;
+}
+
+.icon-hover:hover {
+    transform: scale(1.2);
+    color: var(--primary-color);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .profile-card {
+        margin-bottom: 1rem;
+    }
+    
+    .profile-card .card-body {
+        padding: 1rem;
+    }
+    
+    .profile-hero {
+        margin-bottom: 1rem;
+    }
+    
+    .info-row {
+        padding: 0.75rem 0;
+    }
+    
+    .info-row:hover {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .disease-badge {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+        margin: 0.2rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-footer {
+        padding: 1rem 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile-card .card-header {
+        padding: 1rem;
+    }
+    
+    .profile-card .card-body {
+        padding: 0.75rem;
+    }
+    
+    .btn-profile-edit,
+    .btn-change-password {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .info-label {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Mejoras adicionales para campos específicos */
+.contact-info {
+    background: linear-gradient(135deg, rgba(13, 110, 180, 0.05) 0%, rgba(23, 162, 184, 0.05) 100%);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+/* Asegurar visibilidad de todos los elementos */
+.profile-card, .profile-hero {
+    visibility: visible !important;
+    opacity: 1;
+}
+
+/* Corrección para elementos que puedan estar ocultos */
+.card-body, .card-header {
+    display: block !important;
+}
+
+/* Responsive adicional */
+@media (max-width: 768px) {
+    .profile-card .card-body {
+        padding: 1rem;
+    }
+    
+    .info-row {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Estilos para prevenir problemas de visualización */
+* {
+    box-sizing: border-box;
+}
+
+.container-fluid {
+    min-height: 100vh;
+}
+
+/* Asegurar que el contenido esté visible */
+.fade-in-up:not(.animate) {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.medical-info {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.05) 0%, rgba(32, 201, 151, 0.05) 100%);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+.general-settings {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.05) 0%, rgba(224, 168, 0, 0.05) 100%);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin: 0.5rem 0;
+}

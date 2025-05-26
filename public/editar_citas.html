@@ -1,299 +1,575 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyHosp - Editar Cita</title>
-    
-    <!-- Bootstrap 5.3 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyHosp - Editar Cita Médica</title>
+    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Estilos modernos -->
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Estilos personalizados modernos -->
     <link rel="stylesheet" href="./css/modern-design.css">
+    <link rel="stylesheet" href="./css/asistente.css">
+    <link rel="stylesheet" href="./css/ana-help-button.css">
+    
+    <style>
+        .edit-form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .appointment-info-card {
+            background: rgba(var(--primary-color-rgb), 0.1);
+            border-left: 4px solid var(--primary-color);
+            border-radius: var(--border-radius);
+        }
+        
+        .doctor-info {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .time-slot {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .time-slot:hover {
+            border-color: var(--primary-color);
+            background: rgba(var(--primary-color-rgb), 0.1);
+        }
+        
+        .time-slot.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .time-slot.unavailable {
+            background: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .change-summary {
+            background: rgba(var(--warning-color-rgb), 0.1);
+            border-left: 4px solid var(--warning-color);
+            border-radius: var(--border-radius);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, #17a2b8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .floating-label {
+            position: relative;
+        }
+        
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label,
+        .floating-label textarea:focus + label,
+        .floating-label textarea:not(:placeholder-shown) + label {
+            transform: translateY(-1.5rem) scale(0.85);
+            color: var(--primary-color);
+        }
+        
+        .floating-label label {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.75rem;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            color: #6c757d;
+        }
+        
+        .availability-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+        }
+    </style>
 </head>
-
 <body>
     <!-- Asistente de voz Ana -->
     <div id="ana-assistant" class="voice-assistant">
-        <!-- Botones para controlar el asistente -->
         <div class="assistant-controls">
             <button id="enableAssistant" class="control-button enable-button" aria-label="Activar asistente de voz">
-                <i class="bi bi-toggle-on"></i>
+                <i class="fas fa-toggle-on"></i>
             </button>
-            <button id="disableAssistant" class="control-button disable-button"
-                aria-label="Desactivar asistente de voz">
-                <i class="bi bi-toggle-off"></i>
+            <button id="disableAssistant" class="control-button disable-button" aria-label="Desactivar asistente de voz">
+                <i class="fas fa-toggle-off"></i>
             </button>
         </div>
         <button id="micButton" class="mic-button" aria-label="Activar asistente de voz">
-            <i id="micIcon" class="bi bi-mic"></i>
+            <i id="micIcon" class="fas fa-microphone"></i>
         </button>
         <div id="assistantStatus" class="assistant-status"></div>
     </div>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=100&h=100&fit=crop&crop=center" alt="MyHosp Logo" class="logo-img">
-                <span class="logo-text">MyHosp</span>
-            </div>
-        </div>
-
-        <div class="sidebar-nav">
-            <a href="dashboard.index.html" class="nav-item">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="ver_citas.html" class="nav-item active">
-                <i class="bi bi-calendar3"></i>
-                <span>Citas</span>
-            </a>
-            <a href="historial_medico.html" class="nav-item">
-                <i class="bi bi-folder2-open"></i>
-                <span>Historial Médico</span>
-            </a>
-            <a href="consultas_online.html" class="nav-item">
-                <i class="bi bi-camera-video"></i>
-                <span>Consulta Online</span>
-            </a>
-            <a href="perfil.html" class="nav-item">
-                <i class="bi bi-person"></i>
-                <span>Perfil</span>
-            </a>
-        </div>
-
-        <div class="sidebar-footer">
-            <button class="logout-btn" id="logoutBtn">
-                <i class="bi bi-box-arrow-left"></i>
-                <span>Cerrar Sesión</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main">
-        <!-- Topbar -->
-        <div class="topbar">
-            <div class="topbar-left">
-                <button class="sidebar-toggle">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div class="page-title">
-                    <h4 class="mb-0">Editar Cita</h4>
-                    <small class="text-muted">Modifica los detalles de tu cita médica</small>
-                </div>
-            </div>
-
-            <div class="topbar-right">
-                <!-- Selector de idioma -->
-                <div class="dropdown">
-                    <button class="btn btn-ghost dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15">
-                        <span>ES</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/co.png" width="20" height="15"> ES</a></li>
-                        <li><a class="dropdown-item" href="#"><img src="https://flagcdn.com/w24/us.png" width="20" height="15"> EN</a></li>
-                    </ul>
-                </div>
-
-                <!-- Notificaciones -->
-                <button class="btn btn-ghost position-relative">
-                    <i class="bi bi-bell"></i>
-                    <span class="notification-badge">3</span>
-                </button>
-
-                <!-- Perfil -->
-                <div class="dropdown">
-                    <button class="btn btn-ghost dropdown-toggle user-dropdown" type="button" data-bs-toggle="dropdown">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Usuario" class="user-avatar">
-                        <span>Neymar Tapias</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person"></i> Mi Perfil</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn2"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-                            <img
-                                src="https://randomuser.me/api/portraits/men/32.jpg"
-                                alt="User" width="32" height="32"
-                                class="rounded-circle">
-                            <span class="fw-semibold">Neymar Tapias</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="dropdownPerfil">
-                            <li><a class="dropdown-item" href="perfil.html">Mi
-                                    Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="#">Configuración</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>        <!-- Contenido principal -->
-        <div class="container-fluid px-4 py-4">
-            <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb" class="mb-4">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="dashboard.index.html">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="ver_citas.html">Citas</a></li>
-                    <li class="breadcrumb-item active">Editar Cita</li>
-                </ol>
-            </nav>
-
-            <!-- Información de la cita actual -->
-            <div class="row mb-4">
-                <div class="col-md-8">
-                    <div class="card glass-card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">
-                                <i class="bi bi-calendar-check text-primary me-2"></i>
-                                Editar Cita Médica
-                            </h5>
-                            <span class="badge bg-success">CITA-001</span>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar d-flex flex-column position-fixed vh-100" style="width: 16.666667%; z-index: 1030;">
+                    <div class="text-center py-3">
+                        <div class="logo">
+                            <img src="./img/logo.png" alt="MyHosp Logo" width="60" height="60" class="logo-image mb-2">
+                            <h5 class="text-white fw-bold mb-0">MyHosp</h5>
+                            <small class="text-white-50 fw-medium">Sistema Hospitalario</small>
                         </div>
-                        <div class="card-body">
-                            <form id="editarCitaForm">
-                                <div class="row g-3">
-                                    <!-- Especialidad -->
-                                    <div class="col-md-6">
-                                        <label for="especialidad" class="form-label">Especialidad</label>
-                                        <select class="form-select" id="especialidad" required>
-                                            <option value="">Seleccionar especialidad</option>
-                                            <option value="psicologia" selected>Psicología</option>
-                                            <option value="medicina-general">Medicina General</option>
-                                            <option value="pediatria">Pediatría</option>
-                                            <option value="cardiologia">Cardiología</option>
-                                            <option value="dermatologia">Dermatología</option>
-                                            <option value="neurologia">Neurología</option>
-                                        </select>
-                                    </div>
+                    </div>
+                    
+                    <nav class="nav flex-column flex-grow-1 px-3">
+                        <a class="nav-link" href="dashboard.index.html">
+                            <i class="bi bi-house-door"></i> Dashboard
+                        </a>                        <a class="nav-link active" href="ver_citas.html">
+                            <i class="bi bi-calendar3"></i> Mis Citas
+                        </a>
+                        <a class="nav-link" href="crear_citas.html">
+                            <i class="bi bi-calendar-plus"></i> Nueva Cita
+                        </a>
+                        <a class="nav-link" href="historial_medico.html">
+                            <i class="bi bi-folder2-open"></i> Historial Médico
+                        </a>
+                        <a class="nav-link" href="consultas_online.html">
+                            <i class="bi bi-camera-video"></i> Consulta Online
+                        </a>
+                        <a class="nav-link" href="perfil.html">
+                            <i class="bi bi-person"></i> Mi Perfil
+                        </a>                        <a class="nav-link" href="Ayuda.html">
+                            <i class="bi bi-question-circle"></i> Ayuda
+                        </a>
+                    </nav>
+                    
+                    <div class="mt-auto p-3">
+                        <button class="logout-btn w-100" onclick="handleLogout()">
+                            <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Overlay para móvil -->
+                <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+            </div>
 
-                                    <!-- Médico -->
-                                    <div class="col-md-6">
-                                        <label for="medico" class="form-label">Médico</label>
-                                        <select class="form-select" id="medico" required>
-                                            <option value="">Seleccionar médico</option>
-                                            <option value="dr-moreno" selected>Dr. Alexander Moreno</option>
-                                            <option value="dra-gomez">Dra. Laura Gómez</option>
-                                            <option value="dr-rodriguez">Dr. Carlos Rodríguez</option>
-                                        </select>
+            <!-- Contenido Principal -->
+            <div class="col-md-9 col-lg-10" style="margin-left: 16.666667%;">
+                <!-- Topbar -->
+                <div class="topbar d-flex justify-content-between align-items-center px-4" style="height: 70px;">
+                    <div class="d-flex align-items-center">
+                        <!-- Botón hamburguesa para móvil -->
+                        <button class="mobile-menu-toggle me-3" type="button" onclick="toggleSidebar()">
+                            <i class="bi bi-list fs-5"></i>
+                        </button>
+                        <div>
+                            <h4 class="text-white mb-0">Editar Cita Médica</h4>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-white-50">Modifica los detalles de tu cita</span>
+                                <span class="text-white-50">•</span>
+                                <span class="text-white-50 current-time"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- Dropdown idioma -->
+                        <div class="dropdown language-dropdown">
+                            <button class="btn btn-language text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="flag-container">
+                                    <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image">
+                                </div>
+                                <span class="language-text">ES</span>
+                                <i class="bi bi-chevron-down small"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end language-menu">
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="es">
+                                        <img src="https://flagcdn.com/w24/co.png" alt="ES" width="20" height="15" class="flag-image me-2">
+                                        <span>Español</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item language-option" href="#" data-lang="en">
+                                        <img src="https://flagcdn.com/w24/us.png" alt="EN" width="20" height="15" class="flag-image me-2">
+                                        <span>English</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Notificaciones -->
+                        <div class="dropdown notifications-dropdown">
+                            <button class="btn btn-notification text-white position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning notification-badge">1</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end notifications-menu" style="min-width: 300px;">
+                                <li class="dropdown-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">Notificaciones</h6>
+                                        <small class="text-muted">1 nueva</small>
                                     </div>
-
-                                    <!-- Tipo de cita -->
-                                    <div class="col-12">
-                                        <label class="form-label">Modalidad de consulta</label>
-                                        <div class="row g-2">
-                                            <div class="col-md-6">
-                                                <div class="form-check-card">
-                                                    <input class="form-check-input" type="radio" name="tipoCita" id="presencial" value="Presencial">
-                                                    <label class="form-check-label-card" for="presencial">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="bi bi-building text-primary me-3 fs-4"></i>
-                                                            <div>
-                                                                <div class="fw-semibold">Presencial</div>
-                                                                <small class="text-muted">Consulta en el hospital</small>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item notification-item" href="#">
+                                        <div class="d-flex align-items-start">
+                                            <div class="notification-icon bg-warning">
+                                                <i class="bi bi-pencil-square text-white"></i>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-check-card">
-                                                    <input class="form-check-input" type="radio" name="tipoCita" id="virtual" value="Virtual" checked>
-                                                    <label class="form-check-label-card" for="virtual">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="bi bi-camera-video text-success me-3 fs-4"></i>
-                                                            <div>
-                                                                <div class="fw-semibold">Virtual</div>
-                                                                <small class="text-muted">Videollamada online</small>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                </div>
+                                            <div class="notification-content">
+                                                <p class="mb-1 fw-medium">Edición de cita</p>
+                                                <small class="text-muted">Puedes modificar tu cita hasta 24h antes</small>
                                             </div>
                                         </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-center text-primary" href="#">
+                                        Ver todas las notificaciones
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Perfil de usuario -->
+                        <div class="dropdown user-profile-dropdown">
+                            <button class="btn btn-user-profile text-white d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Usuario" width="40" class="rounded-circle user-avatar">
+                                <div class="user-info-text d-none d-md-block">
+                                    <span class="user-name">Neymar Tapias</span>
+                                    <small class="user-role d-block text-white-50">Paciente</small>
+                                </div>
+                                <i class="bi bi-chevron-down small d-none d-md-inline"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-menu">
+                                <li class="dropdown-header">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="Usuario" width="50" class="rounded-circle me-3">
+                                        <div>
+                                            <h6 class="mb-0">Neymar Tapias</h6>
+                                            <small class="text-muted">paciente@myhosp.com</small>
+                                        </div>
                                     </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="perfil.html">
+                                        <i class="bi bi-person me-2 text-primary"></i>Mi Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="editar_perfil.html">
+                                        <i class="bi bi-gear me-2 text-secondary"></i>Configuración
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="Ayuda.html">
+                                        <i class="bi bi-question-circle me-2 text-info"></i>Ayuda
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" onclick="handleLogout()">
+                                        <i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>                </div>
 
-                                    <!-- Fecha -->
-                                    <div class="col-md-6">
-                                        <label for="fecha" class="form-label">Fecha de la cita</label>
-                                        <input type="date" class="form-control" id="fecha" value="2025-04-10" required>
+                <!-- Hero Section -->
+                <div class="hero-section text-white py-5 position-relative">
+                    <div class="container-fluid px-4">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <div class="hero-content position-relative" style="z-index: 2;">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="hero-icon me-3">
+                                            <i class="bi bi-pencil-square fs-1"></i>
+                                        </div>
+                                        <div>
+                                            <h1 class="hero-title mb-2">Editar Cita Médica</h1>
+                                            <p class="hero-subtitle mb-0">Modifica los detalles de tu cita médica de forma fácil y rápida</p>
+                                        </div>
                                     </div>
-
-                                    <!-- Hora -->
-                                    <div class="col-md-6">
-                                        <label for="hora" class="form-label">Hora de la cita</label>
-                                        <select class="form-select" id="hora" required>
-                                            <option value="">Seleccionar hora</option>
-                                            <option value="08:00">8:00 AM</option>
-                                            <option value="09:00">9:00 AM</option>
-                                            <option value="10:00">10:00 AM</option>
-                                            <option value="11:00">11:00 AM</option>
-                                            <option value="14:00" selected>2:00 PM</option>
-                                            <option value="15:00">3:00 PM</option>
-                                            <option value="16:00">4:00 PM</option>
-                                            <option value="17:00">5:00 PM</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Motivo de consulta -->
-                                    <div class="col-12">
-                                        <label for="problema" class="form-label">Motivo de consulta</label>
-                                        <select class="form-select" id="problema" required>
-                                            <option value="">Seleccionar motivo</option>
-                                            <option value="depresion" selected>Depresión</option>
-                                            <option value="ansiedad">Ansiedad</option>
-                                            <option value="estres">Estrés</option>
-                                            <option value="trastorno-sueno">Trastorno del sueño</option>
-                                            <option value="control-rutinario">Control rutinario</option>
-                                            <option value="otro">Otro</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Notas adicionales -->
-                                    <div class="col-12">
-                                        <label for="notas" class="form-label">Notas adicionales</label>
-                                        <textarea class="form-control" id="notas" rows="3" placeholder="Describe síntomas adicionales o información relevante...">Seguimiento de tratamiento para depresión post-natal</textarea>
-                                    </div>
-
-                                    <!-- Botones de acción -->
-                                    <div class="col-12">
-                                        <div class="d-flex gap-2 flex-wrap">
-                                            <button type="submit" class="btn btn-primary flex-fill" id="editarCitaBtn">
-                                                <i class="bi bi-check-circle me-2"></i>
-                                                Guardar Cambios
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger" id="eliminarCitaBtn">
-                                                <i class="bi bi-trash me-2"></i>
-                                                Eliminar
-                                            </button>
-                                            <a href="ver_citas.html" class="btn btn-outline-secondary">
-                                                <i class="bi bi-arrow-left me-2"></i>
-                                                Volver
-                                            </a>
+                                    
+                                    <div class="hero-features">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <div class="feature-item">
+                                                    <i class="bi bi-clock-history text-warning me-2"></i>
+                                                    <span>Cambios hasta 24h antes</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="feature-item">
+                                                    <i class="bi bi-shield-check text-success me-2"></i>
+                                                    <span>Proceso seguro</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="feature-item">
+                                                    <i class="bi bi-telephone text-info me-2"></i>
+                                                    <span>Soporte 24/7</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="col-lg-4 text-end">
+                                <div class="hero-illustration position-relative" style="z-index: 2;">
+                                    <div class="floating-card">
+                                        <div class="card bg-white bg-opacity-20 border-0 text-white">
+                                            <div class="card-body text-center">
+                                                <i class="bi bi-calendar-check fs-1 mb-3"></i>
+                                                <h5 class="card-title">Cita Actual</h5>
+                                                <p class="card-text">Psicología<br>Dr. Alexander Moreno<br>10 Apr, 2:00 PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div>                <!-- Contenido principal -->
+                <div class="main-content">
+                    <!-- Breadcrumb -->
+                    <nav aria-label="breadcrumb" class="px-4 pt-4">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="dashboard.index.html" class="text-decoration-none">
+                                    <i class="bi bi-house-door me-1"></i>Dashboard
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="ver_citas.html" class="text-decoration-none">Mis Citas</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Editar Cita</li>
+                        </ol>
+                    </nav>                    <!-- Contenido del formulario -->
+                    <div class="container-fluid px-4 py-4">
+                        <!-- Información de la cita actual -->
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <div class="card modern-card edit-form-container">
+                                    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center py-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="header-icon me-3">
+                                                <i class="bi bi-calendar-check text-primary fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="mb-0 fw-bold">Editar Cita Médica</h5>
+                                                <small class="text-muted">Modifica los detalles de tu cita médica</small>
+                                            </div>
+                                        </div>
+                                        <span class="badge bg-primary fs-6 px-3 py-2">CITA-001</span>
+                                    </div>                                    <div class="card-body p-4">
+                                        <form id="editarCitaForm" class="needs-validation" novalidate>
+                                            <div class="row g-4">
+                                                <!-- Especialidad -->
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="especialidad" required>
+                                                            <option value="">Seleccionar especialidad</option>
+                                                            <option value="psicologia" selected>Psicología</option>
+                                                            <option value="medicina-general">Medicina General</option>
+                                                            <option value="pediatria">Pediatría</option>
+                                                            <option value="cardiologia">Cardiología</option>
+                                                            <option value="dermatologia">Dermatología</option>
+                                                            <option value="neurologia">Neurología</option>
+                                                        </select>
+                                                        <label for="especialidad">
+                                                            <i class="bi bi-heart-pulse me-2"></i>Especialidad Médica
+                                                        </label>
+                                                        <div class="invalid-feedback">
+                                                            Por favor selecciona una especialidad.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Médico -->
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="medico" required>
+                                                            <option value="">Seleccionar médico</option>
+                                                            <option value="dr-moreno" selected>Dr. Alexander Moreno</option>
+                                                            <option value="dra-gomez">Dra. Laura Gómez</option>
+                                                            <option value="dr-rodriguez">Dr. Carlos Rodríguez</option>
+                                                        </select>
+                                                        <label for="medico">
+                                                            <i class="bi bi-person-badge me-2"></i>Médico Especialista
+                                                        </label>
+                                                        <div class="invalid-feedback">
+                                                            Por favor selecciona un médico.
+                                                        </div>
+                                                    </div>
+                                                </div>                                                <!-- Tipo de cita -->
+                                                <div class="col-12">
+                                                    <label class="form-label fw-semibold mb-3">
+                                                        <i class="bi bi-gear me-2"></i>Modalidad de Consulta
+                                                    </label>
+                                                    <div class="row g-3">
+                                                        <div class="col-md-6">
+                                                            <div class="card appointment-type-card h-100">
+                                                                <input class="form-check-input d-none" type="radio" name="tipoCita" id="presencial" value="Presencial">
+                                                                <label class="card-body text-center cursor-pointer" for="presencial">
+                                                                    <div class="appointment-type-icon mb-3">
+                                                                        <i class="bi bi-building text-primary fs-1"></i>
+                                                                    </div>
+                                                                    <h6 class="fw-bold">Presencial</h6>
+                                                                    <p class="text-muted small mb-0">Consulta en el hospital</p>
+                                                                    <div class="appointment-type-check">
+                                                                        <i class="bi bi-check-circle-fill text-success"></i>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="card appointment-type-card h-100 selected">
+                                                                <input class="form-check-input d-none" type="radio" name="tipoCita" id="virtual" value="Virtual" checked>
+                                                                <label class="card-body text-center cursor-pointer" for="virtual">
+                                                                    <div class="appointment-type-icon mb-3">
+                                                                        <i class="bi bi-camera-video text-success fs-1"></i>
+                                                                    </div>
+                                                                    <h6 class="fw-bold">Virtual</h6>
+                                                                    <p class="text-muted small mb-0">Videollamada online</p>
+                                                                    <div class="appointment-type-check">
+                                                                        <i class="bi bi-check-circle-fill text-success"></i>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                                <!-- Fecha y Hora -->
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <input type="date" class="form-control" id="fecha" value="2025-04-10" required>
+                                                        <label for="fecha">
+                                                            <i class="bi bi-calendar3 me-2"></i>Fecha de la Cita
+                                                        </label>
+                                                        <div class="invalid-feedback">
+                                                            Por favor selecciona una fecha válida.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="hora" required>
+                                                            <option value="">Seleccionar hora</option>
+                                                            <option value="08:00">8:00 AM</option>
+                                                            <option value="09:00">9:00 AM</option>
+                                                            <option value="10:00">10:00 AM</option>
+                                                            <option value="11:00">11:00 AM</option>
+                                                            <option value="14:00" selected>2:00 PM</option>
+                                                            <option value="15:00">3:00 PM</option>
+                                                            <option value="16:00">4:00 PM</option>
+                                                            <option value="17:00">5:00 PM</option>
+                                                        </select>
+                                                        <label for="hora">
+                                                            <i class="bi bi-clock me-2"></i>Hora de la Cita
+                                                        </label>
+                                                        <div class="invalid-feedback">
+                                                            Por favor selecciona una hora.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Motivo de consulta -->
+                                                <div class="col-12">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="problema" required>
+                                                            <option value="">Seleccionar motivo</option>
+                                                            <option value="depresion" selected>Depresión</option>
+                                                            <option value="ansiedad">Ansiedad</option>
+                                                            <option value="estres">Estrés</option>
+                                                            <option value="trastorno-sueno">Trastorno del sueño</option>
+                                                            <option value="control-rutinario">Control rutinario</option>
+                                                            <option value="otro">Otro</option>
+                                                        </select>
+                                                        <label for="problema">
+                                                            <i class="bi bi-clipboard2-pulse me-2"></i>Motivo de Consulta
+                                                        </label>
+                                                        <div class="invalid-feedback">
+                                                            Por favor selecciona el motivo de consulta.
+                                                        </div>
+                                                    </div>
+                                                </div>                                                <!-- Notas adicionales -->
+                                                <div class="col-12">
+                                                    <div class="form-floating">
+                                                        <textarea class="form-control" id="notas" rows="3" style="height: 100px;" placeholder="Describe síntomas adicionales o información relevante...">Seguimiento de tratamiento para depresión post-natal</textarea>
+                                                        <label for="notas">
+                                                            <i class="bi bi-chat-text me-2"></i>Notas Adicionales
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Alerta de cambios -->
+                                                <div class="col-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                                        <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+                                                        <div>
+                                                            <strong>Importante:</strong> Los cambios en la cita deben realizarse al menos 24 horas antes de la fecha programada.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Botones de acción -->
+                                                <div class="col-12">
+                                                    <div class="d-flex gap-3 flex-wrap">
+                                                        <button type="submit" class="btn btn-primary btn-lg flex-fill" id="editarCitaBtn">
+                                                            <i class="bi bi-check-circle me-2"></i>
+                                                            Guardar Cambios
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-danger btn-lg" id="eliminarCitaBtn">
+                                                            <i class="bi bi-trash me-2"></i>
+                                                            Eliminar Cita
+                                                        </button>
+                                                        <a href="ver_citas.html" class="btn btn-outline-secondary btn-lg">
+                                                            <i class="bi bi-arrow-left me-2"></i>
+                                                            Volver
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
                 <!-- Panel de información del médico -->
                 <div class="col-md-4">
