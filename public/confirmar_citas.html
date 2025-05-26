@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MyHosp - Citas</title>
+       <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+        <!-- Font Awesome -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+            rel="stylesheet">
+        <!-- Google Fonts - Lexend (Asegurando que esté disponible con todos los pesos) -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <!-- Estilos personalizados -->
+        <link rel="stylesheet" href="./css/style.css" />
+        <!-- Estilos específicos para autenticación -->
+        <link rel="stylesheet" href="./css/auth.css" />
+        <!-- Estilos del asistente -->
+        <link rel="stylesheet" href="./css/asistente.css" />
+        <!-- Estilos para el botón de ayuda de Ana -->
+        <link rel="stylesheet" href="./css/ana-help-button.css" />
+        <link rel="stylesheet" href="./css/dashboard.css" />
+        <!-- Estilos unificados para notificaciones -->
+  <link rel="stylesheet" href="./css/notifications.css" />
+    </head>
+    <body>
+        <!-- Asistente de voz Ana -->
+        <div id="ana-assistant" class="voice-assistant">
+            <!-- Botones para controlar el asistente -->
+            <div class="assistant-controls">
+                <button id="enableAssistant"
+                    class="control-button enable-button"
+                    aria-label="Activar asistente de voz">
+                    <i class="fas fa-toggle-on"></i>
+                </button>
+                <button id="disableAssistant"
+                    class="control-button disable-button"
+                    aria-label="Desactivar asistente de voz">
+                    <i class="fas fa-toggle-off"></i>
+                </button>
+            </div>
+            <button id="micButton" class="mic-button"
+                aria-label="Activar asistente de voz">
+                <i id="micIcon" class="fas fa-microphone"></i>
+            </button>
+            <div id="assistantStatus" class="assistant-status"></div>
+        </div>
+
+        <div class="sidebar">
+            <div>
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo" width="80">
+                </div>
+                <ul class="nav flex-column">
+                    <li><a class="nav-link" href="dashboard.html"><i
+                                class="bi bi-speedometer2"></i>
+                            Dashboard</a></li>
+                    <li><a class="nav-link" href="citas.html"><i
+                                class="bi bi-calendar3"></i> Citas</a></li>
+                    <li><a class="nav-link active"
+                            href="historial_medico.html"><i
+                                class="bi bi-folder2-open"></i> Historial
+                            Médico</a></li>
+                    <li><a class="nav-link" href="consultas_online.html"><i
+                                class="bi bi-camera-video"></i> Consulta
+                            Online</a></li>
+                    <li><a class="nav-link" href="ayuda.html"><i
+                                class="bi bi-question-circle"></i>
+                            Ayuda</a></li>
+                </ul>
+            </div>
+            <a class="logout-btn" href="index.html"><i
+                    class="bi bi-box-arrow-left"></i>
+                Salir</a>
+        </div>
+
+        <div class="main">
+            <!-- Navbar Perfil -->
+            <div
+                class="topbar d-flex justify-content-between align-items-center px-4"
+                style="background-color: #0d99b4; color: white; height: 60px;">
+                <div>
+                    <strong>Hola, Neymar Tapias</strong><br>
+                    <span
+                        style="font-weight: 700; font-size: 1.25rem;">Citas</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 ms-auto">
+                    <!-- Dropdown idioma -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white dropdown-toggle d-flex align-items-center gap-1 py-0 px-2"
+                            type="button" id="dropdownIdioma"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none; font-size: 0.85rem;">
+                            <img src="https://flagcdn.com/w24/co.png" alt="ES"
+                                width="24" height="auto"
+                                style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                            ES
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownIdioma"
+                            style="min-width: 70px; font-size: 0.85rem;">
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/co.png"
+                                        alt="ES" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    ES
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item d-flex align-items-center gap-2"
+                                    href="#">
+                                    <img src="https://flagcdn.com/w24/us.png"
+                                        alt="EN" width="24" height="auto"
+                                        style="object-fit: cover; border-radius: 4px; margin-right: 6px; vertical-align: middle;">
+                                    EN
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Notificaciones -->
+                    <button type="button"
+                        class="btn position-relative btn-transparent text-white p-0"
+                        style="background: transparent; border: none; font-size: 1rem;">
+                        <i class="bi bi-bell"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="font-size: 0.6rem; padding: 0.15em 0.3em;">
+                            3
+                            <span class="visually-hidden">notificaciones
+                                nuevas</span>
+                        </span>
+                    </button>
+
+                    <!-- Dropdown perfil -->
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-transparent text-white d-flex align-items-center gap-2 dropdown-toggle"
+                            type="button" id="dropdownPerfil"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="background: transparent; border: none;">
+                            <img
+                                src="https://randomuser.me/api/portraits/men/32.jpg"
+                                alt="User" width="32" height="32"
+                                class="rounded-circle">
+                            <span class="fw-semibold">Neymar Tapias</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="dropdownPerfil">
+                            <li><a class="dropdown-item" href="perfil.html">Mi
+                                    Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="#">Configuración</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <!-- Contenido principal -->
+            <div class="p-4">
+                <div class="bg-white p-4 shadow rounded">
+                    <div class="row gx-5">
+                        <!-- Col Izquierda -->
+                        <div
+                            class="col-lg-4 border-right d-flex flex-column justify-content-between">
+                            <br><br>
+                            <h5 class="text-center"
+                                style="color: #888b8c;">
+                                Detalles de la cita
+                            </h5>
+                            <hr>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-heart-pulse fs-4 me-2"></i>
+                                <span>Psicología</span>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-person-circle fs-4 me-2"></i>
+                                <span>Dr. Alexander Moreno</span>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-camera-video fs-4 me-2"></i>
+                                <span>Cita virtual</span>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-clock fs-4 me-2"></i>
+                                <span>60 mins</span>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-currency-dollar fs-4 me-2"></i>
+                                <span>80.000 COP</span>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-calendar-event fs-4 me-2"></i>
+                                <span>02:00pm - 03:00pm, Miércoles, 10 de
+                                    abril.</span>
+                            </div>
+                        </div>
+
+                        <!-- Col Derecha -->
+                        <div class="col-lg-8 px-lg-5 mt-4 mt-lg-0">
+                            <h2 class="text-center mb-4"
+                                style="color: #0d99b4;">
+                                Verificacion de datos
+                            </h2>
+                            <form action="ver_citas.html">
+                                <div class="mb-3">
+                                    <label for="nombrePaciente"
+                                        class="form-label">Nombre del
+                                        paciente</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="nombrePaciente"
+                                        placeholder="Neymar Tapias" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="idPaciente"
+                                        class="form-label">Identificación del
+                                        paciente</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="idPaciente"
+                                        placeholder="1111222333" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="celularContacto"
+                                        class="form-label">Celular de
+                                        contacto</label>
+                                    <input
+                                        type="tel"
+                                        class="form-control"
+                                        id="celularContacto"
+                                        placeholder="+57 3103358842" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="correoPaciente"
+                                        class="form-label">Correo electrónico
+                                        del paciente</label>
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        id="correoPaciente"
+                                        placeholder="Neymar.Top@gmail.com" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="problemaMedico"
+                                        class="form-label">Problema</label>
+                                    <select class="form-select"
+                                        id="problemaMedico"
+                                        aria-label="Selecciona problema médico">
+                                        <option selected>Escoja su problema
+                                            médico</option>
+                                        <option value="1">Problema 1</option>
+                                        <option value="2">Problema 2</option>
+                                        <option value="3">Problema 3</option>
+                                    </select>
+                                </div>
+                                <button type="submit"
+                                    class="btn w-100 text-white"
+                                    style="background-color: #0d99b4;">Confirmar
+                                    cita</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Socket.IO -->
+        <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+        <!-- Script de notificación inicial para el asistente -->
+        <script src="./js/activation-prompt.js"></script>
+
+        <!-- Script para notificación inicial sobre capacidades de Ana -->
+        <script src="./js/initial-notification.js"></script>
+
+        <!-- Script de consentimiento para Ana -->
+        <script src="./js/ana-consent.js"></script>
+
+        <!-- Script para controlar los botones del asistente -->
+        <script src="./js/assistant-controls.js"></script>
+        <!-- Asistente de voz -->
+        <script type="module" src="./js/ViewModels/assistant.js"></script>
+
+        <!-- Botón de ayuda de Ana -->
+        <script src="./js/ana-help-button.js"></script>
+
+    </body>
+</html>

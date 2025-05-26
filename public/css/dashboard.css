@@ -1,0 +1,234 @@
+/* Reset y tipografía global */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background-color: #f8f9fa;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  border-right: 1px solid #dee2e6;
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.sidebar .nav-link {
+  color: #495057;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+.sidebar .nav-link i {
+  margin-right: 10px;
+}
+.sidebar .nav-link.active {
+  background-color: #0d99b4;
+  color: white;
+}
+.sidebar .logout-btn {
+  width: 100%;
+  background-color: #0d99b4;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 0.6rem;
+}
+
+/* Contenido principal */
+.main {
+  margin-left: 240px;
+  background-color: #f1f3f4;
+  min-height: 100vh;
+}
+
+/* Topbar */
+.topbar {
+  background-color: #0d99b4;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar .user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.topbar img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+/* Botón flotante */
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background-color: #0d99b4;
+  border-radius: 50%;
+  padding: 15px;
+  color: white;
+  font-size: 20px;
+}
+
+/* Tarjetas y estrellas */
+.card-bordered-red {
+  border: 1px solid #d67c7c;
+  border-radius: 8px;
+}
+.card-bordered-green {
+  border: 1px solid #66a661;
+  border-radius: 8px;
+}
+.star-yellow {
+  color: #f9d148;
+  font-size: 1.3rem;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+.star-grey {
+  color: #bfbfbf;
+  font-size: 1.3rem;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+.card-header-icons {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #777;
+}
+.card-img-container {
+  position: relative;
+  padding-top: 10px;
+}
+.card-text-center {
+  text-align: center;
+  margin-top: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.text-date {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+/* Chat 2 */
+#chat2 .form-control {
+  border-color: transparent;
+}
+#chat2 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px transparent;
+}
+
+/* Divisor */
+.divider:before,
+.divider:after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+/* Calendario */
+.calendar-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+.fc .fc-toolbar-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+}
+.fc-toolbar-chunk:nth-child(1),
+.fc-toolbar-chunk:nth-child(3) {
+  flex: 0 0 auto;
+}
+.fc-event {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0;
+}
+.fc-event-title {
+  background-color: #0d99b4;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  display: inline-block;
+  text-decoration: none !important;
+}
+.fc-event-title-container a {
+  text-decoration: none !important;
+  color: inherit;
+}
+.fc-daygrid-day-number,
+.fc-col-header-cell-cushion {
+  color: #000 !important;
+  font-weight: 500;
+  text-decoration: none !important;
+}
+
+/* Selección y horarios */
+#fechaSeleccionada {
+  margin-bottom: 1rem;
+}
+#horarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Navegación de pestañas activas */
+.nav-pills .nav-link.active {
+  background-color: #f8f9fa;
+  color: #0d6efd;
+}
+
+/* Especialidades en tarjeta */
+.card-specialty {
+  font-size: 0.8rem;
+  background-color: #e5f9f5;
+  color: #1c9c89;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* Botones de cita */
+.appointment-btn {
+  background-color: #3ea7c1;
+  color: white;
+  border: none;
+}
+.appointment-btn:hover {
+  background-color: #2f90a8;
+}
+
+/* Imagen de perfil */
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
